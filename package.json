@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eddyystop/feathers-hooks-common.git"
+    "url": "git+https://github.com/feathersjs/feathers-hooks-common.git"
   },
   "keywords": [
     "feathers",
@@ -37,9 +37,9 @@
   "author": "John Szwaronek <johnsz9999@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eddyystop/feathers-hooks-common/issues"
+    "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
   },
-  "homepage": "https://github.com/eddyystop/feathers-hooks-common#readme",
+  "homepage": "https://github.com/feathers/feathers-hooks-common#readme",
   "dependencies": {
     "debug": "^2.2.0",
     "feathers-hooks-utils": "^0.1.1",
