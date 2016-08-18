@@ -1,0 +1,70 @@
+{
+  "name": "feathers-hooks-common",
+  "version": "1.2.2",
+  "description": "Useful hooks for use with Feathersjs services.",
+  "main": "lib/",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "copy": "rm -rf lib/ && cp -r src/ lib/",
+    "babel": "babel src/ --out-dir lib --presets babel-preset-es2015",
+    "babel:watch": "babel src/ --watch --out-dir lib --presets babel-preset-es2015",
+    "mocha": "mocha test/  --reporter spec --compilers js:babel-core/register",
+    "mocha:only": "mocha test/ --reporter spec",
+    "eslint": "eslint src/. test/. --ext .js,.jsx",
+    "build": "npm run copy && npm run babel",
+    "test": "npm run build && npm run eslint && npm run mocha",
+    "test:build": "npm run build && npm run mocha:only",
+    "test:only": "npm run mocha:only",
+    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- --reporter spec test/*",
+    "watch": "npm run copy && npm run babel:watch",
+    "npm:patch": "npm version patch && npm publish",
+    "npm:minor": "npm version minor && npm publish",
+    "npm:major": "npm version major && npm publish",
+    "npm:updates": "npm-check-updates"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eddyystop/feathers-hooks-common.git"
+  },
+  "keywords": [
+    "feathers",
+    "feathersjs",
+    "hook",
+    "hooks"
+  ],
+  "author": "John Szwaronek <johnsz9999@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eddyystop/feathers-hooks-common/issues"
+  },
+  "homepage": "https://github.com/eddyystop/feathers-hooks-common#readme",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "feathers-hooks-utils": "^0.1.1",
+    "object.assign": "^4.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.10.4",
+    "babel-eslint": "6.1.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "3.5.0",
+    "coveralls": "2.11.9",
+    "eslint": "3.0.1",
+    "eslint-config-airbnb": "9.0.1",
+    "eslint-plugin-import": "1.10.2",
+    "eslint-plugin-jsdoc": "2.3.1",
+    "eslint-plugin-jsx-a11y": "1.5.5",
+    "eslint-plugin-react": "5.2.2",
+    "feathers-tests-fake-app-users": "1.0.0",
+    "istanbul": "0.4.4",
+    "mocha": "2.5.3"
+  },
+  "engines": {
+    "node": ">=5.0.0",
+    "npm": ">=3.8.0"
+  }
+}
