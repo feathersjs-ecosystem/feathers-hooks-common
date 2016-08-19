@@ -2,48 +2,135 @@
 /* eslint-env es6, node */
 /* eslint  max-len: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
 
-const hooks = require('feathers-authentication').hooks;
+const authHooks = require('feathers-authentication').hooks;
 const errors = require('feathers-errors');
 const utils = require('feathers-hooks-utils');
+const utils2 = require('./utils');
+
+const setByDot = utils2.setByDot;
 
 /**
- * Add a createdAt field (for before/after, create/update/patch).
+ * Set the fields to the current date-time. The fields are either in the data submitted
+ * (as a before hook for create, update or patch) or in the result (as an after hook).
+ * If the data is an array or a paginated find result the hook will lowercase the field
+ * for every item.
  *
- * @param {Object} options - Field name is options.as or 'createdAt'.
- * @returns {Function} hook function(hook)
+ * @param {Array.<string|Function>} fields - Field names.
+ *    One or more fields may be set to the date-time. Dot notation is supported.
+ *    The default is createdAt if no fields names are included.
+ * @returns {Function} hook function(hook).
  *
- * module.exports.before = {
- *   create: [ hooksCommon.setCreatedAt() ]
- * };
+ * The last param may be a function to determine if the current hook should be updated.
+ * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
+ * This boolean determines if the hook is updated.
+ *
+ * hooks.setCreatedAt('madeAt', hook => hook.data.status === 1);
+ * hooks.setCreatedAt(hook => new Promise(resolve => {
+ *   setTimeout(() => { resolve(true); }, 100)
+ * }));
+ *
  */
-module.exports.setCreatedAt = (options) => {
-  const name = (options && options.as) ? options.as : 'createdAt';
-  return (hook) => {
-    utils.set(hook, name, new Date());
+
+export function setCreatedAt(... fields) {
+  const addFields = data => {
+    for (const field of fields) {
+      setByDot(data, field, new Date());
+    }
   };
-};
+
+  const callback = typeof fields[fields.length - 1] === 'function' ?
+    fields.pop() : () => true;
+
+  if (!fields.length) {
+    fields = ['createdAt'];
+  }
+
+  return function (hook) {
+    const items = hook.type === 'before' ? hook.data : hook.result;
+
+    const update = condition => {
+      if (items && condition) {
+        if (hook.method === 'find' || Array.isArray(items)) {
+          // data.data if the find method is paginated
+          (items.data || items).forEach(addFields);
+        } else {
+          addFields(items);
+        }
+      }
+      return hook;
+    };
+
+    const check = callback(hook);
+
+    return check && typeof check.then === 'function' ?
+      check.then(update) : update(check);
+  };
+}
 
 /**
- * Add/update an updatedAt field (for before/after, create/update/patch).
+ * Set the fields to the current date-time. The fields are either in the data submitted
+ * (as a before hook for create, update or patch) or in the result (as an after hook).
+ * If the data is an array or a paginated find result the hook will lowercase the field
+ * for every item.
  *
- * @param {Object} options - Field name is options.as or 'updatedAt'.
- * @returns {Function} hook function
+ * @param {Array.<string|Function>} fields - Field names.
+ *    One or more fields may be set to the date-time. Dot notation is supported.
+ *    The default is updatedAt if no fields names are included.
+ * @returns {Function} hook function(hook).
  *
- * module.exports.before = {
- *   all: [ hooksCommon.setUpdatedAt() ]
- * };
+ * The last param may be a function to determine if the current hook should be updated.
+ * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
+ * This boolean determines if the hook is updated.
+ *
+ * hooks.setCreatedAt('madeAt', hook => hook.data.status === 1);
+ * hooks.setCreatedAt(hook => new Promise(resolve => {
+ *   setTimeout(() => { resolve(true); }, 100)
+ * }));
+ *
  */
-module.exports.setUpdatedAt = (options) => {
-  const name = (options && options.as) ? options.as : 'updatedAt';
-  return (hook) => {
-    utils.set(hook, name, new Date());
+
+export function setUpdatedAt(... fields) {
+  const addFields = data => {
+    for (const field of fields) {
+      setByDot(data, field, new Date());
+    }
   };
-};
+
+  const callback = typeof fields[fields.length - 1] === 'function' ?
+    fields.pop() : () => true;
+
+  if (!fields.length) {
+    fields = ['updatedAt'];
+  }
+
+  return function (hook) {
+    const items = hook.type === 'before' ? hook.data : hook.result;
+
+    const update = condition => {
+      if (items && condition) {
+        if (hook.method === 'find' || Array.isArray(items)) {
+          // data.data if the find method is paginated
+          (items.data || items).forEach(addFields);
+        } else {
+          addFields(items);
+        }
+      }
+      return hook;
+    };
+
+    const check = callback(hook);
+
+    return check && typeof check.then === 'function' ?
+      check.then(update) : update(check);
+  };
+}
 
 /**
- * Normalize slug, placing it in hook.params.query.
+ * Normalize slug, so it can be accessed in the same place regardless of provider and transport.
  *
- * @param {string} slug - name e.g. 'storeId' for http://.../stores/:storeId/...
+ * @param {string} slug - The slug, e.g. 'storeId' for http://.../stores/:storeId/...
+ * @param {?string} field - where in hook.params to copy the URL slug. Dot notation is supported.
+ *    hook.params.query[storeId] is the default location.
  * @returns {Function} hook function(hook)
  *
  * A service may have a slug in its path e.g. app.use('/stores/:storeId/candies', new Service());
@@ -57,22 +144,26 @@ module.exports.setUpdatedAt = (options) => {
  * raw HTTP          123       { size: 'large' }                 fetch('/stores/123/candies?size=large', ...
  *
  * This hook normalizes the difference between the transports. A hook of
- * all: [ hooksCommon.setSlug('storeId') ]
- * provides a normalized hook.params.query of { size: 'large', storeId: '123' }.
+ * all: [ hooks.setSlug('storeId') ]
+ * provides a normalized hook.params.query of { size: 'large', storeId: '123' } for the above.
  *
  * module.exports.before = {
- *   all: [ hooksCommon.setSlug('storeId') ]
+ *   all: [ hooks.setSlug('storeId') ]
  * };
  */
-module.exports.setSlug = (slug) => (hook) => {
+module.exports.setSlug = (slug, field) => (hook) => {
+  if (typeof field !== 'string') {
+    field = `query.${slug}`;
+  }
+
+  if (hook.type === 'after') {
+    throw new errors.GeneralError('Cannot set slug on after hook. (setSlug)');
+  }
+
   if (hook.params && hook.params.provider === 'rest') {
     const value = hook.params[slug];
-
-    // Handle raw HTTP call. feathers-client rest api calls cannot send a slug value.
-    // They must already include the slug in the query object.
     if (typeof value === 'string' && value[0] !== ':') {
-      if (!hook.params.query) { hook.params.query = {}; }
-      hook.params.query[slug] = value;
+      setByDot(hook.params, field, value);
     }
   }
 };
@@ -84,7 +175,7 @@ module.exports.setSlug = (slug) => (hook) => {
  * @returns {Function} hook function(hook)
  *
  * module.exports.before = {
- *   create: [ hooksCommon.debug('step 1') ]
+ *   create: [ hooks.debug('step 1') ]
  * };
  */
 module.exports.debug = (msg) => (
@@ -106,7 +197,7 @@ module.exports.debug = (msg) => (
  * @returns {Function} hook function(hook, next)
  *
  * Example:
- * const authorizer = hooksCommon.restrictToRoles([], 'allowedRoles', false, 'ownerId');
+ * const authorizer = hooks.restrictToRoles([], 'allowedRoles', false, 'ownerId');
  * module.exports.before = {
  *   all: [ authorizer(['purchasing', 'accounting']) ]
  * }
@@ -115,7 +206,7 @@ module.exports.restrictToRoles =
   (defaultRoles, rolesFieldName = 'roles', defaultIfOwner = false, ownerFieldName = 'ownerId') => {
     if (!defaultRoles) { defaultRoles = []; }
 
-    return (roles, ifOwner) => hooks.restrictToRoles({
+    return (roles, ifOwner) => authHooks.restrictToRoles({
       roles: roles || defaultRoles,
       fieldName: rolesFieldName || 'roles',
       owner: typeof ifOwner === 'undefined' ? defaultIfOwner : ifOwner,
@@ -223,20 +314,19 @@ module.exports.validateUsingPromise = (validator, ...rest) => (hook) => {
  * app.configure(verifyResetService(...)); // custom service
  *
  * // user/hooks/index.js
- * const hooks = require('feathers-hooks');
- * const hooksCommon = require('feathers-hooks-common');
+ * const hooks = require('feathers-hooks-common');
  * const validateSchema = require('feathers-hooks-validate-joi');
  * const verifyReset = app.service('/verifyReset/:action/:value');
  *
  * create: [
  *   validateSchema.form(schemas.signup, schemas.options), // schema validation
- *   hooksCommon.validateSync(usersClientValidations.signup),  // redo redux-form client validation
- *   hooksCommon.validateUsingPromise( // redo redux-form async validation, for uniqueness
+ *   hooks.validateSync(usersClientValidations.signup),  // redo redux-form client validation
+ *   hooks.validateUsingPromise( // redo redux-form async validation, for uniqueness
  *     (values) => verifyReset.create( // wrap call for compatibility with validateUsingPromise
  *       { action: 'unique', value: { username: values.username, email: values.email } }
  *     )
  *   ),
- *   hooksCommon.validateUsingCallback(usersServerValidations.signup, {}), // server validation
+ *   hooks.validateUsingCallback(usersServerValidations.signup, {}), // server validation
  *   hooks.remove('confirmPassword'),
  *   auth.hashPassword(),
  * ],

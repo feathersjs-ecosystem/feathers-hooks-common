@@ -60,19 +60,25 @@ module.exports.after = {
 
 (5) Add created at timestamp.
 
+- Field names support dot notation
+- Supports multiple data items, including paginated `find`.
+- May be dynamically disabled, using either a sync or promise based function.
+
 ```javascript
 module.exports.before = {
-  create: [ hooks.setCreatedAt({ as: 'createdAt' }) ] // added to hook.data
+  create: [ hooks.setCreatedAt('createdAt') ]
 };
 ```
 
 (6) Add or update the updated at timestamp.
 
+- Field names support dot notation
+- Supports multiple data items, including paginated `find`.
+- May be dynamically disabled, using either a sync or promise based function.
+
 ```javascript
 module.exports.before = {
-  create: [ hooks.setUpdatedAt({ as: 'updatedAt' }) ], // added to hook.data
-  update: [ hooks.setUpdatedAt({ as: 'updatedAt' }) ], // added to hook.data.$set
-  patch: [ hooks.setUpdatedAt({ as: 'updatedAt' }) ]
+  create: [ hooks.setUpdatedAt('updatedAt') ]
 };
 ```
 
@@ -92,7 +98,7 @@ module.exports.before = {
 
 (2) Retain only selected criteria in query (before hook).
 
-- Field names support dot notation
+- Field names support dot notation.
 - Supports multiple data items, including paginated `find`.
 - May be dynamically disabled, using either a sync or promise based function.
 
@@ -160,8 +166,6 @@ The structure of the data object should be checked before any validation is perf
 Several schema validation packages
 [are available](http://docs.feathersjs.com/why/showcase.html#validation).
 
-See `feathers-starter-react-redux-login` for a working example of schema and hook validation.
-
 ## Authorization
 
 (1) Disable hook
@@ -194,14 +198,12 @@ module.exports.before = {
 
 (1) Normalize the URL slug (before).
 
-Copy the slug from raw HTTP requests, e.g. https://.../stores/:storeid/...,
-to `hooks.parms.query` which is where other providers typically store it.
+Copy the slug from raw HTTP requests, e.g. https://.../stores/:storeid/...
+to where other providers typically store it. Dot notation is supported.
 
 ```javascript
 module.exports.before = {
-  create: [ hooks.setSlug('storeid') ], // slug value at hook.params.query.storeid
-  update: [ hooks.setSlug('storeid') ],
-  patch: [ hooks.setSlug('storeid') ]
+  create: [ hooks.setSlug('storeid') ]
 };
 ```
 
@@ -218,10 +220,6 @@ module.exports.after = {
 // query: { sex: 'm' }
 // result: { assigned: true }
 ```
-
-
-
-See `feathers-starter-react-redux-login` for a working example of validation hooks.
 
 ## Motivation
 
@@ -252,7 +250,7 @@ Each file fully documents its module's API.
 
 ## Contributing
 
-To do.
+[Guide to ideomatic contributing.](https://github.com/jonschlinkert/idiomatic-contributing)
 
 ## License
 

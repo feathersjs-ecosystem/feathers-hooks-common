@@ -32,4 +32,20 @@ describe('setSlug', () => {
       assert.deepEqual(hook.params.query, { a: 'a', storeId: '123' });
     });
   });
+
+  describe('handles field name', () => {
+    it('copies slug to query', () => {
+      hook.params.storeId = '123';
+      hooksCommon.setSlug('storeId', 'slugger')(hook);
+      assert.equal(hook.params.slugger, '123');
+    });
+  });
+
+  describe('handles field name with dot notation', () => {
+    it('copies slug to query', () => {
+      hook.params.storeId = '123';
+      hooksCommon.setSlug('storeId', 'query.slugger')(hook);
+      assert.deepEqual(hook.params.query, { a: 'a', slugger: '123' });
+    });
+  });
 });
