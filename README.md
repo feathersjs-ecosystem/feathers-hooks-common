@@ -250,6 +250,8 @@ Each file fully documents its module's API.
 
 ## Contributing
 
+[Contribute to this repo.](./CONTRIBUTING.md)
+
 [Guide to ideomatic contributing.](https://github.com/jonschlinkert/idiomatic-contributing)
 
 ## License
