@@ -87,11 +87,11 @@ from the main (upstream) repository:
 
 The most important need is that all code changes and contributions have unit tests.
 
-* Place unit tests in `/test`. They should require code from `/lib`.
+* Place unit tests in `/test`. They should require their code from `/lib`.
 * Unit tests should not require a build step. Feel free to use the latest Nodejs syntax.
 * The repo is set up to use Mocha and Chai.
 You can use any assertion style but most tests are presently using the assert style.
-* `npm run test` will build, lint and test.
+* `npm test` will build, lint and test.
 This command needs to complete successfully before you submit a PR.
 * `npm run test:build` will build and test.
 * `npm run test:only` will just run the tests.
@@ -104,7 +104,8 @@ The build:
 Linting and docs:
 
 * The lint step uses eslint with the Airbnb rule set.
-* Feel free to add JSDoc blocks as that helps us write documentation.
+* `npm run eslint` runs the linting.
+* Feel free to add JSDoc blocks for your new hooks as that helps us write documentation.
 * The code should immediately follow any JSDoc blocks.
 * JSDoc blocks are linted.
-Follow them by a blank line if you have issues, as that prevents linting.
+Follow them by a blank line if you have linting issues, as that prevents linting.

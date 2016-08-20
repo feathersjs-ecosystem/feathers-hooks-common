@@ -2,12 +2,11 @@
 /* eslint-env es6, node */
 /* eslint  max-len: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
 
-const authHooks = require('feathers-authentication').hooks;
-const errors = require('feathers-errors');
-const utils = require('feathers-hooks-utils');
-const utils2 = require('./utils');
+import authentication from 'feathers-authentication';
+import errors from 'feathers-errors';
+import { getItems, replaceItems, setByDot, checkContext } from './utils';
 
-const setByDot = utils2.setByDot;
+const authHooks = authentication.hooks;
 
 /**
  * Set the fields to the current date-time. The fields are either in the data submitted
@@ -30,8 +29,7 @@ const setByDot = utils2.setByDot;
  * }));
  *
  */
-
-export function setCreatedAt(... fields) {
+export const setCreatedAt = (... fields) => {
   const addFields = data => {
     for (const field of fields) {
       setByDot(data, field, new Date());
@@ -65,7 +63,7 @@ export function setCreatedAt(... fields) {
     return check && typeof check.then === 'function' ?
       check.then(update) : update(check);
   };
-}
+};
 
 /**
  * Set the fields to the current date-time. The fields are either in the data submitted
@@ -88,8 +86,7 @@ export function setCreatedAt(... fields) {
  * }));
  *
  */
-
-export function setUpdatedAt(... fields) {
+export const setUpdatedAt = (... fields) => {
   const addFields = data => {
     for (const field of fields) {
       setByDot(data, field, new Date());
@@ -123,7 +120,7 @@ export function setUpdatedAt(... fields) {
     return check && typeof check.then === 'function' ?
       check.then(update) : update(check);
   };
-}
+};
 
 /**
  * Normalize slug, so it can be accessed in the same place regardless of provider and transport.
@@ -151,7 +148,7 @@ export function setUpdatedAt(... fields) {
  *   all: [ hooks.setSlug('storeId') ]
  * };
  */
-module.exports.setSlug = (slug, field) => (hook) => {
+export const setSlug = (slug, field) => (hook) => {
   if (typeof field !== 'string') {
     field = `query.${slug}`;
   }
@@ -178,7 +175,7 @@ module.exports.setSlug = (slug, field) => (hook) => {
  *   create: [ hooks.debug('step 1') ]
  * };
  */
-module.exports.debug = (msg) => (
+export const debug = (msg) => (
   (hook) => {
     console.log(`* ${msg || ''}\ntype:${hook.type}, method: ${hook.method}`);
     if (hook.data) { console.log('data:', hook.data); }
@@ -202,7 +199,7 @@ module.exports.debug = (msg) => (
  *   all: [ authorizer(['purchasing', 'accounting']) ]
  * }
  */
-module.exports.restrictToRoles =
+export const restrictToRoles =
   (defaultRoles, rolesFieldName = 'roles', defaultIfOwner = false, ownerFieldName = 'ownerId') => {
     if (!defaultRoles) { defaultRoles = []; }
 
@@ -225,10 +222,10 @@ module.exports.restrictToRoles =
  *   formValues:  { email: 'a@a.com', password: '1234567890' }
  *   returns:     { email: 'Email not found', password: 'Password is incorrect.' }
  */
-module.exports.validateSync = (validator, ...rest) => (hook) => {
-  utils.checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateSync');
+export const validateSync = (validator, ...rest) => (hook) => {
+  checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateSync');
 
-  const formErrors = validator(utils.get(hook), ...rest);
+  const formErrors = validator(getItems(hook), ...rest);
 
   if (formErrors && Object.keys(formErrors).length) {
     throw new errors.BadRequest({ errors: formErrors });
@@ -252,11 +249,11 @@ module.exports.validateSync = (validator, ...rest) => (hook) => {
  *
  * Note this is not compatible with Feathersjs callbacks from services. Use promises for these.
  */
-module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
-  utils.checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingCallback');
+export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
+  checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingCallback');
   const rest1 = rest.concat(cb);
 
-  validator(utils.get(hook), ...rest1);
+  validator(getItems(hook), ...rest1);
 
   function cb(formErrors, convertedValues) {
     if (formErrors) {
@@ -264,7 +261,7 @@ module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
     }
 
     if (convertedValues) {
-      utils.setAll(hook, convertedValues);
+      replaceItems(hook, convertedValues);
     }
 
     return next(null, hook);
@@ -284,13 +281,13 @@ module.exports.validateUsingCallback = (validator, ...rest) => (hook, next) => {
  *                Or reject(new errors.GeneralError(...))
  *   resolve:     resolve(data) replaces formValues if truthy
  */
-module.exports.validateUsingPromise = (validator, ...rest) => (hook) => {
-  utils.checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
+export const validateUsingPromise = (validator, ...rest) => (hook) => {
+  checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
 
-  return validator(utils.get(hook), ...rest)
+  return validator(getItems(hook), ...rest)
     .then(convertedValues => {
       if (convertedValues) {
-        utils.setAll(hook, convertedValues);
+        replaceItems(hook, convertedValues);
       }
 
       return hook;

@@ -3,5 +3,6 @@
 
 module.exports = Object.assign({},
   require('./common'),
-  require('./bundled')
+  require('./bundled'),
+  require('./new')
 );

@@ -5,7 +5,16 @@ Useful hooks for use with Feathersjs services.
 [![Build Status](https://travis-ci.org/eddyystop/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
 [![Coverage Status](https://coveralls.io/repos/github/eddyystop/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/eddyystop/feathers-hooks-common?branch=master)
 
-## Data Items
+## Code Examples
+
+- [Data Items](#dataItems)
+- [Query Params](#queryParams)
+- [Authorization](#authorization)
+- [Database](#database)
+- [Utilities](#utilities)
+- [Utilities for Writing Hooks](#utilitiesHooks)
+
+## <a name="dataItems"></a> Data Items
 
 (1) Join a related item to result (after hook).
 
@@ -82,7 +91,7 @@ module.exports.before = {
 };
 ```
 
-## Query params
+## <a name="queryParams"></a> Query Params
 
 (1) Remove criteria from query (before hook).
 
@@ -108,7 +117,7 @@ module.exports.before = {
 };
 ```
 
-## Validation
+## <a name="validation"></a> Validation
 
 Fidelity and code reuse are improved if the server can rerun validation code written
 for the front-end.
@@ -166,7 +175,7 @@ The structure of the data object should be checked before any validation is perf
 Several schema validation packages
 [are available](http://docs.feathersjs.com/why/showcase.html#validation).
 
-## Authorization
+## <a name="authorization"></a> Authorization
 
 (1) Disable hook
 
@@ -194,7 +203,18 @@ module.exports.before = {
 };
 ```
 
-## Utilities
+## <a name="database"></a> Database
+
+(1) Mark items as deleted rather than removing them from the database. **(ALPHA)**
+
+```javascript
+export.before = {
+  remove: [ softDelete() ], // update item flagging it as deleted
+  find: [ softDelete() ] // ignore deleted items
+};
+```
+
+## <a name="utilities"></a> Utilities
 
 (1) Normalize the URL slug (before).
 
@@ -219,9 +239,54 @@ module.exports.after = {
 // data: { name: 'Joe Doe' }
 // query: { sex: 'm' }
 // result: { assigned: true }
+
+## <a name="utilitiesHooks"></a> Utilities for Writing Hooks
+
+These utilities may be useful when you are writing your own hooks.
+You can import them from `feathers-hooks-common/utils`.
+
+(1) Get and replace the items in the hook.
+
+- Handles before and after types.
+- Handles paginated and non-paginated results from find.
+
+```javascript```
+import { getItems, replaceItems } from 'feathers-hooks-common/utils';
+export.before = { create: [ (hook) => {
+  ...
+  const items = getItems(hook);
+  Array.isArray(items) ? items[0].code = 'a' : items.code = 'a';
+  replaceItems(hook, items);
+  ...
+}]};
 ```
 
-## Motivation
+(2) Throw if a hook is used wrongly.
+
+```javascript
+import { checkContext } from 'feathers-hooks-common/utils';
+function myHook(hook) {
+  checkContext(hook, 'before', ['create', 'remove']);
+  ...
+}
+export.after = { create: [ myHook ]}; // throws
+```
+
+(3) Support dot notation in field access.
+
+- Optionally deletes properties in object.
+
+```javascript
+import { getByDot, setByDot } from 'feathers-hooks-common/utils';
+export.before = { create: [ (hook) => {
+  ...
+  const city = getByDot(hook.data, 'person.address.city');
+  setByDot(hook, 'data.person.address.city', 'London');
+  ...
+}]};
+```
+
+## <a name="motivation"></a> Motivation
 
 Feathers [services](http://docs.feathersjs.com/services/readme.html)
 can be developed faster if the
@@ -230,7 +295,7 @@ you need are at hand.
 
 This package provides some commonly needed hooks.
 
-## Installation
+## <a name="installation"></a> Installation
 
 Install [Nodejs](https://nodejs.org/en/).
 
@@ -238,22 +303,28 @@ Run `npm install feathers-hooks-common --save` in your project folder.
 
 `/src` on GitHub contains the ES6 source. It will run on Node 6+ without transpiling.
 
-## API Reference
+## <a name="apiReference"></a> API Reference
 
-Each file fully documents its module's API.
+Each file in `/src` fully documents its exports.
 
-## Tests
+See also the [Featherjs docs](http://docs.feathersjs.com/hooks/bundled.html#built-in-hooks).
+
+## <a name="tests"></a> Tests
 
 `npm test` to run tests.
 
 `npm run cover` to run tests plus coverage.
 
-## Contributing
+## <a name="contribution"></a> Contributing
 
 [Contribute to this repo.](./CONTRIBUTING.md)
 
 [Guide to ideomatic contributing.](https://github.com/jonschlinkert/idiomatic-contributing)
 
-## License
+## <a name="changeLog"></a> Change Log
+
+[List of notable changes.](./CHANGELOG.md)
+
+## <a name="license"></a> License
 
 MIT. See LICENSE.

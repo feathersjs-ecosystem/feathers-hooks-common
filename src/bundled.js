@@ -3,10 +3,7 @@
 /* eslint brace-style: 0, consistent-return: 0, no-param-reassign: 0 */
 
 const errors = require('feathers-errors').errors;
-const utils = require('./utils');
-
-const getByDot = utils.getByDot;
-const setByDot = utils.setByDot;
+import { getItems, replaceItems, getByDot, setByDot } from './utils';
 
 /**
  * Lowercase the given fields either in the data submitted (as a before hook for create,
@@ -194,8 +191,8 @@ export function pluckQuery(... fields) {
 export function remove(... fields) {
   const removeFields = data => {
     for (const field of fields) {
-      const value = getByDot(data, field); // prevent setByDot creating nested empty objects
-      if (value !== undefined) {
+      const value = getByDot(data, field);
+      if (value !== undefined) { // prevent setByDot creating nested empty objects
         setByDot(data, field, undefined, true);
       }
     }
@@ -257,8 +254,8 @@ export function pluck(... fields) {
     const plucked = {};
 
     fields.forEach(field => {
-      const value = getByDot(data, field); // prevent setByDot creating nested empty objects
-      if (value !== undefined) {
+      const value = getByDot(data, field);
+      if (value !== undefined) { // prevent setByDot creating nested empty objects
         setByDot(plucked, field, value);
       }
     });
@@ -271,25 +268,15 @@ export function pluck(... fields) {
 
   return function (hook) {
     const update = condition => {
-      const updateInner = (result, method) => {
-        if (result) {
-          if (Array.isArray(result)) {
-            result = result.map(pluckFields);
-          } else if (method === 'find' && result.data) {
-            result.data = result.data.map(pluckFields);
-          } else {
-            result = pluckFields(result);
-          }
-        }
-
-        return result;
-      };
-
       if (condition) {
-        if (hook.type === 'before') {
-          hook.data = updateInner(hook.data, hook.method);
-        } else {
-          hook.result = updateInner(hook.result, hook.method);
+        const items = getItems(hook);
+
+        if (items) {
+          if (Array.isArray(items)) {
+            replaceItems(hook, items.map(pluckFields));
+          } else {
+            replaceItems(hook, pluckFields(items));
+          }
         }
       }
 
