@@ -2,7 +2,8 @@
 
 1.5.0
 - softDelete (ALPHA) mark items as deleted rather than deleting them from the database.
-- feathers-hooks-common/utils exposed. Dependencies on outside hook utility packages removed.
+- feathers-hooks-common/utils exposed as utils for writing hooks.
+Dependencies on outside hook utility packages removed.
 
 1.4.0
 - Hooks from eddyystop/feathers-hooks-common brought up to bundled hook standards.

@@ -12,7 +12,7 @@ Useful hooks for use with Feathersjs services.
 - [Authorization](#authorization)
 - [Database](#database)
 - [Utilities](#utilities)
-- [Utilities for Writing Hooks](#utilitiesHooks)
+- [Utilities for Writing Hooks](#hookUtils)
 
 ## <a name="dataItems"></a> Data Items
 
@@ -239,8 +239,9 @@ module.exports.after = {
 // data: { name: 'Joe Doe' }
 // query: { sex: 'm' }
 // result: { assigned: true }
+```
 
-## <a name="utilitiesHooks"></a> Utilities for Writing Hooks
+## <a name="hookUtils"></a> Utilities for Writing Hooks
 
 These utilities may be useful when you are writing your own hooks.
 You can import them from `feathers-hooks-common/utils`.
