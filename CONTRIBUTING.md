@@ -41,7 +41,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
     git push origin my-fix-branch
     ```
 
-* In GitHub, send a pull request to `angular:master`.
+* In GitHub, send a pull request.
 * If a change is suggested then:
   * Make the required updates.
   * Re-run the test suite to ensure tests are still passing.
@@ -59,7 +59,7 @@ That's it! Thank you for your contribution!
 After your pull request is merged, you can safely delete your branch and pull the changes
 from the main (upstream) repository:
 
-* Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
+* Delete the remote branch on GitHub:
 
     ```shell
     git push origin --delete my-fix-branch
@@ -103,9 +103,11 @@ The build:
 
 Linting and docs:
 
-* The lint step uses eslint with the Airbnb rule set.
+* The lint step uses ESLint with the AirBnB rule set.
+ESLint is the most popular JavaScript linting tool right now,
+and AirBnB’s style guide is the most widely-used style guide.
 * `npm run eslint` runs the linting.
 * Feel free to add JSDoc blocks for your new hooks as that helps us write documentation.
 * The code should immediately follow any JSDoc blocks.
 * JSDoc blocks are linted.
-Follow them by a blank line if you have linting issues, as that prevents linting.
+Follow them by a blank line if you have linting issues, as that stops the block from being linted.
