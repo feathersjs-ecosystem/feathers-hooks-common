@@ -11,16 +11,14 @@ const ifExternal = (... args) => hook => !!hook.params.provider; // include with
 
 // ===> the hook supporting conditional hooks
 
-export const iff = (ifFcn, hookFcn) => (hook, next) => {
+export const iff = (ifFcn, hookFcn) => (hook) => {
   const check = ifFcn(hook);
 
-  if (typeof check === 'object' && typeof check.then === 'function') {
-    check.then(check1 => {
-      return check1 ? hookFcn(hook) : Promise.resolve(hook);
-    });
-  } else if (check) {
-    return hookFcn(hook, next);
+  if (check && typeof check.then === 'function') {
+    return check.then(check1 => check1 ? hookFcn(hook) : hook);
   }
+
+  return check ? hookFcn(hook) : undefined;
 };
 
 // example usage
