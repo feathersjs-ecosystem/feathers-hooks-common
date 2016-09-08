@@ -257,7 +257,8 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
 
   function cb(formErrors, convertedValues) {
     if (formErrors) {
-      return next(formErrors instanceof Error ? formErrors : { errors: formErrors });
+      return next(formErrors instanceof Error ? formErrors :
+        errors.BadRequest('Invalid data', { errors: formErrors }), hook);
     }
 
     if (convertedValues) {

@@ -244,7 +244,7 @@ module.exports.after = {
 ## <a name="hookUtils"></a> Utilities for Writing Hooks
 
 These utilities may be useful when you are writing your own hooks.
-You can import them from `feathers-hooks-common/utils`.
+You can import them from `feathers-hooks-common/lib/utils`.
 
 (1) Get and replace the items in the hook.
 
@@ -252,7 +252,7 @@ You can import them from `feathers-hooks-common/utils`.
 - Handles paginated and non-paginated results from find.
 
 ```javascript```
-import { getItems, replaceItems } from 'feathers-hooks-common/utils';
+import { getItems, replaceItems } from 'feathers-hooks-common/lib/utils';
 export.before = { create: [ (hook) => {
   ...
   const items = getItems(hook);
@@ -265,7 +265,7 @@ export.before = { create: [ (hook) => {
 (2) Throw if a hook is used wrongly.
 
 ```javascript
-import { checkContext } from 'feathers-hooks-common/utils';
+import { checkContext } from 'feathers-hooks-common/lib/utils';
 function myHook(hook) {
   checkContext(hook, 'before', ['create', 'remove']);
   ...
@@ -278,7 +278,7 @@ export.after = { create: [ myHook ]}; // throws
 - Optionally deletes properties in object.
 
 ```javascript
-import { getByDot, setByDot } from 'feathers-hooks-common/utils';
+import { getByDot, setByDot } from 'feathers-hooks-common/lib/utils';
 export.before = { create: [ (hook) => {
   ...
   const city = getByDot(hook.data, 'person.address.city');
