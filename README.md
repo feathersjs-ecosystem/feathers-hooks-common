@@ -113,7 +113,7 @@ module.exports.before = {
 
 ```javascript
 module.exports.before = {
-  all: [ hooks.removeQuery('employee.dept') ]
+  all: [ hooks.pluckQuery('employee.dept') ]
 };
 ```
 
