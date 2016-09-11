@@ -2,8 +2,8 @@
 
 Useful hooks for use with Feathersjs services.
 
-[![Build Status](https://travis-ci.org/eddyystop/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
-[![Coverage Status](https://coveralls.io/repos/github/eddyystop/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/eddyystop/feathers-hooks-common?branch=master)
+[![Build Status](https://travis-ci.org/feathersjs/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
+[![Coverage Status](https://coveralls.io/repos/github/feathersjs/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/eddyystop/feathers-hooks-common?branch=master)
 
 ## Code Examples
 
