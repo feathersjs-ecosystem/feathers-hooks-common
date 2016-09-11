@@ -12,6 +12,7 @@ Useful hooks for use with Feathersjs services.
 - [Authorization](#authorization)
 - [Database](#database)
 - [Utilities](#utilities)
+- [Conditional hooks](#conditionalHooks)
 - [Utilities for Writing Hooks](#hookUtils)
 
 ## <a name="dataItems"></a> Data Items
@@ -239,6 +240,36 @@ module.exports.after = {
 // data: { name: 'Joe Doe' }
 // query: { sex: 'm' }
 // result: { assigned: true }
+```
+
+## <a name="conditionalHooks"></a> Running hooks conditionally
+
+There are times when you may want to run a hook conditionally.
+For example: depending on the provider, depending on the user authorization,
+depending if the user created the record, etc.
+
+A custom service may always be called with the `create` method,
+with a data value specifying the action to perform.
+Some actions may require authentication or authorization,
+while others do not.
+
+(1) Conditionally run a hook (before, after).
+
+Run a predicate function,
+which returns either a boolean, or a Promise which evaluates to a boolean.
+Run the hook if the result is truesy.
+
+```javascript
+// sync predicate and hook
+hooks.iff(
+  () => params.user.roles.includes('admin') === -1,
+  hooks.remove('securityKey')
+);
+// async predicate and hook
+hooks.iff(
+  () => new Promise((resolve, catch) => { ...}),
+  hooks.populate('user', { field: 'senderId', service: '/users' })
+);
 ```
 
 ## <a name="hookUtils"></a> Utilities for Writing Hooks

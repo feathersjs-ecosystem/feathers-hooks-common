@@ -31,3 +31,38 @@ export const softDelete = (field) => (hook) => {
     return hook; // Always return the hook or `undefined`
   });
 };
+
+/**
+ * Hook to conditionally execute another hook.
+ *
+ * @param {Function|Promise|boolean} ifFcn - Predicate function. Execute hookFcn if result is true.
+ * @param {Function|Promise} hookFcn - Hook function to execute.
+ * @returns {Object} hook
+ *
+ * feathers-hooks will catch any errors from the predicate or hook Promises
+ */
+export const iff = (ifFcn, hookFcn) => (hook) => {
+  const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
+
+  if (!check) {
+    return hook;
+  }
+
+  if (typeof check.then !== 'function') {
+    return hookFcn(hook); // could be sync or async
+  }
+
+  return check.then(check1 => {
+    if (!check1) {
+      return Promise.resolve(hook);
+    }
+
+    const result = hookFcn(hook); // could be sync or async
+
+    if (!result || typeof result.function !== 'function') {
+      return Promise.resolve(result);
+    }
+
+    return result;
+  });
+};

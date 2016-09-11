@@ -78,8 +78,10 @@ describe('populate', () => {
   });
 
   describe('test remove', () => {
-    // Test would first require very large changes to feathers-tests-app-user.
-    console.log('NO TESTS - NO TESTS - NO TESTS - NO TESTS - NO TESTS - NO TESTS - NO TESTS');
+    it('WARNING - insufficient tests', () => {
+      // Test would first require very large changes to feathers-tests-app-user.
+      console.log('populate: NO TESTS - NO TESTS - NO TESTS - NO TESTS - NO TESTS - NO TESTS');
+    });
   });
 /*
   describe('uses options.field as key, target for populated fields', () => {

@@ -75,7 +75,7 @@ describe('validate', () => {
 
     it('test fails on errors', (next) => {
       hooks.validateUsingCallback(fcn, 'val4param2')(hookBad, (err) => {
-        assert.deepEqual(err, { errors: { email: 'Email is invalid' } });
+        assert.deepEqual(err.errors, { email: 'Email is invalid' });
         next();
       });
     });

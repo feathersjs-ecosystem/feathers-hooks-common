@@ -1,6 +1,6 @@
 
 /* eslint-env es6, node */
-/* eslint  max-len: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
+/* eslint  max-len: 0, new-cap: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
 
 import authentication from 'feathers-authentication';
 import errors from 'feathers-errors';
@@ -258,7 +258,7 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
   function cb(formErrors, convertedValues) {
     if (formErrors) {
       return next(formErrors instanceof Error ? formErrors :
-        errors.BadRequest('Invalid data', { errors: formErrors }), hook);
+        new errors.BadRequest('Invalid data', { errors: formErrors }), hook);
     }
 
     if (convertedValues) {
