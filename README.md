@@ -260,8 +260,8 @@ Run the hook if the result is truesy.
 
 ```javascript
 // sync predicate and hook
-const hasRole = role => hook => params.user.roles.indexOf(role) === -1;
-hooks.iff(!hasRole(admin), hooks.remove('securityKey'))
+const isNotAdmin = adminRole => hook => params.user.roles.indexOf(adminRole || 'admin') === -1;
+hooks.iff(isNotAdmin(), hooks.remove('securityKey'))
 );
 // async predicate and hook
 hooks.iff(
