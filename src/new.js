@@ -2,6 +2,7 @@
 /* eslint-env es6, node */
 /* eslint no-param-reassign: 0, no-var: 0 */
 
+const errors = require('feathers-errors').errors;
 import { setByDot, checkContext } from './utils';
 
 /**
@@ -35,11 +36,19 @@ export const softDelete = (field) => (hook) => {
 /**
  * Hook to conditionally execute another hook.
  *
- * @param {Function|Promise|boolean} ifFcn - Predicate function. Execute hookFcn if result is true.
+ * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
+ *    Execute hookFcn if result is truesy.
  * @param {Function|Promise} hookFcn - Hook function to execute.
  * @returns {Object} hook
  *
- * feathers-hooks will catch any errors from the predicate or hook Promises
+ * The predicate is called with hook as a param.
+ *   const isServer = hook => !hook.params.provider;
+ *   iff(isServer, hook.remove( ... ));
+ * You can use a high order predicate to access other values.
+ *   const isProvider = provider => hook => hook.params.provider === provider;
+ *   iff(isProvider('socketio'), hook.remove( ... ));
+ *
+ * feathers-hooks will catch any errors from the predicate or hook Promises.
  */
 export const iff = (ifFcn, hookFcn) => (hook) => {
   const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
@@ -65,4 +74,28 @@ export const iff = (ifFcn, hookFcn) => (hook) => {
 
     return result;
   });
+};
+
+/**
+ * Check what called the service method.
+ *
+ * @param {string} [providers] - Providers permitted
+ *    'server' = service method called from server,
+ *    'external' = any external access,
+ *    string = that provider e.g. 'rest',
+ * @returns {boolean} whether the service method was called by one of the [providers].
+ */
+export const isProvider = (...providers) => {
+  if (!providers.length) {
+    throw new errors.MethodNotAllowed('Calling iff() predicate incorrectly. (isProvider)');
+  }
+
+  return function (hook) {
+    const hookProvider = hook.params.provider;
+
+    return providers.some(provider => provider === hookProvider
+        || (provider === 'server' && !hookProvider)
+        || (provider === 'external' && hookProvider)
+    );
+  };
 };

@@ -9,6 +9,30 @@ var hookBefore;
 var hookAfter;
 var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
+var predicateHook;
+var predicateOptions;
+
+const predicateSync = (hook) => {
+  predicateHook = clone(hook);
+  return true;
+};
+
+const predicateSync2 = (options) => (hook) => {
+  predicateOptions = clone(options);
+  predicateHook = clone(hook);
+  return true;
+};
+
+const predicateAsync = (hook) => {
+  predicateHook = clone(hook);
+  return new Promise(resolve => resolve(true));
+};
+
+const predicateAsync2 = (options) => (hook) => {
+  predicateOptions = clone(options);
+  predicateHook = clone(hook);
+  return new Promise(resolve => resolve(true));
+};
 
 const hookFcnSync = (hook) => {
   hookFcnSyncCalls = + 1;
@@ -207,6 +231,108 @@ describe('iff - async predicate, async hook', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
+      done();
+    }
+  });
+});
+
+describe('iff - sync predicate', () => {
+  beforeEach(() => {
+    hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
+    hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
+    hook = clone(hookBefore);
+    hookFcnSyncCalls = 0;
+    hookFcnAsyncCalls = 0;
+    predicateHook = null;
+    predicateOptions = null;
+  });
+
+  it('does not need to access hook', () => {
+    const result = hooks.iff(() => 'a', hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      assert.fail(true, false, 'promise unexpectedly returned');
+    } else {
+      assert.deepEqual(result, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    }
+  });
+
+  it('is passed hook as param', () => {
+    const result = hooks.iff(predicateSync, hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      assert.fail(true, false, 'promise unexpectedly returned');
+    } else {
+      assert.deepEqual(predicateHook, hookBefore);
+      assert.deepEqual(result, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    }
+  });
+
+  it('a higher order predicate can pass more options', () => {
+    const result = hooks.iff(predicateSync2({ z: 'z' }), hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      assert.fail(true, false, 'promise unexpectedly returned');
+    } else {
+      assert.deepEqual(predicateOptions, { z: 'z' });
+      assert.deepEqual(predicateHook, hookBefore);
+      assert.deepEqual(result, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    }
+  });
+});
+
+describe('iff - async predicate', () => {
+  beforeEach(() => {
+    hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
+    hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
+    hook = clone(hookBefore);
+    hookFcnSyncCalls = 0;
+    hookFcnAsyncCalls = 0;
+    predicateHook = null;
+    predicateOptions = null;
+  });
+
+  it('is passed hook as param', (done) => {
+    const result = hooks.iff(predicateAsync, hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      result.then(result1 => {
+        assert.deepEqual(predicateHook, hookBefore);
+        assert.deepEqual(result1, hookAfter);
+        assert.equal(hookFcnSyncCalls, 1);
+        assert.deepEqual(result1, hookAfter);
+
+        done();
+      });
+    } else {
+      assert.fail(true, false, 'promise unexpectedly not returned');
+
+      done();
+    }
+  });
+
+  it('a higher order predicate can pass more options', (done) => {
+    const result = hooks.iff(predicateAsync2({ y: 'y' }), hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      result.then(result1 => {
+        assert.deepEqual(predicateOptions, { y: 'y' });
+        assert.deepEqual(predicateHook, hookBefore);
+        assert.deepEqual(result1, hookAfter);
+        assert.equal(hookFcnSyncCalls, 1);
+        assert.deepEqual(result1, hookAfter);
+
+        done();
+      });
+    } else {
+      assert.fail(true, false, 'promise unexpectedly not returned');
+
       done();
     }
   });

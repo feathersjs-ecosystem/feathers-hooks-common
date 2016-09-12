@@ -228,7 +228,6 @@ module.exports.before = {
 };
 ```
 
-
 (2) Display current info about the hook to console.
 
 ```javascript
@@ -244,13 +243,13 @@ module.exports.after = {
 
 ## <a name="conditionalHooks"></a> Running hooks conditionally
 
-There are times when you may want to run a hook conditionally.
-For example: depending on the provider, depending on the user authorization,
-depending if the user created the record, etc.
+There are times when you may want to run a hook conditionally,
+perhaps depending on the provider, the user authorization,
+if the user created the record, etc.
 
-A custom service may always be called with the `create` method,
-with a data value specifying the action to perform.
-Some actions may require authentication or authorization,
+A custom service may be designed to always be called with the `create` method,
+with a data value specifying the action the service is to perform.
+Certain actions may require authentication or authorization,
 while others do not.
 
 (1) Conditionally run a hook (before, after).
@@ -267,9 +266,15 @@ hooks.iff(
 );
 // async predicate and hook
 hooks.iff(
-  () => new Promise((resolve, catch) => { ...}),
+  () => new Promise((resolve, catch) => { ... }),
   hooks.populate('user', { field: 'senderId', service: '/users' })
 );
+```
+
+(2) Predicate for which provider called the service method.
+
+```javascript
+hooks.iff(!hooks.isProvider('server'), hooks.remove( ... )) // also socketio, external, rest, primus
 ```
 
 ## <a name="hookUtils"></a> Utilities for Writing Hooks
