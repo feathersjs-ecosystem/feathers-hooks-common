@@ -260,9 +260,8 @@ Run the hook if the result is truesy.
 
 ```javascript
 // sync predicate and hook
-hooks.iff(
-  () => params.user.roles.includes('admin') === -1,
-  hooks.remove('securityKey')
+const hasRole = role => hook => params.user.roles.indexOf(role) === -1;
+hooks.iff(!hasRole(admin), hooks.remove('securityKey'))
 );
 // async predicate and hook
 hooks.iff(
@@ -271,10 +270,10 @@ hooks.iff(
 );
 ```
 
-(2) Predicate for which provider called the service method.
+(2) isProvider: predicate for which provider called the service method.
 
 ```javascript
-hooks.iff(!hooks.isProvider('server'), hooks.remove( ... )) // also socketio, external, rest, primus
+hooks.iff(!hooks.isProvider('server'), hooks.remove( ... )) // also external, socketio, rest, primus
 ```
 
 ## <a name="hookUtils"></a> Utilities for Writing Hooks
