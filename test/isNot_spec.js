@@ -4,15 +4,26 @@
 const assert = require('chai').assert;
 const hooks = require('../lib/index');
 
+const isNot = hooks.isNot;
 const isProvider = hooks.isProvider;
 
 var hookServer;
-var hookSocketio;
 
 var hook;
 var hookBefore;
 var hookAfter;
 var hookFcnSyncCalls;
+var predicateCalls;
+
+const predicateSync = (value) => () => {
+  predicateCalls = + 1;
+  return value;
+};
+
+const predicateAsync = (value) => () => new Promise(resolve => {
+  predicateCalls = + 1;
+  return resolve(value);
+});
 
 const hookFcnSync = (hook) => {
   hookFcnSyncCalls = + 1;
@@ -21,80 +32,60 @@ const hookFcnSync = (hook) => {
   return hook;
 };
 
-describe('isProvider - predicate', () => {
+describe('isNot - predicate', () => {
   beforeEach(() => {
     hookServer = { type: 'before', method: 'create', params: { provider: '' } };
-    hookSocketio = { type: 'before', method: 'create', params: { provider: 'socketio' } };
+    predicateCalls = 0;
   });
 
-  it('returns a function', () => {
-    const fcn = isProvider('server');
-
-    assert.isFunction(fcn);
+  it('expects a function param', () => {
+    assert.throws(() => { isNot('not a function'); });
   });
 
-  it('gets passed the hook', () => {
+  it('negates a sync function 1', () => {
     const hook = clone(hookServer);
-    const result = isProvider('server')(hook);
+    const result = isNot(predicateSync(true))(hook);
 
-    assert.equal(result, true);
-  });
-
-  it('throws on no args', () => {
-    assert.throws(() => isProvider());
-  });
-
-  it('finds provider with 1 arg', () => {
-    const hook = clone(hookSocketio);
-    const result = isProvider('socketio')(hook);
-
-    assert.equal(result, true);
-  });
-
-  it('finds provider with 2 args', () => {
-    const hook = clone(hookSocketio);
-    const result = isProvider('rest', 'socketio')(hook);
-
-    assert.equal(result, true);
-  });
-
-  it('finds server', () => {
-    const hook = clone(hookServer);
-    const result = isProvider('rest', 'socketio', 'server')(hook);
-
-    assert.equal(result, true);
-  });
-
-  it('finds external', () => {
-    const hook = clone(hookSocketio);
-    const result = isProvider('rest', 'server', 'external')(hook);
-
-    assert.equal(result, true);
-  });
-
-  it('fails properly if not provider', () => {
-    const hook = clone(hookServer);
-    const result = isProvider('socketio')(hook);
-
+    assert.equal(predicateCalls, 1);
     assert.equal(result, false);
   });
 
-  it('fails properly if not external', () => {
+  it('negates a sync function 2', () => {
     const hook = clone(hookServer);
-    const result = isProvider('external')(hook);
+    const result = isNot(predicateSync(false))(hook);
 
-    assert.equal(result, false);
+    assert.equal(predicateCalls, 1);
+    assert.equal(result, true);
   });
 
-  it('fails properly if not server', () => {
-    const hook = clone(hookSocketio);
-    const result = isProvider('server')(hook);
+  it('negates an async function 1', (done) => {
+    const hook = clone(hookServer);
+    isNot(predicateAsync(true))(hook)
+      .then(result => {
+        assert.equal(predicateCalls, 1);
+        assert.equal(result, false);
+        done();
+      })
+    .catch(() => {
+      assert.equal(true, false, 'unexpected catch');
+    });
+  });
 
-    assert.equal(result, false);
+  it('negates an async function 2', (done) => {
+    const hook = clone(hookServer);
+    isNot(predicateAsync(false))(hook)
+      .then(result => {
+        assert.equal(predicateCalls, 1);
+        assert.equal(result, true);
+        done();
+      })
+      .catch(() => {
+        assert.equal(true, false, 'unexpected catch');
+      });
   });
 });
 
-describe('isProvider - works with iff', () => {
+describe('isNot - works with iff and isProvider', () => {
   beforeEach(() => {
     hookBefore = {
       type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' },
@@ -107,7 +98,7 @@ describe('isProvider - works with iff', () => {
   });
 
   it('calls sync hook function if truthy', () => {
-    const result = hooks.iff(isProvider('rest'), hookFcnSync)(hook);
+    const result = hooks.iff(isNot(isProvider('server')), hookFcnSync)(hook);
 
     if (result && typeof result.then === 'function') {
       assert.fail(true, false, 'promise unexpectedly returned');
@@ -119,7 +110,7 @@ describe('isProvider - works with iff', () => {
   });
 
   it('does not call sync hook function if falsey', () => {
-    const result = hooks.iff(isProvider('server'), hookFcnSync)(hook);
+    const result = hooks.iff(isNot(isProvider('rest')), hookFcnSync)(hook);
 
     if (result && typeof result.then === 'function') {
       assert.fail(true, false, 'promise unexpectedly returned');

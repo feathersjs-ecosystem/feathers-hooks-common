@@ -63,21 +63,15 @@ export const iff = (ifFcn, hookFcn) => (hook) => {
 
   return check.then(check1 => {
     if (!check1) {
-      return Promise.resolve(hook);
+      return hook;
     }
 
-    const result = hookFcn(hook); // could be sync or async
-
-    if (!result || typeof result.function !== 'function') {
-      return Promise.resolve(result);
-    }
-
-    return result;
+    return hookFcn(hook); // could be sync or async
   });
 };
 
 /**
- * Check what called the service method.
+ * Predicate to check what called the service method.
  *
  * @param {string} [providers] - Providers permitted
  *    'server' = service method called from server,
@@ -90,12 +84,37 @@ export const isProvider = (...providers) => {
     throw new errors.MethodNotAllowed('Calling iff() predicate incorrectly. (isProvider)');
   }
 
-  return function (hook) {
-    const hookProvider = hook.params.provider;
+  return function (hook) { // allow bind
+    const hookProvider = (hook.params || {}).provider;
 
     return providers.some(provider => provider === hookProvider
         || (provider === 'server' && !hookProvider)
         || (provider === 'external' && hookProvider)
     );
+  };
+};
+
+/**
+ * Negate a predicate.
+ *
+ * @param {Function} predicate - returns a boolean or a promise resolving to a boolean.
+ * @returns {boolean} the not of the predicate result.
+ *
+ * const hooks, { iff, isNot, isProvider } from 'feathers-hooks-common';
+ * iff(isNot(isProvider('rest')), hooks.remove( ... ));
+ */
+export const isNot = (predicate) => {
+  if (typeof predicate !== 'function') {
+    throw new errors.MethodNotAllowed('Expected function as param. (isNot)');
+  }
+
+  return hook => {
+    const result = predicate(hook); // Should we pass a clone? (safety vs performance)
+
+    if (!result || typeof result.then !== 'function') {
+      return !result;
+    }
+
+    return result.then(result1 => !result1);
   };
 };

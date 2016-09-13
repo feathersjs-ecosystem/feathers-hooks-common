@@ -1,5 +1,8 @@
 # Notable changes to feathers-hooks-common 
 
+## 1.5.7
+- `isNot` added.
+
 ## 1.5.4
 - `iff` conditional hook added.
 - `isProvider` predicate added for use with `iff`.

@@ -11,6 +11,7 @@ var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
 var predicateHook;
 var predicateOptions;
+var predicateValue;
 
 const predicateSync = (hook) => {
   predicateHook = clone(hook);
@@ -32,6 +33,14 @@ const predicateAsync2 = (options) => (hook) => {
   predicateOptions = clone(options);
   predicateHook = clone(hook);
   return new Promise(resolve => resolve(true));
+};
+
+const predicateAsyncFunny = (hook) => {
+  predicateHook = clone(hook);
+  return new Promise(resolve => {
+    predicateValue = 'abc';
+    return resolve(predicateValue);
+  });
 };
 
 const hookFcnSync = (hook) => {
@@ -142,6 +151,24 @@ describe('iff - sync predicate, async hook', () => {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnAsyncCalls, 0);
       assert.deepEqual(hook, hookBefore);
+    }
+  });
+
+  it('calls async hook function if sync predicate returns truthy', (done) => {
+    const result = hooks.iff(() => true, hookFcnAsync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      result.then((result1) => {
+        assert.deepEqual(result1, hookAfter);
+        assert.equal(hookFcnAsyncCalls, 1);
+        assert.deepEqual(hook, hookAfter);
+
+        done();
+      });
+    } else {
+      assert.fail(true, false, 'promise unexpectedly not returned');
+
+      done();
     }
   });
 });
@@ -296,6 +323,7 @@ describe('iff - async predicate', () => {
     hookFcnAsyncCalls = 0;
     predicateHook = null;
     predicateOptions = null;
+    predicateValue = null;
   });
 
   it('is passed hook as param', (done) => {
@@ -307,6 +335,27 @@ describe('iff - async predicate', () => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
+
+        done();
+      });
+    } else {
+      assert.fail(true, false, 'promise unexpectedly not returned');
+
+      done();
+    }
+  });
+
+  it('is resolved', (done) => {
+    const result = hooks.iff(predicateAsyncFunny, hookFcnSync)(hook);
+
+    if (result && typeof result.then === 'function') {
+      result.then(result1 => {
+        assert.deepEqual(predicateHook, hookBefore);
+        assert.deepEqual(result1, hookAfter);
+        assert.equal(hookFcnSyncCalls, 1);
+        assert.deepEqual(result1, hookAfter);
+
+        assert.equal(predicateValue, 'abc');
 
         done();
       });

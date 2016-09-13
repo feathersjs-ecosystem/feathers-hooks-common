@@ -270,10 +270,18 @@ hooks.iff(
 );
 ```
 
-(2) isProvider: predicate for which provider called the service method.
+(2) isProvider: predicate to check which provider called the service method.
 
 ```javascript
-hooks.iff(!hooks.isProvider('server'), hooks.remove( ... )) // also external, socketio, rest, primus
+import hooks, { iff, isProvider } from 'feathers-hooks-common';
+iff(isProvider('external'), hooks.remove( ... )) // also external, socketio, rest, primus
+```
+
+(3) isNot: negates a sync or async predicate.
+
+```javascript
+import hooks, { iff, isNot, isProvider } from 'feathers-hooks-common';
+iff(isNot(isProvider('server')), hooks.remove( ... )) // also external, socketio, rest, primus
 ```
 
 ## <a name="hookUtils"></a> Utilities for Writing Hooks
