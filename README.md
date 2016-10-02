@@ -131,7 +131,7 @@ and promise based validation routines.
 - Optionally replace the data with sanitized values.
 
 ```javascript
-import { fnPromisify } from 'feathers-hooks-common/promisify; // turn any func into Promise
+import { fnPromisify } from 'feathers-hooks-common/promisify'; // turn any func into Promise
 
 const usersClientValidation = (values) => values.email ? null : { email: 'Email is invalid' };
 
@@ -161,9 +161,11 @@ module.exports.before = {
 };
 ```
 
+(2) DEPRECATED validateSync, validateUsingCallback, validateUsingPromise
+
 #### Note:
 
-Please read the details involved in [promisifying functions](#promisify]. 
+Please read the details involved in [promisifying functions](#promisify). 
 
 The structure of the data object should be checked before any validation is performed.
 Several schema validation packages
@@ -238,7 +240,9 @@ module.exports.after = {
 // result: { assigned: true }
 ```
 
-### <a name="promisify"></a> Promisifying functions
+#### <a name="promisify"></a> Promisifying functions
+
+Wrap functions so they return Promises.
 
 (3) Wrap a feathers hook so it returns a Promise.
 
@@ -295,13 +299,13 @@ fnPromisify(syncCheck)(1).then( ... ).catch( ... );
 fnPromisify(cbCheck)(1).then( ... ).catch( ... );
 ```
 
-- Use fnPromisifyCallback or fnPromisifySync instead on the frontend (because minification).
-- Watch out on the backend that common names are used for the callback param
+- Use fnPromisifyCallback or fnPromisifySync instead on the front-end (because minification).
+- Watch out on the back-end that common names are used for the callback param
 i.e. cb, callback, callback_, done, or next.
-- Watch out on the backend for the rare cases which cannot be correctly parsed.
+- Watch out on the back-end for the rare cases which cannot be correctly parsed.
 These involve params who default values involve parenthesis or commas
 e.g. function abc(a = () => {}, b = (x, y) => {}, c = 'x,y'.indexOf(','))
-- You have no worries if you transpile with Babel on the backend (but do not minify).
+- You have no worries if you transpile with Babel on the back-end (but do not minify).
 
 (5) Wrap a function calling a callback into one that returns a promise.
 
