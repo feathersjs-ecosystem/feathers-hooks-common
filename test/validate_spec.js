@@ -14,7 +14,7 @@ var origHookBad;
 var hookOk;
 var hookBad;
 
-describe('validate', () => {
+describe('validate DEPRECATED hooks', () => {
   describe('validateSync', () => {
     beforeEach(() => {
       fcn = (values) => (values.email ? null : { email: 'Email is invalid' });
@@ -81,7 +81,7 @@ describe('validate', () => {
     });
   });
 
-  describe('validateUsingPromise', () => {
+  describe('validate', () => {
     origHookOk = { type: 'before', method: 'create', data: { email: ' a@a.com ' } };
     origHookBad = { type: 'before', method: 'create', data: { email: '' } };
 
@@ -111,7 +111,7 @@ describe('validate', () => {
     });
 
     it('test passes on correct data', (next) => {
-      hooks.validateUsingPromise(fcn)(hookOk)
+      hooks.validate(fcn)(hookOk)
         .then(hook => {
           assert.deepEqual(hook, origHookOk);
           next();
@@ -120,7 +120,7 @@ describe('validate', () => {
     });
 
     it('test can sanitize correct data', (next) => {
-      hooks.validateUsingPromise(fcnSanitize)(hookOk)
+      hooks.validate(fcnSanitize)(hookOk)
         .then(hook => {
           assert.equal(hook.data.email, 'a@a.com');
           next();
@@ -129,7 +129,7 @@ describe('validate', () => {
     });
 
     it('test fails on errors', (next) => {
-      hooks.validateUsingPromise(fcnSanitize)(hookBad)
+      hooks.validate(fcnSanitize)(hookBad)
         .then(() => {
           assert.fail(true, false, 'test should not have completed successfully');
         })

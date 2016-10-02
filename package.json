@@ -43,6 +43,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "feathers-hooks-utils": "^0.1.1",
+    "get-parameter-names": "https://github.com/benbotto/get-parameter-names",
     "object.assign": "^4.0.4"
   },
   "devDependencies": {

@@ -4,6 +4,7 @@
 
 import authentication from 'feathers-authentication';
 import errors from 'feathers-errors';
+
 import { getItems, replaceItems, setByDot, checkContext } from './utils';
 
 const authHooks = authentication.hooks;
@@ -185,7 +186,7 @@ export const debug = (msg) => (
 );
 
 /**
- * Factory for Feathers hooks.restrictToRoles.
+ * DEPRECATED: Factory for Feathers hooks.restrictToRoles.
  *
  * @param {?array|string} [defaultRoles=[]] - Roles authorized to continue. Default [].
  * @param {?string} rolesFieldName - Name of field containing roles. Default 'roles'.
@@ -201,6 +202,9 @@ export const debug = (msg) => (
  */
 export const restrictToRoles =
   (defaultRoles, rolesFieldName = 'roles', defaultIfOwner = false, ownerFieldName = 'ownerId') => {
+    console.error(
+      'DEPRECATED Use feathers-authentication v0.8. Removed next ver. (restrictToRoles)'
+    );
     if (!defaultRoles) { defaultRoles = []; }
 
     return (roles, ifOwner) => authHooks.restrictToRoles({
@@ -223,6 +227,7 @@ export const restrictToRoles =
  *   returns:     { email: 'Email not found', password: 'Password is incorrect.' }
  */
 export const validateSync = (validator, ...rest) => (hook) => {
+  console.error('DEPRECATED Use validate. Removed next ver. (validateSync)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateSync');
 
   const formErrors = validator(getItems(hook), ...rest);
@@ -250,6 +255,7 @@ export const validateSync = (validator, ...rest) => (hook) => {
  * Note this is not compatible with Feathersjs callbacks from services. Use promises for these.
  */
 export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
+  console.error('DEPRECATED Use validate. Removed next ver. (validateUsingCallback)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingCallback');
   const rest1 = rest.concat(cb);
 
@@ -282,7 +288,26 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
  *                Or reject(new errors.GeneralError(...))
  *   resolve:     resolve(data) replaces formValues if truthy
  */
-export const validateUsingPromise = (validator, ...rest) => (hook) => {
+export const validateUsingPromise = (validator, ...rest) => {
+  console.error('DEPRECATED Use validate. Removed next ver. (validateUsingPromise)');
+
+  return validate(validator, ...rest);
+};
+
+/**
+ * Call a validation routine which returns a Promise.
+ *
+ * @param {Function} validator - with signature (formValues, ...rest)
+ * @param {?Array.<*>} rest - params #2+ for validator
+ * @returns {Function} hook function(hook, next)
+ *
+ * The validator is called with: validator(formValues, ...rest)
+ *   formValues:  { email: 'a@a.com', password: '1234567890' }
+ *   reject:      reject(new errors.BadRequest({ errors: { email: 'Email not found' }}))
+ *                Or reject(new errors.GeneralError(...))
+ *   resolve:     resolve(data) replaces formValues if truthy
+ */
+export const validate = (validator, ...rest) => (hook) => {
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
 
   return validator(getItems(hook), ...rest)

@@ -1,6 +1,6 @@
 
 /* eslint-env es6, node */
-/* eslint brace-style: 0, consistent-return: 0, no-param-reassign: 0 */
+/* eslint brace-style: 0, consistent-return: 0, no-console: 0, no-param-reassign: 0, no-var: 0 */
 
 const errors = require('feathers-errors').errors;
 import { getItems, replaceItems, getByDot, setByDot } from './utils';
@@ -13,7 +13,7 @@ import { getItems, replaceItems, getByDot, setByDot } from './utils';
  * @param {Array.<string|Function>} fields - Field names to lowercase. Dot notation is supported.
  * @returns {Function} hook function(hook).
  *
- * The last param may be a function to determine if the current hook should be updated.
+ * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -38,8 +38,11 @@ export function lowerCase(... fields) {
     }
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : () => true;
+  var callback = () => true;
+  if (typeof fields[fields.length - 1] === 'function') {
+    callback = fields.pop();
+    console.error('DEPRECATED Predicate func will be removed next version. (lowerCase)');
+  }
 
   return function (hook) {
     const items = hook.type === 'before' ? hook.data : hook.result;
@@ -70,7 +73,7 @@ export function lowerCase(... fields) {
  * @param {Array.<string|Function>} fields - Field names to remove. Dot notation is supported.
  * @returns {Function} hook function(hook)
  *
- * The last param may be a function to determine if the current hook should be updated.
+ * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -89,8 +92,11 @@ export function removeQuery(... fields) {
     }
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : () => true;
+  var callback = () => true;
+  if (typeof fields[fields.length - 1] === 'function') {
+    callback = fields.pop();
+    console.error('DEPRECATED Predicate func will be removed next version. (removeQuery)');
+  }
 
   return function (hook) {
     if (hook.type === 'after') {
@@ -121,7 +127,7 @@ export function removeQuery(... fields) {
  * @param {Array.<string|Function>} fields - Field names to retain. Dot notation is supported.
  * @returns {Function} hook function(hook)
  *
- * The last param may be a function to determine if the current hook should be updated.
+ * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -144,8 +150,11 @@ export function pluckQuery(... fields) {
     return plucked;
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : () => true;
+  var callback = () => true;
+  if (typeof fields[fields.length - 1] === 'function') {
+    callback = fields.pop();
+    console.error('DEPRECATED Predicate func will be removed next version. (pluckQuery)');
+  }
 
   return function (hook) {
     if (hook.type === 'after') {
@@ -176,7 +185,7 @@ export function pluckQuery(... fields) {
  * @param {Array.<string|Function>} fields - Field names to remove. Dot notation is supported.
  * @returns {Function} hook function(hook)
  *
- * The last param may be a function to determine if the current hook should be updated.
+ * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -198,8 +207,12 @@ export function remove(... fields) {
     }
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : (hook) => !!hook.params.provider;
+  // when deprecating, remember hook should not run if called from server
+  var callback = (hook) => !!hook.params.provider;
+  if (typeof fields[fields.length - 1] === 'function') {
+    callback = fields.pop();
+    console.error('DEPRECATED Predicate func will be removed next version. (remove)');
+  }
 
   return function (hook) {
     const result = hook.type === 'before' ? hook.data : hook.result;
@@ -237,7 +250,7 @@ export function remove(... fields) {
  * @param {Array.<string|Function>} fields - Field names to remove. Dot notation is supported.
  * @returns {Function} hook function(hook)
  *
- * The last param may be a function to determine if the current hook should be updated.
+ * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -263,8 +276,12 @@ export function pluck(... fields) {
     return plucked;
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : (hook) => !!hook.params.provider;
+  // when deprecating, remember hook should not run if called from server
+  var callback = (hook) => !!hook.params.provider;
+  if (typeof fields[fields.length - 1] === 'function') {
+    callback = fields.pop();
+    console.error('DEPRECATED Predicate func will be removed next version. (pluck)');
+  }
 
   return function (hook) {
     const update = condition => {

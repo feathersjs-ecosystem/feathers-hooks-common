@@ -3,6 +3,7 @@
 /* eslint no-param-reassign: 0, no-var: 0 */
 
 const errors = require('feathers-errors').errors;
+
 import { setByDot, checkContext } from './utils';
 
 /**

@@ -1,5 +1,13 @@
 # Notable changes to feathers-hooks-common 
 
+## 1.6.0
+- Added setCbVarNames, fnPromisify, fnPromisifyCallback, fnPromisifySync, promisifyHook
+in feathers-hooks-common/promisify.
+- Added validate. Deprecated validateSync, validateUsingCallback, validateUsingPromise.
+- Added tests for everything added.
+- Deprecated restrictToRoles as the new feathers-authenticate will have this feature and more.
+- Deprecated the internal predicate function in many of the bundled hooks.
+
 ## 1.5.7
 - `isNot` added.
 

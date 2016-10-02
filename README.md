@@ -9,6 +9,7 @@ Useful hooks for use with Feathersjs services.
 
 - [Data Items](#dataItems)
 - [Query Params](#queryParams)
+- [Validation](#validation)
 - [Authorization](#authorization)
 - [Database](#database)
 - [Utilities](#utilities)
@@ -123,39 +124,18 @@ module.exports.before = {
 Fidelity and code reuse are improved if the server can rerun validation code written
 for the front-end.
 
-- Support is provided for sync, callback and promise based validation routines.
+(1) Invoke a validation routine (before; create, update, patch).
+
+- Support is provided for sync, callback (both through fnPromisify)
+and promise based validation routines.
 - Optionally replace the data with sanitized values.
 
-(1) Invoke a synchronous validation routine (before; create, update, patch).
-
 ```javascript
+import { fnPromisify } from 'feathers-hooks-common/promisify; // turn any func into Promise
+
 const usersClientValidation = (values) => values.email ? null : { email: 'Email is invalid' };
 
-module.exports.before = {
-  create: [ hooks.validateSync(usersClientValidations) ] // redo client sync validation
-};
-```
-
-(2) Invoke a callback based validation routine (before; create, update, patch).
-
-```javascript
-const usersServerValidation = (values, param2, cb) => {
-  setTimeout(() => {
-    values.email.trim()
-      ? cb(null, { ...values, email: values.email.trim() }) // sanitize data
-      : cb({ email: 'Email is invalid' });
-  }, 100);
-};
-
-module.exports.before = {
-  create: [ hooks.validateUsingCallback(usersServerValidations, 'value4param2') ] // server only
-};
-```
-
-(3) Invoke a promise based validation routine (before; create, update, patch).
-
-```javascript
-const usersServerValidation = (values, ...rest) => (
+const usersClientAsync = (values) => (
   new Promise((resolve, reject) => {
     setTimeout(() => {
       values.email.trim()
@@ -165,12 +145,25 @@ const usersServerValidation = (values, ...rest) => (
   })
 );
 
+const usersServerValidation = (values, param2, cb) => {
+  setTimeout(() => {
+    values.email.trim()
+      ? cb(null, { ...values, email: values.email.trim() }) // sanitize data
+      : cb({ email: 'Email is invalid' });
+  }, 100);
+};
+
 module.exports.before = {
-  create: [ hooks.validateUsingPromise(usersClientAsync) ] // redo client async validation
+  create: [
+    hooks.validate(fnPromisify(usersClientValidations)), // sync
+    hooks.validate(fnPromisify(usersClientAsync)), // promise. fnPromisify() wrapper is optional.
+    hooks.validate(fnPromisify(usersServerValidations, 'valueForparam2')) // callback
 };
 ```
 
 #### Note:
+
+Please read the details involved in [promisifying functions](#promisify]. 
 
 The structure of the data object should be checked before any validation is performed.
 Several schema validation packages
@@ -193,6 +186,8 @@ module.exports.before = {
 (2) Authorize access by role.
 Convenience wrapper for `feathers-authentication.hooks.restrictToRoles`.
 
+DEPRECATED. Use hooks provided by feathers-authentication v2.
+
 - Clean, clear and DRY.
     
 ```javascript
@@ -203,6 +198,8 @@ module.exports.before = {
   create: [ authorizer(['purch']) ]
 };
 ```
+
+(3) 
 
 ## <a name="database"></a> Database
 
@@ -232,13 +229,132 @@ module.exports.before = {
 
 ```javascript
 module.exports.after = {
-  create: [ hooks.setUpdatedAt('step 1') ]
+  create: [ hooks.debug('step 1') ]
 };
-// * step 1
+//step 1
 // type: before, method: create
 // data: { name: 'Joe Doe' }
 // query: { sex: 'm' }
 // result: { assigned: true }
+```
+
+### <a name="promisify"></a> Promisifying functions
+
+(3) Wrap a feathers hook so it returns a Promise.
+
+Feathers may someday deprecate hooks which call callbacks.
+You can future-proof any callback hooks you have by wrapping them to return Promises now.
+There is support for
+
+- Sync functions. Promise is rejected if the function throws.
+- Functions calling a callback. The call to the callback may be sync or async. Rejected on throw.
+- Functions returning a Promise. Basically a no-op.
+
+```javascript
+import { promisifyHook } from 'feathers-hooks-common/promisify';
+
+const delayedCreatedAt = () => (hook, next) => {
+  setTimeout(() => {
+    hook.data.createdAt = new Date();
+    next(null, hook);
+  }, 100);
+};
+const updatedAt = () => (hook) => {
+  hook.data.updatedAt = new Date();
+  return hook;
+};
+const updatedBy = (email = 'email') => (hook) => {
+  hook.data.email = hook.users[email];
+  return Promise.resolve(hook);
+);
+
+const wrappedDelayedCreatedAt = promisifyHook(delayedCreatedAt());
+const wrappedUpdatedAt = promisifyHook(updatedAt());
+const wrappedUpdatedBy = promisifyHook(updatedBy('userEmail'));
+
+module.exports.before = {
+  create: [wrappedDelayedCreatedAt, wrappedUpdatedAt, wrappedUpdatedBy], // each returns a Promise
+};
+```
+
+(4) Wrap any function to return a Promise.
+
+```javascript
+import { fnPromisify } from 'feathers-hooks-common/promisify';
+
+function syncCheck(value) {
+  if (value !== 1) { throw new Error( ... ); }
+  return value;
+}
+
+function cbCheck(value, cb) {
+  cb(value === 1 ? null : new Error( ... ), value);
+}
+
+fnPromisify(syncCheck)(1).then( ... ).catch( ... );
+fnPromisify(cbCheck)(1).then( ... ).catch( ... );
+```
+
+- Use fnPromisifyCallback or fnPromisifySync instead on the frontend (because minification).
+- Watch out on the backend that common names are used for the callback param
+i.e. cb, callback, callback_, done, or next.
+- Watch out on the backend for the rare cases which cannot be correctly parsed.
+These involve params who default values involve parenthesis or commas
+e.g. function abc(a = () => {}, b = (x, y) => {}, c = 'x,y'.indexOf(','))
+- You have no worries if you transpile with Babel on the backend (but do not minify).
+
+(5) Wrap a function calling a callback into one that returns a promise.
+
+```javascript
+import { fnPromisifyCallback } from 'feathers-hooks-common/promisify';
+
+function tester(data, a, b, cb) {
+  cb(data === 1 ? null : 'bad', data);
+} 
+const wrappedTester = fnPromisifyCallback(tester, 3);
+
+wrappedTester(1, 2, 3); // tester(1, 2, 3, wrapperCb)
+wrappedTester(1, 2); // tester(1, 2, undefined, wrapperCb)
+wrappedTester(); // tester(undefined, undefined undefined, wrapperCb)
+wrappedTester(1, 2, 3, 4, 5); // tester(1, 2, 3, wrapperCb)
+```
+
+You may specify the number of params in the function signature,
+not including the callback param itself.
+The wrapped function will always be called with that number,
+preventing potential bugs.
+
+The function signature is parsed to obtain the count if paramsCountBeforeCb is not provided.
+Read fnPromisify for some ramifications.
+
+(6) Wrap a sync function into one that returns a promise.
+This can be used to wrap any function other than one calling a callback
+as functions returning a Promise are not affected by this wrapper.
+
+- Promise is rejected if the function throws.
+
+```javascript
+import { fnPromisifyCallback } from 'feathers-hooks-common/promisify';
+
+function testSync(data, a, b) {
+  if (data === 3) {
+    throw new Error('throwing');
+  }
+
+  return data === 1 ? data : 'bad';
+}
+
+fnPromisifySync(testSync)(1, 0, 0);
+```
+
+(7) Add to or replace the variable names commonly used for callbacks.
+
+```javascript
+import { setCbVarNames } from 'feathers-hooks-common/promisify';
+
+const testHodor = (a, b, c, hodor) => {};
+
+setCbVarNames('holdar', false); // false adds to list, true replaces
 ```
 
 ## <a name="conditionalHooks"></a> Running hooks conditionally
