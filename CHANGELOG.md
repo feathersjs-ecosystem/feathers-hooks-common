@@ -1,6 +1,9 @@
 # Notable changes to feathers-hooks-common 
 
-## 1.6.0
+## 1.6.2
+- fnPromisifyCallback properly rejects if it throws. Test added.
+
+## 1.6.1
 - Added setCbVarNames, fnPromisify, fnPromisifyCallback, fnPromisifySync, promisifyHook
 in feathers-hooks-common/promisify.
 - Added validate. Deprecated validateSync, validateUsingCallback, validateUsingPromise.

@@ -163,7 +163,7 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
       }
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { // eslint-disable-line consistent-return
       args.push((err, data) => {
         if (err) {
           return reject(err);
@@ -171,7 +171,11 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
         return resolve(data);
       });
 
-      func.apply(self, args); // todo consider placing inside a try/catch
+      try {
+        func.apply(self, args);
+      } catch (err) {
+        return reject(err);
+      }
     });
   };
 };

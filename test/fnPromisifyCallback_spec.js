@@ -20,6 +20,10 @@ function funcCb3(data, a, b, cb) {
   }
 }
 
+function funcCb3Throw(data, a, b, cb) {
+  throw new Error('bad');
+}
+
 function funcCb0Resolve(cb) {
   cb(null, 1);
 }
@@ -85,6 +89,18 @@ describe('fnPromisifyCallback', () => {
           })
           .catch(err => {
             assert.equal(err, 'bad');
+            done();
+          });
+      });
+
+      it('rejects if throws', (done) => {
+        fnPromisifyCallback(funcCb3Throw, 3)(2, 0, 0)
+          .then(() => {
+            assert(false, 'unexpected catch');
+            done();
+          })
+          .catch(err => {
+            assert.equal(err.message, 'bad');
             done();
           });
       });

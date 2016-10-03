@@ -36,7 +36,7 @@ module.exports.after = {
 
 - Field names support dot notation e.g. 'name.address.city'
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.after = {
@@ -48,7 +48,7 @@ module.exports.after = {
 
 - Field names support dot notation
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.after = {
@@ -61,7 +61,7 @@ module.exports.after = {
 
 - Field names support dot notation
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.after = {
@@ -73,7 +73,7 @@ module.exports.after = {
 
 - Field names support dot notation
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.before = {
@@ -85,7 +85,7 @@ module.exports.before = {
 
 - Field names support dot notation
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.before = {
@@ -99,7 +99,7 @@ module.exports.before = {
 
 - Field names support dot notation
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.before = {
@@ -111,7 +111,7 @@ module.exports.before = {
 
 - Field names support dot notation.
 - Supports multiple data items, including paginated `find`.
-- May be dynamically disabled, using either a sync or promise based function.
+- May be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.before = {
@@ -127,7 +127,7 @@ for the front-end.
 (1) Invoke a validation routine (before; create, update, patch).
 
 - Support is provided for sync, callback (both through fnPromisify)
-and promise based validation routines.
+and Promise based validation routines.
 - Optionally replace the data with sanitized values.
 
 ```javascript
@@ -156,7 +156,7 @@ const usersServerValidation = (values, param2, cb) => {
 module.exports.before = {
   create: [
     hooks.validate(fnPromisify(usersClientValidations)), // sync
-    hooks.validate(fnPromisify(usersClientAsync)), // promise. fnPromisify() wrapper is optional.
+    hooks.validate(fnPromisify(usersClientAsync)), // Promise. fnPromisify() wrapper is optional.
     hooks.validate(fnPromisify(usersServerValidations, 'valueForparam2')) // callback
 };
 ```
@@ -176,7 +176,7 @@ Several schema validation packages
 (1) Disable hook
 
 - Disable service completely, from all external providers, or from certain providers.
-- Service be dynamically disabled, using either a sync or promise based function.
+- Service be dynamically disabled, using either a sync or Promise based function.
 
 ```javascript
 module.exports.before = {
@@ -240,7 +240,7 @@ module.exports.after = {
 // result: { assigned: true }
 ```
 
-#### <a name="promisify"></a> Promisifying functions
+### <a name="promisify"></a> Utilities to promisify functions
 
 Wrap functions so they return Promises.
 
@@ -287,11 +287,12 @@ module.exports.before = {
 import { fnPromisify } from 'feathers-hooks-common/promisify';
 
 function syncCheck(value) {
-  if (value !== 1) { throw new Error( ... ); }
+  if (value !== 3) { throw new Error( ... ); }
   return value;
 }
 
 function cbCheck(value, cb) {
+  if (data === 3) { throw new Error( ... ); }
   cb(value === 1 ? null : new Error( ... ), value);
 }
 
@@ -307,12 +308,15 @@ These involve params who default values involve parenthesis or commas
 e.g. function abc(a = () => {}, b = (x, y) => {}, c = 'x,y'.indexOf(','))
 - You have no worries if you transpile with Babel on the back-end (but do not minify).
 
-(5) Wrap a function calling a callback into one that returns a promise.
+(5) Wrap a function calling a callback into one that returns a Promise.
+
+- Promise is rejected if the function throws.
 
 ```javascript
 import { fnPromisifyCallback } from 'feathers-hooks-common/promisify';
 
 function tester(data, a, b, cb) {
+  if (data === 3) { throw new Error('error thrown'); }
   cb(data === 1 ? null : 'bad', data);
 } 
 const wrappedTester = fnPromisifyCallback(tester, 3);
@@ -321,44 +325,44 @@ wrappedTester(1, 2, 3); // tester(1, 2, 3, wrapperCb)
 wrappedTester(1, 2); // tester(1, 2, undefined, wrapperCb)
 wrappedTester(); // tester(undefined, undefined undefined, wrapperCb)
 wrappedTester(1, 2, 3, 4, 5); // tester(1, 2, 3, wrapperCb)
+
+wrappedTester(1, 2, 3)
+  .catch(err => { console.log(data instanceof Error ? err.message : err); });
 ```
 
 You may specify the number of params in the function signature,
-not including the callback param itself.
-The wrapped function will always be called with that number,
+this count does not include the callback param itself.
+The wrapped function will always be called with that many params,
 preventing potential bugs.
 
-The function signature is parsed to obtain the count if paramsCountBeforeCb is not provided.
-Read fnPromisify for some ramifications.
+The function signature is parsed to obtain the count if the number of params is not provided.
+Read fnPromisify for important ramifications.
 
-(6) Wrap a sync function into one that returns a promise.
-This can be used to wrap any function other than one calling a callback
-as functions returning a Promise are not affected by this wrapper.
+(6) Wrap a sync function into one that returns a Promise.
+It's a no-op if you use this to wrap a function already returning a Promise.
+That means fnPromisifySync can be used to wrap any function other than one calling a callback.
 
 - Promise is rejected if the function throws.
 
 ```javascript
-import { fnPromisifyCallback } from 'feathers-hooks-common/promisify';
+import { fnPromisifySync } from 'feathers-hooks-common/promisify';
 
 function testSync(data, a, b) {
-  if (data === 3) {
-    throw new Error('throwing');
-  }
-
+  if (data === 3) { throw new Error('throwing'); }
   return data === 1 ? data : 'bad';
 }
 
-fnPromisifySync(testSync)(1, 0, 0);
+fnPromisifySync(testSync)(1, 0, 0).then( ... ).catch( ... );
 ```
 
 (7) Add to or replace the variable names commonly used for callbacks.
 
 ```javascript
-import { setCbVarNames } from 'feathers-hooks-common/promisify';
+import { fnPromisify, setCbVarNames } from 'feathers-hooks-common/promisify';
+setCbVarNames('hodor', false); // false adds to the list, true replaces it
 
-const testHodor = (a, b, c, hodor) => {};
-
-setCbVarNames('holdar', false); // false adds to list, true replaces
+const testHodor = (a, hodor) => { hodor(null, a); };
+fnPromisify(testHodor)(1).then( ... ).catch( ... );
 ```
 
 ## <a name="conditionalHooks"></a> Running hooks conditionally
