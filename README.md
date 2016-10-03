@@ -2,7 +2,7 @@
 
 Useful hooks for use with Feathersjs services.
 
-`feathers-hooks-common` deprecates `feathers-hooks`.
+> `feathers-hooks-common` deprecates the built-in (bundled) hooks in `feathers-hooks`.
 
 [![Build Status](https://travis-ci.org/feathersjs/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
 [![Coverage Status](https://coveralls.io/repos/github/feathersjs/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/feathersjs/feathers-hooks-common?branch=master)
