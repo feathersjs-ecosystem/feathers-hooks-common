@@ -2,6 +2,8 @@
 
 Useful hooks for use with Feathersjs services.
 
+`feathers-hooks-common` deprecates `feathers-hooks`.
+
 [![Build Status](https://travis-ci.org/feathersjs/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
 [![Coverage Status](https://coveralls.io/repos/github/feathersjs/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/feathersjs/feathers-hooks-common?branch=master)
 
@@ -319,15 +321,15 @@ function tester(data, a, b, cb) {
   if (data === 3) { throw new Error('error thrown'); }
   cb(data === 1 ? null : 'bad', data);
 } 
-const wrappedTester = fnPromisifyCallback(tester, 3);
+const wrappedTester = fnPromisifyCallback(tester, 3); // because func call requires 3 params
 
 wrappedTester(1, 2, 3); // tester(1, 2, 3, wrapperCb)
 wrappedTester(1, 2); // tester(1, 2, undefined, wrapperCb)
 wrappedTester(); // tester(undefined, undefined undefined, wrapperCb)
 wrappedTester(1, 2, 3, 4, 5); // tester(1, 2, 3, wrapperCb)
 
-wrappedTester(1, 2, 3)
-  .catch(err => { console.log(data instanceof Error ? err.message : err); });
+wrappedTester(1, 2, 3).then( ... )
+  .catch(err => { console.log(err instanceof Error ? err.message : err); });
 ```
 
 You may specify the number of params in the function signature,
@@ -352,7 +354,8 @@ function testSync(data, a, b) {
   return data === 1 ? data : 'bad';
 }
 
-fnPromisifySync(testSync)(1, 0, 0).then( ... ).catch( ... );
+fnPromisifySync(testSync)(1, 0, 0).then( ... )
+  .catch(err => { console.log(err instanceof Error ? err.message : err); });
 ```
 
 (7) Add to or replace the variable names commonly used for callbacks.
