@@ -5,6 +5,17 @@ The purpose of a CHANGELOG is to make it easier for users and contributors to se
 precisely what *notable* changes have been made between each release (or version) of the project.
 Dumping all the commit logs into a single file doesn't do this.
 
+## 1.7.0
+- Deprecated all validate*, removed from README.
+Its frankly easier for the dev to inline the validation than to
+use these validation routines: less cognitive load, no awkward
+interface, easier to reason about.
+- Remove try/catch in promisify*.
+There is no need to do a try/catch when you are within a new Promise()
+as that itself will catch any throws.
+Placed note in CHANGELOG that it should be curated and just contain
+git log.
+
 ## 1.6.2
 - fnPromisifyCallback properly rejects if it throws. Test added.
 
