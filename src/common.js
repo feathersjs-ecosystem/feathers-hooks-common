@@ -227,7 +227,7 @@ export const restrictToRoles =
  *   returns:     { email: 'Email not found', password: 'Password is incorrect.' }
  */
 export const validateSync = (validator, ...rest) => (hook) => {
-  console.error('DEPRECATED Use validate. Removed next ver. (validateSync)');
+  console.error('DEPRECATED Removed next ver. (validateSync)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateSync');
 
   const formErrors = validator(getItems(hook), ...rest);
@@ -255,7 +255,7 @@ export const validateSync = (validator, ...rest) => (hook) => {
  * Note this is not compatible with Feathersjs callbacks from services. Use promises for these.
  */
 export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
-  console.error('DEPRECATED Use validate. Removed next ver. (validateUsingCallback)');
+  console.error('DEPRECATED Removed next ver. (validateUsingCallback)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingCallback');
   const rest1 = rest.concat(cb);
 
@@ -289,7 +289,7 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
  *   resolve:     resolve(data) replaces formValues if truthy
  */
 export const validateUsingPromise = (validator, ...rest) => {
-  console.error('DEPRECATED Use validate. Removed next ver. (validateUsingPromise)');
+  console.error('DEPRECATED Removed next ver. (validateUsingPromise)');
 
   return validate(validator, ...rest);
 };
@@ -308,6 +308,7 @@ export const validateUsingPromise = (validator, ...rest) => {
  *   resolve:     resolve(data) replaces formValues if truthy
  */
 export const validate = (validator, ...rest) => (hook) => {
+  console.error('DEPRECATED Removed next ver. (validateUsingPromise)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
 
   return validator(getItems(hook), ...rest)

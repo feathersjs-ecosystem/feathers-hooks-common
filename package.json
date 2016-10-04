@@ -23,7 +23,7 @@
     "npm:minor": "npm version minor && npm publish",
     "npm:major": "npm version major && npm publish",
     "npm:updates": "npm-check-updates",
-    "changelog": "git log v1.3.0... --pretty=format:'%s'"
+    "changelog": "git log --pretty=format:'%h% B'"
   },
   "repository": {
     "type": "git",

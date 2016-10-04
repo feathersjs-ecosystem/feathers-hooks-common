@@ -11,7 +11,6 @@ Useful hooks for use with Feathersjs services.
 
 - [Data Items](#dataItems)
 - [Query Params](#queryParams)
-- [Validation](#validation)
 - [Authorization](#authorization)
 - [Database](#database)
 - [Utilities](#utilities)
@@ -120,58 +119,6 @@ module.exports.before = {
   all: [ hooks.pluckQuery('employee.dept') ]
 };
 ```
-
-## <a name="validation"></a> Validation
-
-Fidelity and code reuse are improved if the server can rerun validation code written
-for the front-end.
-
-(1) Invoke a validation routine (before; create, update, patch).
-
-- Support is provided for sync, callback (both through fnPromisify)
-and Promise based validation routines.
-- Optionally replace the data with sanitized values.
-
-```javascript
-import { fnPromisify } from 'feathers-hooks-common/promisify'; // turn any func into Promise
-
-const usersClientValidation = (values) => values.email ? null : { email: 'Email is invalid' };
-
-const usersClientAsync = (values) => (
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      values.email.trim()
-        ? resolve({ ...values, email: values.email.trim() })
-        : reject(new errors.BadRequest({ email: 'Email is invalid' }));
-    }, 100);
-  })
-);
-
-const usersServerValidation = (values, param2, cb) => {
-  setTimeout(() => {
-    values.email.trim()
-      ? cb(null, { ...values, email: values.email.trim() }) // sanitize data
-      : cb({ email: 'Email is invalid' });
-  }, 100);
-};
-
-module.exports.before = {
-  create: [
-    hooks.validate(fnPromisify(usersClientValidations)), // sync
-    hooks.validate(fnPromisify(usersClientAsync)), // Promise. fnPromisify() wrapper is optional.
-    hooks.validate(fnPromisify(usersServerValidations, 'valueForparam2')) // callback
-};
-```
-
-(2) DEPRECATED validateSync, validateUsingCallback, validateUsingPromise
-
-#### Note:
-
-Please read the details involved in [promisifying functions](#promisify). 
-
-The structure of the data object should be checked before any validation is performed.
-Several schema validation packages
-[are available](http://docs.feathersjs.com/why/showcase.html#validation).
 
 ## <a name="authorization"></a> Authorization
 

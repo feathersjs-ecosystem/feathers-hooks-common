@@ -189,7 +189,7 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
 const fnPromisifySync = (func) => (...args) => {
   const self = this;
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const res = func.apply(self, args);
     // Return either a promise or a value. The Promise spec converts that value to a promise.
     return resolve(res);
