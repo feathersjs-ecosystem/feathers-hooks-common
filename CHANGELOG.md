@@ -1,4 +1,9 @@
-# Notable changes to feathers-hooks-common 
+# Notable changes to feathers-hooks-common
+
+We are not automatically dumping git logs into CHANGELOG.
+The purpose of a CHANGELOG is to make it easier for users and contributors to see
+precisely what *notable* changes have been made between each release (or version) of the project.
+Dumping all the commit logs into a single file doesn't do this.
 
 ## 1.6.2
 - fnPromisifyCallback properly rejects if it throws. Test added.
@@ -32,3 +37,4 @@ Dependencies on outside hook utility packages removed.
 feathersjs/feathers-hooks-common and npm's feathers-hooks-common.
 - Bundled hooks support dot field notation.
 - Test suite.
+

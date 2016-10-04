@@ -22,7 +22,8 @@
     "npm:patch": "npm version patch && npm publish",
     "npm:minor": "npm version minor && npm publish",
     "npm:major": "npm version major && npm publish",
-    "npm:updates": "npm-check-updates"
+    "npm:updates": "npm-check-updates",
+    "changelog": "git log v1.3.0... --pretty=format:'%s'"
   },
   "repository": {
     "type": "git",

@@ -171,11 +171,7 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
         return resolve(data);
       });
 
-      try {
-        func.apply(self, args);
-      } catch (err) {
-        return reject(err);
-      }
+      func.apply(self, args);
     });
   };
 };
@@ -193,15 +189,8 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
 const fnPromisifySync = (func) => (...args) => {
   const self = this;
 
-  return new Promise((resolve, reject) => {
-    var res; // eslint-disable-line no-var
-
-    try { // looking for a sync func to throw
-      res = func.apply(self, args);
-    } catch (err) {
-      return reject(err);
-    }
-
+  return new Promise((resolve) => {
+    const res = func.apply(self, args);
     // Return either a promise or a value. The Promise spec converts that value to a promise.
     return resolve(res);
   });
