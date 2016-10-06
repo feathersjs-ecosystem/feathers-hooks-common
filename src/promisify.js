@@ -164,13 +164,7 @@ const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
     }
 
     return new Promise((resolve, reject) => { // eslint-disable-line consistent-return
-      args.push((err, data) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(data);
-      });
-
+      args.push((err, data) => (err ? reject(err) : resolve(data)));
       func.apply(self, args);
     });
   };

@@ -150,8 +150,6 @@ module.exports.before = {
 };
 ```
 
-(3) 
-
 ## <a name="database"></a> Database
 
 (1) Mark items as deleted rather than removing them from the database. **(ALPHA)**
@@ -339,7 +337,7 @@ hooks.iff(isNotAdmin(), hooks.remove('securityKey'))
 );
 // async predicate and hook
 hooks.iff(
-  () => new Promise((resolve, catch) => { ... }),
+  () => new Promise((resolve, reject) => { ... }),
   hooks.populate('user', { field: 'senderId', service: '/users' })
 );
 ```
@@ -368,7 +366,7 @@ You can import them from `feathers-hooks-common/lib/utils`.
 - Handles before and after types.
 - Handles paginated and non-paginated results from find.
 
-```javascript```
+```javascript
 import { getItems, replaceItems } from 'feathers-hooks-common/lib/utils';
 export.before = { create: [ (hook) => {
   ...

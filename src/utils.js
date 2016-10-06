@@ -26,7 +26,7 @@ export const getByDot = (obj, path) => path.split('.').reduce(
  *
  * To delete a prop, set value = undefined and ifDelete = true. Note that
  * new empty inner objects will still be created,
- * e.g. setByDot({}, 'a.b.c', undefined, true) will return {a: b: {} )
+ * e.g. setByDot({}, 'a.b.c', undefined, true) will return {a: b: {} }
  */
 export function setByDot(obj, path, value, ifDelete) {
   const parts = path.split('.');

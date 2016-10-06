@@ -185,7 +185,7 @@ export function pluckQuery(... fields) {
  * @param {Array.<string|Function>} fields - Field names to remove. Dot notation is supported.
  * @returns {Function} hook function(hook)
  *
- * DEPRECATED: The last param may be a function to determine if the current hook should be updated.
+ * The last param may be a function to determine if the current hook should be updated.
  * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
  * This boolean determines if the hook is updated.
  *
@@ -208,10 +208,9 @@ export function remove(... fields) {
   };
 
   // when deprecating, remember hook should not run if called from server
-  var callback = (hook) => !!hook.params.provider;
+  var callback = (hook) => !!hook.params.provider; // important condition
   if (typeof fields[fields.length - 1] === 'function') {
     callback = fields.pop();
-    console.error('DEPRECATED Predicate func will be removed next version. (remove)');
   }
 
   return function (hook) {

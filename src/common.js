@@ -10,38 +10,25 @@ import { getItems, replaceItems, setByDot, checkContext } from './utils';
 const authHooks = authentication.hooks;
 
 /**
- * Set the fields to the current date-time. The fields are either in the data submitted
- * (as a before hook for create, update or patch) or in the result (as an after hook).
- * If the data is an array or a paginated find result the hook will lowercase the field
- * for every item.
+ * Set one or more fields to a value. Base function for setCreateAt and setUpdatedAt.
  *
- * @param {Array.<string|Function>} fields - Field names.
- *    One or more fields may be set to the date-time. Dot notation is supported.
- *    The default is createdAt if no fields names are included.
+ * @param {string} defaultFieldName - default field name to add or update
+ * @param {*} value - The value to set the fields to
+ * @param {Array.<string|Function>} fieldNames - Field names.
  * @returns {Function} hook function(hook).
- *
- * The last param may be a function to determine if the current hook should be updated.
- * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
- * This boolean determines if the hook is updated.
- *
- * hooks.setCreatedAt('madeAt', hook => hook.data.status === 1);
- * hooks.setCreatedAt(hook => new Promise(resolve => {
- *   setTimeout(() => { resolve(true); }, 100)
- * }));
- *
  */
-export const setCreatedAt = (... fields) => {
+const setField = (defaultFieldName, value, ...fieldNames) => {
   const addFields = data => {
-    for (const field of fields) {
-      setByDot(data, field, new Date());
+    for (const field of fieldNames) {
+      setByDot(data, field, value);
     }
   };
 
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : () => true;
+  const callback = typeof fieldNames[fieldNames.length - 1] === 'function' ?
+    fieldNames.pop() : () => true;
 
-  if (!fields.length) {
-    fields = ['createdAt'];
+  if (!fieldNames.length) {
+    fieldNames = [defaultFieldName];
   }
 
   return function (hook) {
@@ -72,7 +59,30 @@ export const setCreatedAt = (... fields) => {
  * If the data is an array or a paginated find result the hook will lowercase the field
  * for every item.
  *
- * @param {Array.<string|Function>} fields - Field names.
+ * @param {Array.<string|Function>} fieldNames - Field names.
+ *    One or more fields may be set to the date-time. Dot notation is supported.
+ *    The default is createdAt if no fields names are included.
+ * @returns {Function} hook function(hook).
+ *
+ * The last param may be a function to determine if the current hook should be updated.
+ * Its signature is func(hook) and it returns either a boolean or a promise resolving to a boolean.
+ * This boolean determines if the hook is updated.
+ *
+ * hooks.setCreatedAt('madeAt', hook => hook.data.status === 1);
+ * hooks.setCreatedAt(hook => new Promise(resolve => {
+ *   setTimeout(() => { resolve(true); }, 100)
+ * }));
+ *
+ */
+export const setCreatedAt = (...fieldNames) => setField('createdAt', new Date(), ...fieldNames);
+
+/**
+ * Set the fields to the current date-time. The fields are either in the data submitted
+ * (as a before hook for create, update or patch) or in the result (as an after hook).
+ * If the data is an array or a paginated find result the hook will lowercase the field
+ * for every item.
+ *
+ * @param {Array.<string|Function>} fieldNames - Field names.
  *    One or more fields may be set to the date-time. Dot notation is supported.
  *    The default is updatedAt if no fields names are included.
  * @returns {Function} hook function(hook).
@@ -87,41 +97,7 @@ export const setCreatedAt = (... fields) => {
  * }));
  *
  */
-export const setUpdatedAt = (... fields) => {
-  const addFields = data => {
-    for (const field of fields) {
-      setByDot(data, field, new Date());
-    }
-  };
-
-  const callback = typeof fields[fields.length - 1] === 'function' ?
-    fields.pop() : () => true;
-
-  if (!fields.length) {
-    fields = ['updatedAt'];
-  }
-
-  return function (hook) {
-    const items = hook.type === 'before' ? hook.data : hook.result;
-
-    const update = condition => {
-      if (items && condition) {
-        if (hook.method === 'find' || Array.isArray(items)) {
-          // data.data if the find method is paginated
-          (items.data || items).forEach(addFields);
-        } else {
-          addFields(items);
-        }
-      }
-      return hook;
-    };
-
-    const check = callback(hook);
-
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
-  };
-};
+export const setUpdatedAt = (...fieldNames) => setField('updatedAt', new Date(), ...fieldNames);
 
 /**
  * Normalize slug, so it can be accessed in the same place regardless of provider and transport.
