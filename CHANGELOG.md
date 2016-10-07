@@ -6,7 +6,9 @@ precisely what *notable* changes have been made between each release (or version
 Dumping all the commit logs into a single file doesn't do this.
 
 ## 1.7.2
-
+- Added a modified validate hook. 
+The need for a validate hook and a cleaner signature for it became
+apparent while modify the hooks section of feathers-docs.
 
 ## 1.7.0
 - Deprecated all validate*, removed from README.
