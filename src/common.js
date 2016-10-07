@@ -264,26 +264,7 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
  *                Or reject(new errors.GeneralError(...))
  *   resolve:     resolve(data) replaces formValues if truthy
  */
-export const validateUsingPromise = (validator, ...rest) => {
-  console.error('DEPRECATED Removed next ver. (validateUsingPromise)');
-
-  return validate(validator, ...rest);
-};
-
-/**
- * Call a validation routine which returns a Promise.
- *
- * @param {Function} validator - with signature (formValues, ...rest)
- * @param {?Array.<*>} rest - params #2+ for validator
- * @returns {Function} hook function(hook, next)
- *
- * The validator is called with: validator(formValues, ...rest)
- *   formValues:  { email: 'a@a.com', password: '1234567890' }
- *   reject:      reject(new errors.BadRequest({ errors: { email: 'Email not found' }}))
- *                Or reject(new errors.GeneralError(...))
- *   resolve:     resolve(data) replaces formValues if truthy
- */
-export const validate = (validator, ...rest) => (hook) => {
+export const validateUsingPromise = (validator, ...rest) => (hook) => {
   console.error('DEPRECATED Removed next ver. (validateUsingPromise)');
   checkContext(hook, 'before', ['create', 'update', 'patch'], 'validateUsingPromise');
 
@@ -295,6 +276,47 @@ export const validate = (validator, ...rest) => (hook) => {
 
       return hook;
     });
+};
+
+/**
+ * Call a validation function from a before hook. The function may be sync or return a Promise.
+ *
+ * @param {Function} validator - Validation function with signature function validator(formValues)
+ *    If you have a different signature for the validator then pass a wrapper as the validator
+ *      e.g. (values) => myValidator(..., values, ...)
+ *    If your validator uses a callback, wrap your validator in a Promise
+ *      const fnPromisify = require('feathers-hooks-common/lib/promisify').fnPromisifyCallback;
+ *      const myValidator = fnPromisifyCallback(myCallbackValidator, 1);
+ *      app.service('users').before({ create: validate(myValidator) });
+ * @returns {Function} hook function(hook)
+ *
+ * Sync functions return either an error object or null. Validate will throw on an error
+ * object with:
+ *   throw new errors.BadRequest({ errors: errorObject });
+ * Promise functions should throw on an error. Their .then returns either sanitized values to
+ * replace hook.data, or null.
+ */
+export const validate = (validator) => (hook) => {
+  checkContext(hook, 'before', ['create', 'update', 'patch'], 'validate');
+
+  const res = validator(getItems(hook));
+
+  if (res && typeof res.then === 'function') {
+    return res.then(convertedValues => {
+      if (convertedValues) { // if values have been sanitized
+        replaceItems(hook, convertedValues);
+      }
+
+      return hook;
+    });
+  }
+
+  // Sync function returns errors. It cannot sanitize.
+  if (res && Object.keys(res).length) {
+    throw new errors.BadRequest({ errors: res });
+  }
+
+  return hook;
 };
 
 /**

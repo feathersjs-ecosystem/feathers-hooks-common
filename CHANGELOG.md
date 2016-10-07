@@ -5,6 +5,9 @@ The purpose of a CHANGELOG is to make it easier for users and contributors to se
 precisely what *notable* changes have been made between each release (or version) of the project.
 Dumping all the commit logs into a single file doesn't do this.
 
+## 1.7.2
+
+
 ## 1.7.0
 - Deprecated all validate*, removed from README.
 Its frankly easier for the dev to inline the validation than to
