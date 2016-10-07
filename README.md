@@ -2,7 +2,10 @@
 
 Useful hooks for use with Feathersjs services.
 
-> `feathers-hooks-common` deprecates the built-in (bundled) hooks in `feathers-hooks`.
+> The next version of feathers-hooks (1.6.0) will export feathers-hooks-common instead of the previous bundled hooks. This will provide backward compatibility.
+Feathers-hooks in Feathers 3.0 will become part of core and you will have to import feathers-hooks-common separately.
+  
+> dr;tl Start using feathers-hooks-common now.
 
 [![Build Status](https://travis-ci.org/feathersjs/feathers-hooks-common.svg?branch=master)](https://travis-ci.org/eddyystop/feathers-hooks-common)
 [![Coverage Status](https://coveralls.io/repos/github/feathersjs/feathers-hooks-common/badge.svg?branch=master)](https://coveralls.io/github/feathersjs/feathers-hooks-common?branch=master)
