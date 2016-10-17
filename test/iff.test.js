@@ -44,14 +44,14 @@ const predicateAsyncFunny = (hook) => {
 };
 
 const hookFcnSync = (hook) => {
-  hookFcnSyncCalls = + 1;
+  hookFcnSyncCalls = +1;
   hook.data.first = hook.data.first.toLowerCase();
 
   return hook;
 };
 
 const hookFcnAsync = (hook) => new Promise(resolve => {
-  hookFcnAsyncCalls = + 1;
+  hookFcnAsyncCalls = +1;
   hook.data.first = hook.data.first.toLowerCase();
 
   resolve(hook);
@@ -389,6 +389,6 @@ describe('iff - async predicate', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

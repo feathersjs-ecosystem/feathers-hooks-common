@@ -12,22 +12,35 @@ var hookFind;
 describe('remove', () => {
   describe('no dynamic decision', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
-      hookAfter = { type: 'after', method: 'create', params: { provider: 'rest' },
+      hookAfter = {
+        type: 'after',
+        method: 'create',
+        params: { provider: 'rest' },
         result: { first: 'Jane', last: 'Doe' } };
-      hookFindPaginate = { type: 'after', method: 'find', params: { provider: 'rest' }, result: {
-        total: 2,
-        data: [
-          { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
-      } };
+      hookFindPaginate = {
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
+        result: {
+          total: 2,
+          data: [
+            { first: 'John', last: 'Doe' },
+            { first: 'Jane', last: 'Doe' }
+          ]
+        } };
       hookFind = {
-        type: 'after', method: 'find', params: { provider: 'rest' }, result: [
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
+        result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
+          { first: 'Jane', last: 'Doe' }
+        ]
       };
     });
 
@@ -40,7 +53,7 @@ describe('remove', () => {
       hooks.remove('last')(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'John' },
-        { first: 'Jane' },
+        { first: 'Jane' }
       ]);
     });
 
@@ -48,7 +61,7 @@ describe('remove', () => {
       hooks.remove('last')(hookFind);
       assert.deepEqual(hookFind.result, [
         { first: 'John' },
-        { first: 'Jane' },
+        { first: 'Jane' }
       ]);
     });
 
@@ -64,21 +77,30 @@ describe('remove', () => {
     });
 
     it('does not throw if field is missing', () => {
-      const hook = { type: 'before', method: 'create', params: { provider: 'rest' },
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
       hooks.remove('first', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
 
     it('does not throw if field is undefined', () => {
-      const hook = { type: 'before', method: 'create', params: { provider: 'rest' },
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: undefined, last: 'Doe' } };
       hooks.remove('first')(hook);
       assert.deepEqual(hook.data, { first: undefined, last: 'Doe' }); // todo note this
     });
 
     it('does not throw if field is null', () => {
-      const hook = { type: 'before', method: 'create', params: { provider: 'rest' },
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: null, last: 'Doe' } };
       hooks.remove('first')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
@@ -87,8 +109,11 @@ describe('remove', () => {
 
   describe('handles dot notation', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' },
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       };
     });
 
@@ -130,7 +155,10 @@ describe('remove', () => {
 
   describe('dynamic decision sync', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
     });
 
@@ -147,7 +175,10 @@ describe('remove', () => {
 
   describe('dynamic decision with Promise', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
     });
 

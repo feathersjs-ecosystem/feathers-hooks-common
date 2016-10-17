@@ -8,7 +8,6 @@ const utils = require('../lib/utils');
 const getByDot = utils.getByDot;
 const setByDot = utils.setByDot;
 
-
 describe('byDot', () => {
   var obj;
   var empty;
@@ -16,12 +15,14 @@ describe('byDot', () => {
   describe('test getByDot', () => {
     beforeEach(() => {
       obj = {
-        dept: 'acct', manager: {
-          ref: 'acct-mgr', employee: {
+        dept: 'acct',
+        manager: {
+          ref: 'acct-mgr',
+          employee: {
             name: 'John',
-            address: { line1: '100 5-th Avenue', city: 'New York' },
-          },
-        },
+            address: { line1: '100 5-th Avenue', city: 'New York' }
+          }
+        }
       };
     });
 

@@ -15,18 +15,23 @@ describe('setCreatedAt', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
       hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
-      hookFindPaginate = { type: 'after', method: 'find', result: {
-        total: 2,
-        data: [
-          { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
-      } };
+      hookFindPaginate = {
+        type: 'after',
+        method: 'find',
+        result: {
+          total: 2,
+          data: [
+            { first: 'John', last: 'Doe' },
+            { first: 'Jane', last: 'Doe' }
+          ]
+        } };
       hookFind = {
-        type: 'after', method: 'find', result: [
+        type: 'after',
+        method: 'find',
+        result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
+          { first: 'Jane', last: 'Doe' }
+        ]
       };
     });
 
@@ -56,13 +61,19 @@ describe('setCreatedAt', () => {
 
   describe('handles dot notation', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create',
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       };
-      hookBefore2 = { type: 'before', method: 'create',
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct',
-          created: { where: 'NYC' },
-        },
+      hookBefore2 = {
+        type: 'before',
+        method: 'create',
+        data: {
+          empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+          dept: 'Acct',
+          created: { where: 'NYC' }
+        }
       };
     });
 
@@ -72,7 +83,6 @@ describe('setCreatedAt', () => {
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
         , 'madeAt');
     });
-
 
     it('props with no dots', () => {
       hooks.setCreatedAt('madeAt', 'builtAt')(hookBefore);
@@ -97,8 +107,9 @@ describe('setCreatedAt', () => {
       assert.equal(Object.keys(hookBefore2.data.created).length, 2);
       delete hookBefore2.data.created.at;
       assert.deepEqual(hookBefore2.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct',
-          created: { where: 'NYC' },
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+          dept: 'Acct',
+          created: { where: 'NYC' }
         }
       );
     });
@@ -174,12 +185,11 @@ describe('setCreatedAt', () => {
 
 // Helpers
 
-function checkHook(item, template, dateFields) {
+function checkHook (item, template, dateFields) {
   const item1 = clone(item);
   if (typeof dateFields === 'string') {
     dateFields = [dateFields];
   }
-
 
   dateFields.forEach(dateField => {
     assert.instanceOf(item[dateField], Date, 'not instance of Date');
@@ -190,6 +200,6 @@ function checkHook(item, template, dateFields) {
   assert.deepEqual(item1, template, 'objects differ');
 }
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

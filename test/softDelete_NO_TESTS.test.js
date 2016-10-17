@@ -11,7 +11,7 @@ const fakeMessagesDb = [ // faked in-memory database
   { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
   { _id: '2', senderId: 'b', text: 'I am. How are you?' },
   { _id: '3', senderId: 'a', text: 'Fine, and you?' },
-  { _id: '4', senderId: 'b', text: 'Fine too?' },
+  { _id: '4', senderId: 'b', text: 'Fine too?' }
 ];
 
 describe('populate', () => {
@@ -29,26 +29,41 @@ describe('populate', () => {
     const messagesService = feathersFakes.makeDbService(app, 'messages', messagesDb);
     app.use('/messages', messagesService);
 
-    hookA = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' },
+    hookA = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' }
     };
-    hookMulti = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' },
+    hookMulti = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' }
     };
-    hookNonPaginated = { type: 'after', method: 'create', app,
+    hookNonPaginated = {
+      type: 'after',
+      method: 'create',
+      app,
       result: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
-        { _id: '2', senderId: 'b', text: 'I am. How are you?' },
-      ],
+        { _id: '2', senderId: 'b', text: 'I am. How are you?' }
+      ]
     };
-    hookPaginated = { type: 'after', method: 'find', app,
+    hookPaginated = {
+      type: 'after',
+      method: 'find',
+      app,
       result: { data: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
-        { _id: '2', senderId: 'b', text: 'I am. How are you?' },
-      ] },
+        { _id: '2', senderId: 'b', text: 'I am. How are you?' }
+      ] }
     };
-    hookBad = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' },
+    hookBad = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' }
     };
   });
 
@@ -197,6 +212,6 @@ describe('populate', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

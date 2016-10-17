@@ -14,26 +14,45 @@ var hookFind;
 describe('getItems & replaceItems', () => {
   describe('getItems', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
-      hookBeforeArray = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookBeforeArray = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: [{ first: 'John', last: 'Doe' }, { first: 'Jane', last: 'Doe' }] };
-      hookAfter = { type: 'after', method: 'create', params: { provider: 'rest' },
+      hookAfter = {
+        type: 'after',
+        method: 'create',
+        params: { provider: 'rest' },
         result: { first: 'Jane2', last: 'Doe2' } };
-      hookAfterArray = { type: 'after', method: 'create', params: { provider: 'rest' },
+      hookAfterArray = {
+        type: 'after',
+        method: 'create',
+        params: { provider: 'rest' },
         result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }] };
-      hookFindPaginate = { type: 'after', method: 'find', params: { provider: 'rest' }, result: {
-        total: 2,
-        data: [
-          { first: 'John3', last: 'Doe3' },
-          { first: 'Jane3', last: 'Doe3' },
-        ],
-      } };
+      hookFindPaginate = {
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
+        result: {
+          total: 2,
+          data: [
+            { first: 'John3', last: 'Doe3' },
+            { first: 'Jane3', last: 'Doe3' }
+          ]
+        } };
       hookFind = {
-        type: 'after', method: 'find', params: { provider: 'rest' }, result: [
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
+        result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
+          { first: 'Jane', last: 'Doe' }
+        ]
       };
     });
 
@@ -46,7 +65,7 @@ describe('getItems & replaceItems', () => {
       const stuff = hooks.getItems(hookBeforeArray);
       assert.deepEqual(stuff, [
         { first: 'John', last: 'Doe' },
-        { first: 'Jane', last: 'Doe' },
+        { first: 'Jane', last: 'Doe' }
       ]);
     });
 
@@ -59,7 +78,7 @@ describe('getItems & replaceItems', () => {
       const stuff = hooks.getItems(hookAfterArray);
       assert.deepEqual(stuff, [
         { first: 'John2', last: 'Doe2' },
-        { first: 'Jane', last: 'Doe' },
+        { first: 'Jane', last: 'Doe' }
       ]);
     });
 
@@ -67,7 +86,7 @@ describe('getItems & replaceItems', () => {
       const stuff = hooks.getItems(hookFindPaginate);
       assert.deepEqual(stuff, [
         { first: 'John3', last: 'Doe3' },
-        { first: 'Jane3', last: 'Doe3' },
+        { first: 'Jane3', last: 'Doe3' }
       ]);
     });
 
@@ -75,7 +94,7 @@ describe('getItems & replaceItems', () => {
       const stuff = hooks.getItems(hookFind);
       assert.deepEqual(stuff, [
         { first: 'John', last: 'Doe' },
-        { first: 'Jane', last: 'Doe' },
+        { first: 'Jane', last: 'Doe' }
       ]);
     });
 
@@ -96,12 +115,16 @@ describe('getItems & replaceItems', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', params: { provider: 'rest' } };
       hookAfter = { type: 'after', method: 'create', params: { provider: 'rest' } };
-      hookFindPaginate = { type: 'after', method: 'find', params: { provider: 'rest' }, result: {
-        total: 200,
-        data: [],
-      } };
+      hookFindPaginate = {
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
+        result: {
+          total: 200,
+          data: []
+        } };
       hookFind = {
-        type: 'after', method: 'find', params: { provider: 'rest' },
+        type: 'after', method: 'find', params: { provider: 'rest' }
       };
     });
 

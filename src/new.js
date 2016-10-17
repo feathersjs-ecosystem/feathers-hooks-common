@@ -88,9 +88,9 @@ export const isProvider = (...providers) => {
   return function (hook) { // allow bind
     const hookProvider = (hook.params || {}).provider;
 
-    return providers.some(provider => provider === hookProvider
-        || (provider === 'server' && !hookProvider)
-        || (provider === 'external' && hookProvider)
+    return providers.some(provider => provider === hookProvider ||
+    (provider === 'server' && !hookProvider) ||
+    (provider === 'external' && hookProvider)
     );
   };
 };

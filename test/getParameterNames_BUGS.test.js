@@ -11,25 +11,25 @@ const getParameterNames = require('../lib/promisify').getParameterNames;
 
 describe('getParameterNames bugs', () => {
   it('b = () => {}', () => {
-    const varNames = getParameterNames(function abc(a, b = () => {}, c) {});
+    const varNames = getParameterNames(function abc (a, b = () => {}, c) {});
     console.log(varNames);
     assert.deepEqual(varNames, ['a', 'b']); // s/b 'a', 'b', 'c'
   });
 
   it('b = (x, y) => {}', () => {
-    const varNames = getParameterNames(function abc(a, b = (x, y) => {}, c) {});
+    const varNames = getParameterNames(function abc (a, b = (x, y) => {}, c) {});
     console.log(varNames);
     assert.deepEqual(varNames, ['a', 'b', 'y']); // s/b 'a', 'b', 'c'
   });
 
   it('b = \'x,y\'.indexOf(\'y\')', () => {
-    const varNames = getParameterNames(function abc(a, b = 5 * (1 + 2), c) {});
+    const varNames = getParameterNames(function abc (a, b = 5 * (1 + 2), c) {});
     console.log(varNames);
     assert.deepEqual(varNames, ['a', 'b', 'c']); // correct
   });
 
   it('b = 5 * ( 1 + 2)', () => {
-    const varNames = getParameterNames(function abc(a, b = 'x,y'.indexOf('y'), c) {});
+    const varNames = getParameterNames(function abc (a, b = 'x,y'.indexOf('y'), c) {});
     console.log(varNames);
     assert.deepEqual(varNames, ['a', 'b', 'y\'.indexOf(\'y\'']); // s/b 'a', 'b', 'c'
   });

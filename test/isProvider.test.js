@@ -15,7 +15,7 @@ var hookAfter;
 var hookFcnSyncCalls;
 
 const hookFcnSync = (hook) => {
-  hookFcnSyncCalls = + 1;
+  hookFcnSyncCalls = +1;
   hook.data.first = hook.data.first.toLowerCase();
 
   return hook;
@@ -97,10 +97,10 @@ describe('isProvider - predicate', () => {
 describe('isProvider - works with iff', () => {
   beforeEach(() => {
     hookBefore = {
-      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' },
+      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }
     };
     hookAfter = {
-      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' },
+      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' }
     };
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
@@ -133,6 +133,6 @@ describe('isProvider - works with iff', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

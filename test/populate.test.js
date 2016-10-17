@@ -9,13 +9,13 @@ const feathersFakes = require('feathers-tests-fake-app-users');
 
 const fakeUsersDb = [ // faked in-memory database
   { _id: 'a', name: 'John Doe', isVerified: false },
-  { _id: 'b', name: 'Jane Doe', isVerified: true },
+  { _id: 'b', name: 'Jane Doe', isVerified: true }
 ];
 const fakeMessagesDb = [ // faked in-memory database
   { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
   { _id: '2', senderId: 'b', text: 'I am. How are you?' },
   { _id: '3', senderId: 'a', text: 'Fine, and you?' },
-  { _id: '4', senderId: 'b', text: 'Fine too?' },
+  { _id: '4', senderId: 'b', text: 'Fine too?' }
 ];
 
 describe('populate', () => {
@@ -37,26 +37,41 @@ describe('populate', () => {
     app.use('/users', usersService);
     app.use('/messages', messagesService);
 
-    hookA = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' },
+    hookA = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.' }
     };
-    hookMulti = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' },
+    hookMulti = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.' }
     };
-    hookNonPaginated = { type: 'after', method: 'create', app,
+    hookNonPaginated = {
+      type: 'after',
+      method: 'create',
+      app,
       result: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
-        { _id: '2', senderId: 'b', text: 'I am. How are you?' },
-      ],
+        { _id: '2', senderId: 'b', text: 'I am. How are you?' }
+      ]
     };
-    hookPaginated = { type: 'after', method: 'find', app,
+    hookPaginated = {
+      type: 'after',
+      method: 'find',
+      app,
       result: { data: [
         { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
-        { _id: '2', senderId: 'b', text: 'I am. How are you?' },
-      ] },
+        { _id: '2', senderId: 'b', text: 'I am. How are you?' }
+      ] }
     };
-    hookBad = { type: 'after', method: 'create', app,
-      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' },
+    hookBad = {
+      type: 'after',
+      method: 'create',
+      app,
+      result: { _id: '5', senderId: 'no-suc-id', text: 'I\'m eating an ice cream.' }
     };
   });
 
@@ -83,8 +98,10 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookA)
         .then(hook => {
           assert.deepEqual(hook.result, {
-            _id: '5', senderId: 'a', text: 'I\'m eating an ice cream.',
-            user: { _id: 'a', name: 'John Doe', isVerified: false },
+            _id: '5',
+            senderId: 'a',
+            text: 'I\'m eating an ice cream.',
+            user: { _id: 'a', name: 'John Doe', isVerified: false }
           });
           next();
         })
@@ -98,7 +115,7 @@ describe('populate', () => {
         .then(hook => {
           console.log('unexpectedly succeeded.');
         })
-        .catch(err => {
+        .catch(() => {
           next();
         });
     });
@@ -111,7 +128,7 @@ describe('populate', () => {
           assert.deepEqual(hook.result, {
             _id: '5',
             senderId: { _id: 'a', name: 'John Doe', isVerified: false },
-            text: 'I\'m eating an ice cream.',
+            text: 'I\'m eating an ice cream.'
           });
           next();
         })
@@ -125,7 +142,7 @@ describe('populate', () => {
         .then(hook => {
           console.log('unexpectedly succeeded.');
         })
-        .catch(err => {
+        .catch(() => {
           next();
         });
     });
@@ -136,10 +153,14 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookNonPaginated)
         .then(hook => {
           assert.deepEqual(hook.result, [
-            { _id: '1', senderId: 'a', text: 'Jane, are you there?',
+            { _id: '1',
+              senderId: 'a',
+              text: 'Jane, are you there?',
               user: { _id: 'a', name: 'John Doe', isVerified: false } },
-            { _id: '2', senderId: 'b', text: 'I am. How are you?',
-              user: { _id: 'b', name: 'Jane Doe', isVerified: true } },
+            { _id: '2',
+              senderId: 'b',
+              text: 'I am. How are you?',
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true } }
           ]);
           next();
         })
@@ -153,10 +174,14 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookPaginated)
         .then(hook => {
           assert.deepEqual(hook.result, { data: [
-            { _id: '1', senderId: 'a', text: 'Jane, are you there?',
+            { _id: '1',
+              senderId: 'a',
+              text: 'Jane, are you there?',
               user: { _id: 'a', name: 'John Doe', isVerified: false } },
-            { _id: '2', senderId: 'b', text: 'I am. How are you?',
-              user: { _id: 'b', name: 'Jane Doe', isVerified: true } },
+            { _id: '2',
+              senderId: 'b',
+              text: 'I am. How are you?',
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true } }
           ] });
           next();
         })
@@ -172,11 +197,13 @@ describe('populate', () => {
       hooks.populate('user', { field: 'senderId', service: '/users' })(hookMulti)
         .then(hook => {
           assert.deepEqual(hook.result, {
-            _id: '5', senderId: ['a', 'b'], text: 'I\'m eating an ice cream.',
+            _id: '5',
+            senderId: ['a', 'b'],
+            text: 'I\'m eating an ice cream.',
             user: [
               { _id: 'a', name: 'John Doe', isVerified: false },
-              { _id: 'b', name: 'Jane Doe', isVerified: true },
-            ],
+              { _id: 'b', name: 'Jane Doe', isVerified: true }
+            ]
           });
           next();
         })
@@ -190,6 +217,6 @@ describe('populate', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

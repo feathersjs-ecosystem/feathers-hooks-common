@@ -10,8 +10,10 @@ var hookAfter;
 describe('removeQuery', () => {
   describe('no dynamic decision', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create',
-        params: { query: { first: 'John', last: 'Doe' } },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { query: { first: 'John', last: 'Doe' } }
       };
       hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
     });
@@ -33,9 +35,12 @@ describe('removeQuery', () => {
 
   describe('handles dot notation', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create', params: {
-        query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
-      } };
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: {
+          query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+        } };
     });
 
     it('prop with no dots', () => {
@@ -76,8 +81,10 @@ describe('removeQuery', () => {
 
   describe('dynamic decision sync', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create',
-        params: { query: { first: 'John', last: 'Doe' } },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { query: { first: 'John', last: 'Doe' } }
       };
     });
 
@@ -94,8 +101,10 @@ describe('removeQuery', () => {
 
   describe('dynamic decision with Promise', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create',
-        params: { query: { first: 'John', last: 'Doe' } },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { query: { first: 'John', last: 'Doe' } }
       };
     });
 
