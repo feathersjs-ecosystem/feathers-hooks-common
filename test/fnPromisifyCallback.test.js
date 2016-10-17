@@ -10,9 +10,9 @@ const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'
 );
 
-function cb(err, data) {}
+function cb (/* err, data */) {}
 
-function funcCb3(data, a, b, cb) {
+function funcCb3 (data, a, b, cb) {
   if (data === 1) {
     cb(null, data);
   } else {
@@ -20,15 +20,15 @@ function funcCb3(data, a, b, cb) {
   }
 }
 
-function funcCb3Throw(data, a, b, cb) {
+function funcCb3Throw (data, a, b, cb) {
   throw new Error('bad');
 }
 
-function funcCb0Resolve(cb) {
+function funcCb0Resolve (cb) {
   cb(null, 1);
 }
 
-function funcCb0Reject(cb) {
+function funcCb0Reject (cb) {
   cb('bad');
 }
 
@@ -455,7 +455,7 @@ describe('fnPromisifyCallback', () => {
             assert.deepEqual(data, { data: { a: 'a' } });
             done();
           })
-          .catch(err => {
+          .catch(() => {
             assert(false, 'unexpected catch');
             done();
           });

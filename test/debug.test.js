@@ -12,7 +12,7 @@ describe('debug', () => {
       method: 'create',
       data: { a: 'a' },
       params: { query: { b: 'b' } },
-      result: { c: 'c' },
+      result: { c: 'c' }
     };
     hooksCommon.debug('my message')(hook);
   });

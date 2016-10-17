@@ -1,5 +1,4 @@
 
-
 /* eslint-env es6, node */
 /* eslint  no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
 
@@ -164,6 +163,6 @@ describe('validate DEPRECATED hooks', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

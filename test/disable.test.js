@@ -76,7 +76,10 @@ describe('disable', () => {
 
   describe('dynamic decision with Promise', () => {
     beforeEach(() => {
-      hookSocketio = { type: 'before', method: 'create', params: { provider: 'rest' },
+      hookSocketio = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
     });
 

@@ -24,8 +24,8 @@ const setField = (defaultFieldName, value, ...fieldNames) => {
     }
   };
 
-  const callback = typeof fieldNames[fieldNames.length - 1] === 'function' ?
-    fieldNames.pop() : () => true;
+  const callback = typeof fieldNames[fieldNames.length - 1] === 'function'
+    ? fieldNames.pop() : () => true;
 
   if (!fieldNames.length) {
     fieldNames = [defaultFieldName];
@@ -48,8 +48,7 @@ const setField = (defaultFieldName, value, ...fieldNames) => {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 };
 
@@ -152,14 +151,14 @@ export const setSlug = (slug, field) => (hook) => {
  *   create: [ hooks.debug('step 1') ]
  * };
  */
-export const debug = (msg) => (
+export const debug = (msg) =>
   (hook) => {
     console.log(`* ${msg || ''}\ntype:${hook.type}, method: ${hook.method}`);
     if (hook.data) { console.log('data:', hook.data); }
     if (hook.params && hook.params.query) { console.log('query:', hook.params.query); }
     if (hook.result) { console.log('result:', hook.result); }
   }
-);
+;
 
 /**
  * DEPRECATED: Factory for Feathers hooks.restrictToRoles.
@@ -187,7 +186,7 @@ export const restrictToRoles =
       roles: roles || defaultRoles,
       fieldName: rolesFieldName || 'roles',
       owner: typeof ifOwner === 'undefined' ? defaultIfOwner : ifOwner,
-      ownerField: ownerFieldName || 'createdById',
+      ownerField: ownerFieldName || 'createdById'
     });
   };
 
@@ -237,10 +236,12 @@ export const validateUsingCallback = (validator, ...rest) => (hook, next) => {
 
   validator(getItems(hook), ...rest1);
 
-  function cb(formErrors, convertedValues) {
+  function cb (formErrors, convertedValues) {
     if (formErrors) {
-      return next(formErrors instanceof Error ? formErrors :
-        new errors.BadRequest('Invalid data', { errors: formErrors }), hook);
+      return next(formErrors instanceof Error
+        ? formErrors
+        : new errors.BadRequest('Invalid data', { errors: formErrors }), hook
+      );
     }
 
     if (convertedValues) {

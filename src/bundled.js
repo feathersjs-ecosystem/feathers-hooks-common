@@ -23,7 +23,7 @@ import { getItems, replaceItems, getByDot, setByDot } from './utils';
  * }));
  *
  */
-export function lowerCase(... fields) {
+export function lowerCase (...fields) {
   const lowerCaseFields = data => {
     for (const field of fields) {
       const value = getByDot(data, field);
@@ -61,8 +61,7 @@ export function lowerCase(... fields) {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 }
 
@@ -82,7 +81,7 @@ export function lowerCase(... fields) {
  *   setTimeout(() => { resolve(true); }, 100)
  * }));
  */
-export function removeQuery(... fields) {
+export function removeQuery (...fields) {
   const removeQueries = data => {
     for (const field of fields) {
       const value = getByDot(data, field); // prevent setByDot creating nested empty objects
@@ -115,8 +114,7 @@ export function removeQuery(... fields) {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 }
 
@@ -136,7 +134,7 @@ export function removeQuery(... fields) {
  *   setTimeout(() => { resolve(true); }, 100)
  * }));
  */
-export function pluckQuery(... fields) {
+export function pluckQuery (...fields) {
   const pluckQueries = data => {
     const plucked = {};
 
@@ -172,8 +170,7 @@ export function pluckQuery(... fields) {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 }
 
@@ -197,7 +194,7 @@ export function pluckQuery(... fields) {
  * The items are only updated for external requests, e.g. hook.params.provider is rest or socketio,
  * or if the decision function mentioned above returns true.
  */
-export function remove(... fields) {
+export function remove (...fields) {
   const removeFields = data => {
     for (const field of fields) {
       const value = getByDot(data, field);
@@ -236,8 +233,7 @@ export function remove(... fields) {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 }
 
@@ -261,7 +257,7 @@ export function remove(... fields) {
  * The items are only updated for external requests, e.g. hook.params.provider is rest or socketio,
  * or if the decision function mentioned above returns true.
  */
-export function pluck(... fields) {
+export function pluck (...fields) {
   const pluckFields = data => {
     const plucked = {};
 
@@ -301,8 +297,7 @@ export function pluck(... fields) {
 
     const check = callback(hook);
 
-    return check && typeof check.then === 'function' ?
-      check.then(update) : update(check);
+    return check && typeof check.then === 'function' ? check.then(update) : update(check);
   };
 }
 
@@ -327,7 +322,7 @@ export function pluck(... fields) {
  * resolves to a boolean. If false, the operation is disabled. This is the only way to disable
  * calls from the server.
  */
-export function disable(realm, ... args) {
+export function disable (realm, ...args) {
   if (!realm) {
     return function (hook) {
       throw new errors.MethodNotAllowed(`Calling '${hook.method}' not allowed. (disable)`);
@@ -392,7 +387,7 @@ export function disable(realm, ... args) {
  *
  * If 'senderId' is an array of keys, then 'user' will be an array of populated items.
  */
-export function populate(target, options) {
+export function populate (target, options) {
   options = Object.assign({}, options);
 
   if (!options.service) {
@@ -402,7 +397,7 @@ export function populate(target, options) {
   const field = options.field || target;
 
   return function (hook) {
-    function populate1(item) {
+    function populate1 (item) {
       if (!item[field]) {
         return Promise.resolve(item);
       }

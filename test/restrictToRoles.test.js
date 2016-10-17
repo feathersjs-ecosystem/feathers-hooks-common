@@ -11,14 +11,15 @@ describe('restrictToRoles', () => {
   beforeEach(() => {
     authorizer = hooksCommon.restrictToRoles([], 'allowedRoles', false, 'ownerId');
     hook = {
-      type: 'before', method: 'create',
+      type: 'before',
+      method: 'create',
       params: {
         provider: 'rest',
-        user: { _id: '123', allowedRoles: ['purchasing', 'accounting'] },
+        user: { _id: '123', allowedRoles: ['purchasing', 'accounting'] }
       },
       app: {
-        get: () => {},
-      },
+        get: () => {}
+      }
     };
   });
 

@@ -10,7 +10,7 @@ const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'
 );
 
-function funcSync3(data, a, b) {
+function funcSync3 (data, a, b) {
   if (data === 3) {
     throw new Error('throwing');
   }
@@ -18,7 +18,7 @@ function funcSync3(data, a, b) {
   return data === 1 ? data : 'bad';
 }
 
-function funcSync3a(...rest) {
+function funcSync3a (...rest) {
   return rest.length;
 }
 
@@ -30,7 +30,7 @@ const funcSyncHook = (a, b) => (hook) => {
   return hook;
 };
 
-function funcPromise3(data, a, b) {
+function funcPromise3 (data, a, b) {
   if (data === 1) {
     return Promise.resolve(data);
   }
@@ -211,7 +211,7 @@ describe('fnPromisifySync - function returning promise', () => {
           assert.deepEqual(data, { data: { a: 'a' } });
           done();
         })
-        .catch(err => {
+        .catch(() => {
           assert(false, 'unexpected catch');
           done();
         });

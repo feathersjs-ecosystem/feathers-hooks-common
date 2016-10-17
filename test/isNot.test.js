@@ -16,17 +16,17 @@ var hookFcnSyncCalls;
 var predicateCalls;
 
 const predicateSync = (value) => () => {
-  predicateCalls = + 1;
+  predicateCalls = +1;
   return value;
 };
 
 const predicateAsync = (value) => () => new Promise(resolve => {
-  predicateCalls = + 1;
+  predicateCalls = +1;
   return resolve(value);
 });
 
 const hookFcnSync = (hook) => {
-  hookFcnSyncCalls = + 1;
+  hookFcnSyncCalls = +1;
   hook.data.first = hook.data.first.toLowerCase();
 
   return hook;
@@ -88,10 +88,10 @@ describe('isNot - predicate', () => {
 describe('isNot - works with iff and isProvider', () => {
   beforeEach(() => {
     hookBefore = {
-      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' },
+      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }
     };
     hookAfter = {
-      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' },
+      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' }
     };
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
@@ -124,6 +124,6 @@ describe('isNot - works with iff and isProvider', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

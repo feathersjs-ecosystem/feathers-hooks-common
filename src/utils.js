@@ -28,7 +28,7 @@ export const getByDot = (obj, path) => path.split('.').reduce(
  * new empty inner objects will still be created,
  * e.g. setByDot({}, 'a.b.c', undefined, true) will return {a: b: {} }
  */
-export function setByDot(obj, path, value, ifDelete) {
+export function setByDot (obj, path, value, ifDelete) {
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
   return parts.reduce(
@@ -60,7 +60,7 @@ export function setByDot(obj, path, value, ifDelete) {
  * @param {string} label identifying hook in error messages. optional.
  *
  * Example:
- * const checkContext = require('feathers-hooks-utils').checkContext;
+ * const checkContext = require('feathers-hooks-common/utils').checkContext;
  *
  * const includeCreatedAtHook = (options) => {
  *   const fieldName = (options && options.as) ? options.as : 'createdAt';
@@ -77,7 +77,7 @@ export function setByDot(obj, path, value, ifDelete) {
  * checkContext(hook, 'before');
  */
 
-export function checkContext(hook, type = null, methods = [], label = 'anonymous') {
+export function checkContext (hook, type = null, methods = [], label = 'anonymous') {
   if (type && hook.type !== type) {
     throw new Error(`The '${label}' hook can only be used as a '${type}' hook.`);
   }
@@ -101,7 +101,7 @@ export function checkContext(hook, type = null, methods = [], label = 'anonymous
  * @param {Object} hook - The hook.
  * @returns {Object|Array.<Object>} The data item or array of data items
  */
-export function getItems(hook) {
+export function getItems (hook) {
   const items = hook.type === 'before' ? hook.data : hook.result;
   return items && hook.method === 'find' ? items.data || items : items;
 }
@@ -115,7 +115,7 @@ export function getItems(hook) {
  * If you update an after find paginated hook with an item rather than an array of items,
  * the hook will have an array consisting of that one item.
  */
-export function replaceItems(hook, items) {
+export function replaceItems (hook, items) {
   if (hook.type === 'before') {
     hook.data = items;
   } else if (hook.method === 'find' && hook.result && hook.result.data) {

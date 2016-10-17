@@ -13,8 +13,10 @@
     "mocha": "mocha test/  --reporter spec --compilers js:babel-core/register",
     "mocha:only": "mocha test/ --reporter spec",
     "eslint": "eslint src/. test/. --ext .js,.jsx",
+    "lint": "eslint-if-supported semistandard",
+    "lint:fix": "eslint-if-supported semistandard --fix",
     "build": "npm run copy && npm run babel",
-    "test": "npm run build && npm run eslint && npm run mocha",
+    "test": "npm run build && npm run lint && npm run mocha",
     "test:build": "npm run build && npm run mocha:only",
     "test:only": "npm run mocha:only",
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- --reporter spec test/*",
@@ -24,6 +26,14 @@
     "npm:major": "npm version major && npm publish",
     "npm:updates": "npm-check-updates",
     "changelog": "git log --pretty=format:'%h% B'"
+  },
+  "semistandard": {
+    "env": [
+      "mocha"
+    ],
+    "ignore": [
+      "/lib"
+    ]
   },
   "repository": {
     "type": "git",
@@ -43,27 +53,23 @@
   "homepage": "https://github.com/feathers/feathers-hooks-common#readme",
   "dependencies": {
     "debug": "^2.2.0",
-    "feathers-hooks-utils": "^0.1.1",
+    "feathers-authentication": "^0.7.11",
+    "feathers-errors": "^2.4.0",
     "get-parameter-names": "https://github.com/benbotto/get-parameter-names",
     "object.assign": "^4.0.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-core": "^6.10.4",
-    "babel-eslint": "6.1.0",
+    "babel-cli": "^6.16.0",
+    "babel-core": "^6.17.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.9.0",
-    "chai": "3.5.0",
-    "coveralls": "2.11.9",
-    "eslint": "3.0.1",
-    "eslint-config-airbnb": "9.0.1",
-    "eslint-plugin-import": "1.10.2",
-    "eslint-plugin-jsdoc": "2.3.1",
-    "eslint-plugin-jsx-a11y": "1.5.5",
-    "eslint-plugin-react": "5.2.2",
-    "feathers-tests-fake-app-users": "1.0.0",
-    "istanbul": "0.4.4",
-    "mocha": "2.5.3"
+    "babel-preset-es2015": "^6.16.0",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
+    "eslint-if-supported": "^1.0.1",
+    "feathers-tests-fake-app-users": "^1.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^2.5.3",
+    "semistandard": "^9.1.0"
   },
   "engines": {
     "node": ">=5.0.0",

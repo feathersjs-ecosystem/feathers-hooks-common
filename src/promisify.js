@@ -196,5 +196,5 @@ export {
   parseFunc,
   fnPromisify,
   fnPromisifyCallback,
-  fnPromisifySync,
+  fnPromisifySync
 };

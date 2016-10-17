@@ -14,18 +14,23 @@ describe('lowercase', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
       hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
-      hookFindPaginate = { type: 'after', method: 'find', result: {
-        total: 2,
-        data: [
-          { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
-      } };
+      hookFindPaginate = {
+        type: 'after',
+        method: 'find',
+        result: {
+          total: 2,
+          data: [
+            { first: 'John', last: 'Doe' },
+            { first: 'Jane', last: 'Doe' }
+          ]
+        } };
       hookFind = {
-        type: 'after', method: 'find', result: [
+        type: 'after',
+        method: 'find',
+        result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' },
-        ],
+          { first: 'Jane', last: 'Doe' }
+        ]
       };
     });
 
@@ -38,7 +43,7 @@ describe('lowercase', () => {
       hooks.lowerCase('first', 'last')(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'john', last: 'doe' },
-        { first: 'jane', last: 'doe' },
+        { first: 'jane', last: 'doe' }
       ]);
     });
 
@@ -46,7 +51,7 @@ describe('lowercase', () => {
       hooks.lowerCase('first', 'last')(hookFind);
       assert.deepEqual(hookFind.result, [
         { first: 'john', last: 'doe' },
-        { first: 'jane', last: 'doe' },
+        { first: 'jane', last: 'doe' }
       ]);
     });
 
@@ -81,8 +86,10 @@ describe('lowercase', () => {
 
   describe('handles dot notation', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'create',
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       };
     });
 
