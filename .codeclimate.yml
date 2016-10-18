@@ -1,0 +1,9 @@
+languages:
+  JavaScript: true
+engines:
+  duplication:
+    enabled: true
+    exclude_paths:
+    - "test/"
+exclude_paths:
+- "lib/"
