@@ -10,7 +10,7 @@
     "copy": "rm -rf lib/ && cp -r src/ lib/",
     "babel": "babel src/ --out-dir lib --presets babel-preset-es2015",
     "babel:watch": "babel src/ --watch --out-dir lib --presets babel-preset-es2015",
-    "mocha": "mocha test/  --reporter spec --compilers js:babel-core/register",
+    "mocha": "mocha test/  --reporter spec --opts mocha.opts",
     "mocha:only": "mocha test/ --reporter spec",
     "eslint": "eslint src/. test/. --ext .js,.jsx",
     "lint": "eslint-if-supported semistandard",
