@@ -1,13 +1,12 @@
 language: node_js
-
 node_js:
-  - stable
-
-install:
-  - npm install
-
-script:
-  - npm run cover
-
-# Send coverage data to Coveralls
-after_script: "cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js"
+  - 'node'
+  - '6'
+  - '4'
+addons:
+  code_climate:
+    repo_token: '1e43aadaeef48496f2cbaad97cb5f3abe9d0079fd73cc811b08da9b1a839c5a4'
+before_script:
+  - npm install -g codeclimate-test-reporter
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info
