@@ -124,6 +124,7 @@ describe('getParameterNames', () => {
   });
 
   describe('default values', () => {
+    /* node 4 doesn't allow ...params. uncomment this code when 4 support drops Apr 2018. LOL.
     it('named with args with whitespace', () => {
       assert.deepEqual(
         getParameterNames(function abc  ( a  = 1  ,  b=2,  c  =  {}){}),
@@ -151,6 +152,7 @@ describe('getParameterNames', () => {
         ['a', 'b', 'c']
       );
     });
+    */
 
     /* *********************************************************************************************
     // parsing package has a bug with this. returns a, b, c, data. Also with ( c=()=>{} )

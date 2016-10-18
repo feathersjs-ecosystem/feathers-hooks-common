@@ -9,6 +9,7 @@ prefer-arrow-callback
 const assert = require('chai').assert;
 const getParameterNames = require('../lib/promisify').getParameterNames;
 
+/* node 4 doesn't allow ...params. uncomment this code when 4 support drops Apr 2018. LOL.
 describe('getParameterNames bugs', () => {
   it('b = () => {}', () => {
     const varNames = getParameterNames(function abc (a, b = () => {}, c) {});
@@ -34,3 +35,4 @@ describe('getParameterNames bugs', () => {
     assert.deepEqual(varNames, ['a', 'b', 'y\'.indexOf(\'y\'']); // s/b 'a', 'b', 'c'
   });
 });
+*/
