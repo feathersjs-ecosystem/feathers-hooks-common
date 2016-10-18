@@ -1,0 +1,2 @@
+--recursive test/
+--require babel-polyfill
