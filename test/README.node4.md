@@ -9,6 +9,10 @@ The commented out tests are in:
 - getParameterNames.test.js
 - getParameterNames_BUGS.test.js
 
+Other tests also had issues.
+babel-polyfill was made a dep to handle these.
+It can later be dropped from package.json dependencies and src/index.js.
+
 Hopefully these will be periodically uncommented and run.
 
 The alternative is to get the node version
