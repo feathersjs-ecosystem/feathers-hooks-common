@@ -18,8 +18,8 @@ function funcSync3 (data, a, b) {
   return data === 1 ? data : 'bad';
 }
 
-function funcSync3a (...rest) {
-  return rest.length;
+function funcSync3a () {
+  return arguments.length;
 }
 
 const funcSyncHook = (a, b) => (hook) => {

@@ -52,12 +52,15 @@ describe('parseFunc', () => {
       );
     });
 
+    console.log('Test skipped till Node 4 support is dropped (Apr 2018)');
+    /* node 4 doesn't allow ...params. uncomment this code when 4 support drops Apr 2018. LOL.
     it('with ..rest', () => {
       assert.deepEqual(
         parseFunc((a, b, c, ...cb) => {}),
         [3, true, false]
       );
     });
+    */
 
     it('with no params', () => {
       assert.deepEqual(
