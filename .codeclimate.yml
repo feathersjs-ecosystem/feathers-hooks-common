@@ -9,5 +9,11 @@ engines:
       - javascript
     exclude_paths:
     - "test/"
+    exclude_fingerprints:
+    - 5fe47a6f2c4df971a1b6f3958c9b3cd4
+    - e6fb8d617273153252180f7a10a24ac6
+    - 1a0b806990ced9ec7ba1e55749b18197
+    - 0323a4bda01997a1319c35acadcd8c4b
+    - 0b9a2fee69d7da77202b1cc0c801a1f4
 exclude_paths:
 - "lib/"
