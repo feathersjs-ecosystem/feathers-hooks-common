@@ -64,7 +64,7 @@ const parseFunc = (func) => {
 };
 
 /**
- * Parse a function signature given the signature.
+ * Parse a function signature.
  * This routine is not intended for general use. Its exported only for testing purposes.
  *
  * @param {string} signature - func.toString()
