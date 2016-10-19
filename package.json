@@ -11,8 +11,7 @@
     "babel": "babel src/ --out-dir lib --presets babel-preset-es2015",
     "babel:watch": "babel src/ --watch --out-dir lib --presets babel-preset-es2015",
     "mocha": "mocha test/  --reporter spec --opts mocha.opts",
-    "mocha:only": "mocha test/ --reporter spec",
-    "eslint": "eslint src/. test/. --ext .js,.jsx",
+    "mocha:only": "mocha test/ --reporter spec --opts mocha.opts",
     "lint": "eslint-if-supported semistandard",
     "lint:fix": "eslint-if-supported semistandard --fix",
     "build": "npm run copy && npm run babel",
@@ -55,7 +54,6 @@
     "debug": "^2.2.0",
     "feathers-authentication": "^0.7.11",
     "feathers-errors": "^2.4.0",
-    "get-parameter-names": "https://github.com/benbotto/get-parameter-names",
     "object.assign": "^4.0.4"
   },
   "devDependencies": {
@@ -73,7 +71,7 @@
     "semistandard": "^9.1.0"
   },
   "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=3.8.0"
+    "node": ">=4.6.1",
+    "npm": ">=2.15.9"
   }
 }
