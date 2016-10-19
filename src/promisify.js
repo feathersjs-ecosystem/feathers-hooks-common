@@ -1,9 +1,45 @@
 
 /* eslint no-param-reassign: 0 */
 
-const getParameterNames = require('@avejidah/get-parameter-names');
-
 var cbVarNames = ['cb', 'callback', 'callback_', 'done', 'next']; // eslint-disable-line no-var
+
+/**
+ * Retrieves the argument names of a function
+ * This is a copy of https://github.com/benbotto/get-parameter-names with a minor change.
+ * The above itself is an improved fork of goatslacker/get-parameter-names (npm get-parameter-names)
+ * which does not seem to be maintained anymore.
+ * Our change is we need the param to be a string rather than a func so our tests can run on Node 4.
+ *
+ * @param {string} signature - func.toString()
+ * @returns {Array} param names
+ *
+ * IMPORTANT: There are bugs with params who's default values include '(', ')' or ','.
+ * e.g. func(cb = () => {}), func(cb = (err, data) => {}), func(a = 'a,b'.indexOf(',')).
+ * They should rarely be an issue for the circumstances in which this rtn is called.
+ * An issue has been created in the src repo. We have tests here which verify the failure cases
+ * and a fix to the repo will cause those tests to fail. This rtn should be updated at that time.
+ *
+ * package.json had
+ * "get-parameter-names": "https://github.com/benbotto/get-parameter-names",
+ */
+const getParameterNames = (signature) => {
+  const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+  const DEFAULT_PARAMS = /=[^,]+/mg;
+  const FAT_ARROWS = /=>.*$/mg;
+  const SPACES = /\s/mg;
+  const BEFORE_OPENING_PAREN = /^[^(]*\(/mg;
+  const AFTER_CLOSING_PAREN = /^([^)]*)\).*$/mg;
+
+  const code = signature
+    .replace(SPACES, '')
+    .replace(COMMENTS, '')
+    .replace(FAT_ARROWS, '')
+    .replace(DEFAULT_PARAMS, '')
+    .replace(BEFORE_OPENING_PAREN, '')
+    .replace(AFTER_CLOSING_PAREN, '$1');
+
+  return code ? code.split(',') : [];
+};
 
 /**
  * Add to or replace the variable names commonly used for callbacks.
@@ -23,24 +59,23 @@ const setCbVarNames = (names, ifReplace) => {
   cbVarNames = cbVarNames.concat(names);
 };
 
+const parseFunc = (func) => {
+  return parseSignature(func.toString());
+};
+
 /**
  * Parse a function signature.
  * This routine is not intended for general use. Its exported only for testing purposes.
  *
- * @param {Function} func - the function to wrap
+ * @param {string} signature - func.toString()
  * @returns {Array} parsed results [ paramCount, ifRest, ifCallback ]
  *    paramCount  Number of parameters in the function signature
  *    ifRest      If the last param was a rest param, e.g. '...rest'. paramCount does not
  *                include a count for the rest param if one was found.
  *    ifCallback  If the name of the last param is one commonly used for callbacks.
  */
-const parseFunc = (func) => {
-  /*
-  // func.length excludes the rest param and only includes params before
-  // the first one with a default value.
-  const funcLen = func.length;
-  */
-  const paramNames = getParameterNames(func);
+const parseSignature = (signature) => {
+  const paramNames = getParameterNames(signature);
   const paramCount = paramNames.length;
   const cbName = paramCount ? paramNames[paramCount - 1] : '';
 
@@ -143,7 +178,7 @@ const fnPromisify = (func) => {
 const fnPromisifyCallback = (func, paramsCountBeforeCb) => {
   // Get number of params needed before callback param
   if (typeof paramsCountBeforeCb === 'undefined') {
-    paramsCountBeforeCb = getParameterNames(func).length - 1;
+    paramsCountBeforeCb = getParameterNames(func.toString()).length - 1;
   }
   paramsCountBeforeCb = Math.max(paramsCountBeforeCb, 0);
 
@@ -194,6 +229,7 @@ export {
   getParameterNames,
   setCbVarNames,
   parseFunc,
+  parseSignature,
   fnPromisify,
   fnPromisifyCallback,
   fnPromisifySync
