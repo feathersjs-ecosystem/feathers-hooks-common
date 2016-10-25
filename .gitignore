@@ -68,3 +68,9 @@ lib-cov
 coverage
 # nyc test coverage
 .nyc_output
+
+tmp*
+.idea/
+
+# The compiled/babelified modules
+lib/
