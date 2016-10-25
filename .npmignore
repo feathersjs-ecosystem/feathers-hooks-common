@@ -7,4 +7,11 @@ src/
 coverage/
 # checklists and standard files
 docs-secure/
+
 .github/
+.editorconfig
+.travis.yml
+.istanbul.yml
+.babelrc
+test/
+!lib/
