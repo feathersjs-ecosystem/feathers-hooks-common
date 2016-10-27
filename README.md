@@ -194,86 +194,20 @@ module.exports.after = {
 // result: { assigned: true }
 ```
 
-### <a name="promisify"></a> Utilities to promisify functions
+### <a name="promisify"></a> Utilities to wrap functions
 
-Wrap functions so they return Promises.
-
-(3) Wrap a feathers hook so it returns a Promise.
-
-Feathers may someday deprecate hooks which call callbacks.
-You can future-proof any callback hooks you have by wrapping them to return Promises now.
-There is support for
-
-- Sync functions. Promise is rejected if the function throws.
-- Functions calling a callback. The call to the callback may be sync or async. Rejected on throw.
-- Functions returning a Promise. Basically a no-op.
-
-```javascript
-import { promisifyHook } from 'feathers-hooks-common/promisify';
-
-const delayedCreatedAt = () => (hook, next) => {
-  setTimeout(() => {
-    hook.data.createdAt = new Date();
-    next(null, hook);
-  }, 100);
-};
-const updatedAt = () => (hook) => {
-  hook.data.updatedAt = new Date();
-  return hook;
-};
-const updatedBy = (email = 'email') => (hook) => {
-  hook.data.email = hook.users[email];
-  return Promise.resolve(hook);
-);
-
-const wrappedDelayedCreatedAt = promisifyHook(delayedCreatedAt());
-const wrappedUpdatedAt = promisifyHook(updatedAt());
-const wrappedUpdatedBy = promisifyHook(updatedBy('userEmail'));
-
-module.exports.before = {
-  create: [wrappedDelayedCreatedAt, wrappedUpdatedAt, wrappedUpdatedBy], // each returns a Promise
-};
-```
-
-(4) Wrap any function to return a Promise.
-
-```javascript
-import { fnPromisify } from 'feathers-hooks-common/promisify';
-
-function syncCheck(value) {
-  if (value !== 3) { throw new Error( ... ); }
-  return value;
-}
-
-function cbCheck(value, cb) {
-  if (data === 3) { throw new Error( ... ); }
-  cb(value === 1 ? null : new Error( ... ), value);
-}
-
-fnPromisify(syncCheck)(1).then( ... ).catch( ... );
-fnPromisify(cbCheck)(1).then( ... ).catch( ... );
-```
-
-- Use fnPromisifyCallback or fnPromisifySync instead on the front-end (because minification).
-- Watch out on the back-end that common names are used for the callback param
-i.e. cb, callback, callback_, done, or next.
-- Watch out on the back-end for the rare cases which cannot be correctly parsed.
-These involve params who default values involve parenthesis or commas
-e.g. function abc(a = () => {}, b = (x, y) => {}, c = 'x,y'.indexOf(','))
-- You have no worries if you transpile with Babel on the back-end (but do not minify).
-
-(5) Wrap a function calling a callback into one that returns a Promise.
+(3) Wrap a function calling a callback into one that returns a Promise.
 
 - Promise is rejected if the function throws.
 
 ```javascript
-import { fnPromisifyCallback } from 'feathers-hooks-common/promisify';
+import { callbackToPromise } from 'feathers-hooks-common/promisify';
 
 function tester(data, a, b, cb) {
   if (data === 3) { throw new Error('error thrown'); }
   cb(data === 1 ? null : 'bad', data);
 } 
-const wrappedTester = fnPromisifyCallback(tester, 3); // because func call requires 3 params
+const wrappedTester = callbackToPromise(tester, 3); // because func call requires 3 params
 
 wrappedTester(1, 2, 3); // tester(1, 2, 3, wrapperCb)
 wrappedTester(1, 2); // tester(1, 2, undefined, wrapperCb)
@@ -288,37 +222,6 @@ You may specify the number of params in the function signature,
 this count does not include the callback param itself.
 The wrapped function will always be called with that many params,
 preventing potential bugs.
-
-The function signature is parsed to obtain the count if the number of params is not provided.
-Read fnPromisify for important ramifications.
-
-(6) Wrap a sync function into one that returns a Promise.
-It's a no-op if you use this to wrap a function already returning a Promise.
-That means fnPromisifySync can be used to wrap any function other than one calling a callback.
-
-- Promise is rejected if the function throws.
-
-```javascript
-import { fnPromisifySync } from 'feathers-hooks-common/promisify';
-
-function testSync(data, a, b) {
-  if (data === 3) { throw new Error('throwing'); }
-  return data === 1 ? data : 'bad';
-}
-
-fnPromisifySync(testSync)(1, 0, 0).then( ... )
-  .catch(err => { console.log(err instanceof Error ? err.message : err); });
-```
-
-(7) Add to or replace the variable names commonly used for callbacks.
-
-```javascript
-import { fnPromisify, setCbVarNames } from 'feathers-hooks-common/promisify';
-setCbVarNames('hodor', false); // false adds to the list, true replaces it
-
-const testHodor = (a, hodor) => { hodor(null, a); };
-fnPromisify(testHodor)(1).then( ... ).catch( ... );
-```
 
 ## <a name="conditionalHooks"></a> Running hooks conditionally
 

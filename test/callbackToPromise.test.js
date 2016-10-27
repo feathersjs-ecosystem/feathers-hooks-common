@@ -4,7 +4,7 @@
 const assert = require('chai').assert;
 const fs = require('fs');
 
-const fnPromisifyCallback = require('../lib/promisify').fnPromisifyCallback;
+const callbackToPromise = require('../lib/promisify').callbackToPromise;
 
 const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'
@@ -42,11 +42,11 @@ const funcAsyncCbHook = (a, b) => (hook, next) => {
   });
 };
 
-describe('fnPromisifyCallback', () => {
+describe('callbackToPromise', () => {
   describe('paramsCountBeforeCb provided', () => {
     describe('correct number of params', () => {
       it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(1, 0, 0)
+        callbackToPromise(funcCb3, 3)(1, 0, 0)
           .then(data => {
             assert.equal(data, 1);
             done();
@@ -58,7 +58,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(2, 0, 0)
+        callbackToPromise(funcCb3, 3)(2, 0, 0)
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -70,7 +70,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('resolves with no args', (done) => {
-        fnPromisifyCallback(funcCb0Resolve, 0)()
+        callbackToPromise(funcCb0Resolve, 0)()
           .then(data => {
             assert.equal(data, 1);
             done();
@@ -82,7 +82,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects with no args', (done) => {
-        fnPromisifyCallback(funcCb0Reject, 0)()
+        callbackToPromise(funcCb0Reject, 0)()
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -94,7 +94,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects if throws', (done) => {
-        fnPromisifyCallback(funcCb3Throw, 3)(2, 0, 0)
+        callbackToPromise(funcCb3Throw, 3)(2, 0, 0)
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -108,7 +108,7 @@ describe('fnPromisifyCallback', () => {
 
     describe('too few params', () => {
       it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(1)
+        callbackToPromise(funcCb3, 3)(1)
           .then(data => {
             assert.equal(data, 1);
             done();
@@ -120,7 +120,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(2)
+        callbackToPromise(funcCb3, 3)(2)
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -134,7 +134,7 @@ describe('fnPromisifyCallback', () => {
 
     describe('too many params', () => {
       it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(1, 0, 0, 0, 0)
+        callbackToPromise(funcCb3, 3)(1, 0, 0, 0, 0)
           .then(data => {
             assert.equal(data, 1);
             done();
@@ -146,7 +146,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3, 3)(2, 0, 0, 0, 0)
+        callbackToPromise(funcCb3, 3)(2, 0, 0, 0, 0)
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -160,7 +160,7 @@ describe('fnPromisifyCallback', () => {
 
     describe('only param is cb', () => {
       it('resolves', (done) => {
-        fnPromisifyCallback(funcCb0Resolve, 0)()
+        callbackToPromise(funcCb0Resolve, 0)()
           .then(data => {
             assert.equal(data, 1);
             done();
@@ -172,215 +172,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        fnPromisifyCallback(funcCb0Reject, 0)()
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-  });
-
-  describe('paramsCountBeforeCb = Infinity', () => {
-    describe('correct number of params', () => {
-      it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3, Infinity)(1, 0, 0)
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3, Infinity)(2, 0, 0)
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-
-    describe('only param is cb', () => {
-      it('resolves with no args', (done) => {
-        fnPromisifyCallback(funcCb0Resolve, Infinity)()
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects with no args', (done) => {
-        fnPromisifyCallback(funcCb0Reject, Infinity)()
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-  });
-
-  describe('paramsCountBeforeCb calculated', () => {
-    describe('correct number of params', () => {
-      it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3)(1, 0, 0)
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3)(2, 0, 0)
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-
-      it('resolves with no args', (done) => {
-        fnPromisifyCallback(funcCb0Resolve)()
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects with no args', (done) => {
-        fnPromisifyCallback(funcCb0Reject)()
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-
-    describe('too few params', () => {
-      it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3)(1)
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3)(2)
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-
-    describe('too many params', () => {
-      it('resolves', (done) => {
-        fnPromisifyCallback(funcCb3)(1, 0, 0, 0, 0)
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects', (done) => {
-        fnPromisifyCallback(funcCb3)(2, 0, 0, 0, 0)
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-
-      it('resolves with no args', (done) => {
-        fnPromisifyCallback(funcCb0Resolve)(1, 2)
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects with no args', (done) => {
-        fnPromisifyCallback(funcCb0Reject)(1, 2)
-          .then(() => {
-            assert(false, 'unexpected catch');
-            done();
-          })
-          .catch(err => {
-            assert.equal(err, 'bad');
-            done();
-          });
-      });
-    });
-
-    describe('only param is cb', () => {
-      it('resolves', (done) => {
-        fnPromisifyCallback(funcCb0Resolve)()
-          .then(data => {
-            assert.equal(data, 1);
-            done();
-          })
-          .catch(() => {
-            assert(false, 'unexpected catch');
-            done();
-          });
-      });
-
-      it('rejects', (done) => {
-        fnPromisifyCallback(funcCb0Reject)()
+        callbackToPromise(funcCb0Reject, 0)()
           .then(() => {
             assert(false, 'unexpected catch');
             done();
@@ -396,7 +188,7 @@ describe('fnPromisifyCallback', () => {
   describe('works with feathers hooks', () => {
     describe('sync hook', () => {
       it('convert hook to promise - no arg length', (done) => {
-        fnPromisifyCallback(funcSyncCbHook(1, 2))({ data: { a: 'a' } })
+        callbackToPromise(funcSyncCbHook(1, 2), 1)({ data: { a: 'a' } })
           .then(data => {
             assert.deepEqual(data, { data: { a: 'a' } });
             done();
@@ -408,7 +200,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('convert hook to promise - arg length', (done) => {
-        fnPromisifyCallback(funcSyncCbHook(1, 2))()
+        callbackToPromise(funcSyncCbHook(1, 2), 1)()
           .then(data => {
             assert.equal(data, undefined);
             done();
@@ -420,7 +212,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        fnPromisifyCallback(funcSyncCbHook(1, 2))({ data: { a: 'bad' } })
+        callbackToPromise(funcSyncCbHook(1, 2), 1)({ data: { a: 'bad' } })
           .then(() => {
             assert(false, 'unexpected then');
             done();
@@ -434,7 +226,7 @@ describe('fnPromisifyCallback', () => {
 
     describe('async hook', () => {
       it('resolves', (done) => {
-        const hookFcn = fnPromisifyCallback(funcAsyncCbHook());
+        const hookFcn = callbackToPromise(funcAsyncCbHook(), 1);
 
         // What Feathers does
         const returnedToFeathers = hookFcn( // how Feathersjs would call the hook func
@@ -462,7 +254,7 @@ describe('fnPromisifyCallback', () => {
       });
 
       it('rejects', (done) => {
-        const hookFcn = fnPromisifyCallback(funcAsyncCbHook());
+        const hookFcn = callbackToPromise(funcAsyncCbHook(), 1);
 
         // What Feathers does
         const returnedToFeathers = hookFcn( // how Feathersjs would call the hook func
