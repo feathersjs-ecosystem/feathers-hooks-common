@@ -44,5 +44,5 @@ const callbackToPromise = (func, paramsCountExcludingCb) => {
 };
 
 export {
-  callbackToPromise,
+  callbackToPromise
 };
