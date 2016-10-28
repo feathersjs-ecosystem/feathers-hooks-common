@@ -1,13 +1,9 @@
 
 /* eslint-env es6, node */
 /* eslint  max-len: 0, new-cap: 0, no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
-
-import authentication from 'feathers-authentication';
 import errors from 'feathers-errors';
 
 import { getItems, replaceItems, setByDot, checkContext } from './utils';
-
-const authHooks = authentication.hooks;
 
 /**
  * Set one or more fields to a value. Base function for setCreateAt and setUpdatedAt.
@@ -159,36 +155,6 @@ export const debug = (msg) =>
     if (hook.result) { console.log('result:', hook.result); }
   }
 ;
-
-/**
- * DEPRECATED: Factory for Feathers hooks.restrictToRoles.
- *
- * @param {?array|string} [defaultRoles=[]] - Roles authorized to continue. Default [].
- * @param {?string} rolesFieldName - Name of field containing roles. Default 'roles'.
- * @param {?boolean} defaultIfOwner - If record owner authorized to continue. Default false.
- * @param {?string} ownerFieldName - Name of field containing owner ID. Default 'ownerId'.
- * @returns {Function} hook function(hook, next)
- *
- * Example:
- * const authorizer = hooks.restrictToRoles([], 'allowedRoles', false, 'ownerId');
- * module.exports.before = {
- *   all: [ authorizer(['purchasing', 'accounting']) ]
- * }
- */
-export const restrictToRoles =
-  (defaultRoles, rolesFieldName = 'roles', defaultIfOwner = false, ownerFieldName = 'ownerId') => {
-    console.error(
-      'DEPRECATED Use feathers-authentication v0.8. Removed next ver. (restrictToRoles)'
-    );
-    if (!defaultRoles) { defaultRoles = []; }
-
-    return (roles, ifOwner) => authHooks.restrictToRoles({
-      roles: roles || defaultRoles,
-      fieldName: rolesFieldName || 'roles',
-      owner: typeof ifOwner === 'undefined' ? defaultIfOwner : ifOwner,
-      ownerField: ownerFieldName || 'createdById'
-    });
-  };
 
 /**
  * Call a validation routine which returns form errors.
