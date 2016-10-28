@@ -1,4 +1,5 @@
 
+/* global process */
 /* eslint no-param-reassign: 0 */
 
 /**
@@ -43,6 +44,40 @@ const callbackToPromise = (func, paramsCountExcludingCb) => {
   };
 };
 
+const asap = process && typeof process.nextTick === 'function'
+  ? process.nextTick : setImmediate;
+
+/**
+ * Convert a Promise to a callback running in a scope outside the Promise chain.
+ * The promise chain will not be invoked should the callback throw.
+ *
+ * @param {Promise} promise - the promise to convert
+ * @returns {Function} func(cb)
+ *
+ * function (cb) {
+ *   const promise = new Promise( ...).then( ... ).catch( ... );
+ *   ...
+ *   promiseToCallback(promise)(cb);
+ *
+ *   promise.then( ... ); // this is still possible
+ * }
+ */
+function promiseToCallback (promise) {
+  return function (cb) {
+    promise.then(
+      data => {
+        asap(cb, null, data);
+        return data;
+      },
+      err => {
+        asap(cb, err);
+      });
+
+    return null;
+  };
+}
+
 export {
-  callbackToPromise
+  callbackToPromise,
+  promiseToCallback
 };

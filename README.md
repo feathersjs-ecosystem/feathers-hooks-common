@@ -223,6 +223,21 @@ this count does not include the callback param itself.
 The wrapped function will always be called with that many params,
 preventing potential bugs.
 
+(4) Wrap a Promise into a function that calls a callback.
+
+- The callback does not run in the Promise's scope. The Promise's `catch` chain is not invoked if the callback throws.
+
+```javascript
+import { promiseToCallback } from 'feathers-hooks-common/promisify'
+
+function (cb) {
+  const promise = new Promise( ...).then( ... ).catch( ... );
+  ...
+  promiseToCallback(promise)(cb);
+  promise.then( ... ); // this is still possible
+}
+```
+
 ## <a name="conditionalHooks"></a> Running hooks conditionally
 
 There are times when you may want to run a hook conditionally,
