@@ -1,3 +1,5 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
+
 import { assert } from 'chai';
 import { checkContext } from '../src/utils';
 

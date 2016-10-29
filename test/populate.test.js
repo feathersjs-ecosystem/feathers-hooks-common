@@ -1,3 +1,5 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
+
 import { assert } from 'chai';
 import hooks from '../src';
 import feathersFakes from 'feathers-tests-fake-app-users';
