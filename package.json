@@ -52,9 +52,7 @@
   "homepage": "https://github.com/feathers/feathers-hooks-common#readme",
   "dependencies": {
     "debug": "^2.2.0",
-    "feathers-authentication": "^0.7.11",
-    "feathers-errors": "^2.4.0",
-    "object.assign": "^4.0.4"
+    "feathers-errors": "^2.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
