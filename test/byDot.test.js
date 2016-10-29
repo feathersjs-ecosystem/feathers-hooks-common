@@ -1,12 +1,5 @@
-
-/* eslint-env es6, node */
-/* eslint no-var: 0 */
-
-const assert = require('chai').assert;
-const utils = require('../lib/utils');
-
-const getByDot = utils.getByDot;
-const setByDot = utils.setByDot;
+import { assert } from 'chai';
+import { getByDot, setByDot } from '../src/utils';
 
 describe('byDot', () => {
   var obj;

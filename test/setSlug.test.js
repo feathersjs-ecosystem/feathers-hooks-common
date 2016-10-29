@@ -1,8 +1,5 @@
-
-/* eslint  no-shadow: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-const hooksCommon = require('../lib/index');
+import { assert } from 'chai';
+import hooksCommon from '../src';
 
 var hook;
 

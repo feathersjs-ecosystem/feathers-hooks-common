@@ -1,10 +1,6 @@
-
-/* eslint-env es6, node */
-/* eslint  no-console: 0, no-param-reassign: 0, no-shadow: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-var errors = require('feathers-errors');
-const hooks = require('../lib/index');
+import { assert } from 'chai';
+import hooks from '../src';
+import errors from 'feathers-errors';
 
 var fcnSync;
 var fcnPromise;

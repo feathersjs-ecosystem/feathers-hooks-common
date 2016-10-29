@@ -1,8 +1,5 @@
-
-/* eslint no-param-reassign: 0, no-shadow: 0, no-unused-vars: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-const promiseToCallback = require('../lib/promisify').promiseToCallback;
+import { assert } from 'chai';
+import { promiseToCallback } from '../src/promisify';
 
 const promise1 = (ifResolve) => new Promise((resolve, reject) => {
   return ifResolve ? resolve('ok') : reject('bad');

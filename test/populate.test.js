@@ -1,11 +1,6 @@
-
-/* global assert, describe, it */
-/* eslint no-console: 0, no-param-reassign: 0, no-shadow: 0, no-unused-vars: 0, no-var: 0,
-one-var: 0, one-var-declaration-per-line: 0, no-use-before-define: [2, "nofunc"] */
-
-const assert = require('chai').assert;
-const hooks = require('../lib/index');
-const feathersFakes = require('feathers-tests-fake-app-users');
+import { assert } from 'chai';
+import hooks from '../src';
+import feathersFakes from 'feathers-tests-fake-app-users';
 
 const fakeUsersDb = [ // faked in-memory database
   { _id: 'a', name: 'John Doe', isVerified: false },
