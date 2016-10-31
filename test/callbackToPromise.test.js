@@ -1,16 +1,12 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
-/* eslint no-param-reassign: 0, no-shadow: 0, no-unused-vars: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-const fs = require('fs');
-
-const callbackToPromise = require('../lib/promisify').callbackToPromise;
+import { assert } from 'chai';
+import fs from 'fs';
+import { callbackToPromise } from '../src/promisify';
 
 const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'
 );
-
-function cb (/* err, data */) {}
 
 function funcCb3 (data, a, b, cb) {
   if (data === 1) {
@@ -20,7 +16,7 @@ function funcCb3 (data, a, b, cb) {
   }
 }
 
-function funcCb3Throw (data, a, b, cb) {
+function funcCb3Throw () {
   throw new Error('bad');
 }
 
@@ -32,11 +28,11 @@ function funcCb0Reject (cb) {
   cb('bad');
 }
 
-const funcSyncCbHook = (a, b) => (hook, next) => {
+const funcSyncCbHook = () => (hook, next) => {
   next(!hook || hook.data.a === 'a' ? null : 'bad', hook);
 };
 
-const funcAsyncCbHook = (a, b) => (hook, next) => {
+const funcAsyncCbHook = () => (hook, next) => {
   fs.stat('./feathers-hooks-common-gfgfgfgfgfgf', () => {
     next(!hook || hook.data.a === 'a' ? null : 'bad', hook);
   });

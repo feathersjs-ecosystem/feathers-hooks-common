@@ -1,7 +1,4 @@
-
-/* eslint-env es6, node */
-
-module.exports = Object.assign({},
+export default Object.assign({},
   require('./common'),
   require('./bundled'),
   require('./new')

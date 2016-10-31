@@ -1,14 +1,13 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
-/* eslint  no-shadow: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-const hooks = require('../lib/index');
-
-var hookRest;
-var hookSocketio;
-var hookServer;
+import { assert } from 'chai';
+import hooks from '../src';
 
 describe('disable', () => {
+  let hookRest;
+  let hookSocketio;
+  let hookServer;
+
   describe('no dynamic decision', () => {
     beforeEach(() => {
       hookRest = { method: 'create', params: { provider: 'rest' } };

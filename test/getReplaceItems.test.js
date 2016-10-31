@@ -1,17 +1,16 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
-/* eslint  no-shadow: 0, no-var: 0 */
-
-const assert = require('chai').assert;
-const hooks = require('../lib/utils');
-
-var hookBefore;
-var hookAfter;
-var hookBeforeArray;
-var hookAfterArray;
-var hookFindPaginate;
-var hookFind;
+import { assert } from 'chai';
+import * as hooks from '../src/utils';
 
 describe('getItems & replaceItems', () => {
+  let hookBefore;
+  let hookAfter;
+  let hookBeforeArray;
+  let hookAfterArray;
+  let hookFindPaginate;
+  let hookFind;
+
   describe('getItems', () => {
     beforeEach(() => {
       hookBefore = {

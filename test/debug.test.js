@@ -1,13 +1,10 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
-/* eslint  no-shadow: 0, no-var: 0 */
-
-const hooksCommon = require('../lib/index');
-
-var hook;
+import hooksCommon from '../src';
 
 describe('debug', () => {
   it('does not crash', () => {
-    hook = {
+    const hook = {
       type: 'before',
       method: 'create',
       data: { a: 'a' },

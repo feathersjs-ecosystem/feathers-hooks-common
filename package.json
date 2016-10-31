@@ -7,24 +7,19 @@
     "lib": "lib"
   },
   "scripts": {
-    "copy": "rimraf lib/ && cp -r src/ lib/",
-    "babel": "babel src/ --out-dir lib --presets babel-preset-es2015",
-    "babel:watch": "babel src/ --watch --out-dir lib --presets babel-preset-es2015",
-    "mocha": "mocha test/  --reporter spec --opts mocha.opts",
-    "mocha:only": "mocha test/ --reporter spec --opts mocha.opts",
-    "lint": "eslint-if-supported semistandard",
-    "lint:fix": "eslint-if-supported semistandard --fix",
-    "build": "npm run copy && npm run babel",
-    "test": "npm run build && npm run lint && npm run mocha",
-    "test:build": "npm run build && npm run mocha:only",
-    "test:only": "npm run mocha:only",
-    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- --reporter spec test/*",
-    "watch": "npm run copy && npm run babel:watch",
-    "npm:patch": "npm version patch && npm publish",
-    "npm:minor": "npm version minor && npm publish",
-    "npm:major": "npm version major && npm publish",
-    "npm:updates": "npm-check-updates",
-    "changelog": "git log --pretty=format:'%h% B'"
+    "prepublish": "npm run compile",
+    "publish": "git push origin --tags && npm run changelog && git push origin",
+    "release:prerelease": "npm version prerelease && npm publish",
+    "release:patch": "npm version patch && npm publish",
+    "release:minor": "npm version minor && npm publish",
+    "release:major": "npm version major && npm publish",
+    "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "compile": "rimraf lib/ && babel -d lib/ src/",
+    "watch": "babel --watch -d lib/ src/",
+    "lint": "eslint-if-supported semistandard --fix",
+    "mocha": "mocha --opts mocha.opts",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
+    "test": "npm run compile && npm run lint && npm run coverage"
   },
   "semistandard": {
     "env": [
@@ -64,13 +59,13 @@
     "coveralls": "^2.11.14",
     "eslint-if-supported": "^1.0.1",
     "feathers-tests-fake-app-users": "^1.0.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^2.5.3",
+    "istanbul": "^1.1.0-alpha.1",
     "rimraf": "^2.5.4",
-    "semistandard": "^9.1.0"
+    "semistandard": "^9.1.0",
+    "mocha": "^3.1.2"
   },
   "engines": {
-    "node": ">=4.6.1",
-    "npm": ">=2.15.9"
+    "node": ">= 4.6.1",
+    "npm": ">= 2.15.9"
   }
 }

@@ -1,6 +1,7 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
-const assert = require('chai').assert;
-const checkContext = require('../lib/utils').checkContext;
+import { assert } from 'chai';
+import { checkContext } from '../src/utils';
 
 describe('checkContext', () => {
   var hook; // eslint-disable-line no-var
