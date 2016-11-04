@@ -374,18 +374,22 @@ export function disable (realm, ...args) {
  *    for the item(s) in options.service.
  * @returns {Function} hook function(hook):Promise resolving to the hook.
  *
- * 'target' is the foreign key for one related item in options.service, e.g. target === item._id.
+ * 'options.field' is the foreign key for one related item in options.service, i.e. item[options.field] === foreignItem[idField].
  * 'target' is set to this related item once it is read successfully.
+ * 
+ * If 'options.field' is not present in the hook result item, the hook is ignored.
  *
  * So if the hook result has the message item
  *    { _id: '1...1', senderId: 'a...a', text: 'Jane, are you there?' }
+ * and the /users service has the item
+ *    { _id: 'a...a', name: 'John Doe'}
  * and then the hook is run
- *    hooks.populate('senderId', { field: 'user', service: '/users' })
+ *    hooks.populate('sender', { field: 'userId', service: '/users' })
  * the hook result will contain
  *    { _id: '1...1', senderId : 'a...a', text: 'Jane, are you there?',
- *      user: { _id: 'a...a', name: 'John Doe'} }
+ *      sender: { _id: 'a...a', name: 'John Doe'} }
  *
- * If 'senderId' is an array of keys, then 'user' will be an array of populated items.
+ * If 'senderId' is an array of keys, then 'sender' will be an array of populated items.
  */
 export function populate (target, options) {
   options = Object.assign({}, options);
