@@ -414,7 +414,7 @@ export function populate (target, options) {
         item = item.toJSON(options);
       }
       // Remove any query from params as it's not related
-      const params = Object.assign({}, params, { query: undefined });
+      const params = Object.assign({}, hook.params, { query: undefined });
       // If the relationship is an array of ids, fetch and resolve an object for each,
       // otherwise just fetch the object.
       const promise = Array.isArray(id)
