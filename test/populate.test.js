@@ -5,8 +5,8 @@ import hooks from '../src';
 import feathersFakes from 'feathers-tests-fake-app-users';
 
 const fakeUsersDb = [ // faked in-memory database
-  { _id: 'a', name: 'John Doe', isVerified: false },
-  { _id: 'b', name: 'Jane Doe', isVerified: true }
+  { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' },
+  { _id: 'b', name: 'Jane Doe', isVerified: true, password: 'secret' }
 ];
 const fakeMessagesDb = [ // faked in-memory database
   { _id: '1', senderId: 'a', text: 'Jane, are you there?' },
@@ -33,6 +33,17 @@ describe('populate', () => {
     const messagesService = feathersFakes.makeDbService(app, 'messages', messagesDb);
     app.use('/users', usersService);
     app.use('/messages', messagesService);
+
+    // Emulate a remove('password') after hook on /users
+    const usersGet = app.service('/users').get;
+    app.service('/users').get = (id, params) => {
+      return usersGet(id, params).then(user => {
+        if (user && !!params.provider) {
+          delete user.password;
+        }
+        return user;
+      });
+    };
 
     hookA = {
       type: 'after',
@@ -98,7 +109,7 @@ describe('populate', () => {
             _id: '5',
             senderId: 'a',
             text: 'I\'m eating an ice cream.',
-            user: { _id: 'a', name: 'John Doe', isVerified: false }
+            user: { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' }
           });
           next();
         })
@@ -124,7 +135,7 @@ describe('populate', () => {
         .then(hook => {
           assert.deepEqual(hook.result, {
             _id: '5',
-            senderId: { _id: 'a', name: 'John Doe', isVerified: false },
+            senderId: { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' },
             text: 'I\'m eating an ice cream.'
           });
           next();
@@ -153,11 +164,11 @@ describe('populate', () => {
             { _id: '1',
               senderId: 'a',
               text: 'Jane, are you there?',
-              user: { _id: 'a', name: 'John Doe', isVerified: false } },
+              user: { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' } },
             { _id: '2',
               senderId: 'b',
               text: 'I am. How are you?',
-              user: { _id: 'b', name: 'Jane Doe', isVerified: true } }
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true, password: 'secret' } }
           ]);
           next();
         })
@@ -174,11 +185,11 @@ describe('populate', () => {
             { _id: '1',
               senderId: 'a',
               text: 'Jane, are you there?',
-              user: { _id: 'a', name: 'John Doe', isVerified: false } },
+              user: { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' } },
             { _id: '2',
               senderId: 'b',
               text: 'I am. How are you?',
-              user: { _id: 'b', name: 'Jane Doe', isVerified: true } }
+              user: { _id: 'b', name: 'Jane Doe', isVerified: true, password: 'secret' } }
           ] });
           next();
         })
@@ -198,9 +209,29 @@ describe('populate', () => {
             senderId: ['a', 'b'],
             text: 'I\'m eating an ice cream.',
             user: [
-              { _id: 'a', name: 'John Doe', isVerified: false },
-              { _id: 'b', name: 'Jane Doe', isVerified: true }
+              { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' },
+              { _id: 'b', name: 'Jane Doe', isVerified: true, password: 'secret' }
             ]
+          });
+          next();
+        })
+        .catch(err => {
+          console.log('unexpectedly failed.');
+          console.log(err);
+        });
+    });
+  });
+
+  describe('populates depending on provider', () => {
+    it('does remove password if non-internal provider', (next) => {
+      hookA.params = { provider: 'rest' };
+      hooks.populate('user', { field: 'senderId', service: '/users' })(hookA)
+        .then(hook => {
+          assert.deepEqual(hook.result, {
+            _id: '5',
+            senderId: 'a',
+            text: 'I\'m eating an ice cream.',
+            user: { _id: 'a', name: 'John Doe', isVerified: false }
           });
           next();
         })
