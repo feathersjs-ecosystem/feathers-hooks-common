@@ -154,6 +154,17 @@ describe('populate', () => {
           next();
         });
     });
+    it('does return same item if populate an item with no options.field', (next) => {
+      hooks.populate('sender', { service: '/users' })(hookA)
+        .then(hook => {
+          assert.strictEqual(hook.result, hookA.result);
+          next();
+        })
+        .catch(err => {
+          console.log('unexpectedly failed.');
+          console.log(err.message);
+        });
+    });
   });
 
   describe('populates an array of results', () => {
