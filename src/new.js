@@ -21,7 +21,7 @@ export const softDelete = (field) => (hook) => {
 
   if (hook.method === 'find') {
     hook.params.query = hook.params.query || {};
-    setByDot(hook.data, `${field || 'deleted'}.$ne`, true);// include non-deleted items only
+    setByDot(hook.params.query, `${field || 'deleted'}.$ne`, true);// include non-deleted items only
     return hook;
   }
 
