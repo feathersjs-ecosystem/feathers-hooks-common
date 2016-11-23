@@ -376,7 +376,7 @@ export function disable (realm, ...args) {
  *
  * 'options.field' is the foreign key for one related item in options.service, i.e. item[options.field] === foreignItem[idField].
  * 'target' is set to this related item once it is read successfully.
- * 
+ *
  * If 'options.field' is not present in the hook result item, the hook is ignored.
  *
  * So if the hook result has the message item
