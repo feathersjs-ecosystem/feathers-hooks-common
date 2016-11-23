@@ -16,7 +16,9 @@ import { getItems, replaceItems, setByDot, checkContext } from './utils';
 const setField = (defaultFieldName, value, ...fieldNames) => {
   const addFields = data => {
     for (const field of fieldNames) {
-      setByDot(data, field, value);
+      const fieldValue = typeof value === 'function' ? value() : value;
+
+      setByDot(data, field, fieldValue);
     }
   };
 
@@ -69,7 +71,7 @@ const setField = (defaultFieldName, value, ...fieldNames) => {
  * }));
  *
  */
-export const setCreatedAt = (...fieldNames) => setField('createdAt', new Date(), ...fieldNames);
+export const setCreatedAt = (...fieldNames) => setField('createdAt', () => new Date(), ...fieldNames);
 
 /**
  * Set the fields to the current date-time. The fields are either in the data submitted
@@ -92,7 +94,7 @@ export const setCreatedAt = (...fieldNames) => setField('createdAt', new Date(),
  * }));
  *
  */
-export const setUpdatedAt = (...fieldNames) => setField('updatedAt', new Date(), ...fieldNames);
+export const setUpdatedAt = (...fieldNames) => setField('updatedAt', () => new Date(), ...fieldNames);
 
 /**
  * Normalize slug, so it can be accessed in the same place regardless of provider and transport.
