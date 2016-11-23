@@ -16,10 +16,10 @@ import { setByDot, checkContext } from './utils';
  *   find: [ softDelete() ] // ignore deleted items
  * };
  */
-export const softDelete = (field) => (hook) => {
-  checkContext(hook, 'before', ['remove', 'find'], 'softDelete');
+export const softDelete = (field) => function (hook) {
+  checkContext(hook, 'before', ['get', 'find', 'update', 'patch', 'remove', 'all'], 'softDelete');
 
-  if (hook.method === 'find') {
+  if (hook.method !== 'remove') {
     hook.params.query = hook.params.query || {};
     setByDot(hook.params.query, `${field || 'deleted'}.$ne`, true);// include non-deleted items only
     return hook;
