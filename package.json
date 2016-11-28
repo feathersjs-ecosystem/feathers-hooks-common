@@ -58,11 +58,14 @@
     "chai": "^3.5.0",
     "coveralls": "^2.11.14",
     "eslint-if-supported": "^1.0.1",
+    "feathers": "2.0.2",
+    "feathers-hooks": "1.7.0",
+    "feathers-memory": "1.0.1",
     "feathers-tests-fake-app-users": "^1.0.0",
     "istanbul": "^1.1.0-alpha.1",
+    "mocha": "^3.1.2",
     "rimraf": "^2.5.4",
-    "semistandard": "^9.1.0",
-    "mocha": "^3.1.2"
+    "semistandard": "^9.1.0"
   },
   "engines": {
     "node": ">= 4.6.1"

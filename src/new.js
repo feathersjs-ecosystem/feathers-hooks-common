@@ -4,7 +4,7 @@
 
 const errors = require('feathers-errors').errors;
 
-import { setByDot, checkContext } from './utils';
+import { checkContext } from './utils';
 
 /**
  * Mark an item as deleted rather than removing it from the database.
@@ -12,26 +12,68 @@ import { setByDot, checkContext } from './utils';
  * @param {string} field - Field for delete status. Supports dot notation. Default is 'deleted'.
  *
  * export.before = {
- *   remove: [ softDelete() ], // update item flagging it as deleted
- *   find: [ softDelete() ] // ignore deleted items
+ *   all: softDelete()
  * };
  */
-export const softDelete = (field) => function (hook) {
-  checkContext(hook, 'before', ['get', 'find', 'update', 'patch', 'remove', 'all'], 'softDelete');
+export const softDelete = field => {
+  const deleteField = field || 'deleted';
 
-  if (hook.method !== 'remove') {
+  return function (hook) {
+    const service = this;
+    hook.data = hook.data || {};
     hook.params.query = hook.params.query || {};
-    setByDot(hook.params.query, `${field || 'deleted'}.$ne`, true);// include non-deleted items only
-    return hook;
-  }
+    checkContext(hook, 'before', null, 'softDelete');
 
-  hook.data = hook.data || {};
-  setByDot(hook.data, field || 'deleted', true); // update the item as deleted
+    if (hook.params.query.$disableSoftDelete) {
+      delete hook.params.query.$disableSoftDelete;
+      return hook;
+    }
 
-  return this.patch(hook.id, hook.data, hook.params).then(data => {
-    hook.result = data; // Set the result from `patch` as the method call result
-    return hook; // Always return the hook or `undefined`
-  });
+    switch (hook.method) {
+      case 'find':
+        hook.params.query[deleteField] = { $ne: true };
+        return hook;
+      case 'get':
+        return throwIfItemDeleted(hook.id)
+          .then(() => hook);
+      case 'create':
+        return hook;
+      case 'update': // fall through
+      case 'patch':
+        if (hook.id) {
+          return throwIfItemDeleted(hook.id)
+            .then(() => hook);
+        }
+        hook.params.query[deleteField] = { $ne: true };
+        return hook;
+      case 'remove':
+        return Promise.resolve()
+          .then(() => hook.id ? throwIfItemDeleted(hook.id) : null)
+          .then(() => {
+            hook.data[deleteField] = true;
+            hook.params.query[deleteField] = { $ne: true };
+            hook.params.query.$disableSoftDelete = true;
+
+            return service.patch(hook.id, hook.data, hook.params)
+              .then(result => {
+                hook.result = result;
+                return hook;
+              });
+          });
+    }
+
+    function throwIfItemDeleted (id) {
+      return service.get(id, { query: { $disableSoftDelete: true } })
+        .then(data => {
+          if (data[deleteField]) {
+            throw new errors.NotFound('Item has been soft deleted.');
+          }
+        })
+        .catch(() => {
+          throw new errors.NotFound('Item not found.');
+        });
+    }
+  };
 };
 
 /**
