@@ -12,8 +12,7 @@ import { checkContext } from './utils';
  * @param {string} field - Field for delete status. Supports dot notation. Default is 'deleted'.
  *
  * export.before = {
- *   remove: [ softDelete() ], // update item flagging it as deleted
- *   find: [ softDelete() ] // ignore deleted items
+ *   all: softDelete()
  * };
  */
 export const softDelete = field => {

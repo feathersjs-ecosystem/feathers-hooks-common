@@ -163,8 +163,7 @@ module.exports.before = {
 
 ```javascript
 export.before = {
-  remove: [ softDelete() ], // update item flagging it as deleted
-  find: [ softDelete() ] // ignore deleted items
+  all: softDelete()
 };
 ```
 
