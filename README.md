@@ -252,12 +252,12 @@ while others do not.
 
 Run a predicate function,
 which returns either a boolean, or a Promise which evaluates to a boolean.
-Run the hook if the result is truesy.
+Run one or more hooks if the result is truesy.
 
 ```javascript
 // sync predicate and hook
 const isNotAdmin = adminRole => hook => hook.params.user.roles.indexOf(adminRole || 'admin') === -1;
-hooks.iff(isNotAdmin(), hooks.remove('securityKey'))
+hooks.iff(isNotAdmin(), hooks.remove('securityKey'), hook2, ...)
 );
 // async predicate and hook
 hooks.iff(

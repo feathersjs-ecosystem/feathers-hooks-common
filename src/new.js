@@ -3,6 +3,7 @@
 /* eslint no-param-reassign: 0, no-var: 0 */
 
 const errors = require('feathers-errors').errors;
+import { processHooks } from 'feathers-hooks/lib/commons';
 
 import { checkContext } from './utils';
 
@@ -76,12 +77,16 @@ export const softDelete = field => {
   };
 };
 
+export const doHooks = (...rest) => function (hook) {
+  return processHooks.call(this, rest, hook);
+};
+
 /**
  * Hook to conditionally execute another hook.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
  *    Execute hookFcn if result is truesy.
- * @param {Function|Promise} hookFcn - Hook function to execute.
+ * @param {Array.Function} rest - Hook functions to execute.
  * @returns {Object} hook
  *
  * The predicate is called with hook as a param.
@@ -91,9 +96,11 @@ export const softDelete = field => {
  *   const isProvider = provider => hook => hook.params.provider === provider;
  *   iff(isProvider('socketio'), hook.remove( ... ));
  *
+ * The hook functions may be sync, return a Promise, or use a callback.
+ *
  * feathers-hooks will catch any errors from the predicate or hook Promises.
  */
-export const iff = (ifFcn, hookFcn) => (hook) => {
+export const iff = (ifFcn, ...rest) => function (hook) {
   const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
 
   if (!check) {
@@ -101,7 +108,7 @@ export const iff = (ifFcn, hookFcn) => (hook) => {
   }
 
   if (typeof check.then !== 'function') {
-    return hookFcn(hook); // could be sync or async
+    return doHooks(...rest).call(this, hook); // could be sync or async
   }
 
   return check.then(check1 => {
@@ -109,7 +116,7 @@ export const iff = (ifFcn, hookFcn) => (hook) => {
       return hook;
     }
 
-    return hookFcn(hook); // could be sync or async
+    return doHooks(...rest).call(this, hook); // could be sync or async
   });
 };
 

@@ -106,15 +106,12 @@ describe('isProvider - works with iff', () => {
   });
 
   it('calls sync hook function if truthy', () => {
-    const result = hooks.iff(isProvider('rest'), hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      assert.fail(true, false, 'promise unexpectedly returned');
-    } else {
-      assert.deepEqual(result, hookAfter);
-      assert.equal(hookFcnSyncCalls, 1);
-      assert.deepEqual(hook, hookAfter);
-    }
+    hooks.iff(isProvider('rest'), hookFcnSync)(hook)
+      .then(hook => {
+        assert.deepEqual(hook, hookAfter);
+        assert.equal(hookFcnSyncCalls, 1);
+        assert.deepEqual(hook, hookAfter);
+      });
   });
 
   it('does not call sync hook function if falsey', () => {
