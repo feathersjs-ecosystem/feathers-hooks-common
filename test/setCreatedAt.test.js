@@ -145,6 +145,7 @@ describe('setCreatedAt', () => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
     });
   });
+
   describe('dynamic decision with Promise', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
@@ -178,6 +179,23 @@ describe('setCreatedAt', () => {
           assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
           next();
         });
+    });
+  });
+
+  describe('time advances', () => {
+    beforeEach(() => {
+      hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
+    });
+
+    it('for 2 hooks', next => {
+      hooks.setCreatedAt()(hookBefore);
+      const firstTime = hookBefore.data.createdAt;
+
+      setTimeout(() => {
+        hooks.setCreatedAt()(hookBefore);
+        assert.isAbove(hookBefore.data.createdAt, firstTime);
+        next();
+      }, 50);
     });
   });
 });
