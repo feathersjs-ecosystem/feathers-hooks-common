@@ -179,6 +179,23 @@ describe('setCreatedAt', () => {
         });
     });
   });
+
+  describe('time advances', () => {
+    beforeEach(() => {
+      hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
+    });
+
+    it('for 2 hooks', next => {
+      hooks.setUpdatedAt()(hookBefore);
+      const firstTime = hookBefore.data.updatedAt;
+
+      setTimeout(() => {
+        hooks.setUpdatedAt()(hookBefore);
+        assert.isAbove(hookBefore.data.updatedAt, firstTime);
+        next();
+      }, 50);
+    });
+  });
 });
 
 // Helpers
