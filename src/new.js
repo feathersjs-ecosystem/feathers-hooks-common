@@ -77,7 +77,25 @@ export const softDelete = field => {
   };
 };
 
-export const doHooks = (...rest) => function (hook) {
+/**
+ * Hook to execute multiple hooks
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Object} resulting hook
+ *
+ * Example 1
+ * service.before({
+ *   create: hooks.combine(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   return hooks.combine(hook1, hook2, ...).call(this, currentHook)
+ *     .then(hook => { ... });
+ * }
+ */
+export const combine = (...rest) => function (hook) {
   return processHooks.call(this, rest, hook);
 };
 
@@ -86,8 +104,8 @@ export const doHooks = (...rest) => function (hook) {
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
  *    Execute hookFcn if result is truesy.
- * @param {Array.Function} rest - Hook functions to execute.
- * @returns {Object} hook
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Object} resulting hook
  *
  * The predicate is called with hook as a param.
  *   const isServer = hook => !hook.params.provider;
@@ -108,7 +126,7 @@ export const iff = (ifFcn, ...rest) => function (hook) {
   }
 
   if (typeof check.then !== 'function') {
-    return doHooks(...rest).call(this, hook); // could be sync or async
+    return combine(...rest).call(this, hook); // could be sync or async
   }
 
   return check.then(check1 => {
@@ -116,7 +134,7 @@ export const iff = (ifFcn, ...rest) => function (hook) {
       return hook;
     }
 
-    return doHooks(...rest).call(this, hook); // could be sync or async
+    return combine(...rest).call(this, hook); // could be sync or async
   });
 };
 

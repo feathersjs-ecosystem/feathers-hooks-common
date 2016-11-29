@@ -48,7 +48,7 @@ function user () {
 
         return hook;
       },
-      hooks.doHooks(
+      hooks.combine(
         function (hook) {
           if (hook.app !== app) { throw new Error('App wrong 1.'); }
           if (service !== this) { throw new Error('Service wrong 1.'); }
@@ -96,7 +96,7 @@ function user () {
   });
 }
 
-describe('doHooks', () => {
+describe('combine', () => {
   let app;
   let user;
 
