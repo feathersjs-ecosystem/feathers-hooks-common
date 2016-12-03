@@ -45,7 +45,6 @@ const predicateAsyncFunny = (hook) => {
 
 const hookFcnSync = (hook) => {
   hookFcnSyncCalls += 1;
-  console.log('hookFuncSync called', hookFcnSyncCalls);
 
   hook.data.first = hook.data.first.toLowerCase();
 
@@ -54,7 +53,6 @@ const hookFcnSync = (hook) => {
 
 const hookFcnAsync = (hook) => new Promise(resolve => {
   hookFcnAsyncCalls += 1;
-  console.log('hookFuncAsync called', hookFcnAsyncCalls);
 
   hook.data.first = hook.data.first.toLowerCase();
 
@@ -63,7 +61,6 @@ const hookFcnAsync = (hook) => new Promise(resolve => {
 
 const hookFcnCb = (hook, cb) => {
   hookFcnCbCalls += 1;
-  console.log('hookFuncCb called', hookFcnCbCalls);
 
   cb(null, hook);
 };
@@ -78,7 +75,7 @@ describe('iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if truthy non-function', () => {
-    hooks.iff('a', hookFcnSync)(hook)
+    return hooks.iff('a', hookFcnSync)(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
@@ -99,7 +96,7 @@ describe('iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if sync predicate truthy', () => {
-    hooks.iff(() => 'a', hookFcnSync)(hook)
+    return hooks.iff(() => 'a', hookFcnSync)(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
@@ -128,23 +125,14 @@ describe('iff - sync predicate, async hook', () => {
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
   });
-
-  it('calls async hook function if sync predicate truthy', (done) => {
-    const result = hooks.iff(true, hookFcnAsync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then((result1) => {
+  
+  it('calls async hook function if sync predicate truthy', () => {
+    const result = hooks.iff(true, hookFcnAsync)(hook)
+      .then((result1) => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 
   it('does not call async hook function if sync predicate falsey', () => {
@@ -159,22 +147,13 @@ describe('iff - sync predicate, async hook', () => {
     }
   });
 
-  it('calls async hook function if sync predicate returns truthy', (done) => {
-    const result = hooks.iff(() => true, hookFcnAsync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then((result1) => {
+  it('calls async hook function if sync predicate returns truthy', () => {
+    const result = hooks.iff(() => true, hookFcnAsync)(hook)
+      .then((result1) => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 });
 
@@ -187,40 +166,22 @@ describe('iff - async predicate, sync hook', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('calls sync hook function if aync predicate truthy', (done) => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('calls sync hook function if aync predicate truthy', () => {
+    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnSync)(hook)
+      .then(result1 => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 
-  it('does not call sync hook function if async predicate falsey', (done) => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('does not call sync hook function if async predicate falsey', () => {
+    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnSync)(hook)
+      .then(result1 => {
         assert.deepEqual(result1, hookBefore);
         assert.equal(hookFcnSyncCalls, 0);
         assert.deepEqual(hook, hookBefore);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 });
 
@@ -233,38 +194,22 @@ describe('iff - async predicate, async hook', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('calls async hook function if aync predicate truthy', (done) => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnAsync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('calls async hook function if aync predicate truthy', () => {
+    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnAsync)(hook)
+      .then(result1 => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-      done();
-    }
   });
 
-  it('does not call async hook function if async predicate falsey', (done) => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnAsync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('does not call async hook function if async predicate falsey', () => {
+    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnAsync)(hook)
+      .then(result1 => {
         assert.deepEqual(result1, hookBefore);
         assert.equal(hookFcnAsyncCalls, 0);
         assert.deepEqual(hook, hookBefore);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-      done();
-    }
   });
 });
 
@@ -280,7 +225,7 @@ describe('iff - sync predicate', () => {
   });
 
   it('does not need to access hook', () => {
-    hooks.iff(() => 'a', hookFcnSync)(hook)
+    return hooks.iff(() => 'a', hookFcnSync)(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
@@ -289,7 +234,7 @@ describe('iff - sync predicate', () => {
   });
 
   it('is passed hook as param', () => {
-    hooks.iff(predicateSync, hookFcnSync)(hook)
+    return hooks.iff(predicateSync, hookFcnSync)(hook)
       .then(hook => {
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(hook, hookAfter);
@@ -299,7 +244,7 @@ describe('iff - sync predicate', () => {
   });
 
   it('a higher order predicate can pass more options', () => {
-    hooks.iff(predicateSync2({ z: 'z' }), hookFcnSync)(hook)
+    return hooks.iff(predicateSync2({ z: 'z' }), hookFcnSync)(hook)
       .then(hook => {
         assert.deepEqual(predicateOptions, { z: 'z' });
         assert.deepEqual(predicateHook, hookBefore);
@@ -322,64 +267,37 @@ describe('iff - async predicate', () => {
     predicateValue = null;
   });
 
-  it('is passed hook as param', (done) => {
-    const result = hooks.iff(predicateAsync, hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('is passed hook as param', () => {
+    const result = hooks.iff(predicateAsync, hookFcnSync)(hook)
+      .then(result1 => {
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 
-  it('is resolved', (done) => {
-    const result = hooks.iff(predicateAsyncFunny, hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('is resolved', () => {
+    const result = hooks.iff(predicateAsyncFunny, hookFcnSync)(hook)
+      .then(result1 => {
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
 
         assert.equal(predicateValue, 'abc');
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 
-  it('a higher order predicate can pass more options', (done) => {
-    const result = hooks.iff(predicateAsync2({ y: 'y' }), hookFcnSync)(hook);
-
-    if (result && typeof result.then === 'function') {
-      result.then(result1 => {
+  it('a higher order predicate can pass more options', () => {
+    const result = hooks.iff(predicateAsync2({ y: 'y' }), hookFcnSync)(hook)
+      .then(result1 => {
         assert.deepEqual(predicateOptions, { y: 'y' });
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.deepEqual(result1, hookAfter);
-
-        done();
       });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
-
-      done();
-    }
   });
 });
 
@@ -393,8 +311,8 @@ describe('iff - runs .else()', () => {
     hookFcnCbCalls = 0;
   });
 
-  it('using iff(true, ...)', (done) => {
-    hooks.iff(true,
+  it('using iff(true, ...)', () => {
+    return hooks.iff(true,
       hookFcnSync,
       hookFcnSync,
       hookFcnSync
@@ -405,13 +323,11 @@ describe('iff - runs .else()', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('using if(false).else(...)', (done) => {
-    hooks.iff(false,
+  it('using if(false).else(...)', () => {
+    return hooks.iff(false,
       hookFcnSync,
     )
       .else(
@@ -427,8 +343,6 @@ describe('iff - runs .else()', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 });
@@ -443,8 +357,8 @@ describe('iff - runs iff(true, iff(true, ...)', () => {
     hookFcnCbCalls = 0;
   });
 
-  it('using iff(true, iff(true, hookFcnSync))', (done) => {
-    hooks.iff(true,
+  it('using iff(true, iff(true, hookFcnSync))', () => {
+    return hooks.iff(true,
       hookFcnAsync,
       hooks.iff(true, hookFcnSync),
       hookFcnCb
@@ -455,13 +369,11 @@ describe('iff - runs iff(true, iff(true, ...)', () => {
         assert.equal(hookFcnCbCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('using iff(true, iff(true, hookFcnAsync))', (done) => {
-    hooks.iff(true,
+  it('using iff(true, iff(true, hookFcnAsync))', () => {
+    return hooks.iff(true,
       hookFcnSync,
       hooks.iff(true, hookFcnAsync),
       hookFcnCb
@@ -472,13 +384,11 @@ describe('iff - runs iff(true, iff(true, ...)', () => {
         assert.equal(hookFcnCbCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('runs iff(true, iff(true, hookFcnCb))', (done) => {
-    hooks.iff(true,
+  it('runs iff(true, iff(true, hookFcnCb))', () => {
+    return hooks.iff(true,
       hookFcnSync,
       hooks.iff(true, hookFcnCb),
       hookFcnAsync
@@ -489,8 +399,6 @@ describe('iff - runs iff(true, iff(true, ...)', () => {
         assert.equal(hookFcnCbCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 });
@@ -505,8 +413,8 @@ describe('iff - runs iff(true, iff(false).else(...)', () => {
     hookFcnCbCalls = 0;
   });
 
-  it('using iff(true, iff(false).else(hookFcnSync))', (done) => {
-    hooks.iff(true,
+  it('using iff(true, iff(false).else(hookFcnSync))', () => {
+    return hooks.iff(true,
       hookFcnAsync,
       hooks.iff(false, hookFcnCb).else(hookFcnSync),
       hookFcnAsync
@@ -517,13 +425,11 @@ describe('iff - runs iff(true, iff(false).else(...)', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('using iff(true, iff(false).else(hookFcnAsync))', (done) => {
-    hooks.iff(true,
+  it('using iff(true, iff(false).else(hookFcnAsync))', () => {
+    return hooks.iff(true,
       hookFcnSync,
       hooks.iff(false, hookFcnSync).else(hookFcnAsync),
       hookFcnSync
@@ -534,8 +440,6 @@ describe('iff - runs iff(true, iff(false).else(...)', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 });
@@ -550,8 +454,8 @@ describe('iff - runs iff(false).else(iff(...).else(...))', () => {
     hookFcnCbCalls = 0;
   });
 
-  it('using iff(false).else(iff(true, ...))', (done) => {
-    hooks.iff(false,
+  it('using iff(false).else(iff(true, ...))', () => {
+    return hooks.iff(false,
       hookFcnCb
     )
       .else(
@@ -565,15 +469,11 @@ describe('iff - runs iff(false).else(iff(...).else(...))', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('runs iff(false).else(iff(false).else(...))', (done) => {
-    console.log('test start hook.iff()');
-
-    hooks.iff(false,
+  it('runs iff(false).else(iff(false).else(...))', () => {
+    return hooks.iff(false,
       hookFcnCb
     )
       .else(
@@ -587,8 +487,6 @@ describe('iff - runs iff(false).else(iff(...).else(...))', () => {
         assert.equal(hookFcnCbCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 });
@@ -603,8 +501,8 @@ describe('iff - multiple iff() sequentially', () => {
     hookFcnCbCalls = 0;
   });
 
-  it('runs in iff(true, ...)', (done) => {
-    hooks.iff(true,
+  it('runs in iff(true, ...)', () => {
+    return hooks.iff(true,
       hookFcnCb,
       hooks.iff(true, hookFcnSync, hookFcnSync, hookFcnSync),
       hookFcnCb,
@@ -617,13 +515,11 @@ describe('iff - multiple iff() sequentially', () => {
         assert.equal(hookFcnCbCalls, 3);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 
-  it('runs in iff(false).else(...)', (done) => {
-    hooks.iff(false,
+  it('runs in iff(false).else(...)', () => {
+    return hooks.iff(false,
       hookFcnCb
     )
       .else(
@@ -638,8 +534,6 @@ describe('iff - multiple iff() sequentially', () => {
         assert.equal(hookFcnCbCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
-
-        done();
       });
   });
 });
