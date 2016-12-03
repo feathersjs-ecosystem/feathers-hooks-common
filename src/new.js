@@ -100,11 +100,11 @@ export const combine = (...rest) => function (hook) {
 };
 
 /**
- * Hook to conditionally execute another hook.
+ * Hook to conditionally execute one or another set of hooks.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- *    Execute hookFcn if result is truesy.
- * @param {Array.function} rest - Hook functions to execute.
+ * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function|Function} falseHooks - Hook functions to execute when ifFcn is falsey.
  * @returns {Object} resulting hook
  *
  * The predicate is called with hook as a param.
@@ -115,27 +115,66 @@ export const combine = (...rest) => function (hook) {
  *   iff(isProvider('socketio'), hook.remove( ... ));
  *
  * The hook functions may be sync, return a Promise, or use a callback.
- *
  * feathers-hooks will catch any errors from the predicate or hook Promises.
+ *
+ * Examples
+ * iffElse(isServer, [hookA, hookB], hookC)
+ *
+ * iffElse(isServer,
+ *   [ hookA, iffElse(hook => hook.method === 'create', hook1, [hook2, hook3]), hookB ],
+ *   iffElse(isProvider('rest'), [hook4, hook5], hook6])
+ * )
  */
-export const iff = (ifFcn, ...rest) => function (hook) {
+export const iffElse = (ifFcn, trueHooks, falseHooks) => (hook) => {
+  if (typeof trueHooks === 'function') { trueHooks = [trueHooks]; }
+  if (typeof falseHooks === 'function') { falseHooks = [falseHooks]; }
+
+  const runHooks = hooks => hooks ? combine(...hooks).call(this, hook) : hook;
+
   const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
 
   if (!check) {
-    return hook;
+    return runHooks(falseHooks);
   }
 
   if (typeof check.then !== 'function') {
-    return combine(...rest).call(this, hook); // could be sync or async
+    return runHooks(trueHooks);
   }
 
-  return check.then(check1 => {
-    if (!check1) {
-      return hook;
-    }
+  return check.then(check1 => runHooks(check1 ? trueHooks : falseHooks));
+};
 
-    return combine(...rest).call(this, hook); // could be sync or async
-  });
+/**
+ * Hook to conditionally execute one or another set of hooks using function chaining.
+ *
+ * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
+ * @param {Array.function} rest - Hook functions to execute when ifFcn is truesy.
+ * @returns {Function} iffWithoutElse
+ *
+ * Examples:
+ * iff(isServer, hookA, hookB)
+ *   .else(hookC)
+ *
+ * iff(isServer,
+ *   hookA,
+ *   iff(isProvider('rest'), hook1, hook2, hook3)
+ *     .else(hook4, hook5),
+ *   hookB
+ * )
+ *   .else(
+ *     iff(hook => hook.method === 'create', hook6, hook7)
+ *   )
+ */
+
+export const iff = (ifFcn, ...rest) => {
+  const trueHooks = [].concat(rest);
+
+  const iffWithoutElse = function (hook) {
+    return iffElse(ifFcn, trueHooks, null).call(this, hook);
+  };
+  iffWithoutElse.else = (...falseHooks) => iffElse(ifFcn, trueHooks, falseHooks);
+
+  return iffWithoutElse;
 };
 
 /**
