@@ -125,9 +125,9 @@ describe('iff - sync predicate, async hook', () => {
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
   });
-  
+
   it('calls async hook function if sync predicate truthy', () => {
-    const result = hooks.iff(true, hookFcnAsync)(hook)
+    return hooks.iff(true, hookFcnAsync)(hook)
       .then((result1) => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
@@ -148,7 +148,7 @@ describe('iff - sync predicate, async hook', () => {
   });
 
   it('calls async hook function if sync predicate returns truthy', () => {
-    const result = hooks.iff(() => true, hookFcnAsync)(hook)
+    return hooks.iff(() => true, hookFcnAsync)(hook)
       .then((result1) => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
@@ -167,7 +167,7 @@ describe('iff - async predicate, sync hook', () => {
   });
 
   it('calls sync hook function if aync predicate truthy', () => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnSync)(hook)
+    return hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnSync)(hook)
       .then(result1 => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
@@ -176,7 +176,7 @@ describe('iff - async predicate, sync hook', () => {
   });
 
   it('does not call sync hook function if async predicate falsey', () => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnSync)(hook)
+    return hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnSync)(hook)
       .then(result1 => {
         assert.deepEqual(result1, hookBefore);
         assert.equal(hookFcnSyncCalls, 0);
@@ -195,7 +195,7 @@ describe('iff - async predicate, async hook', () => {
   });
 
   it('calls async hook function if aync predicate truthy', () => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnAsync)(hook)
+    return hooks.iff(() => new Promise(resolve => resolve(true)), hookFcnAsync)(hook)
       .then(result1 => {
         assert.deepEqual(result1, hookAfter);
         assert.equal(hookFcnAsyncCalls, 1);
@@ -204,7 +204,7 @@ describe('iff - async predicate, async hook', () => {
   });
 
   it('does not call async hook function if async predicate falsey', () => {
-    const result = hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnAsync)(hook)
+    return hooks.iff(() => new Promise(resolve => resolve(false)), hookFcnAsync)(hook)
       .then(result1 => {
         assert.deepEqual(result1, hookBefore);
         assert.equal(hookFcnAsyncCalls, 0);
@@ -268,7 +268,7 @@ describe('iff - async predicate', () => {
   });
 
   it('is passed hook as param', () => {
-    const result = hooks.iff(predicateAsync, hookFcnSync)(hook)
+    return hooks.iff(predicateAsync, hookFcnSync)(hook)
       .then(result1 => {
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(result1, hookAfter);
@@ -278,7 +278,7 @@ describe('iff - async predicate', () => {
   });
 
   it('is resolved', () => {
-    const result = hooks.iff(predicateAsyncFunny, hookFcnSync)(hook)
+    return hooks.iff(predicateAsyncFunny, hookFcnSync)(hook)
       .then(result1 => {
         assert.deepEqual(predicateHook, hookBefore);
         assert.deepEqual(result1, hookAfter);
@@ -290,7 +290,7 @@ describe('iff - async predicate', () => {
   });
 
   it('a higher order predicate can pass more options', () => {
-    const result = hooks.iff(predicateAsync2({ y: 'y' }), hookFcnSync)(hook)
+    return hooks.iff(predicateAsync2({ y: 'y' }), hookFcnSync)(hook)
       .then(result1 => {
         assert.deepEqual(predicateOptions, { y: 'y' });
         assert.deepEqual(predicateHook, hookBefore);
