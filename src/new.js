@@ -178,6 +178,12 @@ export const iff = (ifFcn, ...rest) => {
 };
 
 /**
+ * Alias for iff
+ */
+
+export const when = iff;
+
+/**
  * Predicate to check what called the service method.
  *
  * @param {string} [providers] - Providers permitted
