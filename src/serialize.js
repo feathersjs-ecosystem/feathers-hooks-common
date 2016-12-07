@@ -1,5 +1,5 @@
 
-import { getItems, replaceItems, getByDot, setByDot } from 'feathers-hooks-common/lib/utils';
+import { getItems, replaceItems, getByDot, setByDot } from './utils';
 
 export const serialize = schema => hook => {
   schema = typeof schema === 'function' ? schema(hook) : schema;
