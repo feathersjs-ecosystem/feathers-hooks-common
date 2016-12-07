@@ -178,6 +178,13 @@ export const iff = (ifFcn, ...rest) => {
 };
 
 /**
+ * Alias for iff
+ */
+
+export const when = iff;
+
+
+/**
  * Hook that executes a set of hooks and returns true if at least one of
  * the hooks returns a truthy value and false if none of them do.
  *
@@ -202,6 +209,35 @@ export const some = (...rest) => function (hook) {
 
   return Promise.all(hooks).then(results => {
     return Promise.resolve(results.some(result => !!result));
+  });
+};
+
+/**
+ * Hook that executes a set of hooks and returns true if all of
+ * the hooks returns a truthy value and false if one of them does not.
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Boolean}
+ *
+ * Example 1
+ * service.before({
+ *   create: hooks.every(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   return hooks.every(hook1, hook2, ...).call(this, currentHook)
+ *     .then(hook => { ... });
+ * }
+ */
+ */
+
+export const every = (...rest) => function (hook) {
+  const hooks = rest.map(fn => fn.call(this, hook));
+
+  return Promise.all(hooks).then(results => {
+    return Promise.resolve(results.every(result => !!result));
   });
 };
 
