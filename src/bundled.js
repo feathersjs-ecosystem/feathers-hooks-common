@@ -391,7 +391,7 @@ export function disable (realm, ...args) {
  *
  * If 'senderId' is an array of keys, then 'sender' will be an array of populated items.
  */
-export function populate (target, options) {
+export function legacyPopulate (target, options) {
   options = Object.assign({}, options);
 
   if (!options.service) {
