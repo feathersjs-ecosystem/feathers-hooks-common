@@ -225,3 +225,52 @@ export const isNot = (predicate) => {
     return result.then(result1 => !result1);
   };
 };
+
+/**
+ * Move params from client to hook.params.
+ *
+ * @param {string|Array.string} whitelist - list of prop names allowed.
+ *    The following names are reserved and may not be used.
+ *    app, authentication, __authentication, permissions, __permissions, provider, query
+ * @returns {Object} hook
+ *
+ * I think it will help people feel safe and warm inside,
+ * instead of wondering if they’re doing something that’s a hack.
+ *
+ * Example:
+ * // on client:
+ * service.find({ query: { dept: 'a', $client: ( populate: 'po-1', serialize: 'po-mgr' } } } );
+ * // on server
+ * service.before({ all: [ $client, myHook ]});
+ * // myHook hook.params is
+ *   { query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' } }
+ */
+export const $client = (...whitelist) => {
+  whitelist.forEach(key => {
+    if (reservedParamProps.indexOf(key) !== -1) {
+      throw new errors.MethodNotAllowed(`${key} is a reserved Feathers prop name. ($client`);
+    }
+  });
+  
+  return hook => {
+    whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
+    const params = hook.params;
+    
+    if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
+      const client = params.query.$client;
+      
+      whitelist.forEach(key => {
+        if (key in client) {
+          params[key] = client[key];
+        }
+      });
+      
+      delete params.query.$client;
+    }
+    
+    return hook;
+  };
+};
+
+const reservedParamProps = ['app', 'authenticated', '__authenticated',
+  'permitted', '__permitted', 'provider', 'query'];
