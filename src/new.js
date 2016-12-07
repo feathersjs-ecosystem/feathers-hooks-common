@@ -234,9 +234,6 @@ export const isNot = (predicate) => {
  *    app, authentication, __authentication, permissions, __permissions, provider, query
  * @returns {Object} hook
  *
- * I think it will help people feel safe and warm inside,
- * instead of wondering if they’re doing something that’s a hack.
- *
  * Example:
  * // on client:
  * service.find({ query: { dept: 'a', $client: ( populate: 'po-1', serialize: 'po-mgr' } } } );
@@ -251,23 +248,23 @@ export const $client = (...whitelist) => {
       throw new errors.MethodNotAllowed(`${key} is a reserved Feathers prop name. ($client`);
     }
   });
-  
+
   return hook => {
     whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
     const params = hook.params;
-    
+
     if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
       const client = params.query.$client;
-      
+
       whitelist.forEach(key => {
         if (key in client) {
           params[key] = client[key];
         }
       });
-      
+
       delete params.query.$client;
     }
-    
+
     return hook;
   };
 };
