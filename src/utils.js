@@ -11,10 +11,10 @@
  * There is no way to differentiate between non-existent paths and a value of undefined
  */
 export const getByDot = (obj, path) => {
-  if (!path.contains('.')) {
+  if (path.indexOf('.') === -1) {
     return obj[path];
   }
-  
+
   return path.split('.').reduce(
     (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
     obj
@@ -35,16 +35,16 @@ export const getByDot = (obj, path) => {
  * e.g. setByDot({}, 'a.b.c', undefined, true) will return {a: b: {} }
  */
 export const setByDot = (obj, path, value, ifDelete) => {
-  if (!path.includes('.')) {
+  if (path.indexOf('.') === -1) {
     obj[path] = value;
-    
+
     if (value === undefined && ifDelete) {
       delete obj[path];
     }
-    
+
     return;
   }
-  
+
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
   return parts.reduce(
