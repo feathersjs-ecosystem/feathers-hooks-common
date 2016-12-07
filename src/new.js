@@ -183,7 +183,6 @@ export const iff = (ifFcn, ...rest) => {
 
 export const when = iff;
 
-
 /**
  * Hook that executes a set of hooks and returns true if at least one of
  * the hooks returns a truthy value and false if none of them do.
@@ -230,7 +229,6 @@ export const some = (...rest) => function (hook) {
  *   return hooks.every(hook1, hook2, ...).call(this, currentHook)
  *     .then(hook => { ... });
  * }
- */
  */
 
 export const every = (...rest) => function (hook) {
