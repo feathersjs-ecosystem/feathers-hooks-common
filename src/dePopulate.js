@@ -1,5 +1,5 @@
 
-import { getItems, replaceItems } from 'feathers-hooks-common/lib/utils';
+import { getItems, replaceItems } from './utils';
 
 export const dePopulate = () => hook => {
   const items = getItems(hook);
