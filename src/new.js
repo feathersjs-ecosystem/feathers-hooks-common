@@ -103,7 +103,7 @@ export const combine = (...rest) => function (hook) {
  * Hook to conditionally execute one or another set of hooks.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truthy.
  * @param {Array.function|Function} falseHooks - Hook functions to execute when ifFcn is falsey.
  * @returns {Object} resulting hook
  *
@@ -182,6 +182,34 @@ export const iff = (ifFcn, ...rest) => {
  */
 
 export const when = iff;
+
+/**
+ * Hook that executes a set of hooks and returns true if all of
+ * the hooks returns a truthy value and false if one of them does not.
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Boolean}
+ *
+ * Example 1
+ * service.before({
+ *   create: hooks.every(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   return hooks.every(hook1, hook2, ...).call(this, currentHook)
+ *     .then(hook => { ... });
+ * }
+ */
+
+export const every = (...rest) => function (hook) {
+  const hooks = rest.map(fn => fn.call(this, hook));
+
+  return Promise.all(hooks).then(results => {
+    return Promise.resolve(results.every(result => !!result));
+  });
+};
 
 /**
  * Predicate to check what called the service method.
