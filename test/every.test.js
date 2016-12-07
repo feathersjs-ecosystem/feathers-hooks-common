@@ -5,7 +5,7 @@ const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
 const hooks = require('../src');
 
-describe.only('every', () => {
+describe('every', () => {
   let app;
 
   beforeEach(() => {
@@ -22,6 +22,8 @@ describe.only('every', () => {
             hooks.iff(
               hooks.every(
                 (hook) => true,
+                (hook) => 1,
+                (hook) => {},
                 (hook) => Promise.resolve(true)
               ),
               (hook) => Promise.resolve(hook)
@@ -38,7 +40,7 @@ describe.only('every', () => {
     });
   });
 
-  describe('when a hook errors', () => {
+  describe('when a hook throws an error', () => {
     beforeEach(() => {
       app.service('users').hooks({
         before: {
@@ -49,6 +51,31 @@ describe.only('every', () => {
                 (hook) => {
                   throw new Error('Hook 2 errored');
                 },
+                (hook) => true
+              ),
+              (hook) => Promise.resolve(hook)
+            )
+          ]
+        }
+      });
+    });
+
+    it('rejects with the error', () => {
+      return app.service('users').find().catch(error => {
+        assert.equal(error.message, 'Hook 2 errored');
+      });
+    });
+  });
+
+  describe('when a hook rejects with an error', () => {
+    beforeEach(() => {
+      app.service('users').hooks({
+        before: {
+          all: [
+            hooks.iff(
+              hooks.every(
+                (hook) => true,
+                (hook) => Promise.reject(Error('Hook 2 errored')),
                 (hook) => true
               ),
               (hook) => Promise.resolve(hook)
@@ -77,6 +104,9 @@ describe.only('every', () => {
                   (hook) => Promise.resolve(true),
                   (hook) => Promise.resolve(false),
                   (hook) => false,
+                  (hook) => 0,
+                  (hook) => null,
+                  (hook) => undefined,
                   (hook) => true,
                 )
               ),
