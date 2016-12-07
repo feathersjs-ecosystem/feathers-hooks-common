@@ -148,7 +148,7 @@ export const iffElse = (ifFcn, trueHooks, falseHooks) => (hook) => {
  * Hook to conditionally execute one or another set of hooks using function chaining.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function} rest - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function} rest - Hook functions to execute when ifFcn is truthy.
  * @returns {Function} iffWithoutElse
  *
  * Examples:
@@ -237,6 +237,32 @@ export const every = (...rest) => function (hook) {
   return Promise.all(hooks).then(results => {
     return Promise.resolve(results.every(result => !!result));
   });
+};
+
+/**
+ * Hook to conditionally execute one or another set of hooks using function chaining.
+ * if the predicate hook function returns a falsey value.
+ * Equivalent to iff(isNot(isProvider), hook1, hook2, hook3).
+ *
+ * @param {Function|Promise|boolean} unlessFcn - Predicate function(hook).
+ * @param {Array.function} rest - Hook functions to execute when unlessFcn is falsey.
+ * @returns {Function} iffWithoutElse
+ *
+ * Examples:
+ * unless(isServer, hookA, hookB)
+ *
+ * unless(isServer,
+ *   hookA,
+ *   unless(isProvider('rest'), hook1, hook2, hook3),
+ *   hookB
+ * )
+ */
+export const unless = (unlessFcn, ...rest) => {
+  if (typeof unlessFcn === 'function') {
+    return iff(isNot(unlessFcn), ...rest);
+  }
+
+  return iff(!unlessFcn, ...rest);
 };
 
 /**
