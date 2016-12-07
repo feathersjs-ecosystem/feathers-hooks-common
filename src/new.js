@@ -103,7 +103,7 @@ export const combine = (...rest) => function (hook) {
  * Hook to conditionally execute one or another set of hooks.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truthy.
  * @param {Array.function|Function} falseHooks - Hook functions to execute when ifFcn is falsey.
  * @returns {Object} resulting hook
  *
@@ -175,6 +175,44 @@ export const iff = (ifFcn, ...rest) => {
   iffWithoutElse.else = (...falseHooks) => iffElse(ifFcn, trueHooks, falseHooks);
 
   return iffWithoutElse;
+};
+
+/**
+ * Hook that executes a set of hooks and returns true if at least one of
+ * the hooks returns a truthy value and false if none of them do.
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Boolean}
+ *
+ * Example 1
+ * service.before({
+ *   create: hooks.some(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   return hooks.some(hook1, hook2, ...).call(this, currentHook)
+ *     .then(hook => { ... });
+ * }
+ */
+
+export const some = (...rest) => (hook) => {
+  const hooks = rest.map(fn => {
+    let promise;
+
+    try {
+      promise = fn.call(this, hook).catch(() => Promise.resolve(false));
+    } catch (error) {
+      promise = Promise.resolve(false);
+    }
+
+    return promise;
+  });
+
+  return Promise.all(hooks).then(results => {
+    return Promise.resolve(results.some(result => !!result));
+  });
 };
 
 /**
