@@ -10,10 +10,16 @@
  *
  * There is no way to differentiate between non-existent paths and a value of undefined
  */
-export const getByDot = (obj, path) => path.split('.').reduce(
-  (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
-  obj
-);
+export const getByDot = (obj, path) => {
+  if (!path.contains('.')) {
+    return obj[path];
+  }
+  
+  return path.split('.').reduce(
+    (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
+    obj
+  );
+};
 
 /**
  * Set a value in an object using dot notation, e.g. employee.address.city.
@@ -28,7 +34,17 @@ export const getByDot = (obj, path) => path.split('.').reduce(
  * new empty inner objects will still be created,
  * e.g. setByDot({}, 'a.b.c', undefined, true) will return {a: b: {} }
  */
-export function setByDot (obj, path, value, ifDelete) {
+export const setByDot = (obj, path, value, ifDelete) => {
+  if (!path.includes('.')) {
+    obj[path] = value;
+    
+    if (value === undefined && ifDelete) {
+      delete obj[path];
+    }
+    
+    return;
+  }
+  
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
   return parts.reduce(
@@ -48,7 +64,7 @@ export function setByDot (obj, path, value, ifDelete) {
     },
     obj
   );
-}
+};
 
 /**
  * Restrict the calling hook to a hook type (before, after) and a set of
@@ -77,7 +93,7 @@ export function setByDot (obj, path, value, ifDelete) {
  * checkContext(hook, 'before');
  */
 
-export function checkContext (hook, type = null, methods = [], label = 'anonymous') {
+export const checkContext = (hook, type = null, methods = [], label = 'anonymous') => {
   if (type && hook.type !== type) {
     throw new Error(`The '${label}' hook can only be used as a '${type}' hook.`);
   }
@@ -90,7 +106,7 @@ export function checkContext (hook, type = null, methods = [], label = 'anonymou
     const msg = JSON.stringify(myMethods);
     throw new Error(`The '${label}' hook can only be used on the '${msg}' service method(s).`);
   }
-}
+};
 
 /**
  * Return the data items in a hook.
@@ -101,10 +117,10 @@ export function checkContext (hook, type = null, methods = [], label = 'anonymou
  * @param {Object} hook - The hook.
  * @returns {Object|Array.<Object>} The data item or array of data items
  */
-export function getItems (hook) {
+export const getItems = hook => {
   const items = hook.type === 'before' ? hook.data : hook.result;
   return items && hook.method === 'find' ? items.data || items : items;
-}
+};
 
 /**
  * Replace the data items in a hook. Companion to getItems.
@@ -115,7 +131,7 @@ export function getItems (hook) {
  * If you update an after find paginated hook with an item rather than an array of items,
  * the hook will have an array consisting of that one item.
  */
-export function replaceItems (hook, items) {
+export const replaceItems = (hook, items) => {
   if (hook.type === 'before') {
     hook.data = items;
   } else if (hook.method === 'find' && hook.result && hook.result.data) {
@@ -129,4 +145,4 @@ export function replaceItems (hook, items) {
   } else {
     hook.result = items;
   }
-}
+};
