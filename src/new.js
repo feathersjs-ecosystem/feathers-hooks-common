@@ -197,18 +197,8 @@ export const iff = (ifFcn, ...rest) => {
  * }
  */
 
-export const some = (...rest) => (hook) => {
-  const hooks = rest.map(fn => {
-    let promise;
-
-    try {
-      promise = fn.call(this, hook).catch(() => Promise.resolve(false));
-    } catch (error) {
-      promise = Promise.resolve(false);
-    }
-
-    return promise;
-  });
+export const some = (...rest) => function (hook) {
+  const hooks = rest.map(fn => fn.call(this, hook));
 
   return Promise.all(hooks).then(results => {
     return Promise.resolve(results.some(result => !!result));
