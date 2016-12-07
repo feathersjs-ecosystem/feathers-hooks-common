@@ -5,16 +5,8 @@ export const dePopulate = () => hook => {
   const items = getItems(hook);
 
   (Array.isArray(items) ? items : [items]).forEach(item => {
-    if ('_computed' in item) {
-      item._computed.forEach(key => { delete item[key]; });
-      delete item._computed;
-    }
-
-    if ('_include' in item) {
-      item._include.forEach(key => { delete item[key]; });
-      delete item._include;
-    }
-
+    removeProps('_computed', item);
+    removeProps('_include', item);
     delete item._elapsed;
   });
 
@@ -22,3 +14,9 @@ export const dePopulate = () => hook => {
   return hook;
 };
 
+function removeProps (name, item) {
+  if (name in item) {
+    item[name].forEach(key => { delete item[key]; });
+    delete item[name];
+  }
+}
