@@ -391,8 +391,13 @@ export function disable (realm, ...args) {
  *
  * If 'senderId' is an array of keys, then 'sender' will be an array of populated items.
  */
-export function populate (target, options) {
+export function legacyPopulate (target, options) {
   options = Object.assign({}, options);
+
+  console.error(
+    'Calling populate(target, options) is now DEPRECATED and will be removed in the future. ' +
+    'Refer to docs.feathersjs.com for more information. (legacyPopulate)'
+  );
 
   if (!options.service) {
     throw new Error('You need to provide a service. (populate)');
