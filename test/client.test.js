@@ -185,11 +185,11 @@ describe('$client', () => {
       assert.throws(() => {
         $client('query')(hook);
       });
-
+  
       assert.throws(() => {
         $client(
-          'app', 'authenticated', '__authenticated',
-          'permitted', '__permitted', 'provider', 'query'
+          'authenticated', '__authenticated', 'mongoose',
+          'provider', 'sequelize', 'query'
         )(hook);
       });
     });
