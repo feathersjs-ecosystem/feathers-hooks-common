@@ -202,7 +202,7 @@ describe('populate - include 1:1', () => {
 
       return populate({ schema, checkPermissions })(hook)
         .then(() => { throw new Error('was not supposed to succeed'); })
-        .catch(() => {});
+        .catch(err => { assert.notEqual(err, undefined); });
     });
 
     it('stores elapsed time', () => {

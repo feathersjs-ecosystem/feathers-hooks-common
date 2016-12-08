@@ -71,21 +71,21 @@ describe('populate - throws on bad params', () => { // run to increase code clim
     const hook = clone(hookAfter);
     return populate({ schema: 1 })(hook)
       .then(() => { throw new Error('was not supposed to succeed'); })
-      .catch(() => {});
+      .catch(err => { assert.notEqual(err, undefined); });
   });
 
   it('permissions not func', () => {
     const hook = clone(hookAfter);
     return populate({ schema: {}, checkPermissions: 1 })(hook)
       .then(() => { throw new Error('was not supposed to succeed'); })
-      .catch(() => {});
+      .catch(err => { assert.notEqual(err, undefined); });
   });
 
   it('throws on invalid permissions', () => {
     const hook = clone(hookAfter);
     return populate({ schema: {}, checkPermissions: () => false })(hook)
       .then(() => { throw new Error('was not supposed to succeed'); })
-      .catch(() => {});
+      .catch(err => { assert.notEqual(err, undefined); });
   });
 });
 
