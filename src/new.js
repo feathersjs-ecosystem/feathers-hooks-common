@@ -227,7 +227,7 @@ export const isNot = (predicate) => {
 };
 
 /**
- * Move params from client to hook.params.
+ * Move params from $client to hook.params.
  *
  * @param {string|Array.string} whitelist - list of prop names allowed.
  *    The following names are reserved and may not be used.
@@ -269,5 +269,5 @@ export const $client = (...whitelist) => {
   };
 };
 
-const reservedParamProps = ['app', 'authenticated', '__authenticated',
-  'permitted', '__permitted', 'provider', 'query'];
+const reservedParamProps = ['authenticated', '__authenticated', 'mongoose',
+  'provider', 'sequelize', 'query'];

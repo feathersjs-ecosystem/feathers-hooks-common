@@ -163,10 +163,6 @@ describe('$client', () => {
       const hook = { params: { query: {} } };
 
       assert.throws(() => {
-        $client('app')(hook);
-      });
-
-      assert.throws(() => {
         $client('authenticated')(hook);
       });
 
@@ -175,15 +171,15 @@ describe('$client', () => {
       });
 
       assert.throws(() => {
-        $client('permitted')(hook);
-      });
-
-      assert.throws(() => {
-        $client('__permitted')(hook);
+        $client('mongoose')(hook);
       });
 
       assert.throws(() => {
         $client('provider')(hook);
+      });
+
+      assert.throws(() => {
+        $client('sequelize')(hook);
       });
 
       assert.throws(() => {
