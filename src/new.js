@@ -231,7 +231,7 @@ export const isNot = (predicate) => {
  *
  * @param {string|Array.string} whitelist - list of prop names allowed.
  *    The following names are reserved and may not be used.
- *    app, authentication, __authentication, permissions, __permissions, provider, query
+ *    authenticated, __authenticated, mongoose, provider, sequelize, query
  * @returns {Object} hook
  *
  * Example:
