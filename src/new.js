@@ -5,7 +5,7 @@
 const errors = require('feathers-errors').errors;
 import { processHooks } from 'feathers-hooks/lib/commons';
 
-import { checkContext } from './utils';
+import { checkContext, getItems } from './utils';
 
 /**
  * Mark an item as deleted rather than removing it from the database.
@@ -225,3 +225,61 @@ export const isNot = (predicate) => {
     return result.then(result1 => !result1);
   };
 };
+
+/**
+ * Validate JSON object using ajv (synchronous)
+ *
+ * @param {Object} schema - json schema (//github.com/json-schema/json-schema)
+ * @param {Function} Ajv - import Ajv from 'ajv'
+ * @param {Object?} options - ajv options
+ *    addNewError optional  reducing function (previousErrs, ajvError, itemsLen, index)
+ *                          to format err.errors in the thrown error
+ *                default   addNewErrorDflt returns an array of error messages.
+ * @returns {undefined}
+ * @throws if hook does not match the schema. err.errors contains the error messages.
+ *
+ * Tutorial: //code.tutsplus.com/tutorials/validating-data-with-json-schema-part-1--cms-25343
+ */
+export const validateSchema = (schema, Ajv, options = { allErrors: true }) => {
+  const addNewError = options.addNewError || addNewErrorDflt;
+  delete options.addNewError;
+  const validate = new Ajv(options).compile(schema); // for fastest execution
+
+  return hook => {
+    const items = getItems(hook);
+    const itemsArray = Array.isArray(items) ? items : [items];
+    const itemsLen = itemsArray.length;
+    let errorMessages;
+    let invalid = false;
+
+    itemsArray.forEach((item, index) => {
+      if (!validate(item)) {
+        invalid = true;
+
+        validate.errors.forEach(ajvError => {
+          errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+        });
+      }
+    });
+
+    if (invalid) {
+      throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+    }
+  };
+};
+
+function addNewErrorDflt (errorMessages, ajvError, itemsLen, index) {
+  const leader = itemsLen === 1 ? '' : `in row ${index + 1} of ${itemsLen}, `;
+  let message;
+
+  if (ajvError.dataPath) {
+    message = `'${leader}${ajvError.dataPath.substring(1)}' ${ajvError.message}`;
+  } else {
+    message = `${leader}${ajvError.message}`;
+    if (ajvError.params && ajvError.params.additionalProperty) {
+      message += `: '${ajvError.params.additionalProperty}'`;
+    }
+  }
+
+  return (errorMessages || []).concat(message);
+}
