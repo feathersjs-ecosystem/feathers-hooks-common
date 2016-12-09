@@ -192,14 +192,14 @@ export const when = iff;
  *
  * Example 1
  * service.before({
- *   create: hooks.some(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ *   create: hooks.iff(hooks.some(hook1, hook2, ...), hookA, hookB, ...)
  * });
  *
  * Example 2 - called within a custom hook function
  * function (hook) {
  *   ...
- *   return hooks.some(hook1, hook2, ...).call(this, currentHook)
- *     .then(hook => { ... });
+ *   hooks.some(hook1, hook2, ...).call(this, currentHook)
+ *     .then(bool => { ... });
  * }
  */
 
@@ -220,14 +220,14 @@ export const some = (...rest) => function (hook) {
  *
  * Example 1
  * service.before({
- *   create: hooks.every(hook1, hook2, ...) // same as [hook1, hook2, ...]
+ *    create: hooks.iff(hooks.every(hook1, hook2, ...), hookA, hookB, ...)
  * });
  *
  * Example 2 - called within a custom hook function
  * function (hook) {
  *   ...
- *   return hooks.every(hook1, hook2, ...).call(this, currentHook)
- *     .then(hook => { ... });
+ *   hooks.every(hook1, hook2, ...).call(this, currentHook)
+ *     .then(bool => { ... })
  * }
  */
 
