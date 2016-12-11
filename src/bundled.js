@@ -305,7 +305,7 @@ export function pluck (...fields) {
  * Disable access to a service method completely, for a specific provider,
  * or for a custom condition.
  *
- * @param {?string|function} realm - Provider, or function(hook):boolean|Promise
+ * @param {string|function} [realm] - Provider, or function(hook):boolean|Promise
  *    The first provider or the custom condition.
  *    null = disable completely,
  *    'external' = disable external access,
