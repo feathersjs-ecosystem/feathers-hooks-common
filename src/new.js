@@ -373,6 +373,7 @@ function addNewErrorDflt (errorMessages, ajvError, itemsLen, index) {
   return (errorMessages || []).concat(message);
 }
 
+/*
  * Traverse objects and modifies values in place
  *
  * @param {function} converter - conversion function(node).
