@@ -2,10 +2,11 @@
 /* eslint-env es6, node */
 /* eslint no-param-reassign: 0, no-var: 0 */
 
+const traverser = require('traverse');
 const errors = require('feathers-errors').errors;
 import { processHooks } from 'feathers-hooks/lib/commons';
 
-import { checkContext } from './utils';
+import { checkContext, getItems } from './utils';
 
 /**
  * Mark an item as deleted rather than removing it from the database.
@@ -312,4 +313,39 @@ export const isNot = (predicate) => {
 
     return result.then(result1 => !result1);
   };
+};
+
+/**
+ * Traverse objects and modifies values in place
+ *
+ * @param {function} converter - conversion function(node).
+ *    See details at https://github.com/substack/js-traverse
+ * @param {function|object?} getObj - object or function(hook) to get object. Optional.
+ *    Default is items in hook.data or hook.result.
+ *
+ * Example - trim strings
+ * const trimmer = function (node) {
+ *   if (typeof node === 'string') { this.update(node.trim()); }
+ * };
+ * service.before({ create: traverse(trimmer) });
+ *
+ * Example - REST HTTP request uses string 'null' in query. Replace them with value null.
+ * const nuller = function (node) {
+ *   if (node === 'null') { this.update(null); }
+ * };
+ * service.before({ find: traverse(nuller, hook => hook.params.query) });
+ *
+ */
+export const traverse = (converter, getObj) => hook => {
+  if (typeof getObj === 'function') {
+    var items = getObj(hook);
+  } else {
+    items = getObj || getItems(hook);
+  }
+
+  (Array.isArray(items) ? items : [items]).forEach(item => {
+    traverser(item).forEach(converter); // replacement is in place
+  });
+
+  return hook;
 };
