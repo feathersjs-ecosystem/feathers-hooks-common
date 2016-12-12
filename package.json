@@ -47,7 +47,8 @@
   "homepage": "https://github.com/feathers/feathers-hooks-common#readme",
   "dependencies": {
     "debug": "^2.2.0",
-    "feathers-errors": "^2.4.0"
+    "feathers-errors": "^2.4.0",
+    "traverse": "0.6.6"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
