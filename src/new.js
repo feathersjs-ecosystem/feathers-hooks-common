@@ -2,10 +2,11 @@
 /* eslint-env es6, node */
 /* eslint no-param-reassign: 0, no-var: 0 */
 
+const traverser = require('traverse');
 const errors = require('feathers-errors').errors;
 import { processHooks } from 'feathers-hooks/lib/commons';
 
-import { checkContext } from './utils';
+import { checkContext, getItems } from './utils';
 
 /**
  * Mark an item as deleted rather than removing it from the database.
@@ -103,7 +104,7 @@ export const combine = (...rest) => function (hook) {
  * Hook to conditionally execute one or another set of hooks.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truthy.
  * @param {Array.function|Function} falseHooks - Hook functions to execute when ifFcn is falsey.
  * @returns {Object} resulting hook
  *
@@ -148,7 +149,7 @@ export const iffElse = (ifFcn, trueHooks, falseHooks) => (hook) => {
  * Hook to conditionally execute one or another set of hooks using function chaining.
  *
  * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function} rest - Hook functions to execute when ifFcn is truesy.
+ * @param {Array.function} rest - Hook functions to execute when ifFcn is truthy.
  * @returns {Function} iffWithoutElse
  *
  * Examples:
@@ -175,6 +176,94 @@ export const iff = (ifFcn, ...rest) => {
   iffWithoutElse.else = (...falseHooks) => iffElse(ifFcn, trueHooks, falseHooks);
 
   return iffWithoutElse;
+};
+
+/**
+ * Alias for iff
+ */
+
+export const when = iff;
+
+/**
+ * Hook that executes a set of hooks and returns true if at least one of
+ * the hooks returns a truthy value and false if none of them do.
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Boolean}
+ *
+ * Example 1
+ * service.before({
+ *   create: hooks.iff(hooks.some(hook1, hook2, ...), hookA, hookB, ...)
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   hooks.some(hook1, hook2, ...).call(this, currentHook)
+ *     .then(bool => { ... });
+ * }
+ */
+
+export const some = (...rest) => function (hook) {
+  const hooks = rest.map(fn => fn.call(this, hook));
+
+  return Promise.all(hooks).then(results => {
+    return Promise.resolve(results.some(result => !!result));
+  });
+};
+
+/**
+ * Hook that executes a set of hooks and returns true if all of
+ * the hooks returns a truthy value and false if one of them does not.
+ *
+ * @param {Array.function} rest - Hook functions to execute.
+ * @returns {Boolean}
+ *
+ * Example 1
+ * service.before({
+ *    create: hooks.iff(hooks.every(hook1, hook2, ...), hookA, hookB, ...)
+ * });
+ *
+ * Example 2 - called within a custom hook function
+ * function (hook) {
+ *   ...
+ *   hooks.every(hook1, hook2, ...).call(this, currentHook)
+ *     .then(bool => { ... })
+ * }
+ */
+
+export const every = (...rest) => function (hook) {
+  const hooks = rest.map(fn => fn.call(this, hook));
+
+  return Promise.all(hooks).then(results => {
+    return Promise.resolve(results.every(result => !!result));
+  });
+};
+
+/**
+ * Hook to conditionally execute one or another set of hooks using function chaining.
+ * if the predicate hook function returns a falsey value.
+ * Equivalent to iff(isNot(isProvider), hook1, hook2, hook3).
+ *
+ * @param {Function|Promise|boolean} unlessFcn - Predicate function(hook).
+ * @param {Array.function} rest - Hook functions to execute when unlessFcn is falsey.
+ * @returns {Function} iffWithoutElse
+ *
+ * Examples:
+ * unless(isServer, hookA, hookB)
+ *
+ * unless(isServer,
+ *   hookA,
+ *   unless(isProvider('rest'), hook1, hook2, hook3),
+ *   hookB
+ * )
+ */
+export const unless = (unlessFcn, ...rest) => {
+  if (typeof unlessFcn === 'function') {
+    return iff(isNot(unlessFcn), ...rest);
+  }
+
+  return iff(!unlessFcn, ...rest);
 };
 
 /**
@@ -271,3 +360,37 @@ export const $client = (...whitelist) => {
 
 const reservedParamProps = ['authenticated', '__authenticated', 'mongoose',
   'provider', 'sequelize', 'query'];
+/*
+ * Traverse objects and modifies values in place
+ *
+ * @param {function} converter - conversion function(node).
+ *    See details at https://github.com/substack/js-traverse
+ * @param {function|object?} getObj - object or function(hook) to get object. Optional.
+ *    Default is items in hook.data or hook.result.
+ *
+ * Example - trim strings
+ * const trimmer = function (node) {
+ *   if (typeof node === 'string') { this.update(node.trim()); }
+ * };
+ * service.before({ create: traverse(trimmer) });
+ *
+ * Example - REST HTTP request uses string 'null' in query. Replace them with value null.
+ * const nuller = function (node) {
+ *   if (node === 'null') { this.update(null); }
+ * };
+ * service.before({ find: traverse(nuller, hook => hook.params.query) });
+ *
+ */
+export const traverse = (converter, getObj) => hook => {
+  if (typeof getObj === 'function') {
+    var items = getObj(hook);
+  } else {
+    items = getObj || getItems(hook);
+  }
+
+  (Array.isArray(items) ? items : [items]).forEach(item => {
+    traverser(item).forEach(converter); // replacement is in place
+  });
+
+  return hook;
+};
