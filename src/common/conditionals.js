@@ -46,18 +46,18 @@ module.exports = function Conditionals (processFuncArray) {
     return iff(!unlessFcn, ...rest);
   };
 
-  const some = (...rest) => function (hook) {
-    const hooks = rest.map(fn => fn.call(this, hook));
+  const some = (...rest) => function (...fnArgs) {
+    const promises = rest.map(fn => fn.apply(this, fnArgs));
 
-    return Promise.all(hooks).then(results => {
+    return Promise.all(promises).then(results => {
       return Promise.resolve(results.some(result => !!result));
     });
   };
 
-  const every = (...rest) => function (hook) {
-    const hooks = rest.map(fn => fn.call(this, hook));
+  const every = (...rest) => function (...fnArgs) {
+    const promises = rest.map(fn => fn.apply(this, fnArgs));
 
-    return Promise.all(hooks).then(results => {
+    return Promise.all(promises).then(results => {
       return Promise.resolve(results.every(result => !!result));
     });
   };
