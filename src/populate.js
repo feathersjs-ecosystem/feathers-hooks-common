@@ -41,8 +41,9 @@ export const populate = (options, ...rest) => {
           throw new errors.BadRequest('Schema does not resolve to an object. (populate)');
         }
 
-        return !schema1.include || !Object.keys(schema1.include).length ? items
-          : populateItemArray(options1, hook, items, schema1.include, 0);
+        const include = [].concat(schema1.include || []);
+
+        return !include.length ? items : populateItemArray(options1, hook, items, include, 0);
       })
       .then(items => {
         replaceItems(hook, items);
