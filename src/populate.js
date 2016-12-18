@@ -74,7 +74,7 @@ function populateItem (options, hook, item, includeSchema, depth) {
   item._include = [];
 
   return Promise.all(
-    includeSchema.map(childSchema => {
+    [].concat(includeSchema || []).map(childSchema => {
       const startAtThisInclude = process.hrtime();
       return populateAddChild(options, hook, item, childSchema, depth)
         .then(result => {

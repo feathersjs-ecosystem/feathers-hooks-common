@@ -39,14 +39,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            nameAs: 'post',
-            parentField: 'postId', // we have no test for dot notation 'cause no such data
-            childField: 'id'
-          }
-        ]
+        include: {
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId', // we have no test for dot notation 'cause no such data
+          childField: 'id'
+        }
       };
 
       return populate({ schema })(hook)
@@ -61,13 +59,11 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            parentField: 'postId',
-            childField: 'id'
-          }
-        ]
+        include: {
+          service: 'posts',
+          parentField: 'postId',
+          childField: 'id'
+        }
       };
 
       return populate({ schema })(hook)
@@ -82,14 +78,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            parentField: 'postId',
-            childField: 'id',
-            asArray: true
-          }
-        ]
+        include: {
+          service: 'posts',
+          parentField: 'postId',
+          childField: 'id',
+          asArray: true
+        }
       };
 
       return populate({ schema })(hook)
@@ -104,14 +98,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            parentField: 'postId',
-            childField: 'id',
-            query: { id: 'aaaaaa' }
-          }
-        ]
+        include: {
+          service: 'posts',
+          parentField: 'postId',
+          childField: 'id',
+          query: { id: 'aaaaaa' }
+        }
       };
 
       return populate({ schema })(hook)
@@ -126,14 +118,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            parentField: 'updatedAt',
-            childField: 'id',
-            select: (hook, parent) => ({ id: parent.postId })
-          }
-        ]
+        include: {
+          service: 'posts',
+          parentField: 'updatedAt',
+          childField: 'id',
+          select: (hook, parent) => ({ id: parent.postId })
+        }
       };
 
       return populate({ schema })(hook)
@@ -155,15 +145,13 @@ describe('populate - include 1:1', () => {
 
       const schema = {
         permissions: 'for root',
-        include: [
-          {
-            service: 'posts',
-            nameAs: 'post',
-            parentField: 'postId',
-            childField: 'id',
-            permissions: 'for posts'
-          }
-        ]
+        include: {
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId',
+          childField: 'id',
+          permissions: 'for posts'
+        }
       };
 
       return populate({ schema, checkPermissions })(hook)
@@ -189,15 +177,13 @@ describe('populate - include 1:1', () => {
 
       const schema = {
         permissions: 'for root',
-        include: [
-          {
-            service: 'posts',
-            nameAs: 'post',
-            parentField: 'postId',
-            childField: 'id',
-            permissions: 'for posts'
-          }
-        ]
+        include: {
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId',
+          childField: 'id',
+          permissions: 'for posts'
+        }
       };
 
       return populate({ schema, checkPermissions })(hook)
@@ -210,14 +196,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            nameAs: 'post',
-            parentField: 'postId',
-            childField: 'id'
-          }
-        ]
+        include: {
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId',
+          childField: 'id'
+        }
       };
 
       return populate({ schema, profile: true })(hook)
@@ -236,14 +220,12 @@ describe('populate - include 1:1', () => {
       hook.app = app; // app is a func and wouldn't be cloned
 
       const schema = {
-        include: [
-          {
-            service: 'posts',
-            nameAs: 'post',
-            parentField: 'postId',
-            childField: 'id'
-          }
-        ]
+        include: {
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId',
+          childField: 'id'
+        }
       };
 
       return populate({ schema, profile: true })(hook)
