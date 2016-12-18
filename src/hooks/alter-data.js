@@ -1,49 +1,59 @@
 
-import { getItems, replaceItems, checkContext } from '../utils';
-import { _remove, _pluck, _traverse } from '../common/alter-data';
+import feathersErrors from 'feathers-errors';
+import { getItems, replaceItems, setByDot, checkContextIf } from './utils';
+import { _transformItems, _remove, _pluck, _traverse, _setFields } from '../common/alter-data';
 
-export const remove = (...fields) => hook => {
-  if (hook.type === 'before') {
-    checkContext(hook, 'before', ['create', 'update', 'patch'], 'remove');
+const errors = feathersErrors.errors;
+
+export const remove = (...fieldNames) => hook => {
+  checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'remove');
+
+  if (hook.params.provider) {
+    _remove(getItems(hook), fieldNames);
   }
-
-  if (!hook.params.provider) {
-    return hook;
-  }
-
-  replaceItems(hook, _remove(getItems(hook), fields));
 
   return hook;
 };
 
-export const pluck = (...fields) => hook => {
-  if (hook.type === 'before') {
-    checkContext(hook, 'before', ['create', 'update', 'patch'], 'pluck');
+export const pluck = (...fieldNames) => hook => {
+  checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'pluck');
+
+  if (hook.params.provider) {
+    replaceItems(hook, _pluck(getItems(hook), fieldNames));
   }
 
-  if (!hook.params.provider) {
-    return hook;
-  }
+  return hook;
+};
 
-  replaceItems(hook, _pluck(getItems(hook), fields));
+export const lowerCase = (...fieldNames) => hook => {
+  checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'lowercase');
 
+  _transformItems(getItems(hook), fieldNames, (item, fieldName, value) => {
+    if (value !== undefined) {
+      if (typeof value !== 'string' && value !== null) {
+        throw new errors.BadRequest(`Expected string data. (lowercase ${fieldName})`);
+      }
+
+      setByDot(item, fieldName, value ? value.toLowerCase() : value);
+    }
+  });
+
+  return hook;
+};
+
+export const setCreatedAt = (...fieldNames) => hook => {
+  _setFields(getItems(hook), () => new Date(), fieldNames, 'createdAt');
+  return hook;
+};
+
+export const setUpdatedAt = (...fieldNames) => hook => {
+  _setFields(getItems(hook), () => new Date(), fieldNames, 'updatedAt');
   return hook;
 };
 
 export const traverse = (converter, getObj) => hook => {
-  if (typeof getObj === 'function') {
-    var items = getObj(hook);
-  } else {
-    items = getObj || getItems(hook);
-  }
+  const items = typeof getObj === 'function' ? getObj(hook) : getObj || getItems(hook);
 
   _traverse(items, converter);
-
   return hook;
 };
-
-export default Object.assign(
-  remove,
-  pluck,
-  traverse,
-);

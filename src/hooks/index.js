@@ -1,5 +1,13 @@
 
 module.exports = Object.assign({},
-  require('./conditionals'),
   require('./alter-data'),
+  require('./query-params'),
+  require('./populate'),
+  require('./legacyPopulate'),
+  require('./serialize'),
+  require('./database'),
+  require('./validate'),
+  require('./utilities'),
+  require('./conditionals'),
+  require('./utils'),
 );

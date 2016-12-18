@@ -1,26 +1,22 @@
-// ALTERING DATA
-// done remove
-// done pluck
-// traverse
-// setFilteredAt ?
-
-// OTHERS
-// validateSchema ? (no factory required)
 
 const traverser = require('traverse');
-import { getByDot, setByDot } from '../utils';
+import { getByDot, setByDot } from '../hooks/utils';
 
-export const _remove = (items, fieldNames) => {
+// transformer(item /* modified */, fieldName, value)
+export const _transformItems = (items /* modified */, fieldNames, transformer) => {
   (Array.isArray(items) ? items : [items]).forEach(item => {
-    fieldNames.forEach(field => {
-      const value = getByDot(item, field);
-      if (value !== undefined) { // prevent setByDot creating nested empty objects
-        setByDot(item, field, undefined, true);
-      }
+    fieldNames.forEach(fieldName => {
+      transformer(item, fieldName, getByDot(item, fieldName));
     });
   });
+};
 
-  return items;
+export const _remove = (items /* modified */, fieldNames) => {
+  _transformItems(items, fieldNames, (item, fieldName, value) => {
+    if (value !== undefined) {
+      setByDot(item, fieldName, undefined, true);
+    }
+  });
 };
 
 export const _pluck = (items, fieldNames) => {
@@ -40,10 +36,10 @@ export const _pluck = (items, fieldNames) => {
 function _pluckItem (item, fieldNames) {
   const plucked = {};
 
-  fieldNames.forEach(field => {
-    const value = getByDot(item, field);
+  fieldNames.forEach(fieldName => {
+    const value = getByDot(item, fieldName);
     if (value !== undefined) { // prevent setByDot creating nested empty objects
-      setByDot(plucked, field, value);
+      setByDot(plucked, fieldName, value);
     }
   });
 
@@ -56,12 +52,14 @@ export const _traverse = (items, converter) => {
   });
 };
 
-export const _setFields = (items, fieldValue, fieldNames) => {
+export const _setFields = (items /* modified */, fieldValue, fieldNames, defaultFieldName) => {
   const value = typeof fieldValue === 'function' ? fieldValue() : fieldValue;
 
+  if (!fieldNames.length) fieldNames = [defaultFieldName];
+
   (Array.isArray(items) ? items : [items]).forEach(item => {
-    fieldNames.forEach(field => {
-      setByDot(item, field, value);
+    fieldNames.forEach(fieldName => {
+      setByDot(item, fieldName, value);
     });
   });
 };

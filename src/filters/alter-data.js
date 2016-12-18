@@ -1,33 +1,20 @@
 
 import { _remove, _pluck, _traverse, _setFields } from '../common/alter-data';
 
-export const remove = (...fields) => data => _remove(data, fields);
+export const remove = (...fields) => data => {
+  _remove(data, fields);
+  return data;
+};
 
 export const pluck = (...fields) => data => _pluck(data, fields);
 
 export const traverse = (converter, getObj) => (data, connection, hook) => {
-  if (typeof getObj === 'function') {
-    var items = getObj(data, connection, hook);
-  } else {
-    items = getObj || data;
-  }
-
+  const items = typeof getObj === 'function' ? getObj(data, connection, hook) : getObj || data;
+  
   _traverse(items, converter);
 };
 
 export const setFilteredAt = (...fieldNames) => data => {
-  if (!fieldNames.length) {
-    fieldNames = ['filteredAt'];
-  }
-
-  _setFields(data, () => new Date(), fieldNames);
-
+  _setFields(data, () => new Date(), fieldNames, 'filteredAt');
   return data;
 };
-
-export default Object.assign(
-  remove,
-  pluck,
-  traverse,
-  setFilteredAt,
-);
