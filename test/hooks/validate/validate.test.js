@@ -14,33 +14,33 @@ var hookBad;
 describe('validate', () => {
   origHookOk = { type: 'before', method: 'create', data: { email: ' a@a.com ' } };
   origHookBad = { type: 'before', method: 'create', data: { email: '' } };
-  
+
   describe('Sync function', () => {
     beforeEach(() => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
-      
+
       fcnSync = (values) => (values.email.trim() // eslint-disable-line no-unused-expressions
           ? null
           : { email: 'Email is invalid' }
       );
     });
-    
+
     it('test passes on correct data', () => {
       const hook = hooks.validate(fcnSync)(hookOk);
       assert.deepEqual(hook, origHookOk);
     });
-    
+
     it('test fails on errors', () => {
       assert.throws(() => hooks.validate(fcnSync)(hookBad));
     });
   });
-  
+
   describe('Promise function', () => {
     beforeEach(() => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
-      
+
       fcnPromise = (values) => (
         new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -50,7 +50,7 @@ describe('validate', () => {
           }, 100);
         })
       );
-      
+
       fcnPromiseSanitize = (values) => (
         new Promise((resolve, reject) => {
           setTimeout(() => {
@@ -61,7 +61,7 @@ describe('validate', () => {
         })
       );
     });
-    
+
     it('test passes on correct data', (next) => {
       hooks.validate(fcnPromise)(hookOk)
         .then(hook => {
@@ -70,7 +70,7 @@ describe('validate', () => {
         })
         .catch(err => next(err));
     });
-    
+
     it('test can sanitize correct data', (next) => {
       hooks.validate(fcnPromiseSanitize)(hookOk)
         .then(hook => {
@@ -79,7 +79,7 @@ describe('validate', () => {
         })
         .catch(err => next(err));
     });
-    
+
     it('test fails on errors', (next) => {
       hooks.validate(fcnPromiseSanitize)(hookBad)
         .then(() => {

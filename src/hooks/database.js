@@ -6,18 +6,18 @@ const errors = feathersErrors.errors;
 
 export const softDelete = field => {
   const deleteField = field || 'deleted';
-  
+
   return function (hook) {
     const service = this;
     hook.data = hook.data || {};
     hook.params.query = hook.params.query || {};
     checkContext(hook, 'before', null, 'softDelete');
-    
+
     if (hook.params.query.$disableSoftDelete) {
       delete hook.params.query.$disableSoftDelete;
       return hook;
     }
-    
+
     switch (hook.method) {
       case 'find':
         hook.params.query[deleteField] = { $ne: true };
@@ -42,7 +42,7 @@ export const softDelete = field => {
             hook.data[deleteField] = true;
             hook.params.query[deleteField] = { $ne: true };
             hook.params.query.$disableSoftDelete = true;
-            
+
             return service.patch(hook.id, hook.data, hook.params)
               .then(result => {
                 hook.result = result;
@@ -50,7 +50,7 @@ export const softDelete = field => {
               });
           });
     }
-    
+
     function throwIfItemDeleted (id) {
       return service.get(id, { query: { $disableSoftDelete: true } })
         .then(data => {

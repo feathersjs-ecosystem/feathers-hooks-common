@@ -1,33 +1,35 @@
 
+import feathersErrors from 'feathers-errors';
+
+const errors = feathersErrors.errors;
+
 export function legacyPopulate (target, options) {
   options = Object.assign({}, options);
-  
+
   console.error(
     'Calling populate(target, options) is now DEPRECATED and will be removed in the future. ' +
     'Refer to docs.feathersjs.com for more information. (legacyPopulate)'
   );
-  
+
   if (!options.service) {
     throw new Error('You need to provide a service. (populate)');
   }
-  
+
   const field = options.field || target;
-  
+
   return function (hook) {
     function populate1 (item) {
       if (!item[field]) {
         return Promise.resolve(item);
       }
-      
+
       // Find by the field value by default or a custom query
       const id = item[field];
-      
+
       // If it's a mongoose model then
       if (typeof item.toObject === 'function') {
         item = item.toObject(options);
-      }
-      // If it's a Sequelize model
-      else if (typeof item.toJSON === 'function') {
+      } else if (typeof item.toJSON === 'function') { // If it's a Sequelize model
         item = item.toJSON(options);
       }
       // Remove any query from params as it's not related
@@ -44,14 +46,14 @@ export function legacyPopulate (target, options) {
         return item;
       });
     }
-    
+
     if (hook.type !== 'after') {
       throw new errors.GeneralError('Can not populate on before hook. (populate)');
     }
-    
+
     const isPaginated = hook.method === 'find' && hook.result.data;
     const data = isPaginated ? hook.result.data : hook.result;
-    
+
     if (Array.isArray(data)) {
       return Promise.all(data.map(populate1)).then(results => {
         if (isPaginated) {
@@ -59,11 +61,11 @@ export function legacyPopulate (target, options) {
         } else {
           hook.result = results;
         }
-        
+
         return hook;
       });
     }
-    
+
     // Handle single objects.
     return populate1(hook.result).then(item => {
       hook.result = item;

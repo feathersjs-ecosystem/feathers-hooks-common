@@ -7,7 +7,7 @@ describe('hooks validateSchema', () => {
   let hookBefore;
   let hookBeforeArray;
   let schema;
-  
+
   beforeEach(() => {
     hookBefore = {
       type: 'before',
@@ -33,18 +33,18 @@ describe('hooks validateSchema', () => {
       'required': ['first', 'last']
     };
   });
-  
+
   it('works with valid single item', () => {
     validateSchema(schema, Ajv)(hookBefore);
   });
-  
+
   it('works with array of valid items', () => {
     validateSchema(schema, Ajv)(hookBeforeArray);
   });
-  
+
   it('fails with in valid single item', () => {
     hookBefore.data = { first: 1 };
-    
+
     try {
       validateSchema(schema, Ajv)(hookBefore);
       assert.fail(true, false, 'test succeeds unexpectedly');
@@ -55,11 +55,11 @@ describe('hooks validateSchema', () => {
       ]);
     }
   });
-  
+
   it('fails with array of invalid items', () => {
     hookBeforeArray.data[0] = { first: 1 };
     delete hookBeforeArray.data[2].last;
-    
+
     try {
       validateSchema(schema, Ajv)(hookBeforeArray);
       assert.fail(true, false, 'test succeeds unexpectedly');

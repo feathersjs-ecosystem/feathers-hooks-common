@@ -10,7 +10,7 @@ export const pluck = (...fields) => data => _pluck(data, fields);
 
 export const traverse = (converter, getObj) => (data, connection, hook) => {
   const items = typeof getObj === 'function' ? getObj(data, connection, hook) : getObj || data;
-  
+
   _traverse(items, converter);
 };
 

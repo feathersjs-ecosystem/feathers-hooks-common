@@ -3,11 +3,11 @@ export const checkContext = (hook, type = null, methods = [], label = 'anonymous
   if (type && hook.type !== type) {
     throw new Error(`The '${label}' hook can only be used as a '${type}' hook.`);
   }
-  
+
   if (!methods) { return; }
-  
+
   const myMethods = Array.isArray(methods) ? methods : [methods]; // safe enough for allowed values
-  
+
   if (myMethods.length > 0 && myMethods.indexOf(hook.method) === -1) {
     const msg = JSON.stringify(myMethods);
     throw new Error(`The '${label}' hook can only be used on the '${msg}' service method(s).`);
@@ -45,7 +45,7 @@ export const getByDot = (obj, path) => {
   if (path.indexOf('.') === -1) {
     return obj[path];
   }
-  
+
   return path.split('.').reduce(
     (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
     obj
@@ -55,14 +55,14 @@ export const getByDot = (obj, path) => {
 export const setByDot = (obj, path, value, ifDelete) => {
   if (path.indexOf('.') === -1) {
     obj[path] = value;
-    
+
     if (value === undefined && ifDelete) {
       delete obj[path];
     }
-    
+
     return;
   }
-  
+
   const parts = path.split('.');
   const lastIndex = parts.length - 1;
   return parts.reduce(
@@ -73,7 +73,7 @@ export const setByDot = (obj, path, value, ifDelete) => {
         }
         return obj1[part];
       }
-      
+
       obj1[part] = value;
       if (value === undefined && ifDelete) {
         delete obj1[part];

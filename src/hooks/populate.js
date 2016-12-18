@@ -174,13 +174,13 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
 
 export const dePopulate = () => hook => {
   const items = getItems(hook);
-  
+
   (Array.isArray(items) ? items : [items]).forEach(item => {
     removeProps('_computed', item);
     removeProps('_include', item);
     delete item._elapsed;
   });
-  
+
   replaceItems(hook, items);
   return hook;
 };
