@@ -12,7 +12,12 @@ module.exports = function Conditionals (processFuncArray) {
     if (typeof trueFuncs === 'function') { trueFuncs = [trueFuncs]; }
     if (typeof falseFuncs === 'function') { falseFuncs = [falseFuncs]; }
 
-    const runProcessFuncArray = funcs => processFuncArray.call(this, fnArgs, funcs);
+    // Babel 6.17.0 did not transpile something in the old version similar to this
+    // const runProcessFuncArray = funcs => processFuncArray.call(this, fnArgs, funcs);
+    var that = this;
+    var runProcessFuncArray = function (funcs) {
+      return processFuncArray.call(that, fnArgs, funcs);
+    };
 
     const check = typeof predicate === 'function' ? predicate(...fnArgs) : !!predicate;
 

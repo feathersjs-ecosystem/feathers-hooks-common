@@ -130,7 +130,12 @@ export const iffElse = (ifFcn, trueHooks, falseHooks) => (hook) => {
   if (typeof trueHooks === 'function') { trueHooks = [trueHooks]; }
   if (typeof falseHooks === 'function') { falseHooks = [falseHooks]; }
 
-  const runHooks = hooks => hooks ? combine(...hooks).call(this, hook) : hook;
+  // Babel 6.17.0 does not transpile the following correctly
+  // const runHooks = hooks => hooks ? combine(...hooks).call(this, hook) : hook;
+  var that = this;
+  var runHooks = function (hooks) {
+    return hooks ? combine.apply(that, hooks).call(that, hook) : hook;
+  };
 
   const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
 
