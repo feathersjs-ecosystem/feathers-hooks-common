@@ -321,50 +321,37 @@ export const isNot = (predicate) => {
 };
 
 /**
- * Move params from $client to hook.params.
+ * Move props from hook.query.$client to hook.params.
  *
  * @param {string|Array.string} whitelist - list of prop names allowed.
- *    The following names are reserved and may not be used.
- *    authenticated, __authenticated, mongoose, provider, sequelize, query
  * @returns {Object} hook
  *
  * Example:
  * // on client:
  * service.find({ query: { dept: 'a', $client: ( populate: 'po-1', serialize: 'po-mgr' } } } );
  * // on server
- * service.before({ all: [ $client, myHook ]});
+ * service.before({ all: [ client, myHook ]});
  * // myHook hook.params is
  *   { query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' } }
  */
-export const $client = (...whitelist) => {
-  whitelist.forEach(key => {
-    if (reservedParamProps.indexOf(key) !== -1) {
-      throw new errors.MethodNotAllowed(`${key} is a reserved Feathers prop name. ($client`);
-    }
-  });
+export const client = (...whitelist) => hook => {
+  whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
+  const params = hook.params;
 
-  return hook => {
-    whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
-    const params = hook.params;
+  if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
+    const client = params.query.$client;
 
-    if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
-      const client = params.query.$client;
+    whitelist.forEach(key => {
+      if (key in client) {
+        params[key] = client[key];
+      }
+    });
 
-      whitelist.forEach(key => {
-        if (key in client) {
-          params[key] = client[key];
-        }
-      });
+    delete params.query.$client;
+  }
 
-      delete params.query.$client;
-    }
-
-    return hook;
-  };
+  return hook;
 };
-
-const reservedParamProps = ['authenticated', '__authenticated', 'mongoose',
-  'provider', 'sequelize', 'query'];
 
 /**
  * Validate JSON object using ajv (synchronous)

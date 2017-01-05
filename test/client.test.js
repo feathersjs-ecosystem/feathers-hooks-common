@@ -1,20 +1,20 @@
 if (!global._babelPolyfill) { require('babel-polyfill'); }
 
 import { assert } from 'chai';
-import { $client } from '../src/new';
+import { client } from '../src/new';
 
-describe('$client', () => {
+describe('client', () => {
   describe('basics', () => {
     it('works no params', () => {
       const hook = {};
-      const hook1 = $client('populate', 'serialize')(hook);
+      const hook1 = client('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, {});
     });
 
     it('works no query', () => {
       const hook = { params: {} };
-      const hook1 = $client('populate', 'serialize')(hook);
+      const hook1 = client('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, { params: {} });
     });
@@ -26,7 +26,7 @@ describe('$client', () => {
           dept: 'b'
         }
       } };
-      const hook1 = $client('populate', 'serialize')(hook);
+      const hook1 = client('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -45,7 +45,7 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client('populate', 'serialize')(hook);
+      const hook1 = client('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -67,7 +67,7 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client()(hook);
+      const hook1 = client()(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -86,7 +86,7 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client('populate', 'serialize')(hook);
+      const hook1 = client('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -107,7 +107,7 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client('a', 'populate', 'b', 'serialize', 'q', 'r')(hook);
+      const hook1 = client('a', 'populate', 'b', 'serialize', 'q', 'r')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -128,7 +128,7 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client('populate')(hook);
+      const hook1 = client('populate')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
@@ -148,50 +148,13 @@ describe('$client', () => {
         }
       } };
 
-      const hook1 = $client('q', 'q')(hook);
+      const hook1 = client('q', 'q')(hook);
 
       assert.deepEqual(hook1, { params: {
         query: {
           div: 'a', dept: 'b'
         }
       } });
-    });
-  });
-
-  describe('reserved prop names', () => {
-    it('throws on reserved names', () => {
-      const hook = { params: { query: {} } };
-
-      assert.throws(() => {
-        $client('authenticated')(hook);
-      });
-
-      assert.throws(() => {
-        $client('__authenticated')(hook);
-      });
-
-      assert.throws(() => {
-        $client('mongoose')(hook);
-      });
-
-      assert.throws(() => {
-        $client('provider')(hook);
-      });
-
-      assert.throws(() => {
-        $client('sequelize')(hook);
-      });
-
-      assert.throws(() => {
-        $client('query')(hook);
-      });
-  
-      assert.throws(() => {
-        $client(
-          'authenticated', '__authenticated', 'mongoose',
-          'provider', 'sequelize', 'query'
-        )(hook);
-      });
     });
   });
 });

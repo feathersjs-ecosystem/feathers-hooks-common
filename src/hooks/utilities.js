@@ -6,10 +6,6 @@ import { setByDot } from './utils';
 
 const errors = feathersErrors.errors;
 
-const reservedParamProps = [
-  'authenticated', '__authenticated', 'mongoose', 'provider', 'sequelize', 'query'
-];
-
 export function disable (realm, ...args) {
   if (!realm) {
     return hook => {
@@ -47,31 +43,23 @@ export function disable (realm, ...args) {
   };
 }
 
-export const $client = (...whitelist) => {
-  whitelist.forEach(key => {
-    if (reservedParamProps.indexOf(key) !== -1) {
-      throw new errors.MethodNotAllowed(`${key} is a reserved Feathers prop name. ($client`);
-    }
-  });
+export const client = (...whitelist) => hook => {
+  whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
+  const params = hook.params;
 
-  return hook => {
-    whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
-    const params = hook.params;
+  if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
+    const client = params.query.$client;
 
-    if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
-      const client = params.query.$client;
+    whitelist.forEach(key => {
+      if (key in client) {
+        params[key] = client[key];
+      }
+    });
 
-      whitelist.forEach(key => {
-        if (key in client) {
-          params[key] = client[key];
-        }
-      });
+    delete params.query.$client;
+  }
 
-      delete params.query.$client;
-    }
-
-    return hook;
-  };
+  return hook;
 };
 
 export const setSlug = (slug, field) => (hook) => {
