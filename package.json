@@ -53,6 +53,7 @@
     "traverse": "0.6.6"
   },
   "devDependencies": {
+    "ajv": "4.9.2",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-plugin-add-module-exports": "^0.2.1",
