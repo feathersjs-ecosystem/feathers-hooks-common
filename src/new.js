@@ -130,7 +130,12 @@ export const iffElse = (ifFcn, trueHooks, falseHooks) => (hook) => {
   if (typeof trueHooks === 'function') { trueHooks = [trueHooks]; }
   if (typeof falseHooks === 'function') { falseHooks = [falseHooks]; }
 
-  const runHooks = hooks => hooks ? combine(...hooks).call(this, hook) : hook;
+  // Babel 6.17.0 does not transpile the following correctly
+  // const runHooks = hooks => hooks ? combine(...hooks).call(this, hook) : hook;
+  var that = this;
+  var runHooks = function (hooks) {
+    return hooks ? combine.apply(that, hooks).call(that, hook) : hook;
+  };
 
   const check = typeof ifFcn === 'function' ? ifFcn(hook) : !!ifFcn;
 
@@ -360,6 +365,65 @@ export const $client = (...whitelist) => {
 
 const reservedParamProps = ['authenticated', '__authenticated', 'mongoose',
   'provider', 'sequelize', 'query'];
+
+/**
+ * Validate JSON object using ajv (synchronous)
+ *
+ * @param {Object} schema - json schema (//github.com/json-schema/json-schema)
+ * @param {Function} Ajv - import Ajv from 'ajv'
+ * @param {Object?} options - ajv options
+ *    addNewError optional  reducing function (previousErrs, ajvError, itemsLen, index)
+ *                          to format err.errors in the thrown error
+ *                default   addNewErrorDflt returns an array of error messages.
+ * @returns {undefined}
+ * @throws if hook does not match the schema. err.errors contains the error messages.
+ *
+ * Tutorial: //code.tutsplus.com/tutorials/validating-data-with-json-schema-part-1--cms-25343
+ */
+export const validateSchema = (schema, Ajv, options = { allErrors: true }) => {
+  const addNewError = options.addNewError || addNewErrorDflt;
+  delete options.addNewError;
+  const validate = new Ajv(options).compile(schema); // for fastest execution
+
+  return hook => {
+    const items = getItems(hook);
+    const itemsArray = Array.isArray(items) ? items : [items];
+    const itemsLen = itemsArray.length;
+    let errorMessages;
+    let invalid = false;
+
+    itemsArray.forEach((item, index) => {
+      if (!validate(item)) {
+        invalid = true;
+
+        validate.errors.forEach(ajvError => {
+          errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+        });
+      }
+    });
+
+    if (invalid) {
+      throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+    }
+  };
+};
+
+function addNewErrorDflt (errorMessages, ajvError, itemsLen, index) {
+  const leader = itemsLen === 1 ? '' : `in row ${index + 1} of ${itemsLen}, `;
+  let message;
+
+  if (ajvError.dataPath) {
+    message = `'${leader}${ajvError.dataPath.substring(1)}' ${ajvError.message}`;
+  } else {
+    message = `${leader}${ajvError.message}`;
+    if (ajvError.params && ajvError.params.additionalProperty) {
+      message += `: '${ajvError.params.additionalProperty}'`;
+    }
+  }
+
+  return (errorMessages || []).concat(message);
+}
+
 /*
  * Traverse objects and modifies values in place
  *

@@ -108,6 +108,12 @@ export const checkContext = (hook, type = null, methods = [], label = 'anonymous
   }
 };
 
+export const checkContextIf = (hook, type, methods, label) => {
+  if (type && hook.type === type) {
+    checkContext(hook, type, methods, label);
+  }
+};
+
 /**
  * Return the data items in a hook.
  * hook.data if type=before.
