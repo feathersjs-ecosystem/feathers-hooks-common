@@ -1,5 +1,5 @@
 
-import Conditionals from '../common/conditionals-split';
+import Conditionals from '../common/conditionals';
 
 // 'combine' is like 'every', each permission func must return true
 const combine = (...permissionHooks) => function (hook) {
