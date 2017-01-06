@@ -1,6 +1,6 @@
 
 import { promisify } from 'feathers-socket-commons/lib/utils';
-import Conditionals from '../common/conditionals';
+import Conditionals from '../common/conditionals-split';
 import makeDebug from 'debug';
 
 const debug = makeDebug('filters/conditionals');

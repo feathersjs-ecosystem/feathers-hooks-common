@@ -1,13 +1,13 @@
 // temporary module
 
-import iffElse from './iffElse';
+import iffElse from './iff-else';
 import iff from './iff';
 import unless from './unless';
 import some from './some';
 import every from './every';
-import isNot from './isNot';
+import isNot from './is-not';
 
-module.exports = function (processFuncArray) {
+export default function (processFuncArray) {
   return {
     iffElse: iffElse(processFuncArray),
     iff,
@@ -17,4 +17,4 @@ module.exports = function (processFuncArray) {
     every,
     isNot
   };
-};
+}

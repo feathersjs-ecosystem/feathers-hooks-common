@@ -1,6 +1,6 @@
 
 // processFuncArray must handle case of null param.
-module.exports = function (processFuncArray) {
+export default function (processFuncArray) {
 // fnArgs is [hook] for service & permission hooks, [data, connection, hook] for event filters
   return function (predicate, trueFuncs, falseFuncs) {
     return function (...fnArgs) {
@@ -28,4 +28,4 @@ module.exports = function (processFuncArray) {
       return check.then(check1 => runProcessFuncArray(check1 ? trueFuncs : falseFuncs));
     };
   };
-};
+}

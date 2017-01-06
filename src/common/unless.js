@@ -1,11 +1,11 @@
 
 import iff from './iff';
-import isNot from './isNot';
+import isNot from './is-not';
 
-module.exports = function (unlessFcn, ...rest) {
+export default function (unlessFcn, ...rest) {
   if (typeof unlessFcn === 'function') {
     return iff(isNot(unlessFcn), ...rest);
   }
 
   return iff(!unlessFcn, ...rest);
-};
+}

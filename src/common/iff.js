@@ -1,7 +1,7 @@
 
-import iffElse from './iffElse';
+import iffElse from './iff-else';
 
-module.exports = function (predicate, ...rest) {
+export default function (predicate, ...rest) {
   const trueHooks = [].concat(rest);
 
   const iffWithoutElse = function (hook) {
@@ -10,4 +10,4 @@ module.exports = function (predicate, ...rest) {
   iffWithoutElse.else = (...falseHooks) => iffElse(predicate, trueHooks, falseHooks);
 
   return iffWithoutElse;
-};
+}

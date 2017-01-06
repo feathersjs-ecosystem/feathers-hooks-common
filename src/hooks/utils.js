@@ -1,4 +1,7 @@
 
+import _getByDot from '../common/get-by-dot';
+import _setByDot from '../common/set-by-dot';
+
 export const checkContext = (hook, type = null, methods = [], label = 'anonymous') => {
   if (type && hook.type !== type) {
     throw new Error(`The '${label}' hook can only be used as a '${type}' hook.`);
@@ -41,45 +44,5 @@ export const replaceItems = (hook, items) => {
   }
 };
 
-export const getByDot = (obj, path) => {
-  if (path.indexOf('.') === -1) {
-    return obj[path];
-  }
-
-  return path.split('.').reduce(
-    (obj1, part) => (typeof obj1 === 'object' ? obj1[part] : undefined),
-    obj
-  );
-};
-
-export const setByDot = (obj, path, value, ifDelete) => {
-  if (path.indexOf('.') === -1) {
-    obj[path] = value;
-
-    if (value === undefined && ifDelete) {
-      delete obj[path];
-    }
-
-    return;
-  }
-
-  const parts = path.split('.');
-  const lastIndex = parts.length - 1;
-  return parts.reduce(
-    (obj1, part, i) => {
-      if (i !== lastIndex) {
-        if (!obj1.hasOwnProperty(part) || typeof obj1[part] !== 'object') {
-          obj1[part] = {};
-        }
-        return obj1[part];
-      }
-
-      obj1[part] = value;
-      if (value === undefined && ifDelete) {
-        delete obj1[part];
-      }
-      return obj1;
-    },
-    obj
-  );
-};
+export const getByDot = _getByDot;
+export const setByDot = _setByDot;

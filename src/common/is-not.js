@@ -1,7 +1,8 @@
 
-const errors = require('feathers-errors').errors;
+import feathersErrors from 'feathers-errors';
+const errors = feathersErrors.errors;
 
-module.exports = function (predicate) {
+export default function (predicate) {
   if (typeof predicate !== 'function') {
     throw new errors.MethodNotAllowed('Expected function as param. (isNot)');
   }
@@ -15,4 +16,4 @@ module.exports = function (predicate) {
 
     return result.then(result1 => !result1);
   };
-};
+}

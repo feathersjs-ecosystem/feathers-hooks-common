@@ -1,5 +1,5 @@
 
-module.exports = function (...rest) {
+export default function (...rest) {
   return function (...fnArgs) {
     const promises = rest.map(fn => fn.apply(this, fnArgs));
 
@@ -7,4 +7,4 @@ module.exports = function (...rest) {
       return Promise.resolve(results.every(result => !!result));
     });
   };
-};
+}
