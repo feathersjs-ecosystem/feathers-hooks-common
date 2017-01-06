@@ -1,6 +1,7 @@
+if (!global._babelPolyfill) { require('babel-polyfill'); }
 
 import { assert } from 'chai';
-import { client } from '../../../src/hooks';
+import { client } from '../src/new';
 
 describe('client', () => {
   describe('basics', () => {

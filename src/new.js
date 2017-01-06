@@ -321,6 +321,39 @@ export const isNot = (predicate) => {
 };
 
 /**
+ * Move props from hook.query.$client to hook.params.
+ *
+ * @param {string|Array.string} whitelist - list of prop names allowed.
+ * @returns {Object} hook
+ *
+ * Example:
+ * // on client:
+ * service.find({ query: { dept: 'a', $client: ( populate: 'po-1', serialize: 'po-mgr' } } } );
+ * // on server
+ * service.before({ all: [ client, myHook ]});
+ * // myHook hook.params is
+ *   { query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' } }
+ */
+export const client = (...whitelist) => hook => {
+  whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
+  const params = hook.params;
+
+  if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
+    const client = params.query.$client;
+
+    whitelist.forEach(key => {
+      if (key in client) {
+        params[key] = client[key];
+      }
+    });
+
+    delete params.query.$client;
+  }
+
+  return hook;
+};
+
+/**
  * Validate JSON object using ajv (synchronous)
  *
  * @param {Object} schema - json schema (//github.com/json-schema/json-schema)
