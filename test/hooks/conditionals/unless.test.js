@@ -62,7 +62,7 @@ const hookFcnCb = (hook, cb) => {
   cb(null, hook);
 };
 
-describe('hooks unless - sync predicate, sync hook', () => {
+describe('services unless - sync predicate, sync hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -114,7 +114,7 @@ describe('hooks unless - sync predicate, sync hook', () => {
   });
 });
 
-describe('hooks unless - sync predicate, async hook', () => {
+describe('services unless - sync predicate, async hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -172,7 +172,7 @@ describe('hooks unless - sync predicate, async hook', () => {
   });
 });
 
-describe('hooks unless - async predicate, sync hook', () => {
+describe('services unless - async predicate, sync hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -218,7 +218,7 @@ describe('hooks unless - async predicate, sync hook', () => {
   });
 });
 
-describe('hooks unless - async predicate, async hook', () => {
+describe('services unless - async predicate, async hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -262,7 +262,7 @@ describe('hooks unless - async predicate, async hook', () => {
   });
 });
 
-describe('hooks unless - sync predicate', () => {
+describe('services unless - sync predicate', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -304,7 +304,7 @@ describe('hooks unless - sync predicate', () => {
   });
 });
 
-describe('hooks unless - async predicate', () => {
+describe('services unless - async predicate', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -377,7 +377,7 @@ describe('hooks unless - async predicate', () => {
   });
 });
 
-describe('hooks unless - runs multiple hooks', () => {
+describe('services unless - runs multiple hooks', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };

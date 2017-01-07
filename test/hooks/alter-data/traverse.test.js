@@ -2,7 +2,7 @@
 import assert from 'assert';
 import hooks from '../../../src/services';
 
-describe('hooks traverse', () => {
+describe('services traverse', () => {
   let hookBefore;
   let hookBeforeArray;
   let trimmer;

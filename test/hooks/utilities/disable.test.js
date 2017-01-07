@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import hooks from '../../../src/services';
 
-describe('hooks disable', () => {
+describe('services disable', () => {
   let hookRest;
   let hookSocketio;
   let hookServer;

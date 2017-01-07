@@ -5,7 +5,7 @@ import hooks from '../../../src/services';
 var hookBefore;
 var hookAfter;
 
-describe('hooks pluckQuery', () => {
+describe('services pluckQuery', () => {
   describe('updates query', () => {
     beforeEach(() => {
       hookBefore = {

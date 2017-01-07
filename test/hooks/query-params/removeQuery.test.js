@@ -5,7 +5,7 @@ import hooks from '../../../src/services';
 var hookBefore;
 var hookAfter;
 
-describe('hooks removeQuery', () => {
+describe('services removeQuery', () => {
   describe('updates query', () => {
     beforeEach(() => {
       hookBefore = {

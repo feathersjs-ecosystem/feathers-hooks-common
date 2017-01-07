@@ -19,7 +19,7 @@ const hookFcnSync = (hook) => {
   return hook;
 };
 
-describe('hooks isProvider - predicate', () => {
+describe('services isProvider - predicate', () => {
   beforeEach(() => {
     hookServer = { type: 'before', method: 'create', params: { provider: '' } };
     hookSocketio = { type: 'before', method: 'create', params: { provider: 'socketio' } };
@@ -92,7 +92,7 @@ describe('hooks isProvider - predicate', () => {
   });
 });
 
-describe('hooks isProvider - works with iff', () => {
+describe('services isProvider - works with iff', () => {
   beforeEach(() => {
     hookBefore = {
       type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }

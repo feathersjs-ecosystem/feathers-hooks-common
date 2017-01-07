@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import * as hooks from '../../../src/services';
 
-describe('hooks getItems & replaceItems', () => {
+describe('services getItems & replaceItems', () => {
   let hookBefore;
   let hookAfter;
   let hookBeforeArray;

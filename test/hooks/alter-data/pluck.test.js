@@ -7,7 +7,7 @@ var hookAfter;
 var hookFindPaginate;
 var hookFind;
 
-describe('hooks pluck', () => {
+describe('services pluck', () => {
   describe('plucks fields', () => {
     beforeEach(() => {
       hookBefore = {

@@ -2,7 +2,7 @@
 const assert = require('assert');
 const { serialize } = require('../../../src/services');
 
-describe('hooks serialize', () => {
+describe('services serialize', () => {
   let hookAfter;
   let schema;
 

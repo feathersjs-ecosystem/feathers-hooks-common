@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { validateSchema } from '../../../src/services';
 import Ajv from 'ajv';
 
-describe('hooks validateSchema', () => {
+describe('services validateSchema', () => {
   let hookBefore;
   let hookBeforeArray;
   let schema;

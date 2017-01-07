@@ -5,7 +5,7 @@ const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
 const hooks = require('../../../src/services');
 
-describe('hooks every', () => {
+describe('services every', () => {
   let app;
 
   beforeEach(() => {

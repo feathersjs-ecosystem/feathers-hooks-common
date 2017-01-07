@@ -64,7 +64,7 @@ const hookFcnCb = (hook, cb) => {
   cb(null, hook);
 };
 
-describe('hooks iff - sync predicate, sync hook', () => {
+describe('services iff - sync predicate, sync hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -116,7 +116,7 @@ describe('hooks iff - sync predicate, sync hook', () => {
   });
 });
 
-describe('hooks iff - sync predicate, async hook', () => {
+describe('services iff - sync predicate, async hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -156,7 +156,7 @@ describe('hooks iff - sync predicate, async hook', () => {
   });
 });
 
-describe('hooks iff - async predicate, sync hook', () => {
+describe('services iff - async predicate, sync hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -184,7 +184,7 @@ describe('hooks iff - async predicate, sync hook', () => {
   });
 });
 
-describe('hooks iff - async predicate, async hook', () => {
+describe('services iff - async predicate, async hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -212,7 +212,7 @@ describe('hooks iff - async predicate, async hook', () => {
   });
 });
 
-describe('hooks iff - sync predicate', () => {
+describe('services iff - sync predicate', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -254,7 +254,7 @@ describe('hooks iff - sync predicate', () => {
   });
 });
 
-describe('hooks iff - async predicate', () => {
+describe('services iff - async predicate', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -300,7 +300,7 @@ describe('hooks iff - async predicate', () => {
   });
 });
 
-describe('hooks iff - runs .else()', () => {
+describe('services iff - runs .else()', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -344,7 +344,7 @@ describe('hooks iff - runs .else()', () => {
   });
 });
 
-describe('hooks iff - runs iff(true, iff(true, ...)', () => {
+describe('services iff - runs iff(true, iff(true, ...)', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -400,7 +400,7 @@ describe('hooks iff - runs iff(true, iff(true, ...)', () => {
   });
 });
 
-describe('hooks iff - runs iff(true, iff(false).else(...)', () => {
+describe('services iff - runs iff(true, iff(false).else(...)', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -441,7 +441,7 @@ describe('hooks iff - runs iff(true, iff(false).else(...)', () => {
   });
 });
 
-describe('hooks iff - runs iff(false).else(iff(...).else(...))', () => {
+describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -488,7 +488,7 @@ describe('hooks iff - runs iff(false).else(iff(...).else(...))', () => {
   });
 });
 
-describe('hooks iff - multiple iff() sequentially', () => {
+describe('services iff - multiple iff() sequentially', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };

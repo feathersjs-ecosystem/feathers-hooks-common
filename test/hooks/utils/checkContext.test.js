@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import { checkContext } from '../../../src/services';
 
-describe('hooks checkContext', () => {
+describe('services checkContext', () => {
   var hook; // eslint-disable-line no-var
 
   beforeEach(() => {

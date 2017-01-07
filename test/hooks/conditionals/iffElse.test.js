@@ -53,7 +53,7 @@ const predicateTrue = function (hook, more2, more3, more4) {
   return true;
 };
 
-describe('hooks iffElse', () => {
+describe('services iffElse', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -131,7 +131,7 @@ describe('hooks iffElse', () => {
       hookFcnCbContext = undefined;
     });
 
-    it('hooks', () => {
+    it('services', () => {
       return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcnCb], null).call(context, hook)
         .then(hook => {
           assert.deepEqual(hook, hookAfter);

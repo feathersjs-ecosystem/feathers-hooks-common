@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import { getByDot, setByDot } from '../../../src/services';
 
-describe('hooks byDot', () => {
+describe('services byDot', () => {
   var obj;
   var empty;
 

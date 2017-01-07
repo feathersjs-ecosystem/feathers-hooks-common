@@ -7,7 +7,7 @@ var hookAfter;
 var hookFindPaginate;
 var hookFind;
 
-describe('hooks remove', () => {
+describe('services remove', () => {
   describe('removes fields', () => {
     beforeEach(() => {
       hookBefore = {

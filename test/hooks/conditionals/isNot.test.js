@@ -31,7 +31,7 @@ const hookFcnSync = (hook) => {
   return hook;
 };
 
-describe('hooks isNot - predicate', () => {
+describe('services isNot - predicate', () => {
   beforeEach(() => {
     hookServer = { type: 'before', method: 'create', params: { provider: '' } };
     predicateCalls = 0;
@@ -84,7 +84,7 @@ describe('hooks isNot - predicate', () => {
   });
 });
 
-describe('hooks isNot - works with iff and isProvider', () => {
+describe('services isNot - works with iff and isProvider', () => {
   beforeEach(() => {
     hookBefore = {
       type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }

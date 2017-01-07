@@ -14,7 +14,7 @@ const fakeMessagesDb = [ // faked in-memory database
   { _id: '4', senderId: 'b', text: 'Fine too?' }
 ];
 
-describe('hooks legacyPopulate', () => {
+describe('services legacyPopulate', () => {
   var usersDb;
   var messagesDb;
   var app;

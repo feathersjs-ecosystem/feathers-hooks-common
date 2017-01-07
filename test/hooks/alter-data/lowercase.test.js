@@ -7,7 +7,7 @@ var hookAfter;
 var hookFindPaginate;
 var hookFind;
 
-describe('hooks lowercase', () => {
+describe('services lowercase', () => {
   describe('updates data', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };

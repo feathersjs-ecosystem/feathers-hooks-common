@@ -8,7 +8,7 @@ var hookAfter;
 var hookFindPaginate;
 var hookFind;
 
-describe('hooks setCreatedAt', () => {
+describe('services setCreatedAt', () => {
   describe('updates fields', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };

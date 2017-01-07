@@ -6,7 +6,7 @@ const promise1 = (ifResolve) => new Promise((resolve, reject) => {
   return ifResolve ? resolve('ok') : reject('bad');
 });
 
-describe('hooks promiseToCallback', () => {
+describe('services promiseToCallback', () => {
   it('calls callback on resolve', (done) => {
     promiseToCallback(promise1(true))((err, data) => {
       assert.strictEqual(err, null, 'err code set');

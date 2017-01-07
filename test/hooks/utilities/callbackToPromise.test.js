@@ -37,7 +37,7 @@ const funcAsyncCbHook = () => (hook, next) => {
   });
 };
 
-describe('hooks callbackToPromise', () => {
+describe('services callbackToPromise', () => {
   describe('paramsCountBeforeCb provided', () => {
     describe('correct number of params', () => {
       it('resolves', (done) => {

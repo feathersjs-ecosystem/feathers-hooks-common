@@ -4,7 +4,7 @@ import hooksCommon from '../../../src/services';
 
 var hook;
 
-describe('hooks setSlug', () => {
+describe('services setSlug', () => {
   beforeEach(() => {
     hook = { type: 'before', method: 'create', params: { provider: 'rest', query: { a: 'a' } } };
   });

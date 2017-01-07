@@ -2,7 +2,7 @@
 const assert = require('assert');
 const { dePopulate } = require('../../../src/services');
 
-describe('hooks dePopulate', () => {
+describe('services dePopulate', () => {
   let hookAfter;
   let hookBeforeArray;
   let hookBefore;

@@ -96,7 +96,7 @@ function user () {
   });
 }
 
-describe('hooks combine', () => {
+describe('services combine', () => {
   let app;
   let user;
 

@@ -38,7 +38,7 @@ function user () {
   });
 }
 
-describe('hooks softDelete', () => {
+describe('services softDelete', () => {
   let app;
   let user;
 
