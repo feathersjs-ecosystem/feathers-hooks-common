@@ -1,6 +1,6 @@
 
 import feathersErrors from 'feathers-errors';
-import Conditionals from '../common/conditionals';
+import Conditionals from '../common/conditionals-split';
 import { processHooks } from 'feathers-hooks/lib/commons';
 
 const errors = feathersErrors.errors;
@@ -26,7 +26,7 @@ const isProvider = (...providers) => {
   };
 };
 
-const conditionals = new Conditionals(
+const conditionals = Conditionals(
   function (hookFnArgs, serviceHooks) {
     return serviceHooks ? combine(...serviceHooks).call(this, hookFnArgs[0]) : hookFnArgs[0];
   });

@@ -1,13 +1,14 @@
 
-import iffElse from './iff-else';
+export default function (_iffElse) {
+  return function (predicate, ...rest) {
+    const trueHooks = [].concat(rest);
+    const that = this;
 
-export default function (predicate, ...rest) {
-  const trueHooks = [].concat(rest);
+    function iffWithoutElse (hook) {
+      return _iffElse(predicate, trueHooks, null).call(that, hook);
+    }
+    iffWithoutElse.else = (...falseHooks) => _iffElse(predicate, trueHooks, falseHooks);
 
-  const iffWithoutElse = function (hook) {
-    return iffElse(predicate, trueHooks, null).call(this, hook);
+    return iffWithoutElse;
   };
-  iffWithoutElse.else = (...falseHooks) => iffElse(predicate, trueHooks, falseHooks);
-
-  return iffWithoutElse;
 }

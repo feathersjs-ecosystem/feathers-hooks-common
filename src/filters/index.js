@@ -6,7 +6,7 @@ import remove from './remove';
 import setFilteredAt from './set-filtered-at';
 import traverse from './traverse';
 
-const conditionals = new Conditionals(
+const conditionals = Conditionals(
   function (filterFnArgs, eventFilters) {
     return eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0];
   }

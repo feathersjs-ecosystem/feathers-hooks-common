@@ -7,12 +7,19 @@ import some from './some';
 import every from './every';
 import isNot from './is-not';
 
-export default function (processFuncArray) {
+// processFuncArray must handle case of null param.
+export default function Conditionals (processFuncArray) {
+  if (!(this instanceof Conditionals)) {
+    return new Conditionals(processFuncArray);
+  }
+
+  const _iffElse = iffElse(processFuncArray);
+
   return {
-    iffElse: iffElse(processFuncArray),
-    iff,
-    when: iff,
-    unless,
+    iffElse: _iffElse,
+    iff: iff(_iffElse),
+    when: iff(_iffElse),
+    unless: unless(_iffElse),
     some,
     every,
     isNot

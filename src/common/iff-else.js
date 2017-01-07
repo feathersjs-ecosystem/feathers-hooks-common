@@ -1,8 +1,8 @@
 
 // processFuncArray must handle case of null param.
 export default function (processFuncArray) {
-// fnArgs is [hook] for service & permission hooks, [data, connection, hook] for event filters
   return function (predicate, trueFuncs, falseFuncs) {
+    // fnArgs is [hook] for service & permission hooks, [data, connection, hook] for event filters
     return function (...fnArgs) {
       if (typeof trueFuncs === 'function') { trueFuncs = [trueFuncs]; }
       if (typeof falseFuncs === 'function') { falseFuncs = [falseFuncs]; }
