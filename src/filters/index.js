@@ -8,7 +8,7 @@ import traverse from './traverse';
 
 const conditionals = new Conditionals(
   function (filterFnArgs, eventFilters) {
-    return eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0]
+    return eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0];
   }
 );
 
