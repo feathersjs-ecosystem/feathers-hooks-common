@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
-const hooks = require('../../../src/hooks');
+const hooks = require('../../../src/services');
 const permissions = require('../../../src/permissions');
 
 describe('permissions some', () => {

@@ -1,6 +1,6 @@
 
 const traverser = require('traverse');
-import { getByDot, setByDot } from '../hooks/utils';
+import { getByDot, setByDot } from '../services/utils';
 
 // transformer(item /* modified */, fieldName, value)
 export const _transformItems = (items /* modified */, fieldNames, transformer) => {

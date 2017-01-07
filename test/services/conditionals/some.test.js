@@ -4,9 +4,8 @@ const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
 const hooks = require('../../../src/services');
-const permissions = require('../../../src/permissions');
 
-describe('permissions every', () => {
+describe('services some', () => {
   let app;
 
   beforeEach(() => {
@@ -15,17 +14,19 @@ describe('permissions every', () => {
       .use('/users', memory());
   });
 
-  describe('when all hooks are truthy', () => {
+  describe('when at least 1 hook is truthy', () => {
     beforeEach(() => {
       app.service('users').hooks({
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.some(
+                (hook) => false,
+                (hook) => Promise.resolve(false),
+                (hook) => Promise.resolve(true),
                 (hook) => true,
                 (hook) => 1,
-                (hook) => {},
-                (hook) => Promise.resolve(true)
+                (hook) => {}
               ),
               (hook) => Promise.resolve(hook)
             )
@@ -47,7 +48,7 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.some(
                 (hook) => true,
                 (hook) => {
                   throw new Error('Hook 2 errored');
@@ -74,7 +75,7 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.some(
                 (hook) => true,
                 (hook) => Promise.reject(Error('Hook 2 errored')),
                 (hook) => true
@@ -93,25 +94,22 @@ describe('permissions every', () => {
     });
   });
 
-  describe('when at least one hook is falsey', () => {
+  describe('when all hooks are falsey', () => {
     beforeEach(() => {
       app.service('users').hooks({
         before: {
           all: [
             hooks.iff(
-              permissions.isNot(
-                permissions.every(
-                  (hook) => true,
-                  (hook) => Promise.resolve(true),
-                  (hook) => Promise.resolve(false),
+              hooks.isNot(
+                hooks.some(
                   (hook) => false,
-                  (hook) => 0,
+                  (hook) => Promise.resolve(false),
                   (hook) => null,
                   (hook) => undefined,
-                  (hook) => true,
+                  (hook) => 0
                 )
               ),
-              () => Promise.reject(new Error('A hook returned false'))
+              () => Promise.reject(new Error('All hooks returned false'))
             )
           ]
         }
@@ -120,7 +118,7 @@ describe('permissions every', () => {
 
     it('returns false', () => {
       return app.service('users').find().catch(error => {
-        assert.equal(error.message, 'A hook returned false');
+        assert.equal(error.message, 'All hooks returned false');
       });
     });
   });

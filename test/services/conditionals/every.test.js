@@ -4,9 +4,8 @@ const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
 const hooks = require('../../../src/services');
-const permissions = require('../../../src/permissions');
 
-describe('permissions every', () => {
+describe('services every', () => {
   let app;
 
   beforeEach(() => {
@@ -21,7 +20,7 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.every(
                 (hook) => true,
                 (hook) => 1,
                 (hook) => {},
@@ -47,7 +46,7 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.every(
                 (hook) => true,
                 (hook) => {
                   throw new Error('Hook 2 errored');
@@ -74,7 +73,7 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.every(
+              hooks.every(
                 (hook) => true,
                 (hook) => Promise.reject(Error('Hook 2 errored')),
                 (hook) => true
@@ -99,8 +98,8 @@ describe('permissions every', () => {
         before: {
           all: [
             hooks.iff(
-              permissions.isNot(
-                permissions.every(
+              hooks.isNot(
+                hooks.every(
                   (hook) => true,
                   (hook) => Promise.resolve(true),
                   (hook) => Promise.resolve(false),
