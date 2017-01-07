@@ -12,14 +12,15 @@ module.exports = function Conditionals (processFuncArray) {
     if (typeof trueFuncs === 'function') { trueFuncs = [trueFuncs]; }
     if (typeof falseFuncs === 'function') { falseFuncs = [falseFuncs]; }
 
-    // Babel 6.17.0 did not transpile something in the old version similar to this
-    // const runProcessFuncArray = funcs => processFuncArray.call(this, fnArgs, funcs);
+    // Babel-core 6.17.0 did not properly transpile the following when coded as an arrow func
     var that = this;
     var runProcessFuncArray = function (funcs) {
       return processFuncArray.call(that, fnArgs, funcs);
     };
 
-    const check = typeof predicate === 'function' ? predicate(...fnArgs) : !!predicate;
+    // Babel-core 6.17.0 transpiled const check = typeof predicate === 'function' ? predicate(...fnArgs) : !!predicate;
+    // as var check = typeof predicate === 'function' ? predicate.apply(undefined, fnArgs) : !!predicate;
+    var check = typeof predicate === 'function' ? predicate.apply(that, fnArgs) : !!predicate;
 
     if (!check) {
       return runProcessFuncArray(falseFuncs);
@@ -93,125 +94,3 @@ module.exports = function Conditionals (processFuncArray) {
     isNot
   };
 };
-
-/**
- * Hook to conditionally execute one or another set of hooks.
- *
- * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function|Function} trueHooks - Hook functions to execute when ifFcn is truthy.
- * @param {Array.function|Function} falseHooks - Hook functions to execute when ifFcn is falsey.
- * @returns {Object} resulting hook
- *
- * The predicate is called with hook as a param.
- *   const isServer = hook => !hook.params.provider;
- *   iff(isServer, hook.remove( ... ));
- * You can use a high order predicate to access other values.
- *   const isProvider = provider => hook => hook.params.provider === provider;
- *   iff(isProvider('socketio'), hook.remove( ... ));
- *
- * The hook functions may be sync, return a Promise, or use a callback.
- * feathers-hooks will catch any errors from the predicate or hook Promises.
- *
- * Examples
- * iffElse(isServer, [hookA, hookB], hookC)
- *
- * iffElse(isServer,
- *   [ hookA, iffElse(hook => hook.method === 'create', hook1, [hook2, hook3]), hookB ],
- *   iffElse(isProvider('rest'), [hook4, hook5], hook6])
- * )
- */
-
-/**
- * Hook to conditionally execute one or another set of hooks using function chaining.
- *
- * @param {Function|Promise|boolean} ifFcn - Predicate function(hook).
- * @param {Array.function} rest - Hook functions to execute when ifFcn is truthy.
- * @returns {Function} iffWithoutElse
- *
- * Examples:
- * iff(isServer, hookA, hookB)
- *   .else(hookC)
- *
- * iff(isServer,
- *   hookA,
- *   iff(isProvider('rest'), hook1, hook2, hook3)
- *     .else(hook4, hook5),
- *   hookB
- * )
- *   .else(
- *     iff(hook => hook.method === 'create', hook6, hook7)
- *   )
- */
-
-/**
- * Alias for iff
- */
-
-/**
- * Hook that executes a set of hooks and returns true if at least one of
- * the hooks returns a truthy value and false if none of them do.
- *
- * @param {Array.function} rest - Hook functions to execute.
- * @returns {Boolean}
- *
- * Example 1
- * service.before({
- *   create: hooks.iff(hooks.some(hook1, hook2, ...), hookA, hookB, ...)
- * });
- *
- * Example 2 - called within a custom hook function
- * function (hook) {
- *   ...
- *   hooks.some(hook1, hook2, ...).call(this, currentHook)
- *     .then(bool => { ... });
- * }
- */
-
-/**
- * Hook that executes a set of hooks and returns true if all of
- * the hooks returns a truthy value and false if one of them does not.
- *
- * @param {Array.function} rest - Hook functions to execute.
- * @returns {Boolean}
- *
- * Example 1
- * service.before({
- *    create: hooks.iff(hooks.every(hook1, hook2, ...), hookA, hookB, ...)
- * });
- *
- * Example 2 - called within a custom hook function
- * function (hook) {
- *   ...
- *   hooks.every(hook1, hook2, ...).call(this, currentHook)
- *     .then(bool => { ... })
- * }
- */
-
-/**
- * Hook to conditionally execute one or another set of hooks using function chaining.
- * if the predicate hook function returns a falsey value.
- * Equivalent to iff(isNot(isProvider), hook1, hook2, hook3).
- *
- * @param {Function|Promise|boolean} unlessFcn - Predicate function(hook).
- * @param {Array.function} rest - Hook functions to execute when unlessFcn is falsey.
- * @returns {Function} iffWithoutElse
- *
- * Examples:
- * unless(isServer, hookA, hookB)
- *
- * unless(isServer,
- *   hookA,
- *   unless(isProvider('rest'), hook1, hook2, hook3),
- *   hookB
- * )
- */
-
-/**
- * Negate a predicate.
- *
- * @param {Function} predicate - returns a boolean or a promise resolving to a boolean.
- * @returns {boolean} the not of the predicate result.
- *
- * const hooks, { iff, isNot, isProvider } from 'feathers-hooks-common';
- * iff(isNot(isProvider('rest')), hooks.remove( ... ));
- */

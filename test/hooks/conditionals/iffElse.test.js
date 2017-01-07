@@ -9,28 +9,42 @@ var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
 var hookFcnCbCalls;
 var predicateParam1, predicateParam2, predicateParam3, predicateParam4;
+var context;
+var predicateTrueContext;
+var hookFcnSyncContext;
+var hookFcnAsyncContext;
+var hookFcnCbContext;
 
-const hookFcnSync = (hook) => {
+const hookFcnSync = function (hook) {
+  hookFcnSyncContext = this;
+
   hookFcnSyncCalls = +1;
   hook.data.first = hook.data.first.toLowerCase();
 
   return hook;
 };
 
-const hookFcnAsync = (hook) => new Promise(resolve => {
-  hookFcnAsyncCalls = +1;
-  hook.data.first = hook.data.first.toLowerCase();
+const hookFcnAsync = function (hook) {
+  hookFcnAsyncContext = this;
 
-  resolve(hook);
-});
+  return new Promise(resolve => {
+    hookFcnAsyncCalls = +1;
+    hook.data.first = hook.data.first.toLowerCase();
 
-const hookFcnCb = (hook, cb) => {
+    resolve(hook);
+  });
+};
+
+const hookFcnCb = function (hook, cb) {
+  hookFcnCbContext = this;
+
   hookFcnCbCalls = +1;
-
   cb(null, hook);
 };
 
-const predicateTrue = (hook, more2, more3, more4) => {
+const predicateTrue = function (hook, more2, more3, more4) {
+  predicateTrueContext = this;
+
   predicateParam1 = hook;
   predicateParam2 = more2;
   predicateParam3 = more3;
@@ -104,6 +118,32 @@ describe('hooks iffElse', () => {
           assert.strictEqual(predicateParam2, undefined, 'param2');
           assert.strictEqual(predicateParam3, undefined, 'param3');
           assert.strictEqual(predicateParam4, undefined, 'param4');
+        });
+    });
+  });
+
+  describe('predicate and hooks get right context', () => {
+    beforeEach(() => {
+      context = { service: 'abc' };
+      predicateTrueContext = undefined;
+      hookFcnSyncContext = undefined;
+      hookFcnAsyncContext = undefined;
+      hookFcnCbContext = undefined;
+    });
+
+    it('hooks', () => {
+      return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcnCb], null).call(context, hook)
+        .then(hook => {
+          assert.deepEqual(hook, hookAfter);
+          assert.equal(hookFcnSyncCalls, 1);
+          assert.equal(hookFcnAsyncCalls, 1);
+          assert.equal(hookFcnCbCalls, 1);
+          assert.deepEqual(hook, hookAfter);
+
+          assert.deepEqual(predicateTrueContext, { service: 'abc' });
+          assert.deepEqual(hookFcnSyncContext, { service: 'abc' });
+          assert.deepEqual(hookFcnAsyncContext, { service: 'abc' });
+          assert.deepEqual(hookFcnCbContext, { service: 'abc' });
         });
     });
   });
