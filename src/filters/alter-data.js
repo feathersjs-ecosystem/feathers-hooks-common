@@ -1,5 +1,5 @@
 
-import { _remove, _pluck, _traverse, _setFields } from '../common/alter-data';
+import { _remove, _pluck, _traverse, _setFields } from '../common/alter-data-split';
 
 export const remove = (...fields) => data => {
   _remove(data, fields);
