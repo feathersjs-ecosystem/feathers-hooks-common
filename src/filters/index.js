@@ -1,5 +1,22 @@
 
-export default Object.assign({},
-  require('./conditionals'),
-  require('./alter-data'),
+import combine from './combine';
+import Conditionals from '../common/conditionals-split';
+import pluck from './pluck';
+import remove from './remove';
+import setFilteredAt from './set-filtered-at';
+import traverse from './traverse';
+
+const conditionals = new Conditionals(
+  (filterFnArgs, eventFilters) =>
+    eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0]
+);
+
+export default Object.assign(
+  { combine,
+    pluck,
+    remove,
+    setFilteredAt,
+    traverse
+  },
+  conditionals,
 );
