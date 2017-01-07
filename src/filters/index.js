@@ -7,8 +7,9 @@ import setFilteredAt from './set-filtered-at';
 import traverse from './traverse';
 
 const conditionals = new Conditionals(
-  (filterFnArgs, eventFilters) =>
-    eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0]
+  function (filterFnArgs, eventFilters) {
+    return eventFilters ? combine(...eventFilters).call(this, filterFnArgs) : filterFnArgs[0]
+  }
 );
 
 export default Object.assign(

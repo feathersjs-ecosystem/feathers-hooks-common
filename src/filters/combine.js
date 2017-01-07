@@ -36,7 +36,7 @@ const dispatchFilters = (promisify, promise, eventFilters, service, data, connec
 };
 
 export default function (...eventFilters) {
-  return ([data, connection, hook]) => {
+  return function ([data, connection, hook]) {
     let promise = Promise.resolve(data);
 
     return dispatchFilters(promisify, promise, eventFilters, this, data, connection, hook);
