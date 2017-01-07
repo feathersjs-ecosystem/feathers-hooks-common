@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import hooks from '../../../src/hooks';
+import hooks from '../../../src/services';
 import hooksCommon from '../../../src';
 
 const isNot = hooks.isNot;

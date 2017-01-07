@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import * as hooks from '../../../src/hooks';
+import * as hooks from '../../../src/services';
 
 describe('hooks getItems & replaceItems', () => {
   let hookBefore;

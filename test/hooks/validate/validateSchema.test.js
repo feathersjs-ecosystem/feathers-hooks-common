@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import { validateSchema } from '../../../src/hooks';
+import { validateSchema } from '../../../src/services';
 import Ajv from 'ajv';
 
 describe('hooks validateSchema', () => {

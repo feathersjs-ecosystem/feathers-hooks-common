@@ -1,7 +1,7 @@
 
 import { assert } from 'chai';
 import fs from 'fs';
-import { callbackToPromise } from '../../../src/hooks';
+import { callbackToPromise } from '../../../src/services';
 
 const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'

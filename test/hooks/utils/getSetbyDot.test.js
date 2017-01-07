@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import { getByDot, setByDot } from '../../../src/hooks';
+import { getByDot, setByDot } from '../../../src/services';
 
 describe('hooks byDot', () => {
   var obj;

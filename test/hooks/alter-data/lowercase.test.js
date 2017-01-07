@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import hooks from '../../../src/hooks';
+import hooks from '../../../src/services';
 
 var hookBefore;
 var hookAfter;

@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import { checkContext } from '../../../src/hooks';
+import { checkContext } from '../../../src/services';
 
 describe('hooks checkContext', () => {
   var hook; // eslint-disable-line no-var

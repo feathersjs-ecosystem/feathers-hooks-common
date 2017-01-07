@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import hooks from '../../../src/hooks';
+import hooks from '../../../src/services';
 import feathersFakes from 'feathers-tests-fake-app-users';
 
 const fakeUsersDb = [ // faked in-memory database

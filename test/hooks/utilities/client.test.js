@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import { client } from '../../../src/hooks';
+import { client } from '../../../src/services';
 
 describe('client', () => {
   describe('basics', () => {

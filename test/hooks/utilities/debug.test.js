@@ -1,5 +1,5 @@
 
-import hooksCommon from '../../../src/hooks';
+import hooksCommon from '../../../src/services';
 
 describe('debug', () => {
   it('does not crash', () => {

@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import hooksCommon from '../../../src/hooks';
+import hooksCommon from '../../../src/services';
 
 var hook;
 

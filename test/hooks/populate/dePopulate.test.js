@@ -1,6 +1,6 @@
 
 const assert = require('assert');
-const { dePopulate } = require('../../../src/hooks');
+const { dePopulate } = require('../../../src/services');
 
 describe('hooks dePopulate', () => {
   let hookAfter;

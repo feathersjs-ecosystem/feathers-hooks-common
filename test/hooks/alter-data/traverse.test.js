@@ -1,6 +1,6 @@
 
 import assert from 'assert';
-import hooks from '../../../src/hooks';
+import hooks from '../../../src/services';
 
 describe('hooks traverse', () => {
   let hookBefore;

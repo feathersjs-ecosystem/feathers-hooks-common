@@ -1,6 +1,6 @@
 
 const assert = require('assert');
-const { serialize } = require('../../../src/hooks');
+const { serialize } = require('../../../src/services');
 
 describe('hooks serialize', () => {
   let hookAfter;

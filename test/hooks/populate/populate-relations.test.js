@@ -2,7 +2,7 @@
 const assert = require('assert');
 const configApp = require('../../helpers/configApp');
 const getInitDb = require('../../helpers/getInitDb');
-const { populate } = require('../../../src/hooks');
+const { populate } = require('../../../src/services');
 
 ['array', 'obj'].forEach(type => {
   describe(`populate - 1:1 & 1:m & m:1 - ${type}`, () => {
