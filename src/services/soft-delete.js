@@ -1,10 +1,10 @@
 
 import feathersErrors from 'feathers-errors';
-import { checkContext } from './utils';
+import checkContext from './check-context';
 
 const errors = feathersErrors.errors;
 
-export const softDelete = field => {
+export default function (field) {
   const deleteField = field || 'deleted';
 
   return function (hook) {
@@ -63,4 +63,4 @@ export const softDelete = field => {
         });
     }
   };
-};
+}
