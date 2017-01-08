@@ -1,9 +1,12 @@
 
 import errors from 'feathers-errors';
-import { getItems, replaceItems, getByDot } from './utils';
-import legacyPopulate from './legacy-populate';
 
-export const populate = (options, ...rest) => {
+import getByDot from '../common/get-by-dot';
+import getItems from './get-items';
+import legacyPopulate from './legacy-populate';
+import replaceItems from './replace-items';
+
+export default function (options, ...rest) {
   if (typeof options === 'string') {
     return legacyPopulate(options, ...rest);
   }
@@ -49,7 +52,7 @@ export const populate = (options, ...rest) => {
         return hook;
       });
   };
-};
+}
 
 function populateItemArray (options, hook, items, includeSchema, depth) {
   // 'items' is an item or an array of items
@@ -171,26 +174,6 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
 
   return promise
     .then(items => ({ [nameAs]: items }));
-}
-
-export const dePopulate = () => hook => {
-  const items = getItems(hook);
-
-  (Array.isArray(items) ? items : [items]).forEach(item => {
-    removeProps('_computed', item);
-    removeProps('_include', item);
-    delete item._elapsed;
-  });
-
-  replaceItems(hook, items);
-  return hook;
-};
-
-function removeProps (name, item) {
-  if (name in item) {
-    item[name].forEach(key => { delete item[key]; });
-    delete item[name];
-  }
 }
 
 // Helpers
