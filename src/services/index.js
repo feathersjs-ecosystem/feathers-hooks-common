@@ -8,6 +8,6 @@ module.exports = Object.assign({},
   require('./database'),
   require('./validate'),
   require('./utilities'),
-  require('./conditionals'),
+  require('./conditionals-split'),
   require('./utils'),
 );
