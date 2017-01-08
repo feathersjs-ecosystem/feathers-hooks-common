@@ -4,7 +4,7 @@ module.exports = Object.assign({},
   require('./query-params-split'),
   require('./database-split'),
   require('./validate-split'),
-  require('./utilities'),
+  require('./utilities-split'),
   require('./conditionals-split'),
   require('./utils'), // this is the split file.
 );
