@@ -1,4 +1,3 @@
-// temporary module
 
 import iffElse from './iff-else';
 import iff from './iff';
@@ -8,11 +7,7 @@ import every from './every';
 import isNot from './is-not';
 
 // processFuncArray must handle case of null param.
-export default function Conditionals (processFuncArray) {
-  if (!(this instanceof Conditionals)) {
-    return new Conditionals(processFuncArray);
-  }
-
+export default function conditionals (processFuncArray) {
   const _iffElse = iffElse(processFuncArray);
 
   return {

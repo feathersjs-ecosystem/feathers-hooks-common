@@ -1,9 +1,9 @@
 
 import combine from './combine';
-import Conditionals from '../common/conditionals-split';
+import _conditionals from '../common/_conditionals';
 import isProvider from './is-provider';
 
-const conditionals = Conditionals(
+const conditionals = _conditionals(
   function (hookFnArgs, serviceHooks) {
     return serviceHooks ? combine(...serviceHooks).call(this, hookFnArgs[0]) : hookFnArgs[0];
   });
