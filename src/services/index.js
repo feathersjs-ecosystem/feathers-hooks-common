@@ -9,5 +9,5 @@ module.exports = Object.assign({},
   require('./validate'),
   require('./utilities'),
   require('./conditionals-split'),
-  require('./utils'),
+  require('./utils'), // this is the split file.
 );
