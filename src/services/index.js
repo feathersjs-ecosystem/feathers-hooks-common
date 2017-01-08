@@ -1,7 +1,7 @@
 
 module.exports = Object.assign({},
   require('./alter-data-split'),
-  require('./query-params'),
+  require('./query-params-split'),
   require('./populate'),
   require('./legacyPopulate'),
   require('./serialize'),
