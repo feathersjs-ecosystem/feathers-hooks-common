@@ -8,10 +8,8 @@ import combine from './combine';
 import debug from './debug';
 import dePopulate from './de-populate';
 import disable from './disable';
-import every from '../common/every';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
-import isNot from '../common/is-not';
 import isProvider from './is-provider';
 import legacyPopulate from './legacy-populate';
 import lowerCase from './lower-case';
@@ -28,7 +26,6 @@ import setCreatedAt from './set-created-at';
 import setSlug from './set-slug';
 import setUpdatedAt from './set-updated-at';
 import softDelete from './soft-delete';
-import some from '../common/some';
 import traverse from './traverse';
 import validate from './validate';
 import validateSchema from './validate-schema';
@@ -47,10 +44,8 @@ export default Object.assign(
       debug,
       dePopulate,
       disable,
-      every,
       getByDot,
       getItems,
-      isNot,
       isProvider,
       legacyPopulate,
       lowerCase,
@@ -67,7 +62,6 @@ export default Object.assign(
       setSlug,
       setUpdatedAt,
       softDelete,
-      some,
       traverse,
       validate,
       validateSchema
