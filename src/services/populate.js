@@ -1,7 +1,7 @@
 
 import errors from 'feathers-errors';
 import { getItems, replaceItems, getByDot } from './utils';
-import { legacyPopulate } from './legacyPopulate';
+import legacyPopulate from './legacy-populate';
 
 export const populate = (options, ...rest) => {
   if (typeof options === 'string') {

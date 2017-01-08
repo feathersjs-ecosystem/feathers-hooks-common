@@ -3,12 +3,12 @@ import feathersErrors from 'feathers-errors';
 
 const errors = feathersErrors.errors;
 
-export function legacyPopulate (target, options) {
+export default function (target, options) {
   options = Object.assign({}, options);
 
   console.error(
     'Calling populate(target, options) is now DEPRECATED and will be removed in the future. ' +
-    'Refer to docs.feathersjs.com for more information. (legacyPopulate)'
+    'Refer to docs.feathersjs.com for more information. (populate-legacy)'
   );
 
   if (!options.service) {
