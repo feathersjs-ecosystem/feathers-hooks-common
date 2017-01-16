@@ -1,7 +1,7 @@
 
 const chai = require('chai');
-const configApp = require('../helpers/configApp');
-const getInitDb = require('../helpers/getInitDb');
+const configApp = require('../helpers/config-app');
+const getInitDb = require('../helpers/get-init-db');
 const { populate } = require('../../src/services');
 
 const assert = chai.assert;

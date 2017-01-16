@@ -2,7 +2,7 @@
 const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
-const getInitDb = require('./getInitDb');
+const getInitDb = require('./get-init-db');
 
 module.exports = function (dbNames) {
   dbNames = typeof dbNames === 'string' ? [dbNames] : dbNames;

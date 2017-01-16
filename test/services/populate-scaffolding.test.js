@@ -1,6 +1,6 @@
 
 const assert = require('assert');
-const configApp = require('../helpers/configApp');
+const configApp = require('../helpers/config-app');
 
 describe('populate - test scaffolding', () => {
   it('can reinitialize database', done => {
