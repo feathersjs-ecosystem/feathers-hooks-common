@@ -11,7 +11,7 @@ export default function (options, ...rest) {
     return legacyPopulate(options, ...rest);
   }
 
-  return hook => {
+  return function (hook) {
     const optionsDefault = {
       schema: {},
       checkPermissions: () => true,
@@ -155,7 +155,8 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         throw new errors.BadRequest(`Service ${childSchema.service} is not configured. (populate)`);
       }
 
-      return serviceHandle.find({ query, _populate: 'skip' });
+      const params = Object.assign({}, hook.params, { query, _populate: 'skip' });
+      return serviceHandle.find(params);
     })
     .then(result => {
       result = result.data || result;
