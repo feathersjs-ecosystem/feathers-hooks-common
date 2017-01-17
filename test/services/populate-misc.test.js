@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
-const { populate } = require('../../src/services');
+const { iff, populate } = require('../../src/services/index');
 
 const userId = 6;
 const userInit = {
@@ -20,7 +20,7 @@ const teamInit = {
   '1': { team: 'Dragons', memberIds: [3, 4, 5], id: 1 }
 };
 
-const schema = {
+const schemaDefault = {
   include: [{
     service: 'users',
     nameAs: 'members',
@@ -29,6 +29,50 @@ const schema = {
   }]
 };
 
+const resultDefault = [{
+  team: 'Does',
+  memberIds: [ 0, 1, 2 ],
+  id: 0,
+  _include: [ 'members' ],
+  members: [
+    { name: 'Jane Doe', key: 'a', id: 0 },
+    { name: 'Jack Doe', key: 'a', id: 1 },
+    { name: 'Jack Doe', key: 'a', id: 2, deleted: true }
+  ]}
+];
+
+const resultPaginated = [{
+  team: 'Does',
+  memberIds: [ 0, 1, 2 ],
+  id: 0,
+  _include: [ 'members' ],
+  members: [
+    { name: 'Jane Doe', key: 'a', id: 0 },
+    { name: 'Jack Doe', key: 'a', id: 1 }
+  ]}
+];
+
+const schemaFalse = {
+  include: [{
+    service: 'users',
+    nameAs: 'members',
+    parentField: 'memberIds',
+    childField: 'id',
+    paginate: false
+  }]
+};
+
+const schemaTrue = {
+  include: [{
+    service: 'users',
+    nameAs: 'members',
+    parentField: 'memberIds',
+    childField: 'id',
+    paginate: { default: 2 }
+  }]
+};
+
+let whichSchema;
 let userHookFlag1;
 
 function services () {
@@ -42,7 +86,11 @@ function user () {
 
   app.use('/users', memory({
     store: clone(userInit),
-    startId: userId
+    startId: userId,
+    paginate: {
+      default: 2,
+      max: 2
+    }
   }));
 
   app.service('users').before({
@@ -61,7 +109,11 @@ function team () {
   }));
 
   app.service('teams').after({
-    all: [populate({ schema })]
+    all: [
+      iff(hook => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
+      iff(hook => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
+      iff(hook => whichSchema === 'schemaTrue', populate({ schema: schemaTrue }))
+    ]
   });
 }
 
@@ -78,20 +130,35 @@ describe('populate - hook.params passed to includes', () => {
   });
 
   it('hook.params passed to includes', () => {
+    whichSchema = 'schemaDefault';
     return teams.find({ query: { id: 0 }, userHookFlag1: 'userHookFlag1' })
       .then(result => {
         assert.equal(userHookFlag1, 'userHookFlag1');
-        assert.deepEqual(result, [{
-          team: 'Does',
-          memberIds: [ 0, 1, 2 ],
-          id: 0,
-          _include: [ 'members' ],
-          members: [
-            { name: 'Jane Doe', key: 'a', id: 0 },
-            { name: 'Jack Doe', key: 'a', id: 1 },
-            { name: 'Jack Doe', key: 'a', id: 2, deleted: true }
-          ]}
-        ]);
+        assert.deepEqual(result, resultDefault);
+      });
+  });
+
+  it('ignores pagination by default', () => {
+    whichSchema = 'schemaDefault';
+    return teams.find({ query: { id: 0 } })
+      .then(result => {
+        assert.deepEqual(result, resultDefault);
+      });
+  });
+
+  it('ignores pagination when paginate:false', () => {
+    whichSchema = 'schemaFalse';
+    return teams.find({ query: { id: 0 } })
+      .then(result => {
+        assert.deepEqual(result, resultDefault);
+      });
+  });
+
+  it('does pagination when paginate:true', () => {
+    whichSchema = 'schemaTrue';
+    return teams.find({ query: { id: 0 } })
+      .then(result => {
+        assert.deepEqual(result, resultPaginated);
       });
   });
 });

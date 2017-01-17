@@ -111,6 +111,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
       childField: 'postId',
       query: { $limit: 5, $select: ['title', 'content', 'postId'], $sort: { createdAt: -1 } },
       select: (hook, parent, depth) => ({ something: { $exists: false }}),
+      paginate: false,
       include: [ ... ],
     }
   */
@@ -155,7 +156,9 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         throw new errors.BadRequest(`Service ${childSchema.service} is not configured. (populate)`);
       }
 
-      const params = Object.assign({}, hook.params, { query, _populate: 'skip' });
+      const paginate = 'paginate' in childSchema ? childSchema.paginate : false;
+
+      const params = Object.assign({}, hook.params, { query, paginate, _populate: 'skip' });
       return serviceHandle.find(params);
     })
     .then(result => {
