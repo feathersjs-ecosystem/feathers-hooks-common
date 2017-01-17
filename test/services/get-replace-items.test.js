@@ -158,13 +158,13 @@ describe('services getItems & replaceItems', () => {
 
     it('updates hook after::find item paginated  NOTE THIS TEST NOTE THIS TEST', () => {
       hooks.replaceItems(hookFindPaginate, { a: 1 });
-      assert.equal(hookFindPaginate.result.total, 1);
+      assert.equal(hookFindPaginate.result.total, 200);
       assert.deepEqual(hookFindPaginate.result.data, [{ a: 1 }]);
     });
 
     it('updates hook after::find items paginated', () => {
       hooks.replaceItems(hookFindPaginate, [{ a: 1 }, { b: 2 }]);
-      assert.equal(hookFindPaginate.result.total, 2);
+      assert.equal(hookFindPaginate.result.total, 200);
       assert.deepEqual(hookFindPaginate.result.data, [{ a: 1 }, { b: 2 }]);
     });
   });

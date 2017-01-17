@@ -3,13 +3,7 @@ export default function (hook, items) {
   if (hook.type === 'before') {
     hook.data = items;
   } else if (hook.method === 'find' && hook.result && hook.result.data) {
-    if (Array.isArray(items)) {
-      hook.result.data = items;
-      hook.result.total = items.length;
-    } else {
-      hook.result.data = [items];
-      hook.result.total = 1;
-    }
+    hook.result.data = Array.isArray(items) ? items : [items];
   } else {
     hook.result = items;
   }
