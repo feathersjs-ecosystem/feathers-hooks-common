@@ -7,6 +7,7 @@ import legacyPopulate from './legacy-populate';
 import replaceItems from './replace-items';
 
 export default function (options, ...rest) {
+  // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
   if (typeof options === 'string') {
     return legacyPopulate(options, ...rest);
   }
@@ -31,9 +32,14 @@ export default function (options, ...rest) {
         const { schema, checkPermissions } = options1;
         const schema1 = typeof schema === 'function' ? schema(hook, options1) : schema;
         const permissions = schema1.permissions || null;
+        const baseService = schema1.service;
 
         if (typeof checkPermissions !== 'function') {
           throw new errors.BadRequest('Permissions param is not a function. (populate)');
+        }
+
+        if (baseService && baseService !== hook.path) {
+          throw new errors.BadRequest(`Schema is for ${baseService} not ${hook.path}. (populate)`);
         }
 
         if (permissions && !checkPermissions(hook, hook.path, permissions, 0)) {

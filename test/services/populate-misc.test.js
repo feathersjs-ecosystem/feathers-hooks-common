@@ -41,6 +41,26 @@ const resultDefault = [{
   ]}
 ];
 
+const schemaDefaultTeams = {
+  service: 'teams',
+  include: [{
+    service: 'users',
+    nameAs: 'members',
+    parentField: 'memberIds',
+    childField: 'id'
+  }]
+};
+
+const schemaDefaultXteams = {
+  service: 'xteams',
+  include: [{
+    service: 'users',
+    nameAs: 'members',
+    parentField: 'memberIds',
+    childField: 'id'
+  }]
+};
+
 const schemaFalse = {
   include: [{
     service: 'users',
@@ -131,7 +151,9 @@ function team () {
       iff(hook => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
       iff(hook => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
       iff(hook => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
-      iff(hook => whichSchema === 'schema1', populate({ schema: schema1 }))
+      iff(hook => whichSchema === 'schema1', populate({ schema: schema1 })),
+      iff(hook => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
+      iff(hook => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams }))
     ]
   });
 }
@@ -186,6 +208,25 @@ describe('populate - hook.params passed to includes', () => {
     return teams.find({ query: { id: 0 } })
       .then(result => {
         assert.deepEqual(result, result1);
+      });
+  });
+
+  it('passes on correct base service', () => {
+    whichSchema = 'schemaDefaultTeams';
+    return teams.find({ query: { id: 0 } })
+      .then(result => {
+        assert.deepEqual(result, resultDefault);
+      });
+  });
+
+  it('throws on incorrect base service', () => {
+    whichSchema = 'schemaDefaultXteams';
+    return teams.find({ query: { id: 0 } })
+      .then(() => {
+        assert.fail(true, false, 'unexpected succeeded');
+      })
+      .catch(err => {
+        assert.equal(err.className, 'bad-request');
       });
   });
 });
