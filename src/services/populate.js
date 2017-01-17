@@ -156,9 +156,12 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         throw new errors.BadRequest(`Service ${childSchema.service} is not configured. (populate)`);
       }
 
-      const paginate = 'paginate' in childSchema ? childSchema.paginate : false;
+      let paginate = { paginate: false };
+      const paginateOption = childSchema.paginate;
+      if (paginateOption === true) { paginate = null; }
+      if (typeof paginateOption === 'number') { paginate = { paginate: { default: paginateOption } }; }
 
-      const params = Object.assign({}, hook.params, { query, paginate, _populate: 'skip' });
+      const params = Object.assign({}, hook.params, paginate, { query, _populate: 'skip' });
       return serviceHandle.find(params);
     })
     .then(result => {

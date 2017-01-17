@@ -41,17 +41,6 @@ const resultDefault = [{
   ]}
 ];
 
-const resultPaginated = [{
-  team: 'Does',
-  memberIds: [ 0, 1, 2 ],
-  id: 0,
-  _include: [ 'members' ],
-  members: [
-    { name: 'Jane Doe', key: 'a', id: 0 },
-    { name: 'Jack Doe', key: 'a', id: 1 }
-  ]}
-];
-
 const schemaFalse = {
   include: [{
     service: 'users',
@@ -68,9 +57,38 @@ const schemaTrue = {
     nameAs: 'members',
     parentField: 'memberIds',
     childField: 'id',
-    paginate: { default: 2 }
+    paginate: true
   }]
 };
+
+const resultTrue = [{
+  team: 'Does',
+  memberIds: [ 0, 1, 2 ],
+  id: 0,
+  _include: [ 'members' ],
+  members: [
+    { name: 'Jane Doe', key: 'a', id: 0 },
+    { name: 'Jack Doe', key: 'a', id: 1 }
+  ]}
+];
+
+const schema1 = {
+  include: [{
+    service: 'users',
+    nameAs: 'members',
+    parentField: 'memberIds',
+    childField: 'id',
+    paginate: 1
+  }]
+};
+
+const result1 = [{
+  team: 'Does',
+  memberIds: [ 0, 1, 2 ],
+  id: 0,
+  _include: [ 'members' ],
+  members: { name: 'Jane Doe', key: 'a', id: 0 }
+}];
 
 let whichSchema;
 let userHookFlag1;
@@ -112,7 +130,8 @@ function team () {
     all: [
       iff(hook => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
       iff(hook => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
-      iff(hook => whichSchema === 'schemaTrue', populate({ schema: schemaTrue }))
+      iff(hook => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
+      iff(hook => whichSchema === 'schema1', populate({ schema: schema1 }))
     ]
   });
 }
@@ -154,11 +173,19 @@ describe('populate - hook.params passed to includes', () => {
       });
   });
 
-  it('does pagination when paginate:true', () => {
+  it('uses configuration when paginate:true', () => {
     whichSchema = 'schemaTrue';
     return teams.find({ query: { id: 0 } })
       .then(result => {
-        assert.deepEqual(result, resultPaginated);
+        assert.deepEqual(result, resultTrue);
+      });
+  });
+
+  it('can specify number of results to return', () => {
+    whichSchema = 'schema1';
+    return teams.find({ query: { id: 0 } })
+      .then(result => {
+        assert.deepEqual(result, result1);
       });
   });
 });
