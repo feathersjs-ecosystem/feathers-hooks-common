@@ -7,11 +7,12 @@ import legacyPopulate from './legacy-populate';
 import replaceItems from './replace-items';
 
 export default function (options, ...rest) {
+  // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
   if (typeof options === 'string') {
     return legacyPopulate(options, ...rest);
   }
 
-  return hook => {
+  return function (hook) {
     const optionsDefault = {
       schema: {},
       checkPermissions: () => true,
@@ -31,9 +32,14 @@ export default function (options, ...rest) {
         const { schema, checkPermissions } = options1;
         const schema1 = typeof schema === 'function' ? schema(hook, options1) : schema;
         const permissions = schema1.permissions || null;
+        const baseService = schema1.service;
 
         if (typeof checkPermissions !== 'function') {
           throw new errors.BadRequest('Permissions param is not a function. (populate)');
+        }
+
+        if (baseService && baseService !== hook.path) {
+          throw new errors.BadRequest(`Schema is for ${baseService} not ${hook.path}. (populate)`);
         }
 
         if (permissions && !checkPermissions(hook, hook.path, permissions, 0)) {
@@ -111,6 +117,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
       childField: 'postId',
       query: { $limit: 5, $select: ['title', 'content', 'postId'], $sort: { createdAt: -1 } },
       select: (hook, parent, depth) => ({ something: { $exists: false }}),
+      paginate: false,
       include: [ ... ],
     }
   */
@@ -155,7 +162,13 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         throw new errors.BadRequest(`Service ${childSchema.service} is not configured. (populate)`);
       }
 
-      return serviceHandle.find({ query, _populate: 'skip' });
+      let paginate = { paginate: false };
+      const paginateOption = childSchema.paginate;
+      if (paginateOption === true) { paginate = null; }
+      if (typeof paginateOption === 'number') { paginate = { paginate: { default: paginateOption } }; }
+
+      const params = Object.assign({}, hook.params, paginate, { query, _populate: 'skip' });
+      return serviceHandle.find(params);
     })
     .then(result => {
       result = result.data || result;
