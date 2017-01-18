@@ -24,8 +24,7 @@ will be removed next version. Use the new `populate` hook.
 - Use `deleteByDot` rather than `setByDot(obj, path, value, true)`.
 - The `delete` hook should be used instead of `remove`.
 You will need to wrap `delete` it in an conditional if you want it to work like `remove` does.
-- The `stop` hook may be used instead of `disable`.
-The `disable` hook when `false` instead of the documented `true`.
+- The `disableMethod` hook may be used instead of `disable`.
 
 ## Documentation
 

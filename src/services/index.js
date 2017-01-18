@@ -9,6 +9,7 @@ import debug from './debug';
 import deleteByDot from '../common/delete-by-dot';
 import dePopulate from './de-populate';
 import disable from './disable';
+import disableMethod from './disable-method';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
 import isProvider from './is-provider';
@@ -46,6 +47,7 @@ export default Object.assign(
       deleteByDot,
       dePopulate,
       disable,
+      disableMethod,
       getByDot,
       getItems,
       isProvider,
