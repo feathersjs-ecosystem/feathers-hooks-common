@@ -1,8 +1,8 @@
 
 const assert = require('assert');
-const { populate } = require('../../src/services');
+const { populate } = require('../../src/services/index');
 
-describe('populate - finds items in hook', () => {
+describe('services populate - finds items in hook', () => {
   let hookAfter;
   let hookAfterArray;
   let hookFindPaginate;

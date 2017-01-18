@@ -1,6 +1,7 @@
 
 import getItems from './get-items';
 import replaceItems from './replace-items';
+import deleteByDot from '../common/delete-by-dot';
 
 export default function () {
   return hook => {
@@ -19,7 +20,7 @@ export default function () {
 
 function removeProps (name, item) {
   if (name in item) {
-    item[name].forEach(key => { delete item[key]; });
+    item[name].forEach(key => { deleteByDot(item, key); });
     delete item[name];
   }
 }

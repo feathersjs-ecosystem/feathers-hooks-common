@@ -2,12 +2,12 @@
 const chai = require('chai');
 const configApp = require('../helpers/config-app');
 const getInitDb = require('../helpers/get-init-db');
-const { populate } = require('../../src/services');
+const { populate, setByDot } = require('../../src/services/index');
 
 const assert = chai.assert;
 
 ['array', 'obj'].forEach(type => {
-  describe(`populate - include 1:1 - ${type}`, () => {
+  describe(`services populate - include 1:1 - ${type}`, () => {
     let hookAfter;
     let hookAfterArray;
 
@@ -35,7 +35,7 @@ const assert = chai.assert;
     });
 
     describe('root is one item', () => {
-      it('saves in nameAs', () => {
+      it('saves in nameAs without dot notation', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
 
@@ -51,6 +51,26 @@ const assert = chai.assert;
         return populate({ schema })(hook)
           .then(hook1 => {
             const expected = recommendationPosts('post');
+            assert.deepEqual(hook1.result, expected);
+          });
+      });
+
+      it('saves in nameAs using dot notation', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            nameAs: 'post.items',
+            parentField: 'postId', // we have no test for dot notation 'cause no such data
+            childField: 'id'
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('post.items');
             assert.deepEqual(hook1.result, expected);
           });
       });
@@ -251,7 +271,8 @@ function recommendationPosts (nameAs, asArray, recommendation, posts) {
   const expected = clone(recommendation);
   expected._include = [nameAs];
 
-  expected[nameAs] = asArray ? [clone(posts)] : clone(posts);
+  // expected[nameAs] = asArray ? [clone(posts)] : clone(posts);
+  setByDot(expected, nameAs, asArray ? [clone(posts)] : clone(posts));
 
   return expected;
 }
