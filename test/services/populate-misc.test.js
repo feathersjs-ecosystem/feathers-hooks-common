@@ -158,7 +158,7 @@ function team () {
   });
 }
 
-describe('populate - hook.params passed to includes', () => {
+describe('services populate - hook.params passed to includes', () => {
   let app;
   let teams;
 

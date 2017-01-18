@@ -2,6 +2,7 @@
 import errors from 'feathers-errors';
 
 import getByDot from '../common/get-by-dot';
+import setByDot from '../common/set-by-dot';
 import getItems from './get-items';
 import legacyPopulate from './legacy-populate';
 import replaceItems from './replace-items';
@@ -95,31 +96,37 @@ function populateItem (options, hook, item, includeSchema, depth) {
     })
   )
     .then(children => {
-      // 'children' is like [{ authorInfo: {...}, readersInfo: [{...}, {...}] }]
+      // 'children' is like
+      //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
       if (options.profile !== false) {
         elapsed.total = getElapsed(options, startAtAllIncludes, depth);
         item._elapsed = elapsed;
       }
 
-      return Object.assign(item, ...children);
+      children.forEach(({ nameAs, items }) => {
+        setByDot(item, nameAs, items);
+      });
+
+      return item;
     });
 }
 
 function populateAddChild (options, hook, parentItem, childSchema, depth) {
   /*
-  'parentItem' is the item we are adding children to
-  'childSchema' is like
-    { service: 'comments',
-      permissions: '...',
-      nameAs: 'comments',
-      asArray: true,
-      parentField: 'id',
-      childField: 'postId',
-      query: { $limit: 5, $select: ['title', 'content', 'postId'], $sort: { createdAt: -1 } },
-      select: (hook, parent, depth) => ({ something: { $exists: false }}),
-      paginate: false,
-      include: [ ... ],
-    }
+  @params
+    'parentItem' is the item we are adding children to
+    'childSchema' is like
+      { service: 'comments',
+        permissions: '...',
+        nameAs: 'comments',
+        asArray: true,
+        parentField: 'id',
+        childField: 'postId',
+        query: { $limit: 5, $select: ['title', 'content', 'postId'], $sort: { createdAt: -1 } },
+        select: (hook, parent, depth) => ({ something: { $exists: false }}),
+        paginate: false,
+        include: [ ... ] }
+  @returns { nameAs: string, items: array }
   */
 
   // note: parentField & childField are req'd, plus parentItem[parentField} !== undefined .
@@ -186,7 +193,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   }
 
   return promise
-    .then(items => ({ [nameAs]: items }));
+    .then(items => ({ nameAs, items }));
 }
 
 // Helpers

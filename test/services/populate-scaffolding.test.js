@@ -2,7 +2,7 @@
 const assert = require('assert');
 const configApp = require('../helpers/config-app');
 
-describe('populate - test scaffolding', () => {
+describe('services populate - test scaffolding', () => {
   it('can reinitialize database', done => {
     const app = configApp(['users', 'comments', 'posts', 'recommendation']);
     const users = app.service('users');

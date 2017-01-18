@@ -2,10 +2,10 @@
 const assert = require('assert');
 const configApp = require('../helpers/config-app');
 const getInitDb = require('../helpers/get-init-db');
-const { populate } = require('../../src/services');
+const { populate } = require('../../src/services/index');
 
 ['array', 'obj'].forEach(type => {
-  describe(`populate - 1:1 & 1:m & m:1 - ${type}`, () => {
+  describe(`services populate - 1:1 & 1:m & m:1 - ${type}`, () => {
     let hookAfter;
     let hookAfterArray;
     let schema;
