@@ -3,6 +3,7 @@ import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
 import replaceItems from './replace-items';
 import setByDot from '../common/set-by-dot';
+import deleteByDot from '../common/delete-by-dot';
 
 export default function (schema) {
   return hook => {
@@ -31,7 +32,10 @@ export default function (schema) {
       if (only) {
         const newItem = {};
         only.concat('_include', '_elapsed', item._include || []).forEach(key => {
-          setByDot(newItem, key, getByDot(item, key), true);
+          let value = getByDot(item, key);
+          if (value !== undefined) {
+            setByDot(newItem, key, value);
+          }
         });
         item = newItem;
       }
@@ -40,7 +44,7 @@ export default function (schema) {
       exclude = typeof exclude === 'string' ? [exclude] : exclude;
       if (exclude) {
         exclude.forEach(key => {
-          setByDot(item, key, undefined, true);
+          deleteByDot(item, key);
         });
       }
 

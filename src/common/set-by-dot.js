@@ -1,5 +1,9 @@
 
 export default function (obj, path, value, ifDelete) {
+  if (ifDelete) {
+    console.log('DEPRECATED. Use deleteByDot instead of setByDot(obj,path,value,true). (setByDot)');
+  }
+
   if (path.indexOf('.') === -1) {
     obj[path] = value;
 
