@@ -6,6 +6,7 @@ import checkContextIf from './check-context-if';
 import client from './client';
 import combine from './combine';
 import debug from './debug';
+import deleteByDot from '../common/delete-by-dot';
 import dePopulate from './de-populate';
 import disable from './disable';
 import getByDot from '../common/get-by-dot';
@@ -42,6 +43,7 @@ export default Object.assign(
       client,
       combine,
       debug,
+      deleteByDot,
       dePopulate,
       disable,
       getByDot,
