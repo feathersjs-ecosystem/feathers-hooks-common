@@ -15,7 +15,7 @@ export default function (validator) {
       throw new errors.BadRequest(`Expected validator function. (validate)`);
     }
 
-    const results = validator(getItems(hook));
+    const results = validator(getItems(hook), hook);
 
     if (results && typeof results.then === 'function') {
       return results.then(convertedValues => {
