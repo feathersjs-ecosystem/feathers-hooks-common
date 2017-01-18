@@ -10,6 +10,7 @@ const hookNames = [
   'client',
   'combine',
   'debug',
+  'deleteByDot',
   'dePopulate',
   'disable',
   'getByDot',
