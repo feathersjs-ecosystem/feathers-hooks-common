@@ -21,6 +21,7 @@ This feature has been removed.
 Deprecated:
 - The legacy populate hook -- with signtaure (string, ...) --
 will be removed next version. Use the new `populate` hook.
+- Use `deleteByDot` rather than `setByDot(obj, path, value, true)`.
 - The `delete` hook should be used instead of `remove`.
 You will need to wrap `delete` it in an conditional if you want it to work like `remove` does.
 - The `stop` hook may be used instead of `disable`.

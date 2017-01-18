@@ -7,7 +7,6 @@ export default function (obj, path) {
 
   for (let i = 0; i < nonLeafLen; i++) {
     let part = parts[i];
-    console.log(path, part, part in obj);
     if (!(part in obj)) { return; }
 
     obj = obj[part];
