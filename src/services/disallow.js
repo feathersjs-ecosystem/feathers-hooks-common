@@ -11,7 +11,7 @@ export default function (...providers) {
     const thisProvider = providers.some(provider =>
       provider === hookProvider ||
       (provider === 'server' && !hookProvider) ||
-      (provider === 'external' && hookProvider)
+      (provider === 'external' && !!hookProvider)
     );
 
     if (anyProvider || thisProvider) {
