@@ -4,7 +4,7 @@ import feathersErrors from 'feathers-errors';
 const errors = feathersErrors.errors;
 
 export default function (realm, ...args) {
-  console.log('DEPRECATED. Use disableMethod instead. (disable)');
+  console.log('DEPRECATED. Use disallow instead. (disable)');
 
   if (!realm) {
     return hook => {
