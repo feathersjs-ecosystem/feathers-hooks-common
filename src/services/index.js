@@ -11,9 +11,11 @@ import dePopulate from './de-populate';
 import disable from './disable';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
+import getWithSlug from './get-with-slug';
 import isProvider from './is-provider';
 import legacyPopulate from './legacy-populate';
 import lowerCase from './lower-case';
+import modifyWithSlug from './modify-with-slug';
 import populate from './populate';
 import pluck from './pluck';
 import pluckQuery from './pluck-query';
@@ -48,9 +50,11 @@ export default Object.assign(
       disable,
       getByDot,
       getItems,
+      getWithSlug,
       isProvider,
       legacyPopulate,
       lowerCase,
+      modifyWithSlug,
       populate,
       pluck,
       pluckQuery,
