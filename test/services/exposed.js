@@ -13,7 +13,7 @@ const hookNames = [
   'deleteByDot',
   'dePopulate',
   'disable',
-  'disableMethod',
+  'disallow',
   'getByDot',
   'getItems',
   'isProvider',
