@@ -3,13 +3,14 @@ import { assert } from 'chai';
 import hooks from '../../src/services';
 import errors from 'feathers-errors';
 
-var fcnSync;
-var fcnPromise;
-var fcnPromiseSanitize;
-var origHookOk;
-var origHookBad;
-var hookOk;
-var hookBad;
+let fcnSync;
+let fcnPromise;
+let fcnPromiseSanitize;
+let origHookOk;
+let origHookBad;
+let hookOk;
+let hookBad;
+let fcnHook;
 
 describe('validate', () => {
   origHookOk = { type: 'before', method: 'create', data: { email: ' a@a.com ' } };
@@ -19,16 +20,19 @@ describe('validate', () => {
     beforeEach(() => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
+      fcnHook = {};
 
-      fcnSync = (values) => (values.email.trim() // eslint-disable-line no-unused-expressions
-          ? null
-          : { email: 'Email is invalid' }
-      );
+      fcnSync = (values, hook) => {
+        fcnHook = hook;
+
+        return values.email.trim() ? null : { email: 'Email is invalid' };
+      };
     });
 
     it('test passes on correct data', () => {
       const hook = hooks.validate(fcnSync)(hookOk);
       assert.deepEqual(hook, origHookOk);
+      assert.deepEqual(fcnHook, origHookOk);
     });
 
     it('test fails on errors', () => {
@@ -40,16 +44,19 @@ describe('validate', () => {
     beforeEach(() => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
+      fcnHook = {};
 
-      fcnPromise = (values) => (
-        new Promise((resolve, reject) => {
+      fcnPromise = (values, hook) => {
+        fcnHook = hook;
+
+        return new Promise((resolve, reject) => {
           setTimeout(() => {
             values.email.trim() // eslint-disable-line no-unused-expressions
               ? resolve()
               : reject(new errors.BadRequest({ email: 'Email is invalid' }));
           }, 100);
-        })
-      );
+        });
+      };
 
       fcnPromiseSanitize = (values) => (
         new Promise((resolve, reject) => {
@@ -66,6 +73,7 @@ describe('validate', () => {
       hooks.validate(fcnPromise)(hookOk)
         .then(hook => {
           assert.deepEqual(hook, origHookOk);
+          assert.deepEqual(fcnHook, origHookOk);
           next();
         })
         .catch(err => next(err));

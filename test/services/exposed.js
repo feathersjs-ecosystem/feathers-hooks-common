@@ -14,6 +14,7 @@ const hookNames = [
   'dePopulate',
   'disable',
   'disableMethod',
+  'disableMultiItemChange',
   'getByDot',
   'getItems',
   'isProvider',
