@@ -68,10 +68,8 @@ describe('populate - throws on bad params', () => { // run to increase code clim
   });
 
   it('schema', () => {
-    const hook = clone(hookAfter);
-    return populate({ schema: 1 })(hook)
-      .then(() => { throw new Error('was not supposed to succeed'); })
-      .catch(err => { assert.notEqual(err, undefined); });
+    assert.throws(() => { populate({}); });
+    assert.throws(() => { populate({ schema: 1 }); });
   });
 
   it('permissions not func', () => {

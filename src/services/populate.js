@@ -9,11 +9,13 @@ import replaceItems from './replace-items';
 
 export default function (options, ...rest) {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
+  options = options || {};
+
   if (typeof options === 'string') {
     return legacyPopulate(options, ...rest);
   }
-  
-  if (typeof options.schema !== object || options.schema === null) {
+
+  if (typeof options.schema !== 'object' || options.schema === null) {
     throw new Error('Options.schema is not an object. (populate)');
   }
 
