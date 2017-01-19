@@ -24,15 +24,15 @@ describe('validate', () => {
 
       fcnSync = (values, hook) => {
         fcnHook = hook;
-        
+
         return values.email.trim() ? null : { email: 'Email is invalid' };
-      }
+      };
     });
 
     it('test passes on correct data', () => {
       const hook = hooks.validate(fcnSync)(hookOk);
       assert.deepEqual(hook, origHookOk);
-      assert.deepEqual(fcnHook, origHookOk)
+      assert.deepEqual(fcnHook, origHookOk);
     });
 
     it('test fails on errors', () => {
@@ -45,10 +45,10 @@ describe('validate', () => {
       hookOk = clone(origHookOk);
       hookBad = clone(origHookBad);
       fcnHook = {};
-  
+
       fcnPromise = (values, hook) => {
         fcnHook = hook;
-        
+
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             values.email.trim() // eslint-disable-line no-unused-expressions
