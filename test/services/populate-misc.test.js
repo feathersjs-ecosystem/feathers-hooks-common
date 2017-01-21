@@ -112,6 +112,13 @@ const result1 = [{
 
 let whichSchema;
 let userHookFlag1;
+let teamHookFlag1;
+let fcnOptions;
+
+function schemaFcn (hook, options) {
+  fcnOptions = options;
+  return schemaDefault;
+}
 
 function services () {
   const app = this;
@@ -148,12 +155,14 @@ function team () {
 
   app.service('teams').after({
     all: [
-      iff(hook => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
-      iff(hook => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
-      iff(hook => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
-      iff(hook => whichSchema === 'schema1', populate({ schema: schema1 })),
-      iff(hook => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
-      iff(hook => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams }))
+      hook => { teamHookFlag1 = hook.params.teamHookFlag1; },
+      iff(() => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
+      iff(() => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
+      iff(() => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
+      iff(() => whichSchema === 'schema1', populate({ schema: schema1 })),
+      iff(() => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
+      iff(() => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams })),
+      iff(() => whichSchema === 'schemaDefaultFcn', populate({ schema: schemaFcn }))
     ]
   });
 }
@@ -227,6 +236,43 @@ describe('services populate - hook.params passed to includes', () => {
       })
       .catch(err => {
         assert.equal(err.className, 'bad-request');
+      });
+  });
+});
+
+describe('services populate - schema may be a function', () => {
+  let app;
+  let teams;
+
+  beforeEach(() => {
+    app = feathers()
+      .configure(feathersHooks())
+      .configure(services);
+    teams = app.service('teams');
+    userHookFlag1 = null;
+    fcnOptions = null;
+  });
+
+  it('calls the function', () => {
+    whichSchema = 'schemaDefaultFcn';
+    return teams.find({ query: { id: 0 }, userHookFlag1: 'userHookFlag1' })
+      .then(result => {
+        assert.equal(userHookFlag1, 'userHookFlag1');
+        assert.deepEqual(result, resultDefault);
+      });
+  });
+
+  it('function gets hook and options', () => {
+    whichSchema = 'schemaDefaultFcn';
+    return teams.find(
+      { query: { id: 0 }, userHookFlag1: 'userHookFlag1', teamHookFlag1: 'teamHookFlag1' }
+    )
+      .then(result => {
+        assert.equal(teamHookFlag1, 'teamHookFlag1');
+        assert.strictEqual(fcnOptions.schema, schemaFcn);
+
+        assert.equal(userHookFlag1, 'userHookFlag1');
+        assert.deepEqual(result, resultDefault);
       });
   });
 });

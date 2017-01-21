@@ -15,7 +15,8 @@ export default function (options, ...rest) {
     return legacyPopulate(options, ...rest);
   }
 
-  if (typeof options.schema !== 'object' || options.schema === null) {
+  const typeofSchema = typeof options.schema;
+  if ((typeofSchema !== 'object' || options.schema === null) && typeofSchema !== 'function') {
     throw new Error('Options.schema is not an object. (populate)');
   }
 
