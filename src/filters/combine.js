@@ -5,7 +5,7 @@ const debug = makeDebug('filters/conditionals');
 const ev = 'conditionals'; // todo work needed here before merge with feathers-sockets-common
 
 // https://github.com/feathersjs/feathers-socket-commons/blob/master/src/utils.js#L17-L27
-export function promisify (method, context, ...args) {
+function promisify (method, context, ...args) {
   return new Promise((resolve, reject) => {
     method.apply(context, args.concat(function (error, result) {
       if (error) {
