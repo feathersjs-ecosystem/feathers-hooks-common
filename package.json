@@ -56,7 +56,6 @@
     "ajv": "^4.10.0",
     "debug": "^2.2.0",
     "feathers-errors": "^2.4.0",
-    "feathers-socket-commons": "2.3.1",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
