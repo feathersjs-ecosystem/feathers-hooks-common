@@ -110,17 +110,15 @@ const result1 = [{
   members: { name: 'Jane Doe', key: 'a', id: 0 }
 }];
 
-function schemaFcn(hook, options) {
-  fcnHook = hook;
+let whichSchema;
+let userHookFlag1;
+let teamHookFlag1;
+let fcnOptions;
+
+function schemaFcn (hook, options) {
   fcnOptions = options;
   return schemaDefault;
 }
-
-let whichSchema;
-let userHookFlag1;
-let teamHookFlag1
-let fcnHook;
-let fcnOptions;
 
 function services () {
   const app = this;
@@ -149,12 +147,12 @@ function user () {
 
 function team () {
   const app = this;
-  
+
   app.use('/teams', memory({
     store: clone(teamInit),
     startId: teamId
   }));
-  
+
   app.service('teams').after({
     all: [
       hook => { teamHookFlag1 = hook.params.teamHookFlag1; },
@@ -245,17 +243,16 @@ describe('services populate - hook.params passed to includes', () => {
 describe('services populate - schema may be a function', () => {
   let app;
   let teams;
-  
+
   beforeEach(() => {
     app = feathers()
       .configure(feathersHooks())
       .configure(services);
     teams = app.service('teams');
     userHookFlag1 = null;
-    fcnHook = null;
     fcnOptions = null;
   });
-  
+
   it('calls the function', () => {
     whichSchema = 'schemaDefaultFcn';
     return teams.find({ query: { id: 0 }, userHookFlag1: 'userHookFlag1' })
@@ -264,7 +261,7 @@ describe('services populate - schema may be a function', () => {
         assert.deepEqual(result, resultDefault);
       });
   });
-  
+
   it('function gets hook and options', () => {
     whichSchema = 'schemaDefaultFcn';
     return teams.find(
@@ -273,7 +270,7 @@ describe('services populate - schema may be a function', () => {
       .then(result => {
         assert.equal(teamHookFlag1, 'teamHookFlag1');
         assert.strictEqual(fcnOptions.schema, schemaFcn);
-        
+
         assert.equal(userHookFlag1, 'userHookFlag1');
         assert.deepEqual(result, resultDefault);
       });
