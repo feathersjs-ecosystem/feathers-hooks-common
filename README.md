@@ -11,6 +11,15 @@
 
 ## Migration to v3 from v2
 
+Some hooks had features which were not initially apparent,
+e.g. `remove` did not remove when the call was made on the server.
+These features have been removed when they were infrequently used,
+or, when removal would result in a significant breaking change,
+new hooks have been introduced which deprecate the original ones.
+
+Such features can be re-implemented using conditional hooks,
+with the additional benefit of making what is happening clearer.
+
 Breaking changes:
 - All hooks and utilities are obtained from `feathers-hooks-common`
 rather than some from, say, `feathers-hooks-common/promisify`.
@@ -19,12 +28,12 @@ This feature has been removed.
 - The populate hook now ignores pagination on joined services by default.
 
 Deprecated:
-- The legacy populate hook -- with signtaure (string, ...) --
-will be removed next version. Use the new `populate` hook.
+- The legacy populate hook -- with signature (string, ...) --
+will be removed next version. Use the regular `populate` hook.
 - Use `deleteByDot` rather than `setByDot(obj, path, value, true)`.
-- The `disallow` hook may be used instead of `disable`.
-- The `delete` hook should be used instead of `remove`.
-You will need to wrap `delete` it in an conditional if you want it to work like `remove` does.
+- The `disallow` hook should be used instead of `disable`.
+- The `discard` hook should be used instead of `remove`.
+You will need to wrap `discard` in an conditional if you want it to work like `remove` does.
 
 ## Documentation
 
