@@ -15,6 +15,7 @@ const hookNames = [
   'disable',
   'disallow',
   'disableMultiItemChange',
+  'discard',
   'getByDot',
   'getItems',
   'isProvider',

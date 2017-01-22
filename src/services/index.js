@@ -11,6 +11,7 @@ import dePopulate from './de-populate';
 import disable from './disable';
 import disallow from './disallow';
 import disableMultiItemChange from './disable-multi-item-change';
+import discard from './discard';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
 import isProvider from './is-provider';
@@ -50,6 +51,7 @@ export default Object.assign(
       disable,
       disallow,
       disableMultiItemChange,
+      discard,
       getByDot,
       getItems,
       isProvider,
