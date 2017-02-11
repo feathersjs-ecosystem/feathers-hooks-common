@@ -4,7 +4,7 @@ import checkContextIf from './check-context-if';
 import getItems from './get-items';
 
 export default function (...fieldNames) {
-  console.log('DEPRECATED. Use omit. (remove)');
+  console.log('DEPRECATED. Use discard. (remove)');
 
   return hook => {
     checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'remove');
