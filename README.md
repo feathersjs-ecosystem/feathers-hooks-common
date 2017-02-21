@@ -43,7 +43,7 @@ or the [current](https://docs.feathersjs.com/hooks/common.html) releases.
 
 ## Installation
 
-Run `npm install feathers-hooks-common --save` in your project folder.
+Run `npm install feathers-hooks-common --save` in your project folder (installs the latest v2 release).
 
 ## Tests
 
