@@ -1,7 +1,8 @@
 
 export default function (...whitelist) {
+  whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
+  
   return hook => {
-    whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
     const params = hook.params;
 
     if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
@@ -13,6 +14,7 @@ export default function (...whitelist) {
         }
       });
 
+      params.query = JSON.parse(JSON.stringify(params.query));
       delete params.query.$client;
     }
 
