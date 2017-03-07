@@ -1,7 +1,5 @@
 
 export default function (...whitelist) {
-  whitelist = typeof whitelist === 'string' ? [whitelist] : whitelist;
-
   return hook => {
     const params = hook.params;
 
