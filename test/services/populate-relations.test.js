@@ -243,6 +243,20 @@ const { populate } = require('../../src/services/index');
           );
         });
     });
+
+    it('for results with toJSON implemented', () => {
+      const hook = clone(hookAfter);
+      hook.app = app; // app is a func and wouldn't be cloned
+      hook.result = Object.assign({}, hook.result, {
+        toJSON: function () {
+          return { iam: 'a simple object' };
+        }
+      });
+      return populate({ schema, checkPermissions: () => true, profile: 'test' })(hook)
+        .then(hook1 => {
+          assert.ok(hook1.result.hasOwnProperty('iam'));
+        });
+    });
   });
 });
 
