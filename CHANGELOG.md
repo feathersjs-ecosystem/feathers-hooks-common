@@ -1,5 +1,24 @@
 # Change Log
 
+## [v3.0.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.0.0) (2017-04-08)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.0.0-pre.1...v3.0.0)
+
+**Closed issues:**
+
+- Convert some REST values so they work in a query object [\#143](https://github.com/feathersjs/feathers-hooks-common/issues/143)
+- Discard prevents /auth/local [\#139](https://github.com/feathersjs/feathers-hooks-common/issues/139)
+- \_include and \_computed props are not sent and thus not kept [\#133](https://github.com/feathersjs/feathers-hooks-common/issues/133)
+- include does not do a deep merge with its results [\#132](https://github.com/feathersjs/feathers-hooks-common/issues/132)
+- Create a $search hook [\#131](https://github.com/feathersjs/feathers-hooks-common/issues/131)
+- Premature with the populate deprecation warning? [\#125](https://github.com/feathersjs/feathers-hooks-common/issues/125)
+- Set model relations for sequelize [\#69](https://github.com/feathersjs/feathers-hooks-common/issues/69)
+
+**Merged pull requests:**
+
+- Avoided side-effect of client [\#137](https://github.com/feathersjs/feathers-hooks-common/pull/137) ([eddyystop](https://github.com/eddyystop))
+- Update README.md [\#127](https://github.com/feathersjs/feathers-hooks-common/pull/127) ([j2L4e](https://github.com/j2L4e))
+- Changed reference to correct replacement hook. [\#124](https://github.com/feathersjs/feathers-hooks-common/pull/124) ([eddyystop](https://github.com/eddyystop))
+
 ## [v3.0.0-pre.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.0.0-pre.1) (2017-02-02)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v2.0.3...v3.0.0-pre.1)
 
