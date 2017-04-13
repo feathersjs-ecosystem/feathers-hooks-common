@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { promiseToCallback } from '../../src/services';
 
 const promise1 = (ifResolve) => new Promise((resolve, reject) => {
-  return ifResolve ? resolve('ok') : reject('bad');
+  return ifResolve ? resolve('ok') : reject(new Error('bad'));
 });
 
 describe('services promiseToCallback', () => {
@@ -18,7 +18,7 @@ describe('services promiseToCallback', () => {
 
   it('calls callback on reject', (done) => {
     promiseToCallback(promise1(false))((err) => {
-      assert.strictEqual(err, 'bad', 'err code set');
+      assert.strictEqual(err.message, 'bad', 'err code set');
 
       done();
     });
