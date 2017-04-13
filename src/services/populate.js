@@ -208,7 +208,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
 function getElapsed (options, startHrtime, depth) {
   if (options.profile === true) {
     const elapsed = process.hrtime(startHrtime);
-    return elapsed[0] * 1e9 + elapsed[1];
+    return (elapsed[0] * 1e9) + elapsed[1];
   } else if (options.profile !== false) {
     return depth; // for testing _elapsed
   }
