@@ -68,7 +68,7 @@
     "coveralls": "^2.11.14",
     "eslint-if-supported": "^1.0.1",
     "feathers": "^2.0.3",
-    "feathers-hooks": "^1.7.1",
+    "feathers-hooks": "^2.0.0",
     "feathers-memory": "^1.0.1",
     "feathers-tests-fake-app-users": "^1.0.0",
     "istanbul": "^1.1.0-alpha.1",
