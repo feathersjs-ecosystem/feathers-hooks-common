@@ -9,5 +9,5 @@ const conditionals = _conditionals(
 
 export default Object.assign(
   { combine },
-  conditionals,
+  conditionals
 );

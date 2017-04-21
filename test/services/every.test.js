@@ -107,7 +107,7 @@ describe('services every', () => {
                   (hook) => 0,
                   (hook) => null,
                   (hook) => undefined,
-                  (hook) => true,
+                  (hook) => true
                 )
               ),
               () => Promise.reject(new Error('A hook returned false'))

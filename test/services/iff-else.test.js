@@ -327,7 +327,7 @@ describe('services iff - runs .else()', () => {
 
   it('using if(false).else(...)', () => {
     return hooks.iff(false,
-      hookFcnSync,
+      hookFcnSync
     )
       .else(
         hookFcnSync,

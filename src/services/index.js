@@ -74,5 +74,5 @@ export default Object.assign(
     validate,
     validateSchema
   },
-  conditionals,
+  conditionals
 );

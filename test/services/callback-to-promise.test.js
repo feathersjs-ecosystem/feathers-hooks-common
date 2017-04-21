@@ -11,7 +11,7 @@ function funcCb3 (data, a, b, cb) {
   if (data === 1) {
     cb(null, data);
   } else {
-    cb('bad', data);
+    cb(new Error('bad'), data);
   }
 }
 
@@ -24,7 +24,7 @@ function funcCb0Resolve (cb) {
 }
 
 function funcCb0Reject (cb) {
-  cb('bad');
+  cb(new Error('bad'));
 }
 
 const funcSyncCbHook = () => (hook, next) => {
@@ -59,7 +59,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -83,7 +83,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -121,7 +121,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -147,7 +147,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -173,7 +173,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
