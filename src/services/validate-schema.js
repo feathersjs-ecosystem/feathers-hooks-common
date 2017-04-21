@@ -8,7 +8,7 @@ const errors = feathersErrors.errors;
 export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   const addNewError = options.addNewError || addNewErrorDflt;
   delete options.addNewError;
-  // TODO: Any better way to tell if ajv is an instance or a constructor?
+  // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?
   let ajv, Ajv;
   if (typeof ajvOrAjv.addKeyword !== 'function') {
     Ajv = ajvOrAjv;
