@@ -80,7 +80,7 @@ function user () {
           if (service !== this) { throw new Error('Service wrong 5.'); }
           hook.params.trace.push('sync3');
           return hook;
-        },
+        }
       ),
       function (hook) {
         if (hook.app !== app) { throw new Error('App wrong 9.'); }

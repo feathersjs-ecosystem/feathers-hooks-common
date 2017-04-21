@@ -19,5 +19,5 @@ export default Object.assign(
     setFilteredAt,
     traverse
   },
-  conditionals,
+  conditionals
 );
