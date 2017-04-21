@@ -5,10 +5,18 @@ import getItems from './get-items';
 
 const errors = feathersErrors.errors;
 
-export default function (schema, Ajv, options = { allErrors: true }) {
+export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   const addNewError = options.addNewError || addNewErrorDflt;
   delete options.addNewError;
-  const validate = new Ajv(options).compile(schema); // for fastest execution
+  // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?
+  let ajv, Ajv;
+  if (typeof ajvOrAjv.addKeyword !== 'function') {
+    Ajv = ajvOrAjv;
+    ajv = new Ajv(options); 
+  } else {
+    ajv = ajvOrAjv;
+  }
+  const validate = ajv.compile(schema); // for fastest execution
 
   return hook => {
     const items = getItems(hook);
