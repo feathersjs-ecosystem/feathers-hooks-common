@@ -59,7 +59,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -83,7 +83,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -121,7 +121,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -147,7 +147,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
@@ -173,7 +173,7 @@ describe('services callbackToPromise', () => {
             done();
           })
           .catch(err => {
-            assert.equal(err, 'bad');
+            assert.equal(err.message, 'bad');
             done();
           });
       });
