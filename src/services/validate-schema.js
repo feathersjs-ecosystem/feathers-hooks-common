@@ -5,11 +5,17 @@ import getItems from './get-items';
 
 const errors = feathersErrors.errors;
 
-export default function (schema, ajv, options = { allErrors: true }) {
+export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   const addNewError = options.addNewError || addNewErrorDflt;
   delete options.addNewError;
   // TODO: Any better way to tell if ajv is an instance or a constructor?
-  if (typeof ajv.addKeyword !== 'function') ajv = new ajv(options); 
+  let ajv, Ajv;
+  if (typeof ajvOrAjv.addKeyword !== 'function') {
+    Ajv = ajvOrAjv;
+    ajv = new Ajv(options); 
+  } else {
+    ajv = ajvOrAjv;
+  }
   const validate = ajv.compile(schema); // for fastest execution
 
   return hook => {
