@@ -30,11 +30,13 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
         // Handler for synchronous validation
         .then((isValid) => {
           if (!isValid) {
-            // eslint-disable-next-line prefer-promise-reject-errors
-            return Promise.reject({errors: validate.errors});
+            return Promise.reject(
+              new ajv.constructor.ValidationError(validate.errors));
           }
         })
         .catch((err) => {
+          if (!(err instanceof ajv.constructor.ValidationError)) throw err;
+
           invalid = true;
 
           err.errors.forEach(ajvError => {
