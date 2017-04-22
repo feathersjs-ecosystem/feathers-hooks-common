@@ -45,30 +45,28 @@ describe('services validateSchema', () => {
   it('fails with in valid single item', () => {
     hookBefore.data = { first: 1 };
 
-    try {
-      validateSchema(schema, Ajv)(hookBefore);
-      assert.fail(true, false, 'test succeeds unexpectedly');
-    } catch (err) {
-      assert.deepEqual(err.errors, [
-        '\'first\' should be string',
-        'should have required property \'last\''
-      ]);
-    }
+    validateSchema(schema, Ajv)(hookBefore)
+        .catch((err) => {
+          assert.fail(true, false, 'test succeeds unexpectedly');
+          assert.deepEqual(err.errors, [
+            '\'first\' should be string',
+            'should have required property \'last\''
+          ]);
+        });
   });
 
   it('fails with array of invalid items', () => {
     hookBeforeArray.data[0] = { first: 1 };
     delete hookBeforeArray.data[2].last;
 
-    try {
-      validateSchema(schema, Ajv)(hookBeforeArray);
-      assert.fail(true, false, 'test succeeds unexpectedly');
-    } catch (err) {
-      assert.deepEqual(err.errors, [
-        "'in row 1 of 3, first' should be string",
-        "in row 1 of 3, should have required property 'last'",
-        "in row 3 of 3, should have required property 'last'"
-      ]);
-    }
+    validateSchema(schema, Ajv)(hookBefore)
+      .catch((err) => {
+        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.deepEqual(err.errors, [
+          "'in row 1 of 3, first' should be string",
+          "in row 1 of 3, should have required property 'last'",
+          "in row 3 of 3, should have required property 'last'"
+        ]);
+      });
   });
 });

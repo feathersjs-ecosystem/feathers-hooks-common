@@ -12,7 +12,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   let ajv, Ajv;
   if (typeof ajvOrAjv.addKeyword !== 'function') {
     Ajv = ajvOrAjv;
-    ajv = new Ajv(options); 
+    ajv = new Ajv(options);
   } else {
     ajv = ajvOrAjv;
   }
@@ -25,19 +25,27 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
     let errorMessages = null;
     let invalid = false;
 
-    itemsArray.forEach((item, index) => {
-      if (!validate(item)) {
-        invalid = true;
+    return Promise.all(itemsArray.map((item, index) => {
+      return Promise.resolve(validate(item))
+        // Handler for synchronous validation
+        .then((isValid) => {
+          if (!isValid) {
+            // eslint-disable-next-line prefer-promise-reject-errors
+            return Promise.reject({errors: validate.errors});
+          }
+        })
+        .catch((err) => {
+          invalid = true;
 
-        validate.errors.forEach(ajvError => {
-          errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+          err.errors.forEach(ajvError => {
+            errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+          });
         });
+    })).then(() => {
+      if (invalid) {
+        throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
       }
     });
-
-    if (invalid) {
-      throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
-    }
   };
 }
 
