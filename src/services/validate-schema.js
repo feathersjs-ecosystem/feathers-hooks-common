@@ -12,7 +12,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   let ajv, Ajv;
   if (typeof ajvOrAjv.addKeyword !== 'function') {
     Ajv = ajvOrAjv;
-    ajv = new Ajv(options); 
+    ajv = new Ajv(options);
   } else {
     ajv = ajvOrAjv;
   }

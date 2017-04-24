@@ -16,52 +16,47 @@ const storeInit = {
 };
 let store;
 
-function makeApp (options = {}) {
-  function services () {
-    const app = this;
-    app.configure(user);
-  }
+function services () {
+  const app = this;
+  app.configure(user);
+}
 
-  function user () {
-    const app = this;
-    store = clone(storeInit);
+function user () {
+  const app = this;
+  store = clone(storeInit);
 
-    class UsersService extends memory.Service {
-      constructor (...args) {
-        super(...args);
-        this.get_call_count = 0;
-      }
-      get (...args) {
-        this.get_call_count += 1;
-        return super.get(...args);
-      }
+  class UsersService extends memory.Service {
+    constructor (...args) {
+      super(...args);
+      this.get_call_count = 0;
     }
-
-    app.use('/users', new UsersService({store, startId}));
-
-    app.service('users').before({
-      all: [
-        hooks.softDelete(...(options.softDelete || []))
-          // hook => console.log('id=', hook.id, 'data=', hook.data, 'query=', hook.params.query),
-      ]
-    });
+    get (...args) {
+      this.get_call_count += 1;
+      return super.get(...args);
+    }
   }
 
-  return feathers()
-      .configure(feathersHooks())
-      .configure(services);
+  app.use('/users', new UsersService({store, startId}));
+
+  app.service('users').before({
+    all: [
+      hooks.softDelete()
+      // hook => console.log('id=', hook.id, 'data=', hook.data, 'query=', hook.params.query),
+    ]
+  });
 }
 
 describe('services softDelete', () => {
   let app;
   let user;
 
-  function prepareEnv (options) {
-    app = makeApp(options);
-    user = app.service('users');
-  }
+  beforeEach(() => {
+    app = feathers()
+      .configure(feathersHooks())
+      .configure(services);
 
-  beforeEach(() => prepareEnv());
+    user = app.service('users');
+  });
 
   describe('find', () => {
     it('find - does not return deleted items', done => {
@@ -74,16 +69,6 @@ describe('services softDelete', () => {
   });
 
   describe('get', () => {
-    it('returns an undeleted item calling "get" twice (old style)', done => {
-      prepareEnv({'softDelete': ['deleted', {optimize: false}]});
-      user.get(0)
-        .then(data => {
-          assert.deepEqual(data, storeInit['0']);
-          assert.equal(user.get_call_count, 2);
-          done();
-        });
-    });
-
     it('returns an undeleted item', done => {
       user.get(0)
         .then(data => {
@@ -111,6 +96,7 @@ describe('services softDelete', () => {
           done();
         })
         .then(data => {
+          assert.equal(user.get_call_count, 1);
           assert.fail(true, false);
           done();
         });
@@ -122,6 +108,7 @@ describe('services softDelete', () => {
           done();
         })
         .then(data => {
+          assert.equal(user.get_call_count, 0);
           assert.fail(true, false);
           done();
         });

@@ -4,12 +4,8 @@ import checkContext from './check-context';
 
 const errors = feathersErrors.errors;
 
-export default function (field, options) {
+export default function (field) {
   const deleteField = field || 'deleted';
-  const {
-    // If true then call 'service.get' only once.
-    optimize = true
-  } = options || {};
 
   return function (hook) {
     const service = this;
@@ -28,13 +24,11 @@ export default function (field, options) {
       case 'get':
         return throwIfItemDeleted(hook.id)
           .then((data) => {
-            if (optimize) {
-              // We got data by calling the same 'service.get' with the
-              // $disableSoftDelete parameter which should not be used
-              // by service methods or other hooks,
-              // so there is no need to call 'service.get' twice.
-              hook.result = data;
-            }
+            // We got data by calling the same 'service.get' with the
+            // $disableSoftDelete parameter which should not be used
+            // by service methods or other hooks,
+            // so there is no need to call 'service.get' twice.
+            hook.result = data;
             return hook;
           });
       case 'create':
