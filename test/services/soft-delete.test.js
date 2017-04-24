@@ -81,10 +81,10 @@ describe('services softDelete', () => {
     it('throws on deleted item', done => {
       user.get(2)
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
-          assert.equal(user.get_call_count, 1);
           assert.fail(true, false);
           done();
         });
@@ -93,10 +93,10 @@ describe('services softDelete', () => {
     it('throws on missing item', done => {
       user.get(99)
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
-          assert.equal(user.get_call_count, 1);
           assert.fail(true, false);
           done();
         });
@@ -105,10 +105,10 @@ describe('services softDelete', () => {
     it('throws on null id', done => {
       user.get()
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
-          assert.equal(user.get_call_count, 0);
           assert.fail(true, false);
           done();
         });

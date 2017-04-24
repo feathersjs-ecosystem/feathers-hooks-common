@@ -17,6 +17,7 @@ export default function (field) {
       delete hook.params.query.$disableSoftDelete;
       return hook;
     }
+
     switch (hook.method) {
       case 'find':
         hook.params.query[deleteField] = { $ne: true };
