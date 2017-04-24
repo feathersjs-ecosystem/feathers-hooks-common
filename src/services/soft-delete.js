@@ -4,8 +4,12 @@ import checkContext from './check-context';
 
 const errors = feathersErrors.errors;
 
-export default function (field) {
+export default function (field, options) {
   const deleteField = field || 'deleted';
+  const {
+    // If true then call 'service.get' only once.
+    optimize = true
+  } = options || {};
 
   return function (hook) {
     const service = this;
@@ -17,14 +21,22 @@ export default function (field) {
       delete hook.params.query.$disableSoftDelete;
       return hook;
     }
-
     switch (hook.method) {
       case 'find':
         hook.params.query[deleteField] = { $ne: true };
         return hook;
       case 'get':
         return throwIfItemDeleted(hook.id)
-          .then(() => hook);
+          .then((data) => {
+            if (optimize) {
+              // We got data by calling the same 'service.get' with the
+              // $disableSoftDelete parameter which should not be used
+              // by service methods or other hooks,
+              // so there is no need to call 'service.get' twice.
+              hook.result = data;
+            }
+            return hook;
+          });
       case 'create':
         return hook;
       case 'update': // fall through
@@ -57,6 +69,7 @@ export default function (field) {
           if (data[deleteField]) {
             throw new errors.NotFound('Item has been soft deleted.');
           }
+          return data;
         })
         .catch(() => {
           throw new errors.NotFound('Item not found.');
