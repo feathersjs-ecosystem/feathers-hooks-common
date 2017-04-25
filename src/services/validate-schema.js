@@ -25,29 +25,40 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
     let errorMessages = null;
     let invalid = false;
 
-    return Promise.all(itemsArray.map((item, index) => {
-      return Promise.resolve(validate(item))
-        // Handler for synchronous validation
-        .then((isValid) => {
-          if (!isValid) {
-            return Promise.reject(
-              new ajv.constructor.ValidationError(validate.errors));
-          }
-        })
-        .catch((err) => {
-          if (!(err instanceof ajv.constructor.ValidationError)) throw err;
+    if (schema.$async) {
+      return Promise.all(itemsArray.map((item, index) => {
+        return validate(item)
+          .catch(err => {
+            if (!(err instanceof ajv.constructor.ValidationError)) throw err;
 
-          invalid = true;
+            invalid = true;
 
-          err.errors.forEach(ajvError => {
-            errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+            addErrors(err.errors, index);
           });
-        });
-    })).then(() => {
-      if (invalid) {
-        throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+      })).then(() => {
+        if (invalid) {
+          throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+        }
+      });
+    }
+
+    itemsArray.forEach((item, index) => {
+      if (!validate(item)) {
+        invalid = true;
+
+        addErrors(validate.errors, index);
       }
     });
+
+    if (invalid) {
+      throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+    }
+
+    function addErrors (errors, index) {
+      errors.forEach(ajvError => {
+        errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+      });
+    }
   };
 }
 
