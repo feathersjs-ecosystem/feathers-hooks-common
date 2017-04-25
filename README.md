@@ -39,9 +39,7 @@ You will need to wrap `discard` in an conditional if you want it to work like `r
 
 ## Documentation
 
-Refer to [Feathersjs documentation](https://docs.feathersjs.com)
-for the coming [Auk](https://docs.feathersjs.com/v/auk/hooks/common.html) (preferable)
-or the [current](https://docs.feathersjs.com/hooks/common.html) releases. 
+Refer to [Feathersjs documentation](https://docs.feathersjs.com/api/hooks-common.html). 
 
 ## Installation
 
