@@ -25,10 +25,18 @@ function user () {
   const app = this;
   store = clone(storeInit);
 
-  app.use('/users', memory({
-    store,
-    startId
-  }));
+  class UsersService extends memory.Service {
+    constructor (...args) {
+      super(...args);
+      this.get_call_count = 0;
+    }
+    get (...args) {
+      this.get_call_count += 1;
+      return super.get(...args);
+    }
+  }
+
+  app.use('/users', new UsersService({store, startId}));
 
   app.service('users').before({
     all: [
@@ -46,6 +54,7 @@ describe('services softDelete', () => {
     app = feathers()
       .configure(feathersHooks())
       .configure(services);
+
     user = app.service('users');
   });
 
@@ -64,6 +73,7 @@ describe('services softDelete', () => {
       user.get(0)
         .then(data => {
           assert.deepEqual(data, storeInit['0']);
+          assert.equal(user.get_call_count, 1);
           done();
         });
     });
@@ -71,6 +81,7 @@ describe('services softDelete', () => {
     it('throws on deleted item', done => {
       user.get(2)
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
@@ -82,6 +93,7 @@ describe('services softDelete', () => {
     it('throws on missing item', done => {
       user.get(99)
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
@@ -93,6 +105,7 @@ describe('services softDelete', () => {
     it('throws on null id', done => {
       user.get()
         .catch(() => {
+          assert.equal(user.get_call_count, 1);
           done();
         })
         .then(data => {
