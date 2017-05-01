@@ -1,5 +1,26 @@
 # Change Log
 
+## [v3.2.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.2.0) (2017-05-01)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.1.0...v3.2.0)
+
+## [v3.1.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.1.0) (2017-05-01)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.0.0...v3.1.0)
+
+**Closed issues:**
+
+- Soft delete doubles calls for service.get [\#161](https://github.com/feathersjs/feathers-hooks-common/issues/161)
+- Populate include relations with Sequelize [\#149](https://github.com/feathersjs/feathers-hooks-common/issues/149)
+
+**Merged pull requests:**
+
+- test for validate-schema with ajv instance passed [\#162](https://github.com/feathersjs/feathers-hooks-common/pull/162) ([beeplin](https://github.com/beeplin))
+- Soft delete will call service.get only once [\#160](https://github.com/feathersjs/feathers-hooks-common/pull/160) ([NikitaVlaznev](https://github.com/NikitaVlaznev))
+- Update ajv to the latest version 🚀 [\#157](https://github.com/feathersjs/feathers-hooks-common/pull/157) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#156](https://github.com/feathersjs/feathers-hooks-common/pull/156) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- validateSchema's 2nd parameter can be ajv instance [\#155](https://github.com/feathersjs/feathers-hooks-common/pull/155) ([beeplin](https://github.com/beeplin))
+- Update feathers-hooks to the latest version 🚀 [\#151](https://github.com/feathersjs/feathers-hooks-common/pull/151) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#148](https://github.com/feathersjs/feathers-hooks-common/pull/148) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+
 ## [v3.0.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.0.0) (2017-04-08)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.0.0-pre.1...v3.0.0)
 
