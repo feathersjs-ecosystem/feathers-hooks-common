@@ -51,7 +51,7 @@
   "bugs": {
     "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
   },
-  "homepage": "https://github.com/feathers/feathers-hooks-common#readme",
+  "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
   "dependencies": {
     "ajv": "^5.0.0",
     "debug": "^2.2.0",
