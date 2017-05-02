@@ -25,18 +25,39 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
     let errorMessages = null;
     let invalid = false;
 
+    if (schema.$async) {
+      return Promise.all(itemsArray.map((item, index) => {
+        return validate(item)
+          .catch(err => {
+            if (!(err instanceof ajv.constructor.ValidationError)) throw err;
+
+            invalid = true;
+
+            addErrors(err.errors, index);
+          });
+      })).then(() => {
+        if (invalid) {
+          throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+        }
+      });
+    }
+
     itemsArray.forEach((item, index) => {
       if (!validate(item)) {
         invalid = true;
 
-        validate.errors.forEach(ajvError => {
-          errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
-        });
+        addErrors(validate.errors, index);
       }
     });
 
     if (invalid) {
       throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+    }
+
+    function addErrors (errors, index) {
+      errors.forEach(ajvError => {
+        errorMessages = addNewError(errorMessages, ajvError, itemsLen, index);
+      });
     }
   };
 }
