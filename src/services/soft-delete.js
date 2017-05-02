@@ -8,7 +8,7 @@ export default function (field) {
   const deleteField = field || 'deleted';
 
   return function (hook) {
-    const service = this;
+    const service = hook.service;
     hook.data = hook.data || {};
     hook.params.query = hook.params.query || {};
     checkContext(hook, 'before', null, 'softDelete');
@@ -59,7 +59,7 @@ export default function (field) {
     }
 
     function throwIfItemDeleted (id) {
-      return service.get(id, { query: { $disableSoftDelete: true } })
+      return service.get(id, { query: { $disableSoftDelete: true }, provider: hook.params.provider })
         .then(data => {
           if (data[deleteField]) {
             throw new errors.NotFound('Item has been soft deleted.');
