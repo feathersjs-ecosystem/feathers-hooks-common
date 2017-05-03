@@ -73,7 +73,6 @@ describe('services validateSchema', () => {
       validateSchema(schema, Ajv)(hookBefore);
     });
 
-
     it('works with array of valid items', () => {
       validateSchema(schema, Ajv)(hookBeforeArray);
     });
@@ -85,7 +84,6 @@ describe('services validateSchema', () => {
     it('works with array of valid items when ajv instance is passed', () => {
       validateSchema(schemaForAjvInstance, ajv)(hookBeforeArrayForAjvInstance);
     });
-
 
     it('fails with in valid single item', () => {
       hookBefore.data = { first: 1 };
@@ -123,7 +121,6 @@ describe('services validateSchema', () => {
         validateSchema(schemaForAjvInstance, ajv)(hookBefore);
         assert.fail(true, false, 'test succeeds unexpectedly');
       } catch (err) {
-        console.log(err.errors);
         assert.deepEqual(err.errors, [
           '\'first\' should match format "startWithJo"',
           'should have required property \'last\''
@@ -139,7 +136,6 @@ describe('services validateSchema', () => {
         validateSchema(schemaForAjvInstance, ajv)(hookBeforeArray);
         assert.fail(true, false, 'test succeeds unexpectedly');
       } catch (err) {
-        console.log(err.errors);
         assert.deepEqual(err.errors, [
           "'in row 1 of 3, first' should match format \"startWithJo\"",
           "in row 1 of 3, should have required property 'last'",
@@ -149,7 +145,6 @@ describe('services validateSchema', () => {
       }
     });
   });
-
 
   describe('Async validation', () => {
     before(() => {
