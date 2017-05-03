@@ -71,15 +71,15 @@ export default function (options, ...rest) {
 function populateItemArray (options, hook, items, includeSchema, depth) {
   // 'items' is an item or an array of items
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
-  
+
   if (items.toJSON || items.toObject) {
-    throw new errors.BadRequest('Populate requires results to be plain JavaScript objects. (populate)')
+    throw new errors.BadRequest('Populate requires results to be plain JavaScript objects. (populate)');
   }
-  
+
   if (!Array.isArray(items)) {
     return populateItem(options, hook, items, includeSchema, depth + 1);
   }
-  
+
   return Promise.all(
     items.map(item => populateItem(options, hook, item, includeSchema, depth + 1))
   );
@@ -96,6 +96,10 @@ function populateItem (options, hook, item, includeSchema, depth) {
 
   return Promise.all(
     include.map(childSchema => {
+      if (!childSchema.parentField || getByDot(item, childSchema.parentField) === undefined) {
+        return undefined;
+      }
+
       const startAtThisInclude = process.hrtime();
       return populateAddChild(options, hook, item, childSchema, depth)
         .then(result => {
@@ -114,8 +118,10 @@ function populateItem (options, hook, item, includeSchema, depth) {
         item._elapsed = elapsed;
       }
 
-      children.forEach(({ nameAs, items }) => {
-        setByDot(item, nameAs, items);
+      children.forEach(child => {
+        if (child) {
+          setByDot(item, child.nameAs, child.items);
+        }
       });
 
       return item;
@@ -160,13 +166,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   let promise = Promise.resolve()
     .then(() => (childSchema.select ? childSchema.select(hook, parentItem, depth) : {}))
     .then(selectQuery => {
-      const parentVal = getByDot(parentItem, childSchema.parentField);
-
-      if (parentVal === undefined) {
-        throw new errors.BadRequest(
-          `ParentField ${childSchema.parentField} for ${nameAs} depth ${depth} is undefined. (populate)`
-        );
-      }
+      const parentVal = getByDot(parentItem, childSchema.parentField); // will not be undefined
 
       const query = Object.assign({},
         childSchema.query,
