@@ -94,6 +94,32 @@ const assert = chai.assert;
           });
       });
 
+      it('ignores undefined parentField', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        delete hook.result.postId;
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id'
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+
+            delete expected.postId;
+            delete expected.posts;
+            expected._include = [];
+
+            assert.deepEqual(hook1.result, expected);
+          });
+      });
+
       it('uses asArray', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
