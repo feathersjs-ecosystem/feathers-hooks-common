@@ -110,6 +110,11 @@ function populateItem (options, hook, item, includeSchema, depth) {
         item._elapsed = elapsed;
       }
 
+      // #144 - Fixes issue with custom `toJSON` implementations (most ORMs)
+      if (typeof item.toJSON === 'function') {
+        item = item.toJSON();
+      }
+
       children.forEach(({ nameAs, items }) => {
         setByDot(item, nameAs, items);
       });
