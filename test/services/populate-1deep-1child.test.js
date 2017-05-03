@@ -2,9 +2,10 @@
 const chai = require('chai');
 const configApp = require('../helpers/config-app');
 const getInitDb = require('../helpers/get-init-db');
-const { populate, setByDot } = require('../../src/services/index');
+const { client, populate, setByDot } = require('../../src/services/index');
 
 const assert = chai.assert;
+let provider;
 
 ['array', 'obj'].forEach(type => {
   describe(`services populate - include 1:1 - ${type}`, () => {
@@ -17,6 +18,12 @@ const assert = chai.assert;
     beforeEach(() => {
       app = configApp(['posts', 'recommendation']);
       recommendation = clone(getInitDb('recommendation').store);
+
+      app.service('posts').before({
+        all: [
+          hook => { provider = hook.params.provider; }
+        ]
+      });
 
       hookAfter = {
         type: 'after',
@@ -208,6 +215,49 @@ const assert = chai.assert;
           .then(hook1 => {
             const expected = recommendationPosts('posts');
             assert.deepEqual(hook1.result, expected);
+          });
+      });
+
+      it('Provider in joins defaults to method call', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' }
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, 'rest'); // Feathers default if not from WebSocket
+          });
+      });
+
+      it('Provider in joins can be overridden', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' },
+            provider: undefined
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, undefined);
           });
       });
 
