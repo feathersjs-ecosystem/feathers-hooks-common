@@ -185,13 +185,14 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
       const paginateOption = childSchema.paginate;
       if (paginateOption === true) { paginate = null; }
       if (typeof paginateOption === 'number') { paginate = { paginate: { default: paginateOption } }; }
-  
+
       const params = Object.assign({},
+        hook.params,
         paginate,
         { query, _populate: 'skip' },
-        { provider: ('provider' in childSchema) ? childSchema.provider : hook.params.provider }
+        ('provider' in childSchema) ? { provider: childSchema.provider } : {}
       );
-      
+
       return serviceHandle.find(params);
     })
     .then(result => {
