@@ -140,6 +140,57 @@ const assert = chai.assert;
           });
       });
 
+      it('Stores null when no joined records and !asArray', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        hook.result.postId = '999';
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id'
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+
+            expected.postId = '999';
+            expected.posts = null;
+
+            assert.deepEqual(hook1.result, expected);
+          });
+      });
+
+      it('Stores [] when no joined records and asArray', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        hook.result.postId = '999';
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            asArray: true
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+
+            expected.postId = '999';
+            expected.posts = [];
+
+            assert.deepEqual(hook1.result, expected);
+          });
+      });
+
       it('query overridden by childField', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned

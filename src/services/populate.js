@@ -191,6 +191,10 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
     .then(result => {
       result = result.data || result;
 
+      if (result.length === 0) {
+        return childSchema.asArray ? [] : null;
+      }
+
       if (result.length === 1 && !childSchema.asArray) {
         result = result[0];
       }
