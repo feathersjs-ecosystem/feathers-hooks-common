@@ -71,11 +71,15 @@ export default function (options, ...rest) {
 function populateItemArray (options, hook, items, includeSchema, depth) {
   // 'items' is an item or an array of items
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
-
+  
+  if (items.toJSON || items.toObject) {
+    throw new errors.BadRequest('Populate requires results to be plain JavaScript objects. (populate)')
+  }
+  
   if (!Array.isArray(items)) {
     return populateItem(options, hook, items, includeSchema, depth + 1);
   }
-
+  
   return Promise.all(
     items.map(item => populateItem(options, hook, item, includeSchema, depth + 1))
   );
