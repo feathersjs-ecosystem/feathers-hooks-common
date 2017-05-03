@@ -56,7 +56,7 @@ describe('services populate - finds items in hook', () => {
   });
 });
 
-describe('populate - throws on bad params', () => { // run to increase code climate score
+describe('services populate - throws on bad params', () => { // run to increase code climate score
   let hookAfter;
 
   beforeEach(() => {

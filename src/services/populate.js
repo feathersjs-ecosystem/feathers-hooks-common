@@ -142,6 +142,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         query: { $limit: 5, $select: ['title', 'content', 'postId'], $sort: { createdAt: -1 } },
         select: (hook, parent, depth) => ({ something: { $exists: false }}),
         paginate: false,
+        provider: hook.provider,
         include: [ ... ] }
   @returns { nameAs: string, items: array }
   */
@@ -185,7 +186,13 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
       if (paginateOption === true) { paginate = null; }
       if (typeof paginateOption === 'number') { paginate = { paginate: { default: paginateOption } }; }
 
-      const params = Object.assign({}, hook.params, paginate, { query, _populate: 'skip' });
+      const params = Object.assign({},
+        hook.params,
+        paginate,
+        { query, _populate: 'skip' },
+        ('provider' in childSchema) ? { provider: childSchema.provider } : {}
+      );
+
       return serviceHandle.find(params);
     })
     .then(result => {
