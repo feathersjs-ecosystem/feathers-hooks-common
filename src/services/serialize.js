@@ -5,9 +5,9 @@ import replaceItems from './replace-items';
 import setByDot from '../common/set-by-dot';
 import deleteByDot from '../common/delete-by-dot';
 
-export default function (schema) {
+export default function (schema1) {
   return hook => {
-    schema = typeof schema === 'function' ? schema(hook) : schema;
+    const schema = typeof schema1 === 'function' ? schema1(hook) : schema1;
     const schemaDirectives = ['computed', 'exclude', 'only'];
 
     replaceItems(hook, serializeItems(getItems(hook), schema));
