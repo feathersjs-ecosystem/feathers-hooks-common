@@ -5,13 +5,13 @@ export default function (obj, path) {
 
   for (let i = 0; i < nonLeafLen; i++) {
     let part = parts[i];
-    
+
     if (!(part in obj)) { return false; }
-    
+
     obj = obj[part];
-    
+
     if (typeof obj !== 'object' || obj === null) { return false; }
   }
-  
+
   return parts[nonLeafLen] in obj;
 }

@@ -21,6 +21,7 @@ import lowerCase from './lower-case';
 import populate from './populate';
 import pluck from './pluck';
 import pluckQuery from './pluck-query';
+import preventChanges from './prevent-changes';
 import promiseToCallback from './promise-to-callback';
 import remove from './remove';
 import removeQuery from './remove-query';
@@ -62,6 +63,7 @@ export default Object.assign(
     populate,
     pluck,
     pluckQuery,
+    preventChanges,
     promiseToCallback,
     remove,
     removeQuery,
