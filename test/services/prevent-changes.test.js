@@ -2,10 +2,7 @@
 import { assert } from 'chai';
 import { preventChanges } from '../../src/services';
 
-var hookBefore;
-var hookAfter;
-var hookFindPaginate;
-var hookFind;
+let hookBefore;
 
 describe('services preventChanges', () => {
   describe('allowed for before patch', () => {
@@ -16,7 +13,7 @@ describe('services preventChanges', () => {
         params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' } };
     });
-    
+
     it('does not throw on before patch', () => {
       preventChanges('x')(hookBefore);
     });
@@ -33,7 +30,7 @@ describe('services preventChanges', () => {
       });
     });
   });
-  
+
   describe('checks props', () => {
     beforeEach(() => {
       hookBefore = {
@@ -42,12 +39,12 @@ describe('services preventChanges', () => {
         params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } } };
     });
-    
+
     it('does not throw if props not found', () => {
       preventChanges('name', 'address')(hookBefore);
       preventChanges('name.x', 'x.y.z')(hookBefore);
     });
-  
+
     it('throw if props found', () => {
       assert.throw(() => preventChanges('name', 'first')(hookBefore));
       assert.throw(() => preventChanges('name', 'a')(hookBefore));
