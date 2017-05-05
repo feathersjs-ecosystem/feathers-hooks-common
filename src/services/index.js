@@ -12,6 +12,7 @@ import disable from './disable';
 import disallow from './disallow';
 import disableMultiItemChange from './disable-multi-item-change';
 import discard from './discard';
+import existsByDot from '../common/exists-by-dot';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
 import isProvider from './is-provider';
@@ -52,6 +53,7 @@ export default Object.assign(
     disallow,
     disableMultiItemChange,
     discard,
+    existsByDot,
     getByDot,
     getItems,
     isProvider,
