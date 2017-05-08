@@ -22,6 +22,8 @@ const hookNames = [
   'isProvider',
   'legacyPopulate',
   'lowerCase',
+  'paramsForServer',
+  'paramsFromClient',
   'populate',
   'pluck',
   'pluckQuery',

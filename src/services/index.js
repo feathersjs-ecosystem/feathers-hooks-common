@@ -18,6 +18,8 @@ import getItems from './get-items';
 import isProvider from './is-provider';
 import legacyPopulate from './legacy-populate';
 import lowerCase from './lower-case';
+import paramsForServer from './params-for-server';
+import paramsFromClient from './params-from-client';
 import populate from './populate';
 import pluck from './pluck';
 import pluckQuery from './pluck-query';
@@ -60,6 +62,8 @@ export default Object.assign(
     isProvider,
     legacyPopulate,
     lowerCase,
+    paramsForServer,
+    paramsFromClient,
     populate,
     pluck,
     pluckQuery,
