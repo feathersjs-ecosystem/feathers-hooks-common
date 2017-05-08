@@ -398,6 +398,19 @@ describe('services iff - runs multiple hooks', () => {
         done();
       });
   });
+
+  it('runs successfully with the array syntax', (done) => {
+    hooks.iff(true, [hookFcnSync, hookFcnAsync, hookFcnCb])(hook)
+      .then(hook => {
+        assert.deepEqual(hook, hookAfter);
+        assert.equal(hookFcnSyncCalls, 1);
+        assert.equal(hookFcnAsyncCalls, 1);
+        assert.equal(hookFcnCbCalls, 1);
+        assert.deepEqual(hook, hookAfter);
+
+        done();
+      });
+  });
 });
 
 // Helpers
