@@ -34,6 +34,7 @@ import setCreatedAt from './set-created-at';
 import setNow from './set-now';
 import setSlug from './set-slug';
 import setUpdatedAt from './set-updated-at';
+import sifter from './sifter';
 import softDelete from './soft-delete';
 import traverse from './traverse';
 import validate from './validate';
@@ -79,6 +80,7 @@ export default Object.assign(
     setNow,
     setSlug,
     setUpdatedAt,
+    sifter,
     softDelete,
     traverse,
     validate,

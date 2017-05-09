@@ -38,6 +38,7 @@ const hookNames = [
   'setNow',
   'setSlug',
   'setUpdatedAt',
+  'sifter',
   'softDelete',
   'traverse',
   'validate',

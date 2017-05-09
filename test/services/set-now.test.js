@@ -55,20 +55,20 @@ describe('services setNow', () => {
       hooks.setNow('createdAt')(hookAfter);
       checkHook(hookAfter.result, { first: 'Jane', last: 'Doe' }, 'createdAt');
     });
-  
+
     it('supports field name', () => {
       hooks.setNow('createdAt2')(hookBefore);
       checkHook(hookBefore.data, { first: 'John', last: 'Doe' }, 'createdAt2');
     });
-  
+
     it('supports multiple field names', () => {
       hooks.setNow('createdAt1', 'createdAt2')(hookBefore);
       checkHook(hookBefore.data, { first: 'John', last: 'Doe' }, ['createdAt1', 'createdAt2']);
     });
-  
+
     it('requires field name', () => {
       assert.throws(() => {
-        hooks.setNow()(hookBefore)
+        hooks.setNow()(hookBefore);
       });
     });
   });
