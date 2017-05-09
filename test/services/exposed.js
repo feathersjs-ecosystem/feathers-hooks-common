@@ -35,6 +35,7 @@ const hookNames = [
   'serialize',
   'setByDot',
   'setCreatedAt',
+  'setNow',
   'setSlug',
   'setUpdatedAt',
   'softDelete',

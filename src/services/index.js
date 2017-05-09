@@ -31,6 +31,7 @@ import replaceItems from './replace-items';
 import serialize from './serialize';
 import setByDot from '../common/set-by-dot';
 import setCreatedAt from './set-created-at';
+import setNow from './set-now';
 import setSlug from './set-slug';
 import setUpdatedAt from './set-updated-at';
 import softDelete from './soft-delete';
@@ -75,6 +76,7 @@ export default Object.assign(
     serialize,
     setByDot,
     setCreatedAt,
+    setNow,
     setSlug,
     setUpdatedAt,
     softDelete,

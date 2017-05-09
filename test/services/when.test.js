@@ -415,6 +415,6 @@ describe('services when - runs multiple hooks', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }
