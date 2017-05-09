@@ -1,5 +1,61 @@
 # Change Log
 
+## [v3.3.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.3.2) (2017-05-09)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.3.1...v3.3.2)
+
+## [v3.3.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.3.1) (2017-05-09)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.3.0...v3.3.1)
+
+## [v3.3.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.3.0) (2017-05-09)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.2.0...v3.3.0)
+
+**Implemented enhancements:**
+
+- convert date for db adapters [\#153](https://github.com/feathersjs/feathers-hooks-common/issues/153)
+
+**Fixed bugs:**
+
+- Using iff with restrictToOwner [\#140](https://github.com/feathersjs/feathers-hooks-common/issues/140)
+
+**Closed issues:**
+
+- paramsFromClient should be removed from feathers docs until ready [\#179](https://github.com/feathersjs/feathers-hooks-common/issues/179)
+- Add hook to post-filter results [\#178](https://github.com/feathersjs/feathers-hooks-common/issues/178)
+- softDelete fix for double 'get' call is not ideal [\#163](https://github.com/feathersjs/feathers-hooks-common/issues/163)
+- serialize mutates the given schema [\#158](https://github.com/feathersjs/feathers-hooks-common/issues/158)
+- \[feature request\] validateSchema receives ajv instance instead of Ajv constructor [\#154](https://github.com/feathersjs/feathers-hooks-common/issues/154)
+- debug hook doesn't log error on error hook [\#152](https://github.com/feathersjs/feathers-hooks-common/issues/152)
+- Make softDelete more rugged [\#147](https://github.com/feathersjs/feathers-hooks-common/issues/147)
+- Prevent certain fields from being changed [\#145](https://github.com/feathersjs/feathers-hooks-common/issues/145)
+- Populate should throw upon detecting an ORM result. [\#144](https://github.com/feathersjs/feathers-hooks-common/issues/144)
+- Populate should allow empty relationship field [\#138](https://github.com/feathersjs/feathers-hooks-common/issues/138)
+- Populate should error when related entity is not found [\#135](https://github.com/feathersjs/feathers-hooks-common/issues/135)
+- populate should set provider to null [\#134](https://github.com/feathersjs/feathers-hooks-common/issues/134)
+- Consolidate setCreatedAt and setUpdatedAt hooks to a more generic hook [\#129](https://github.com/feathersjs/feathers-hooks-common/issues/129)
+- Add array traversal to `pluck` hook [\#126](https://github.com/feathersjs/feathers-hooks-common/issues/126)
+- Add a client-side hook which formats client params for server-side `client` hook. [\#123](https://github.com/feathersjs/feathers-hooks-common/issues/123)
+- Filter returned items keeping those that satisfy some criteria [\#77](https://github.com/feathersjs/feathers-hooks-common/issues/77)
+
+**Merged pull requests:**
+
+- Edited shift hook text [\#183](https://github.com/feathersjs/feathers-hooks-common/pull/183) ([eddyystop](https://github.com/eddyystop))
+- Added sifter hook - filter result with mongodb queries [\#182](https://github.com/feathersjs/feathers-hooks-common/pull/182) ([eddyystop](https://github.com/eddyystop))
+- Added setNow hook [\#181](https://github.com/feathersjs/feathers-hooks-common/pull/181) ([eddyystop](https://github.com/eddyystop))
+- Added paramsForServer util & paramsFromClient hook. Issues \#123 [\#177](https://github.com/feathersjs/feathers-hooks-common/pull/177) ([eddyystop](https://github.com/eddyystop))
+- enable array syntax for `iff`, `iff-else` and `when` [\#176](https://github.com/feathersjs/feathers-hooks-common/pull/176) ([beeplin](https://github.com/beeplin))
+- Added preventChanges before patch hook [\#175](https://github.com/feathersjs/feathers-hooks-common/pull/175) ([eddyystop](https://github.com/eddyystop))
+- Added existsByDot util in preparaion for leaveAlone hook [\#174](https://github.com/feathersjs/feathers-hooks-common/pull/174) ([eddyystop](https://github.com/eddyystop))
+- Fixed reported param issue in serialize. Issue \#158 [\#173](https://github.com/feathersjs/feathers-hooks-common/pull/173) ([eddyystop](https://github.com/eddyystop))
+- Added provider to populate schema. Issue \#134 [\#172](https://github.com/feathersjs/feathers-hooks-common/pull/172) ([eddyystop](https://github.com/eddyystop))
+- Fixed populate to return \[\] or null if no joined records found. Issue… [\#171](https://github.com/feathersjs/feathers-hooks-common/pull/171) ([eddyystop](https://github.com/eddyystop))
+- Allow undefined parentField in populate. Issue \#138 [\#170](https://github.com/feathersjs/feathers-hooks-common/pull/170) ([eddyystop](https://github.com/eddyystop))
+- Thows if ORM found. Issue \#144 [\#169](https://github.com/feathersjs/feathers-hooks-common/pull/169) ([eddyystop](https://github.com/eddyystop))
+- Removed unneeded console.log's in verifySchema [\#168](https://github.com/feathersjs/feathers-hooks-common/pull/168) ([eddyystop](https://github.com/eddyystop))
+- Fixed debug hook issue \#152 [\#167](https://github.com/feathersjs/feathers-hooks-common/pull/167) ([eddyystop](https://github.com/eddyystop))
+- Fixed softDelete issues \#147, \#163 [\#166](https://github.com/feathersjs/feathers-hooks-common/pull/166) ([eddyystop](https://github.com/eddyystop))
+- Fixes 'homepage' in package.json [\#165](https://github.com/feathersjs/feathers-hooks-common/pull/165) ([cpsubrian](https://github.com/cpsubrian))
+- Add async schema validation support [\#159](https://github.com/feathersjs/feathers-hooks-common/pull/159) ([TheBeastOfCaerbannog](https://github.com/TheBeastOfCaerbannog))
+
 ## [v3.2.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.2.0) (2017-05-01)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.1.0...v3.2.0)
 
