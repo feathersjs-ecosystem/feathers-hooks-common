@@ -6,7 +6,7 @@ import getItems from './get-items';
 import replaceItems from './replace-items';
 
 // import sift from 'sift';
-// getSifter = hook => sift({ 'address.country': hook.data.country }
+// getSifter = hook => sift({ 'address.country': hook.params.country }
 export default function (getSifter) {
   return hook => {
     checkContext(hook, 'after', 'find', 'sifter');
