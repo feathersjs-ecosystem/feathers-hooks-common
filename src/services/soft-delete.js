@@ -59,7 +59,15 @@ export default function (field) {
     }
 
     function throwIfItemDeleted (id) {
-      return service.get(id, { query: { $disableSoftDelete: true }, provider: hook.params.provider })
+      // It is important to pass all params, among which are:
+      // * 'provider' - is needed for succeeding hooks like 'restrictToRoles'.
+      // * 'authenticated' - flag, set by preceding 'authenticate' hook,
+      //    is required to skip 'authenticate', that will be called otherwise,
+      //    because the 'provider' is passed.
+      // * original query, that is required to treat the result of this
+      //    internall call as a final result.
+      hook.params.query.$disableSoftDelete = true;
+      return service.get(id, hook.params)
         .then(data => {
           if (data[deleteField]) {
             throw new errors.NotFound('Item has been soft deleted.');
