@@ -96,7 +96,11 @@ function populateItem (options, hook, item, includeSchema, depth) {
 
   return Promise.all(
     include.map(childSchema => {
-      if (!childSchema.parentField || getByDot(item, childSchema.parentField) === undefined) {
+      const { query, select, parentField } = childSchema;
+      
+      // A related column join is required if neither the query nor select options are provided.
+      // That requires item[parentField] exist. (The DB handles child[childField] existence.)
+      if (!query && !select && (!parentField || getByDot(item, parentField)=== undefined)) {
         return undefined;
       }
 
@@ -152,10 +156,13 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
     childField, paginate, parentField, permissions, query, select, service, useInnerPopulate
   } = childSchema;
 
-  // note: parentField & childField are req'd, plus parentItem[parentField} !== undefined .
-  // childSchema.select may override their relationship but some relationship must be given.
-  if (!service || !parentField || !childField) {
-    throw new errors.BadRequest('Child schema is missing a required property. (populate)');
+  if (!service) {
+    throw new errors.BadRequest('Child schema is missing the service property. (populate)');
+  }
+  
+  // A related column join is required if neither the query nor select options are provided.
+  if (!query && !select && !(parentField && childField)) {
+    throw new errors.BadRequest('Child schema is missing parentField or childField property. (populate)');
   }
 
   if (permissions && !options.checkPermissions(hook, service, permissions, depth)) {
@@ -170,11 +177,16 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   return Promise.resolve()
     .then(() => (select ? select(hook, parentItem, depth) : {}))
     .then(selectQuery => {
-      const parentVal = getByDot(parentItem, parentField); // will not be undefined
+      let sqlQuery = {};
+  
+      if (parentField) {
+        const parentVal = getByDot(parentItem, parentField); // will not be undefined
+        sqlQuery = { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal };
+      }
 
       const queryObj = Object.assign({},
         query,
-        { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal },
+        sqlQuery,
         selectQuery // dynamic options override static ones
       );
 
