@@ -56,7 +56,15 @@ module.exports = function (name) {
       author: '167asdf3689348sdad7312131s',
       readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
       createdAt: 1480793101559
-    }
+    },
+    '4': {
+      id: 4,
+      title: 'Post 4',
+      content: 'Lorem ipsum dolor sit amet 5',
+      author: '167asdf3689348sdad7312131s',
+      readers: [],
+      createdAt: 1480793101559
+  }
   };
 
   const recommendation = {

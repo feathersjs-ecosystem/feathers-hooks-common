@@ -206,7 +206,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         result = result[0];
       }
 
-      return childSchema.include
+      return (childSchema.include && result)
         ? populateItemArray(options, hook, result, childSchema.include, depth) : result;
     })
     .then(items => ({ nameAs, items }));
