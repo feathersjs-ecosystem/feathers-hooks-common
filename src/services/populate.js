@@ -143,6 +143,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         select: (hook, parent, depth) => ({ something: { $exists: false }}),
         paginate: false,
         provider: hook.provider,
+        useInnerPopulate: false,
         include: [ ... ] }
   @returns { nameAs: string, items: array }
   */
@@ -189,7 +190,8 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
       const params = Object.assign({},
         hook.params,
         paginate,
-        { query, _populate: 'skip' },
+        { query },
+        childSchema.useInnerPopulate ? { _populate: 'skip' } : {},
         ('provider' in childSchema) ? { provider: childSchema.provider } : {}
       );
 
