@@ -147,51 +147,55 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         include: [ ... ] }
   @returns { nameAs: string, items: array }
   */
+  
+  const {
+    childField, paginate, parentField, permissions, query, select, service, useInnerPopulate
+  } = childSchema;
 
   // note: parentField & childField are req'd, plus parentItem[parentField} !== undefined .
   // childSchema.select may override their relationship but some relationship must be given.
-  if (!childSchema.service || !childSchema.parentField || !childSchema.childField) {
+  if (!service || !parentField || !childField) {
     throw new errors.BadRequest('Child schema is missing a required property. (populate)');
   }
 
-  if (childSchema.permissions &&
-    !options.checkPermissions(hook, childSchema.service, childSchema.permissions, depth)
-  ) {
+  if (permissions && !options.checkPermissions(hook, service, permissions, depth)) {
     throw new errors.BadRequest(
-      `Permissions for ${childSchema.service} do not allow include. (populate)`
+      `Permissions for ${service} do not allow include. (populate)`
     );
   }
 
-  const nameAs = childSchema.nameAs || childSchema.service;
+  const nameAs = childSchema.nameAs || service;
   parentItem._include.push(nameAs);
 
   return Promise.resolve()
-    .then(() => (childSchema.select ? childSchema.select(hook, parentItem, depth) : {}))
+    .then(() => (select ? select(hook, parentItem, depth) : {}))
     .then(selectQuery => {
-      const parentVal = getByDot(parentItem, childSchema.parentField); // will not be undefined
+      const parentVal = getByDot(parentItem, parentField); // will not be undefined
 
-      const query = Object.assign({},
-        childSchema.query,
-        { [childSchema.childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal },
+      const queryObj = Object.assign({},
+        query,
+        { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal },
         selectQuery // dynamic options override static ones
       );
 
-      const serviceHandle = hook.app.service(childSchema.service);
+      const serviceHandle = hook.app.service(service);
 
       if (!serviceHandle) {
-        throw new errors.BadRequest(`Service ${childSchema.service} is not configured. (populate)`);
+        throw new errors.BadRequest(`Service ${service} is not configured. (populate)`);
       }
 
-      let paginate = { paginate: false };
-      const paginateOption = childSchema.paginate;
-      if (paginateOption === true) { paginate = null; }
-      if (typeof paginateOption === 'number') { paginate = { paginate: { default: paginateOption } }; }
+      let paginateObj = { paginate: false };
+      const paginateOption = paginate;
+      if (paginateOption === true) { paginateObj = null; }
+      if (typeof paginateOption === 'number') {
+        paginateObj = { paginate: { default: paginateOption } };
+      }
 
       const params = Object.assign({},
         hook.params,
-        paginate,
-        { query },
-        childSchema.useInnerPopulate ? { _populate: 'skip' } : {},
+        paginateObj,
+        { query: queryObj },
+        useInnerPopulate ? { _populate: 'skip' } : {},
         ('provider' in childSchema) ? { provider: childSchema.provider } : {}
       );
 
