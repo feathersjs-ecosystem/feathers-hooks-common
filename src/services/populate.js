@@ -164,7 +164,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   const nameAs = childSchema.nameAs || childSchema.service;
   parentItem._include.push(nameAs);
 
-  let promise = Promise.resolve()
+  return Promise.resolve()
     .then(() => (childSchema.select ? childSchema.select(hook, parentItem, depth) : {}))
     .then(selectQuery => {
       const parentVal = getByDot(parentItem, childSchema.parentField); // will not be undefined
@@ -206,15 +206,9 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         result = result[0];
       }
 
-      return result;
-    });
-
-  if (childSchema.include) {
-    promise = promise
-      .then(items => populateItemArray(options, hook, items, childSchema.include, depth));
-  }
-
-  return promise
+      return childSchema.include
+        ? populateItemArray(options, hook, result, childSchema.include, depth) : result;
+    })
     .then(items => ({ nameAs, items }));
 }
 
