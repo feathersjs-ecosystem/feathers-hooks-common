@@ -97,10 +97,10 @@ function populateItem (options, hook, item, includeSchema, depth) {
   return Promise.all(
     include.map(childSchema => {
       const { query, select, parentField } = childSchema;
-      
+
       // A related column join is required if neither the query nor select options are provided.
       // That requires item[parentField] exist. (The DB handles child[childField] existence.)
-      if (!query && !select && (!parentField || getByDot(item, parentField)=== undefined)) {
+      if (!query && !select && (!parentField || getByDot(item, parentField) === undefined)) {
         return undefined;
       }
 
@@ -151,7 +151,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         include: [ ... ] }
   @returns { nameAs: string, items: array }
   */
-  
+
   const {
     childField, paginate, parentField, permissions, query, select, service, useInnerPopulate
   } = childSchema;
@@ -159,7 +159,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   if (!service) {
     throw new errors.BadRequest('Child schema is missing the service property. (populate)');
   }
-  
+
   // A related column join is required if neither the query nor select options are provided.
   if (!query && !select && !(parentField && childField)) {
     throw new errors.BadRequest('Child schema is missing parentField or childField property. (populate)');
@@ -178,7 +178,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
     .then(() => (select ? select(hook, parentItem, depth) : {}))
     .then(selectQuery => {
       let sqlQuery = {};
-  
+
       if (parentField) {
         const parentVal = getByDot(parentItem, parentField); // will not be undefined
         sqlQuery = { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal };

@@ -360,11 +360,11 @@ let provider;
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
-  
+
       it('allow non related field joins if query', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
-    
+
         const schema = {
           include: makeInclude(type, {
             service: 'posts',
@@ -372,7 +372,7 @@ let provider;
             query: { id: hookAfter.result.postId }
           })
         };
-    
+
         return populate({ schema, profile: true })(hook)
           .then(hook1 => {
             const elapsed = hook1.result._elapsed;
@@ -381,11 +381,11 @@ let provider;
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
-  
+
       it('allow non related field joins if select', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
-    
+
         const schema = {
           include: makeInclude(type, {
             service: 'posts',
@@ -393,7 +393,7 @@ let provider;
             select: (hook, parentItem) => ({ id: parentItem.postId })
           })
         };
-    
+
         return populate({ schema, profile: true })(hook)
           .then(hook1 => {
             const elapsed = hook1.result._elapsed;
@@ -402,11 +402,11 @@ let provider;
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
-  
+
       it('throws if no parentField option in related field join', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
-    
+
         const schema = {
           include: makeInclude(type, {
             service: 'posts',
@@ -414,7 +414,7 @@ let provider;
             childField: 'id'
           })
         };
-    
+
         return populate({ schema, profile: true })(hook)
           .then(() => {
             assert(false, 'unexpectedly succeeeded');
@@ -423,13 +423,12 @@ let provider;
             assert.isObject(err, 'no error object');
           });
       });
-  
-  
+
       it('throws if no parentField defined in related field join', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
         delete hook.result.postId;
-    
+
         const schema = {
           include: makeInclude(type, {
             service: 'posts',
@@ -438,7 +437,7 @@ let provider;
             childField: 'id'
           })
         };
-    
+
         return populate({ schema, profile: true })(hook)
           .then(() => {
             assert(false, 'unexpectedly succeeeded');

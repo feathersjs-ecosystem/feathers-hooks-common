@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import { client } from '../../src/services';
 
-describe('params-from-client', () => {
+describe('services params-from-client', () => {
   describe('basics', () => {
     it('works no params', () => {
       const hook = {};

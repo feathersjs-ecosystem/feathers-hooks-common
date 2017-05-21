@@ -14,7 +14,7 @@ const hookNames = [
   'isNot'
 ].sort();
 
-describe('permission exposed hooks', () => {
+describe('permissions exposed hooks', () => {
   it('expected hooks are exposed', () => {
 
   });
