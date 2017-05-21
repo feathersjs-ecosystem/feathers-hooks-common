@@ -64,7 +64,7 @@ module.exports = function (name) {
       author: '167asdf3689348sdad7312131s',
       readers: [],
       createdAt: 1480793101559
-  }
+    }
   };
 
   const recommendation = {

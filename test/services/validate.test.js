@@ -12,7 +12,7 @@ let hookOk;
 let hookBad;
 let fcnHook;
 
-describe('validate', () => {
+describe('services validate', () => {
   origHookOk = { type: 'before', method: 'create', data: { email: ' a@a.com ' } };
   origHookBad = { type: 'before', method: 'create', data: { email: '' } };
 

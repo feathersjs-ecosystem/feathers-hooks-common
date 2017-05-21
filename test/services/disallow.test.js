@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { disallow } from '../../src/services';
 
-describe('disallow', () => {
+describe('services disallow', () => {
   describe('disallow is compatible with .disable (without predicate)', () => {
     let hookRest;
     let hookSocketio;

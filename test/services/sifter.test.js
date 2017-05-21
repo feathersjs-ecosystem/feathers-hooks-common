@@ -28,7 +28,7 @@ const getCountry = country => hook => sift({ 'address.country': country });
 let hook;
 let hookPaginated;
 
-describe('shift', () => {
+describe('services shifter', () => {
   beforeEach(() => {
     hook = clone(origHook);
     hookPaginated = clone(origHookPaginated);

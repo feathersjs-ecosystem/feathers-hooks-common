@@ -1,7 +1,7 @@
 
 import hooksCommon from '../../src/services';
 
-describe('debug', () => {
+describe('services debug', () => {
   it('does not crash', () => {
     const hook = {
       type: 'before',

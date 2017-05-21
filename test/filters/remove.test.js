@@ -5,7 +5,7 @@ import filter from '../../src/filters';
 var data;
 var dataArray;
 
-describe('filter remove', () => {
+describe('filters remove', () => {
   describe('removes fields', () => {
     beforeEach(() => {
       data = { first: 'John', last: 'Doe' };

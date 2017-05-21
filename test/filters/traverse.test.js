@@ -2,7 +2,7 @@
 import assert from 'assert';
 import filter from '../../src/filters';
 
-describe('filter traverse', () => {
+describe('filters traverse', () => {
   let data;
   let dataArray;
   let dataComplex;
