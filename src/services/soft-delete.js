@@ -23,12 +23,8 @@ export default function (field) {
         hook.params.query[deleteField] = { $ne: true };
         return hook;
       case 'get':
-        return throwIfItemDeleted(hook.id)
-          .then((data) => {
-            // We got data by calling the same 'service.get' with the
-            // $disableSoftDelete parameter which should not be used
-            // by service methods or other hooks,
-            // so there is no need to call 'service.get' twice.
+        return throwIfItemDeleted(hook.id, true)
+          .then(data => {
             hook.result = data;
             return hook;
           });
@@ -36,7 +32,7 @@ export default function (field) {
         return hook;
       case 'update': // fall through
       case 'patch':
-        if (hook.id) {
+        if (hook.id !== null) {
           return throwIfItemDeleted(hook.id)
             .then(() => hook);
         }
@@ -58,9 +54,20 @@ export default function (field) {
           });
     }
 
-    function throwIfItemDeleted (id) {
-      return service.get(id, { query: { $disableSoftDelete: true }, provider: hook.params.provider })
+    function throwIfItemDeleted (id, isGet) {
+      const params = isGet ? hook.params : {
+        query: {},
+        provider: hook.params.provider,
+        authenticated: hook.params.authenticated,
+        user: hook.params.user
+      };
+
+      params.query.$disableSoftDelete = true;
+
+      return service.get(id, params)
         .then(data => {
+          delete params.query.$disableSoftDelete;
+
           if (data[deleteField]) {
             throw new errors.NotFound('Item has been soft deleted.');
           }

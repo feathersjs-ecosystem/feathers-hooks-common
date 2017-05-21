@@ -14,7 +14,9 @@ const storeInit = {
   '4': { name: 'Dick Doe', key: 'b', id: 4 },
   '5': { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
 };
+
 let store;
+let getCallParams;
 
 function services () {
   const app = this;
@@ -40,8 +42,12 @@ function user () {
 
   app.service('users').before({
     all: [
+      hook => {
+        if (hook.method === 'get') {
+          getCallParams = clone(hook.params);
+        }
+      },
       hooks.softDelete()
-      // hook => console.log('id=', hook.id, 'data=', hook.data, 'query=', hook.params.query),
     ]
   });
 }
@@ -311,6 +317,37 @@ describe('services softDelete', () => {
       user.remove(null, { query: { key: 'z' } })
         .then(data => {
           assert.deepEqual(data, []);
+          done();
+        });
+    });
+  });
+
+  describe('handles params', () => {
+    it('uses all params for get', done => {
+      getCallParams = null;
+
+      const params = { a: 1, b: 2 };
+      const expected = { a: 1, b: 2, query: { $disableSoftDelete: true } };
+
+      user.get(0, params)
+        .then(data => {
+          assert.deepEqual(data, storeInit['0']);
+          assert.equal(user.get_call_count, 1);
+          assert.deepEqual(getCallParams, expected);
+          done();
+        });
+    });
+
+    it('uses selected params for other methods', done => {
+      getCallParams = null;
+
+      const params = { a: 1, b: 2, authenticated: 'a', user: 'b' };
+      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b' };
+
+      user.patch(0, { x: 1 }, params)
+        .then(data => {
+          assert.equal(user.get_call_count, 1);
+          assert.deepEqual(getCallParams, expected);
           done();
         });
     });
