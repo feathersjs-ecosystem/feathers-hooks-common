@@ -8,22 +8,22 @@ import replaceItems from './replace-items';
 const errors = feathersErrors.errors;
 
 export default function (validator) {
-  return hook => {
-    checkContext(hook, 'before', ['create', 'update', 'patch'], 'validate');
+  return context => {
+    checkContext(context, 'before', ['create', 'update', 'patch'], 'validate');
 
     if (typeof validator !== 'function') {
       throw new errors.BadRequest(`Expected validator function. (validate)`);
     }
 
-    const results = validator(getItems(hook), hook);
+    const results = validator(getItems(context), context);
 
     if (results && typeof results.then === 'function') {
       return results.then(convertedValues => {
         if (convertedValues) { // if values have been sanitized
-          replaceItems(hook, convertedValues);
+          replaceItems(context, convertedValues);
         }
 
-        return hook;
+        return context;
       });
     }
 
@@ -32,6 +32,6 @@ export default function (validator) {
       throw new errors.BadRequest({ errors: results });
     }
 
-    return hook;
+    return context;
   };
 }
