@@ -17,7 +17,7 @@ export default function (prop) {
       return context;
     }
 
-    const params = (context.method === 'get') ? context.params : {
+    const params = context.method === 'get' ? context.params : {
       provider: context.params.provider,
       authenticated: context.params.authenticated,
       user: context.params.user

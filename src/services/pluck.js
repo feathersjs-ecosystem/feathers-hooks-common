@@ -5,13 +5,13 @@ import getItems from './get-items';
 import replaceItems from './replace-items';
 
 export default function (...fieldNames) {
-  return hook => {
-    checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'pluck');
+  return context => {
+    checkContextIf(context, 'before', ['create', 'update', 'patch'], 'pluck');
 
-    if (hook.params.provider) {
-      replaceItems(hook, _pluck(getItems(hook), fieldNames));
+    if (context.params.provider) {
+      replaceItems(context, _pluck(getItems(context), fieldNames));
     }
 
-    return hook;
+    return context;
   };
 }

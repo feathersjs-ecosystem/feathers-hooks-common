@@ -3,12 +3,12 @@ import _pluck from '../common/_pluck';
 import checkContext from './check-context';
 
 export default function (...fieldNames) {
-  return hook => {
-    checkContext(hook, 'before', null, 'pluckQuery');
+  return context => {
+    checkContext(context, 'before', null, 'pluckQuery');
 
-    const query = (hook.params || {}).query || {};
-    hook.params.query = _pluck(query, fieldNames);
+    const query = (context.params || {}).query || {};
+    context.params.query = _pluck(query, fieldNames);
 
-    return hook;
+    return context;
   };
 }

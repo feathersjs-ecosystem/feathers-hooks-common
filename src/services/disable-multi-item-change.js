@@ -3,12 +3,12 @@ import errors from 'feathers-errors';
 import checkContext from './check-context';
 
 export default function () {
-  return function (hook) {
-    checkContext(hook, 'before', ['update', 'patch', 'remove'], 'disableMultiItemChange');
+  return function (context) {
+    checkContext(context, 'before', ['update', 'patch', 'remove'], 'disableMultiItemChange');
 
-    if (hook.id === null) {
+    if (context.id === null) {
       throw new errors.BadRequest(
-        `Multi-record changes not allowed for ${hook.path} ${hook.method}. (disableMultiItemChange)`
+        `Multi-record changes not allowed for ${context.path} ${context.method}. (disableMultiItemChange)`
       );
     }
   };
