@@ -40,6 +40,7 @@ const hookNames = [
   'setUpdatedAt',
   'sifter',
   'softDelete',
+  'stashBefore',
   'traverse',
   'validate',
   'validateSchema',
