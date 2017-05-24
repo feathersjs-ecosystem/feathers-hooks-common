@@ -36,6 +36,7 @@ import setSlug from './set-slug';
 import setUpdatedAt from './set-updated-at';
 import sifter from './sifter';
 import softDelete from './soft-delete';
+import stashBefore from './stash-before';
 import traverse from './traverse';
 import validate from './validate';
 import validateSchema from './validate-schema';
@@ -82,6 +83,7 @@ export default Object.assign(
     setUpdatedAt,
     sifter,
     softDelete,
+    stashBefore,
     traverse,
     validate,
     validateSchema
