@@ -96,7 +96,7 @@ describe('filters setFilteredAt', () => {
 
       setTimeout(() => {
         filters.setFilteredAt()(data);
-        assert.isAbove(result.filteredAt, firstTime);
+        assert.isAbove(result.filteredAt.getTime(), firstTime.getTime());
         next();
       }, 50);
     });

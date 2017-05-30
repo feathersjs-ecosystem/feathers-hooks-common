@@ -135,7 +135,7 @@ describe('services setCreatedAt', () => {
 
       setTimeout(() => {
         hooks.setCreatedAt()(hookBefore);
-        assert.isAbove(hookBefore.data.createdAt, firstTime);
+        assert.isAbove(hookBefore.data.createdAt.getTime(), firstTime.getTime());
         next();
       }, 50);
     });

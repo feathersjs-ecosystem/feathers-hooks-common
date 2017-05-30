@@ -8,7 +8,7 @@ var hookAfter;
 var hookFindPaginate;
 var hookFind;
 
-describe('services setCreatedAt', () => {
+describe('services setUpdatedAt', () => {
   describe('updates fields', () => {
     beforeEach(() => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
@@ -134,7 +134,7 @@ describe('services setCreatedAt', () => {
 
       setTimeout(() => {
         hooks.setUpdatedAt()(hookBefore);
-        assert.isAbove(hookBefore.data.updatedAt, firstTime);
+        assert.isAbove(hookBefore.data.updatedAt.getTime(), firstTime.getTime());
         next();
       }, 50);
     });
