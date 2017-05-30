@@ -1,5 +1,21 @@
 # Change Log
 
+## [v3.5.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.1) (2017-05-30)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.0...v3.5.1)
+
+**Implemented enhancements:**
+
+- Add defer Hook [\#67](https://github.com/feathersjs/feathers-hooks-common/issues/67)
+
+**Closed issues:**
+
+- Question: Way to skip hooks? [\#204](https://github.com/feathersjs/feathers-hooks-common/issues/204)
+
+**Merged pull requests:**
+
+- Changed tests for chai 4.0.0 [\#205](https://github.com/feathersjs/feathers-hooks-common/pull/205) ([eddyystop](https://github.com/eddyystop))
+- add missing `feathers-hooks` dependency [\#202](https://github.com/feathersjs/feathers-hooks-common/pull/202) ([ahdinosaur](https://github.com/ahdinosaur))
+
 ## [v3.5.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.0) (2017-05-24)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.3.3...v3.5.0)
 
@@ -102,11 +118,11 @@
 
 **Merged pull requests:**
 
-- Update ajv to the latest version 🚀 [\#157](https://github.com/feathersjs/feathers-hooks-common/pull/157) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
-- Update semistandard to the latest version 🚀 [\#156](https://github.com/feathersjs/feathers-hooks-common/pull/156) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Update ajv to the latest version 🚀 [\#157](https://github.com/feathersjs/feathers-hooks-common/pull/157) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#156](https://github.com/feathersjs/feathers-hooks-common/pull/156) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - validateSchema's 2nd parameter can be ajv instance [\#155](https://github.com/feathersjs/feathers-hooks-common/pull/155) ([beeplin](https://github.com/beeplin))
-- Update feathers-hooks to the latest version 🚀 [\#151](https://github.com/feathersjs/feathers-hooks-common/pull/151) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
-- Update dependencies to enable Greenkeeper 🌴 [\#148](https://github.com/feathersjs/feathers-hooks-common/pull/148) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Update feathers-hooks to the latest version 🚀 [\#151](https://github.com/feathersjs/feathers-hooks-common/pull/151) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#148](https://github.com/feathersjs/feathers-hooks-common/pull/148) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v3.0.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.0.0) (2017-04-08)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.0.0-pre.1...v3.0.0)
