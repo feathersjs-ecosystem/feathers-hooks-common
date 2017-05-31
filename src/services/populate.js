@@ -207,7 +207,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         hook.params,
         paginateObj,
         { query: queryObj },
-        useInnerPopulate ? { _populate: 'skip' } : {},
+        useInnerPopulate ? {} : { _populate: 'skip' },
         ('provider' in childSchema) ? { provider: childSchema.provider } : {}
       );
 
