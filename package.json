@@ -53,7 +53,7 @@
   },
   "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
   "dependencies": {
-    "ajv": "5.2.0",
+    "ajv": "^5.2.0",
     "debug": "^2.2.0",
     "feathers-errors": "^2.4.0",
     "feathers-hooks": "^2.0.1",
