@@ -1,5 +1,24 @@
 # Change Log
 
+## [v3.5.3](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.3) (2017-06-19)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.2...v3.5.3)
+
+## [v3.5.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.2) (2017-06-19)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.1...v3.5.2)
+
+**Closed issues:**
+
+- Unpin ajv dependency so Greenkeeper can move to 5.1.6 once ajv fixes its issue. [\#213](https://github.com/feathersjs/feathers-hooks-common/issues/213)
+- An in-range update of ajv is breaking the build 🚨 [\#211](https://github.com/feathersjs/feathers-hooks-common/issues/211)
+- Gain access to the current hook object inside the validateSchema async validator [\#209](https://github.com/feathersjs/feathers-hooks-common/issues/209)
+
+**Merged pull requests:**
+
+- Unpin AJV dependency [\#216](https://github.com/feathersjs/feathers-hooks-common/pull/216) ([daffl](https://github.com/daffl))
+- Update ajv to the latest version 🚀 [\#215](https://github.com/feathersjs/feathers-hooks-common/pull/215) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- fix: pin ajv to 5.1.5 [\#212](https://github.com/feathersjs/feathers-hooks-common/pull/212) ([eddyystop](https://github.com/eddyystop))
+- Update populate.js [\#206](https://github.com/feathersjs/feathers-hooks-common/pull/206) ([Creiger](https://github.com/Creiger))
+
 ## [v3.5.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.1) (2017-05-30)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.0...v3.5.1)
 
