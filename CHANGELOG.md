@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.5.5](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.5) (2017-06-20)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.3...v3.5.5)
+
+**Fixed bugs:**
+
+- Updated stashBefore so it clones context.data rather than references it. [\#219](https://github.com/feathersjs/feathers-hooks-common/pull/219) ([eddyystop](https://github.com/eddyystop))
+
+**Closed issues:**
+
+- Setting useInnerPopulate to false causes child schema to populate [\#218](https://github.com/feathersjs/feathers-hooks-common/issues/218)
+
 ## [v3.5.3](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.3) (2017-06-19)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.2...v3.5.3)
 
