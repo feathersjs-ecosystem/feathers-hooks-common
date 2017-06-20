@@ -30,7 +30,7 @@ export default function (prop) {
       .then(data => {
         delete params.query.$disableStashBefore;
 
-        context.params[beforeField] = data;
+        context.params[beforeField] = JSON.parse(JSON.stringify(data));
         return context;
       })
       .catch(() => context);
