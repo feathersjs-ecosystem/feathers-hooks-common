@@ -1,5 +1,19 @@
 # Change Log
 
+## [v3.6.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.6.0) (2017-07-27)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.5...v3.6.0)
+
+**Closed issues:**
+
+- How to break and return a value to client in before hook [\#231](https://github.com/feathersjs/feathers-hooks-common/issues/231)
+- Store `deleted` \(soft-delete\) fields as a date instead of a boolean [\#228](https://github.com/feathersjs/feathers-hooks-common/issues/228)
+- populate: hook.params.user is not populated in child items [\#220](https://github.com/feathersjs/feathers-hooks-common/issues/220)
+
+**Merged pull requests:**
+
+- Added hook utility thenifyHook [\#232](https://github.com/feathersjs/feathers-hooks-common/pull/232) ([eddyystop](https://github.com/eddyystop))
+- Update sift to the latest version 🚀 [\#230](https://github.com/feathersjs/feathers-hooks-common/pull/230) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v3.5.5](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.5) (2017-06-20)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.3...v3.5.5)
 
