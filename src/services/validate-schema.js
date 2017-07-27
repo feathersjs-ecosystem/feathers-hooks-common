@@ -7,7 +7,7 @@ const errors = feathersErrors.errors;
 
 export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   const addNewError = options.addNewError || addNewErrorDflt;
-  delete options.addNewError;
+  // delete options.addNewError;
   // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?
   let ajv, Ajv;
   if (typeof ajvOrAjv.addKeyword !== 'function') {
@@ -37,7 +37,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
           });
       })).then(() => {
         if (invalid) {
-          throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+          throw new errors.BadRequest('Data does not match schema', { errors: errorMessages });
         }
       });
     }
@@ -51,7 +51,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
     });
 
     if (invalid) {
-      throw new errors.BadRequest('Invalid schema', { errors: errorMessages });
+      throw new errors.BadRequest('Data does not match schema', { errors: errorMessages });
     }
 
     function addErrors (errors, index) {
