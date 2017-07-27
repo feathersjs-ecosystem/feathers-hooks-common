@@ -41,6 +41,7 @@ const hookNames = [
   'sifter',
   'softDelete',
   'stashBefore',
+  'thenifyHook',
   'traverse',
   'validate',
   'validateSchema',

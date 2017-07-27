@@ -37,6 +37,7 @@ import setUpdatedAt from './set-updated-at';
 import sifter from './sifter';
 import softDelete from './soft-delete';
 import stashBefore from './stash-before';
+import thenifyHook from './thenify-hook';
 import traverse from './traverse';
 import validate from './validate';
 import validateSchema from './validate-schema';
@@ -84,6 +85,7 @@ export default Object.assign(
     sifter,
     softDelete,
     stashBefore,
+    thenifyHook,
     traverse,
     validate,
     validateSchema
