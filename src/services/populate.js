@@ -46,7 +46,7 @@ export default function (options, ...rest) {
           throw new errors.BadRequest('Permissions param is not a function. (populate)');
         }
 
-        if (baseService && baseService !== hook.path) {
+        if (baseService && hook.path && baseService !== hook.path) {
           throw new errors.BadRequest(`Schema is for ${baseService} not ${hook.path}. (populate)`);
         }
 
