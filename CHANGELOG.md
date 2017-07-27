@@ -1,7 +1,22 @@
 # Change Log
 
+## [v3.6.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.6.1) (2017-07-27)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.6.0...v3.6.1)
+
+**Implemented enhancements:**
+
+- Made `populate` hook friendlier to `thenifyHook` util [\#233](https://github.com/feathersjs/feathers-hooks-common/pull/233) ([eddyystop](https://github.com/eddyystop))
+
+**Fixed bugs:**
+
+- Fixed 2 issues with validateSchema [\#234](https://github.com/feathersjs/feathers-hooks-common/pull/234) ([eddyystop](https://github.com/eddyystop))
+
 ## [v3.6.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.6.0) (2017-07-27)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.5...v3.6.0)
+
+**Implemented enhancements:**
+
+- Added hook utility thenifyHook [\#232](https://github.com/feathersjs/feathers-hooks-common/pull/232) ([eddyystop](https://github.com/eddyystop))
 
 **Closed issues:**
 
@@ -11,7 +26,6 @@
 
 **Merged pull requests:**
 
-- Added hook utility thenifyHook [\#232](https://github.com/feathersjs/feathers-hooks-common/pull/232) ([eddyystop](https://github.com/eddyystop))
 - Update sift to the latest version 🚀 [\#230](https://github.com/feathersjs/feathers-hooks-common/pull/230) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v3.5.5](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.5) (2017-06-20)
@@ -31,6 +45,10 @@
 ## [v3.5.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.2) (2017-06-19)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.1...v3.5.2)
 
+**Fixed bugs:**
+
+- Update populate.js [\#206](https://github.com/feathersjs/feathers-hooks-common/pull/206) ([Creiger](https://github.com/Creiger))
+
 **Closed issues:**
 
 - Unpin ajv dependency so Greenkeeper can move to 5.1.6 once ajv fixes its issue. [\#213](https://github.com/feathersjs/feathers-hooks-common/issues/213)
@@ -42,7 +60,6 @@
 - Unpin AJV dependency [\#216](https://github.com/feathersjs/feathers-hooks-common/pull/216) ([daffl](https://github.com/daffl))
 - Update ajv to the latest version 🚀 [\#215](https://github.com/feathersjs/feathers-hooks-common/pull/215) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - fix: pin ajv to 5.1.5 [\#212](https://github.com/feathersjs/feathers-hooks-common/pull/212) ([eddyystop](https://github.com/eddyystop))
-- Update populate.js [\#206](https://github.com/feathersjs/feathers-hooks-common/pull/206) ([Creiger](https://github.com/Creiger))
 
 ## [v3.5.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.1) (2017-05-30)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.5.0...v3.5.1)
@@ -51,6 +68,10 @@
 
 - Add defer Hook [\#67](https://github.com/feathersjs/feathers-hooks-common/issues/67)
 
+**Fixed bugs:**
+
+- add missing `feathers-hooks` dependency [\#202](https://github.com/feathersjs/feathers-hooks-common/pull/202) ([ahdinosaur](https://github.com/ahdinosaur))
+
 **Closed issues:**
 
 - Question: Way to skip hooks? [\#204](https://github.com/feathersjs/feathers-hooks-common/issues/204)
@@ -58,7 +79,6 @@
 **Merged pull requests:**
 
 - Changed tests for chai 4.0.0 [\#205](https://github.com/feathersjs/feathers-hooks-common/pull/205) ([eddyystop](https://github.com/eddyystop))
-- add missing `feathers-hooks` dependency [\#202](https://github.com/feathersjs/feathers-hooks-common/pull/202) ([ahdinosaur](https://github.com/ahdinosaur))
 
 ## [v3.5.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.5.0) (2017-05-24)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.3.3...v3.5.0)
