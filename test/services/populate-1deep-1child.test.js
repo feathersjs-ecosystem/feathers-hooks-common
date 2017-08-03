@@ -261,6 +261,49 @@ let provider;
           });
       });
 
+      it('Provider can be passed down from options', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' },
+          })
+        };
+
+        return populate({ schema, provider: 'rest' })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, 'rest');
+          });
+      });
+
+      it('Global provider can be overwritten at schema level', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' },
+            provider: 'socketio'
+          })
+        };
+
+        return populate({ schema, provider: 'rest' })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, 'socketio');
+          });
+      });
+
       it('childField overridden by select', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
