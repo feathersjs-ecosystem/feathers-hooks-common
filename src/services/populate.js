@@ -24,7 +24,8 @@ export default function (options, ...rest) {
     const optionsDefault = {
       schema: {},
       checkPermissions: () => true,
-      profile: false
+      profile: false,
+      provider: hook.params.provider
     };
 
     if (hook.params._populate === 'skip') { // this service call made from another populate
@@ -208,7 +209,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         paginateObj,
         { query: queryObj },
         useInnerPopulate ? {} : { _populate: 'skip' },
-        ('provider' in childSchema) ? { provider: childSchema.provider } : {}
+        ('provider' in childSchema) ? { provider: childSchema.provider } : { provider: options.provider }
       );
 
       return serviceHandle.find(params);
