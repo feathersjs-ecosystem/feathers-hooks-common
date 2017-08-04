@@ -261,11 +261,12 @@ let provider;
           });
       });
 
-      it('Provider can be passed down from options', () => {
+      it('Provider can be passed down from top level', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
 
         const schema = {
+          provider: 'global',
           include: makeInclude(type, {
             service: 'posts',
             parentField: 'postId',
@@ -274,11 +275,11 @@ let provider;
           })
         };
 
-        return populate({ schema, provider: 'rest' })(hook)
+        return populate({ schema })(hook)
           .then(hook1 => {
             const expected = recommendationPosts('posts');
             assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, 'rest');
+            assert.equal(provider, 'global');
           });
       });
 
@@ -287,6 +288,7 @@ let provider;
         hook.app = app; // app is a func and wouldn't be cloned
 
         const schema = {
+          provider: 'global',
           include: makeInclude(type, {
             service: 'posts',
             parentField: 'postId',
@@ -296,7 +298,7 @@ let provider;
           })
         };
 
-        return populate({ schema, provider: 'rest' })(hook)
+        return populate({ schema })(hook)
           .then(hook1 => {
             const expected = recommendationPosts('posts');
             assert.deepEqual(hook1.result, expected);
