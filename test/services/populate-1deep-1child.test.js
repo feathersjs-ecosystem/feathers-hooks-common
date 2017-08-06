@@ -271,7 +271,7 @@ let provider;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' },
+            query: { id: 'aaaaaa' }
           })
         };
 
