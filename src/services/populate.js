@@ -41,6 +41,7 @@ export default function (options, ...rest) {
         const schema1 = typeof schema === 'function' ? schema(hook, options1) : schema;
         const permissions = schema1.permissions || null;
         const baseService = schema1.service;
+        const provider = schema1.provider || hook.params.provider;
 
         if (typeof checkPermissions !== 'function') {
           throw new errors.BadRequest('Permissions param is not a function. (populate)');
@@ -58,7 +59,17 @@ export default function (options, ...rest) {
           throw new errors.BadRequest('Schema does not resolve to an object. (populate)');
         }
 
-        const include = [].concat(schema1.include || []);
+        const include = []
+          .concat(schema1.include || [])
+          .map(schema => {
+            if ('provider' in schema) {
+              return schema;
+            } else {
+              schema.provider = provider;
+              return schema;
+            }
+          });
+
         return !include.length ? items : populateItemArray(options1, hook, items, include, 0);
       })
       .then(items => {
@@ -153,7 +164,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   */
 
   const {
-    childField, paginate, parentField, permissions, query, select, service, useInnerPopulate
+    childField, paginate, parentField, permissions, query, select, service, useInnerPopulate, provider
   } = childSchema;
 
   if (!service) {
@@ -224,8 +235,19 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
         result = result[0];
       }
 
+      const include = []
+        .concat(childSchema.include || [])
+        .map(schema => {
+          if ('provider' in schema) {
+            return schema;
+          } else {
+            schema.provider = provider;
+            return schema;
+          }
+        });
+
       return (childSchema.include && result)
-        ? populateItemArray(options, hook, result, childSchema.include, depth) : result;
+        ? populateItemArray(options, hook, result, include, depth) : result;
     })
     .then(items => ({ nameAs, items }));
 }
