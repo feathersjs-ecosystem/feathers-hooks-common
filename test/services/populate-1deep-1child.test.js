@@ -306,6 +306,30 @@ let provider;
           });
       });
 
+      it('Falsy providers override default provider', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+        hook.params.provider = 'rest'; // Set up default provider
+
+        const schema = {
+          provider: undefined,
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' },
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, undefined);
+          });
+
+      });
+
       it('childField overridden by select', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
