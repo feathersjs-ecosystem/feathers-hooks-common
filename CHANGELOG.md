@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.7.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.1) (2017-08-07)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.0...v3.7.1)
+
+**Merged pull requests:**
+
+- Correct falsy provider handling [\#243](https://github.com/feathersjs/feathers-hooks-common/pull/243) ([adamvr](https://github.com/adamvr))
+
 ## [v3.7.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.0) (2017-08-06)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.6.1...v3.7.0)
 
