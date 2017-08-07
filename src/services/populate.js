@@ -41,7 +41,7 @@ export default function (options, ...rest) {
         const schema1 = typeof schema === 'function' ? schema(hook, options1) : schema;
         const permissions = schema1.permissions || null;
         const baseService = schema1.service;
-        const provider = schema1.provider || hook.params.provider;
+        const provider = ('provider' in schema1) ? schema1.provider : hook.params.provider;
 
         if (typeof checkPermissions !== 'function') {
           throw new errors.BadRequest('Permissions param is not a function. (populate)');
