@@ -317,7 +317,7 @@ let provider;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' },
+            query: { id: 'aaaaaa' }
           })
         };
 
@@ -327,7 +327,6 @@ let provider;
             assert.deepEqual(hook1.result, expected);
             assert.equal(provider, undefined);
           });
-
       });
 
       it('childField overridden by select', () => {
