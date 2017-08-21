@@ -103,7 +103,7 @@ function populateItem (options, hook, item, includeSchema, depth) {
   const elapsed = {};
   const startAtAllIncludes = process.hrtime();
   const include = [].concat(includeSchema || []);
-  item._include = [];
+  if(!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
   return Promise.all(
     include.map(childSchema => {
