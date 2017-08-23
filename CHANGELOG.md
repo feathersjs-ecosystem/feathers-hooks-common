@@ -1,9 +1,25 @@
 # Change Log
 
+## [v3.7.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.2) (2017-08-23)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.1...v3.7.2)
+
+**Implemented enhancements:**
+
+- Fix \_include being overwritten with empty array [\#246](https://github.com/feathersjs/feathers-hooks-common/pull/246) ([rodeyseijkens](https://github.com/rodeyseijkens))
+
+**Closed issues:**
+
+- Support $search in query syntax [\#141](https://github.com/feathersjs/feathers-hooks-common/issues/141)
+- Look into the Babel transpiling issue in a section of populate hook. [\#116](https://github.com/feathersjs/feathers-hooks-common/issues/116)
+
+**Merged pull requests:**
+
+- Update debug to the latest version 🚀 [\#244](https://github.com/feathersjs/feathers-hooks-common/pull/244) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
 ## [v3.7.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.1) (2017-08-07)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.0...v3.7.1)
 
-**Merged pull requests:**
+**Fixed bugs:**
 
 - Correct falsy provider handling [\#243](https://github.com/feathersjs/feathers-hooks-common/pull/243) ([adamvr](https://github.com/adamvr))
 
