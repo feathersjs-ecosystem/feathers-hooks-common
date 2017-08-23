@@ -103,7 +103,7 @@ function populateItem (options, hook, item, includeSchema, depth) {
   const elapsed = {};
   const startAtAllIncludes = process.hrtime();
   const include = [].concat(includeSchema || []);
-  item._include = [];
+  if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
   return Promise.all(
     include.map(childSchema => {
@@ -183,7 +183,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   }
 
   const nameAs = childSchema.nameAs || service;
-  parentItem._include.push(nameAs);
+  if (parentItem._include.indexOf(nameAs) === -1) parentItem._include.push(nameAs);
 
   return Promise.resolve()
     .then(() => (select ? select(hook, parentItem, depth) : {}))
