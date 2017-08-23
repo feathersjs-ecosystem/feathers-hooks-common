@@ -183,7 +183,7 @@ function populateAddChild (options, hook, parentItem, childSchema, depth) {
   }
 
   const nameAs = childSchema.nameAs || service;
-  if (parentItem._include.indexOf(nameAs)) parentItem._include.push(nameAs);
+  if (parentItem._include.indexOf(nameAs) === -1) parentItem._include.push(nameAs);
 
   return Promise.resolve()
     .then(() => (select ? select(hook, parentItem, depth) : {}))
