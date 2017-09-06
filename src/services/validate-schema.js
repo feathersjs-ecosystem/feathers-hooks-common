@@ -16,7 +16,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
   } else {
     ajv = ajvOrAjv;
   }
-  const validate = ajv.compile(schema); // for fastest execution
+  const validate = (typeof schema === 'string') ? ajv.getSchema(schema) : ajv.compile(schema); // for fastest execution
 
   return hook => {
     const items = getItems(hook);
@@ -25,7 +25,7 @@ export default function (schema, ajvOrAjv, options = { allErrors: true }) {
     let errorMessages = null;
     let invalid = false;
 
-    if (schema.$async) {
+    if (validate.schema.$async) {
       return Promise.all(itemsArray.map((item, index) => {
         return validate(item)
           .catch(err => {
