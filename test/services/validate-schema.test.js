@@ -5,6 +5,14 @@ import Ajv from 'ajv';
 
 const ajv = new Ajv({ allErrors: true });
 ajv.addFormat('startWithJo', '^Jo');
+ajv.addSchema({
+  'id': 'syncSchema',
+  'properties': {
+    'first': { 'type': 'string', 'format': 'startWithJo' },
+    'last': { 'type': 'string' }
+  },
+  'required': ['first', 'last']
+});
 
 describe('services validateSchema', () => {
   let hookBefore;
@@ -83,6 +91,14 @@ describe('services validateSchema', () => {
 
     it('works with array of valid items when ajv instance is passed', () => {
       validateSchema(schemaForAjvInstance, ajv)(hookBeforeArrayForAjvInstance);
+    });
+
+    it('works with valid single item with existing schema in ajv instance', () => {
+      validateSchema('syncSchema', ajv)(hookBefore);
+    });
+
+    it('works with array of valid items with existing schema in ajv instance', () => {
+      validateSchema('syncSchema', ajv)(hookBeforeArrayForAjvInstance);
     });
 
     it('fails with in valid single item', () => {
@@ -172,6 +188,22 @@ describe('services validateSchema', () => {
           }, 50);
         })
       });
+
+      ajvAsync.addSchema({
+        'id': 'asyncSchema',
+        '$async': true,
+        'properties': {
+          'first': {
+            'type': 'string',
+            'format': '3or4chars'
+          },
+          'last': {
+            'type': 'string',
+            'equalsDoe': true
+          }
+        },
+        'required': ['first', 'last']
+      });
     });
 
     beforeEach(() => {
@@ -189,6 +221,17 @@ describe('services validateSchema', () => {
         },
         'required': ['first', 'last']
       };
+    });
+
+    it('works with string schema id', (next) => {
+      validateSchema('asyncSchema', ajvAsync)(hookBefore)
+        .then(() => {
+          next();
+        })
+        .catch((err) => {
+          console.log(err);
+          assert.fail(true, false, 'test fails unexpectedly');
+        });
     });
 
     it('works with valid single item', (next) => {
