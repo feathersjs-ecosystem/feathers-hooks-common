@@ -1,5 +1,26 @@
 # Change Log
 
+## [v3.7.3](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.3) (2017-09-17)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.2...v3.7.3)
+
+**Implemented enhancements:**
+
+- no need for populate in softDelete [\#253](https://github.com/feathersjs/feathers-hooks-common/pull/253) ([superbarne](https://github.com/superbarne))
+- Allow schema IDs in first parameter of validateSchema [\#251](https://github.com/feathersjs/feathers-hooks-common/pull/251) ([CypherAlmasy](https://github.com/CypherAlmasy))
+
+**Fixed bugs:**
+
+- no need for populate in softDelete [\#253](https://github.com/feathersjs/feathers-hooks-common/pull/253) ([superbarne](https://github.com/superbarne))
+
+**Closed issues:**
+
+- serialize running twice [\#255](https://github.com/feathersjs/feathers-hooks-common/issues/255)
+- An in-range update of feathers is breaking the build 🚨 [\#249](https://github.com/feathersjs/feathers-hooks-common/issues/249)
+
+**Merged pull requests:**
+
+- Add babel-polyfill and package-lock.json [\#250](https://github.com/feathersjs/feathers-hooks-common/pull/250) ([daffl](https://github.com/daffl))
+
 ## [v3.7.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.2) (2017-08-23)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.1...v3.7.2)
 
