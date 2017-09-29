@@ -342,7 +342,7 @@ describe('services softDelete', () => {
       getCallParams = null;
 
       const params = { a: 1, b: 2, authenticated: 'a', user: 'b' };
-      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b' };
+      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b', _populate: 'skip' };
 
       user.patch(0, { x: 1 }, params)
         .then(data => {

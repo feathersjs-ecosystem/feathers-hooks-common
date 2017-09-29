@@ -261,6 +261,74 @@ let provider;
           });
       });
 
+      it('Provider can be passed down from top level', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          provider: 'global',
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' }
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, 'global');
+          });
+      });
+
+      it('Global provider can be overwritten at schema level', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+
+        const schema = {
+          provider: 'global',
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' },
+            provider: 'socketio'
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, 'socketio');
+          });
+      });
+
+      it('Falsy providers override default provider', () => {
+        const hook = clone(hookAfter);
+        hook.app = app; // app is a func and wouldn't be cloned
+        hook.params.provider = 'rest'; // Set up default provider
+
+        const schema = {
+          provider: undefined,
+          include: makeInclude(type, {
+            service: 'posts',
+            parentField: 'postId',
+            childField: 'id',
+            query: { id: 'aaaaaa' }
+          })
+        };
+
+        return populate({ schema })(hook)
+          .then(hook1 => {
+            const expected = recommendationPosts('posts');
+            assert.deepEqual(hook1.result, expected);
+            assert.equal(provider, undefined);
+          });
+      });
+
       it('childField overridden by select', () => {
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned

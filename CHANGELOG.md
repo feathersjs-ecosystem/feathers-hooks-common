@@ -1,5 +1,61 @@
 # Change Log
 
+## [v3.7.3](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.3) (2017-09-17)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.2...v3.7.3)
+
+**Implemented enhancements:**
+
+- no need for populate in softDelete [\#253](https://github.com/feathersjs/feathers-hooks-common/pull/253) ([superbarne](https://github.com/superbarne))
+- Allow schema IDs in first parameter of validateSchema [\#251](https://github.com/feathersjs/feathers-hooks-common/pull/251) ([CypherAlmasy](https://github.com/CypherAlmasy))
+
+**Fixed bugs:**
+
+- no need for populate in softDelete [\#253](https://github.com/feathersjs/feathers-hooks-common/pull/253) ([superbarne](https://github.com/superbarne))
+
+**Closed issues:**
+
+- serialize running twice [\#255](https://github.com/feathersjs/feathers-hooks-common/issues/255)
+- An in-range update of feathers is breaking the build 🚨 [\#249](https://github.com/feathersjs/feathers-hooks-common/issues/249)
+
+**Merged pull requests:**
+
+- Add babel-polyfill and package-lock.json [\#250](https://github.com/feathersjs/feathers-hooks-common/pull/250) ([daffl](https://github.com/daffl))
+
+## [v3.7.2](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.2) (2017-08-23)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.1...v3.7.2)
+
+**Implemented enhancements:**
+
+- Fix \_include being overwritten with empty array [\#246](https://github.com/feathersjs/feathers-hooks-common/pull/246) ([rodeyseijkens](https://github.com/rodeyseijkens))
+
+**Closed issues:**
+
+- Support $search in query syntax [\#141](https://github.com/feathersjs/feathers-hooks-common/issues/141)
+- Look into the Babel transpiling issue in a section of populate hook. [\#116](https://github.com/feathersjs/feathers-hooks-common/issues/116)
+
+**Merged pull requests:**
+
+- Update debug to the latest version 🚀 [\#244](https://github.com/feathersjs/feathers-hooks-common/pull/244) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+
+## [v3.7.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.1) (2017-08-07)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.7.0...v3.7.1)
+
+**Fixed bugs:**
+
+- Correct falsy provider handling [\#243](https://github.com/feathersjs/feathers-hooks-common/pull/243) ([adamvr](https://github.com/adamvr))
+
+## [v3.7.0](https://github.com/feathersjs/feathers-hooks-common/tree/v3.7.0) (2017-08-06)
+[Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.6.1...v3.7.0)
+
+**Implemented enhancements:**
+
+- Add top level provider option to populate hook [\#239](https://github.com/feathersjs/feathers-hooks-common/pull/239) ([adamvr](https://github.com/adamvr))
+
+**Closed issues:**
+
+- Insert commonhook into a function. [\#241](https://github.com/feathersjs/feathers-hooks-common/issues/241)
+- Get user is called 4 times in main usage case instead of 1 [\#164](https://github.com/feathersjs/feathers-hooks-common/issues/164)
+
 ## [v3.6.1](https://github.com/feathersjs/feathers-hooks-common/tree/v3.6.1) (2017-07-27)
 [Full Changelog](https://github.com/feathersjs/feathers-hooks-common/compare/v3.6.0...v3.6.1)
 
@@ -132,7 +188,6 @@
 - softDelete fix for double 'get' call is not ideal [\#163](https://github.com/feathersjs/feathers-hooks-common/issues/163)
 - \[feature request\] validateSchema receives ajv instance instead of Ajv constructor [\#154](https://github.com/feathersjs/feathers-hooks-common/issues/154)
 - debug hook doesn't log error on error hook [\#152](https://github.com/feathersjs/feathers-hooks-common/issues/152)
-- Prevent certain fields from being changed [\#145](https://github.com/feathersjs/feathers-hooks-common/issues/145)
 - Populate should throw upon detecting an ORM result. [\#144](https://github.com/feathersjs/feathers-hooks-common/issues/144)
 - Populate should allow empty relationship field [\#138](https://github.com/feathersjs/feathers-hooks-common/issues/138)
 - Populate should error when related entity is not found [\#135](https://github.com/feathersjs/feathers-hooks-common/issues/135)

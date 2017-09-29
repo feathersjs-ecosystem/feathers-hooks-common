@@ -58,6 +58,7 @@ export default function (field) {
       const params = isGet ? hook.params : {
         query: {},
         provider: hook.params.provider,
+        _populate: 'skip',
         authenticated: hook.params.authenticated,
         user: hook.params.user
       };
