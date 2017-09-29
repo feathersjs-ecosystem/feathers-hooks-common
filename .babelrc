@@ -1,4 +1,4 @@
 {
-  "plugins": [ "add-module-exports" ],
-  "presets": [ "es2015" ]
+  "plugins": [ "add-module-exports", "transform-runtime" ],
+  "presets": [ "env" ]
 }
