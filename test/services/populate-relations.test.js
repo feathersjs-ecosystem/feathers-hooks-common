@@ -102,11 +102,9 @@ const { populate } = require('../../src/services/index');
                   age: 55 },
                 commentsInfo:
                 [ { title: 'Comment 1',
-                  id: 1,
                   content: 'Lorem ipsum dolor sit amet 1',
                   postId: 1 },
                 { title: 'Comment 3',
-                  id: 3,
                   content: 'Lorem ipsum dolor sit amet 3',
                   postId: 1 } ],
                 readersInfo:
@@ -154,11 +152,9 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 1',
                   content: 'Lorem ipsum dolor sit amet 1',
-                  id: 1,
                   postId: 1 },
                 { title: 'Comment 3',
                   content: 'Lorem ipsum dolor sit amet 3',
-                  id: 3,
                   postId: 1 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
@@ -194,7 +190,6 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 2',
                   content: 'Lorem ipsum dolor sit amet 2',
-                  id: 2,
                   postId: 2 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
@@ -230,10 +225,8 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 1',
                   content: 'Lorem ipsum dolor sit amet 1',
-                  id: 1,
                   postId: 1 },
                 { title: 'Comment 3',
-                  id: 3,
                   content: 'Lorem ipsum dolor sit amet 3',
                   postId: 1 } ],
                 readersInfo:
