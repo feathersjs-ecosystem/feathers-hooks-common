@@ -1,4 +1,4 @@
 {
-  "plugins": [ "add-module-exports", "transform-runtime" ],
+  "plugins": [ "add-module-exports" ],
   "presets": [ "env" ]
 }

@@ -57,7 +57,7 @@ const { populate } = require('../../src/services/index');
               asArray: true,
               query: {
                 $limit: 5,
-                $select: ['title', 'content', 'postId'],
+                $select: ['id', 'title', 'content', 'postId'],
                 $sort: {createdAt: -1}
               }
             },
@@ -103,9 +103,11 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 1',
                   content: 'Lorem ipsum dolor sit amet 1',
+                  id: 1,
                   postId: 1 },
                 { title: 'Comment 3',
                   content: 'Lorem ipsum dolor sit amet 3',
+                  id: 3,
                   postId: 1 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
@@ -152,9 +154,11 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 1',
                   content: 'Lorem ipsum dolor sit amet 1',
+                  id: 1,
                   postId: 1 },
                 { title: 'Comment 3',
                   content: 'Lorem ipsum dolor sit amet 3',
+                  id: 3,
                   postId: 1 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
@@ -190,6 +194,7 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 2',
                   content: 'Lorem ipsum dolor sit amet 2',
+                  id: 2,
                   postId: 2 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
@@ -225,9 +230,11 @@ const { populate } = require('../../src/services/index');
                 commentsInfo:
                 [ { title: 'Comment 1',
                   content: 'Lorem ipsum dolor sit amet 1',
+                  id: 1,
                   postId: 1 },
                 { title: 'Comment 3',
                   content: 'Lorem ipsum dolor sit amet 3',
+                  id: 3,
                   postId: 1 } ],
                 readersInfo:
                 [ { id: 'as61389dadhga62343hads6712',
