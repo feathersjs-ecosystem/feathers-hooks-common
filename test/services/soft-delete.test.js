@@ -18,7 +18,7 @@ const storeInit = {
   '5': { name: 'Dary Doe', key: 'b', id: 5, deleted: true }
 };
 
-let getCallParams;
+let getCallParams, afterSoftDeleteParams;
 
 /******************************************************************************/
 // Helper
@@ -55,7 +55,10 @@ function createTestApp (softDeleteConfig, store = clone(storeInit), startId = st
           getCallParams = clone(hook.params);
         }
       },
-      softDelete(softDeleteConfig)
+      softDelete(softDeleteConfig),
+      hook => {
+        afterSoftDeleteParams = hook.params;
+      }
     ]
   });
 
@@ -157,6 +160,32 @@ describe('services softDelete', () => {
         const jane = await users.remove(0);
 
         assert(jane.deleted === 'resolved', 'error not thrown!');
+      });
+    });
+
+    describe('config.allowClientDisable', () => {
+      it('allows clients to skip soft deletion', async () => {
+        app = createTestApp({
+          allowClientDisable: false
+        });
+
+        const users = app.service('users');
+        const jane = await users.remove('0', { provider: 'rest', query: { $disableSoftDelete: true } });
+
+        assert(jane.deleted instanceof Date === false, 'Client was able to skip soft-delete.');
+      });
+    });
+
+    describe('config.disableParam', () => {
+      it('sets the name of the disable parameter', async () => {
+        app = createTestApp({
+          disableParam: '$skipSoftDelete'
+        });
+
+        const users = app.service('users');
+        const jane = await users.remove('0', { $skipSoftDelete: true });
+
+        assert(jane.deleted instanceof Date === false, 'paramName ignored.');
       });
     });
   });
@@ -387,11 +416,24 @@ describe('services softDelete', () => {
   });
 
   describe('handles params', () => {
+    it('moves disable param from query to params', async () => {
+      getCallParams = null;
+
+      const params = { a: 1, b: 2, query: { $disableSoftDelete: true } };
+      const expected = { a: 1, b: 2, $disableSoftDelete: true, query: {} };
+
+      const data = await user.get(0, params);
+
+      assert.deepEqual(data, storeInit['0']);
+      assert.equal(user.get_call_count, 1);
+      assert.deepEqual(afterSoftDeleteParams, expected);
+    });
+
     it('uses all params for get', async () => {
       getCallParams = null;
 
       const params = { a: 1, b: 2 };
-      const expected = { a: 1, b: 2, query: { $disableSoftDelete: true } };
+      const expected = { a: 1, b: 2, $disableSoftDelete: true, query: {} };
 
       const data = await user.get(0, params);
 
@@ -404,7 +446,7 @@ describe('services softDelete', () => {
       getCallParams = null;
 
       const params = { a: 1, b: 2, authenticated: 'a', user: 'b' };
-      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b', _populate: 'skip' };
+      const expected = { $disableSoftDelete: true, authenticated: 'a', user: 'b', _populate: 'skip', query: {} };
 
       await user.patch(0, { x: 1 }, params);
 

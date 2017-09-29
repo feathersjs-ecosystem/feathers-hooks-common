@@ -7,10 +7,10 @@ import checkContext from './check-context';
 
 const DEFAULTS = {
   field: 'deleted',
+  disableParam: '$disableSoftDelete',
+  allowClientDisable: true,
   setDeleted: () => true
 };
-
-const SKIP = '$disableSoftDelete';
 
 const NOT_DELETED = { $in: [ false, null, undefined ] };
 
@@ -35,7 +35,7 @@ function validate (config) {
   return options;
 }
 
-async function throwIfDeleted (hook, { field }) {
+async function throwIfDeleted (hook, { field, disableParam }) {
   const { service, id, method, app } = hook;
 
   const auth = app.get('auth');
@@ -51,17 +51,26 @@ async function throwIfDeleted (hook, { field }) {
     _populate: 'skip'
   };
 
-  params.query[SKIP] = true;
+  params[disableParam] = true;
 
   const doc = await service.get(id, params);
-
-  delete params.query[SKIP];
-
   if (doc[field]) {
     throw new NotFound(`Record for id '${id}' has been soft deleted.`);
   }
 
   return doc;
+}
+
+function sortParams (params, { allowClientDisable, disableParam }) {
+  params.query = params.query || {};
+
+  if (disableParam in params.query && (allowClientDisable || !params.provider)) {
+    params[disableParam] = params.query[disableParam];
+  }
+
+  delete params.query[disableParam];
+
+  return params;
 }
 
 /******************************************************************************/
@@ -74,12 +83,10 @@ export default function (config) {
   return async function (hook) {
     checkContext(hook, 'before', null, 'softDelete');
 
-    const { method, service } = hook;
+    const { method, service, params } = hook;
 
-    hook.params.query = hook.params.query || {};
-
-    if (hook.params.query[SKIP]) {
-      delete hook.params.query[SKIP];
+    hook.params = sortParams(params, opt);
+    if (hook.params[opt.disableParam]) {
       return hook;
     }
 
@@ -112,7 +119,7 @@ export default function (config) {
         }
 
         hook.params.query[opt.field] = NOT_DELETED;
-        hook.params.query[SKIP] = true;
+        hook.params.query[opt.disableParam] = true;
 
         hook.result = await service.patch(hook.id, hook.data, hook.params);
 
