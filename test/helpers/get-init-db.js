@@ -95,6 +95,6 @@ module.exports = function (name) {
   // console.log(`returning db for ${name}`);
   return {
     store: dbs[name],
-    idField: '_id'
+    idField: 'id'
   };
 };
