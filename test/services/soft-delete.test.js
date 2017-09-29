@@ -419,14 +419,31 @@ describe('services softDelete', () => {
     it('moves disable param from query to params', async () => {
       getCallParams = null;
 
-      const params = { a: 1, b: 2, query: { $disableSoftDelete: true } };
-      const expected = { a: 1, b: 2, $disableSoftDelete: true, query: {} };
+      let params = { a: 1, b: 2, query: { $disableSoftDelete: true } };
+      let expected = { a: 1, b: 2, $disableSoftDelete: true, query: {} };
 
-      const data = await user.get(0, params);
+      let data = await user.get(0, params);
 
       assert.deepEqual(data, storeInit['0']);
       assert.equal(user.get_call_count, 1);
       assert.deepEqual(afterSoftDeleteParams, expected);
+    });
+
+    it('uses seperate params object for nested calls', async () => {
+      await user.get(0);
+      assert('$disableSoftDelete' in afterSoftDeleteParams === false);
+
+      await user.find({});
+      assert('$disableSoftDelete' in afterSoftDeleteParams === false);
+
+      await user.patch(0, { name: 'Jane Dane' });
+      assert('$disableSoftDelete' in afterSoftDeleteParams === false);
+
+      await user.update(0, { name: 'Jane Dane', key: 'b' });
+      assert('$disableSoftDelete' in afterSoftDeleteParams === false);
+
+      await user.remove(0);
+      assert('$disableSoftDelete' in afterSoftDeleteParams === false);
     });
 
     it('uses all params for get', async () => {

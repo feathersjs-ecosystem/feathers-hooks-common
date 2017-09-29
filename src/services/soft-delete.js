@@ -36,24 +36,27 @@ function validate (config) {
 }
 
 async function throwIfDeleted (hook, { field, disableParam }) {
-  const { service, id, method, app } = hook;
+  const { service, id, method, app, params } = hook;
 
   const auth = app.get('auth');
   const entity = (auth && auth.entity) || 'user';
+  const { provider, authenticated } = params;
 
-  const params = method === 'get'
-  ? hook.params
-  : {
-    query: {},
-    provider: hook.params.provider,
-    authenticated: hook.params.authenticated,
-    [entity]: hook.params[entity],
-    _populate: 'skip'
-  };
+  const getParams = Object.assign(
+    {},
+    method === 'get'
+    ? params
+    : {
+      query: {},
+      provider,
+      authenticated,
+      _populate: 'skip',
+      [entity]: params[entity]
+    },
+    { [disableParam]: true }
+  );
 
-  params[disableParam] = true;
-
-  const doc = await service.get(id, params);
+  const doc = await service.get(id, getParams);
   if (doc[field]) {
     throw new NotFound(`Record for id '${id}' has been soft deleted.`);
   }
@@ -119,9 +122,10 @@ export default function (config) {
         }
 
         hook.params.query[opt.field] = NOT_DELETED;
-        hook.params.query[opt.disableParam] = true;
 
-        hook.result = await service.patch(hook.id, hook.data, hook.params);
+        const patchParams = Object.assign({}, hook.params, { [opt.disableParam]: true });
+
+        hook.result = await service.patch(hook.id, hook.data, patchParams);
 
         break;
 
