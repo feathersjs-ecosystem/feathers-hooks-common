@@ -1,44 +1,52 @@
+import { Service as MemoryService } from 'feathers-memory';
+import { assert, expect } from 'chai';
+import feathers from 'feathers';
+import feathersHooks from 'feathers-hooks';
+import { softDelete } from '../../src/services';
 
-const assert = require('chai').assert;
-const feathers = require('feathers');
-const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
-const hooks = require('../../src/services');
+/******************************************************************************/
+// Data
+/******************************************************************************/
 
-const startId = 6;
+const storeInitStartId = 6;
 const storeInit = {
   '0': { name: 'Jane Doe', key: 'a', id: 0 },
   '1': { name: 'Jack Doe', key: 'a', id: 1 },
   '2': { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
   '3': { name: 'Rick Doe', key: 'b', id: 3 },
   '4': { name: 'Dick Doe', key: 'b', id: 4 },
-  '5': { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
+  '5': { name: 'Dary Doe', key: 'b', id: 5, deleted: true }
 };
 
-let store;
 let getCallParams;
 
-function services () {
-  const app = this;
-  app.configure(user);
+/******************************************************************************/
+// Helper
+/******************************************************************************/
+
+function clone (obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
-function user () {
-  const app = this;
-  store = clone(storeInit);
+function merge (...args) {
+  return Object.assign({}, ...args);
+}
 
-  class UsersService extends memory.Service {
-    constructor (...args) {
-      super(...args);
-      this.get_call_count = 0;
-    }
-    get (...args) {
-      this.get_call_count += 1;
-      return super.get(...args);
-    }
+class UsersService extends MemoryService {
+  constructor (...args) {
+    super(...args);
+    this.get_call_count = 0;
   }
+  get (...args) {
+    this.get_call_count += 1;
+    return super.get(...args);
+  }
+}
 
-  app.use('/users', new UsersService({store, startId}));
+function createTestApp (softDeleteConfig, store = clone(storeInit), startId = storeInitStartId) {
+  const app = feathers()
+    .configure(feathersHooks())
+    .use('users', new UsersService({ store, startId }));
 
   app.service('users').before({
     all: [
@@ -47,313 +55,361 @@ function user () {
           getCallParams = clone(hook.params);
         }
       },
-      hooks.softDelete()
+      softDelete(softDeleteConfig)
     ]
   });
+
+  return app;
 }
 
-describe('services softDelete', () => {
+/******************************************************************************/
+// Tests
+/******************************************************************************/
+
+describe.only('services softDelete', () => {
   let app;
   let user;
 
   beforeEach(() => {
-    app = feathers()
-      .configure(feathersHooks())
-      .configure(services);
-
+    app = createTestApp();
     user = app.service('users');
   });
 
-  describe('find', () => {
-    it('find - does not return deleted items', done => {
-      user.find()
-        .then(data => {
-          assert.deepEqual(data, [ store['0'], store['1'], store['3'], store['4'] ]);
-          done();
+  describe('configure', () => {
+    it('takes either a string or object', () => {
+      expect(() => softDelete('removed'))
+        .to.not.throw();
+
+      expect(() => softDelete({ field: 'removed' }))
+        .to.not.throw();
+    });
+
+    describe('config.field', () => {
+      it('customizes the deleted field', async () => {
+        app = createTestApp('removed', {}, 0);
+        const users = app.service('users');
+
+        let jane = await users.create({ name: 'Jane Doe' });
+        jane = await users.remove(jane.id);
+
+        assert(jane.removed, 'Field not altered.');
+      });
+    });
+
+    describe('config.setDeleted', () => {
+      it('if supplied, must be a function', () => {
+        for (const setDeleted of [ () => true, () => new Date() ]) {
+          expect(() => softDelete({ setDeleted }))
+            .to.not.throw();
+        }
+
+        for (const setDeleted of ['not', /a/, !Function]) {
+          expect(() => softDelete({ setDeleted }))
+            .to.throw('config.setDeleted must be a function');
+        }
+      });
+      it('customizes the value placed on deleted fields', async () => {
+        app = createTestApp({
+          setDeleted: () => new Date()
         });
+
+        const users = app.service('users');
+        const jane = await users.remove('0');
+
+        assert(jane.deleted instanceof Date, 'Field not altered.');
+      });
+      it('takes hook as argument', async () => {
+        let hook;
+        app = createTestApp({
+          setDeleted: h => { hook = h; return true; }
+        });
+
+        const users = app.service('users');
+        await users.remove(0);
+
+        assert(['app', 'service', 'data', 'params'].every(key => key in hook),
+        'argument doesnt seem to be a hook object.');
+      });
+
+      it('throws if value returned is not truthy value.', async () => {
+        app = createTestApp({
+          setDeleted: h => false
+        });
+
+        const users = app.service('users');
+        let err;
+        try {
+          await users.remove(0);
+        } catch (e) {
+          err = e;
+        }
+
+        assert(err && err.message === 'config.setDeleted must return a truthy value.',
+        'error not thrown!');
+      });
+
+      it('is asyncronous', async () => {
+        app = createTestApp({
+          setDeleted: h => new Promise(resolve => setTimeout(resolve('resolved'), 100))
+        });
+
+        const users = app.service('users');
+        const jane = await users.remove(0);
+
+        assert(jane.deleted === 'resolved', 'error not thrown!');
+      });
+    });
+  });
+
+  describe('find', () => {
+    it('find - does not return deleted items', async () => {
+      const data = await user.find();
+
+      const { store } = user;
+
+      const shouldBe = [0, 1, 3, 4].map(index => store[index]);
+
+      assert.deepEqual(data, shouldBe);
     });
   });
 
   describe('get', () => {
-    it('returns an undeleted item', done => {
-      user.get(0)
-        .then(data => {
-          assert.deepEqual(data, storeInit['0']);
-          assert.equal(user.get_call_count, 1);
-          done();
-        });
+    it('returns an undeleted item', async () => {
+      const data = await user.get(0);
+
+      assert.deepEqual(data, storeInit['0']);
+      assert.equal(user.get_call_count, 1);
     });
 
-    it('throws on deleted item', done => {
-      user.get(2)
-        .catch(() => {
-          assert.equal(user.get_call_count, 1);
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on deleted item', async () => {
+      let err;
+      try {
+        await user.get(2);
+      } catch (e) {
+        err = e;
+      }
+      assert(err, 'Error was not thrown');
+      assert.equal(user.get_call_count, 1);
     });
 
-    it('throws on missing item', done => {
-      user.get(99)
-        .catch(() => {
-          assert.equal(user.get_call_count, 1);
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on missing item', async () => {
+      try {
+        await user.get(99);
+        assert.fail(true, false);
+      } catch (err) {
+        assert.equal(user.get_call_count, 1);
+      }
     });
 
-    it('throws on null id', done => {
-      user.get()
-        .catch(() => {
-          assert.equal(user.get_call_count, 1);
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on null id', async () => {
+      let err;
+      try {
+        await user.get();
+      } catch (e) {
+        err = e;
+      }
+      assert(err);
+      assert.equal(user.get_call_count, 1);
     });
   });
 
   describe('create', () => {
-    it('adds items', done => {
-      user.create({ name: 'John Doe', key: 'x' })
-        .then(data => {
-          const newUser = { name: 'John Doe', key: 'x', id: startId };
-          assert.deepEqual(data, newUser);
-          assert.deepEqual(store, Object.assign({}, store, { [startId]: newUser }));
+    it('adds items', async () => {
+      const john = await user.create({ name: 'John Doe', key: 'x' });
 
-          done();
-        });
+      const { store } = user;
+
+      const johnShouldBe = { name: 'John Doe', key: 'x', id: storeInitStartId };
+      assert.deepEqual(john, johnShouldBe);
+
+      const storeShouldBe = merge(store, { [storeInitStartId]: john });
+      assert.deepEqual(store, storeShouldBe);
     });
 
-    it('adds items marked deleted', done => {
-      user.create({ name: 'John Doe', deleted: true })
-        .then(data => {
-          const newUser = { name: 'John Doe', deleted: true, id: startId };
-          assert.deepEqual(data, newUser);
-          assert.deepEqual(store, Object.assign({}, store, { [startId]: newUser }));
+    it('adds items marked deleted', async () => {
+      const john = await user.create({ name: 'John Doe', deleted: true });
 
-          done();
-        });
+      const { store } = user;
+
+      const johnShouldBe = { name: 'John Doe', deleted: true, id: storeInitStartId };
+      assert.deepEqual(john, johnShouldBe);
+
+      const storeShouldBe = merge(store, { [storeInitStartId]: john });
+      assert.deepEqual(store, storeShouldBe);
     });
   });
 
   describe('update, with id', () => {
-    it('updates an undeleted item', done => {
-      user.update(0, { y: 'y' })
-        .catch(err => console.log(err))
-        .then(data => {
-          assert.deepEqual(data, { y: 'y', id: 0 });
-          done();
-        });
+    it('updates an undeleted item', async () => {
+      const y = 'y';
+
+      const data = await user.update(0, { y });
+
+      assert.deepEqual(data, { y, id: 0 });
     });
 
-    it('throws on deleted item', done => {
-      user.update(2, { y: 'y' })
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on deleted item', async () => {
+      const y = 'y';
+      let err;
+      try {
+        await user.update(2, { y });
+      } catch (e) {
+        err = e;
+      }
+      assert(err, 'Error was not thrown');
     });
 
-    it('throws on missing item', done => {
-      user.update(99, { y: 'y' })
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
-    });
-  });
-
-  /*
-  // update without an id throws BadRequest: You can not replace multiple instances. Did you mean 'patch'?
-  describe('update, without id', () => {
-    it('updates all nondeleted items if no filter', done => {
-      user.update(null, { x: 'x' })
-        .then(data => {
-          console.log(data);
-          assert.deepEqual(data, [
-            { x: 'x', id: 0 }, { x: 'x', id: 1 }, { x: 'x', id: 3 }, { x: 'x', id: 4 },
-          ]);
-
-          done();
-        });
-    });
-
-    it('updates filtered, nondeleted items', done => {
-      user.update(null, { x: 'x' }, { query: { name: 'Jane Doe' }})
-        .then(data => {
-          console.log(data);
-          assert.deepEqual(data, [{ name: 'Jane Doe', id: 0 }]);
-
-          done();
-        });
+    it('throws on missing item', async () => {
+      const y = 'y';
+      let err;
+      try {
+        await user.update(99, { y });
+      } catch (e) {
+        err = e;
+      }
+      assert(err, 'Error was not thrown');
     });
   });
-  */
 
   describe('patch, with id', () => {
-    it('patches an undeleted item', done => {
-      user.patch(0, { y: 'y' })
-        .then(data => {
-          assert.deepEqual(data, Object.assign({}, storeInit['0'], { y: 'y' }));
-          done();
-        });
+    it('patches an undeleted item', async () => {
+      const y = 'y';
+      const data = await user.patch(0, { y });
+      const dataShouldBe = merge(storeInit['0'], { y });
+
+      assert.deepEqual(data, dataShouldBe);
     });
 
-    it('throws on deleted item', done => {
-      user.patch(2, { y: 'y' })
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on deleted item', async () => {
+      let err;
+      try {
+        await user.patch(2, { y: 'y' });
+      } catch (e) {
+        err = e;
+      }
+      assert(err, 'Error was not thrown');
     });
 
-    it('throws on missing item', done => {
-      user.patch(99, { y: 'y' })
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws on missing item', async () => {
+      let err;
+      try {
+        await user.patch(99, { y: 'y' });
+      } catch (e) {
+        err = e;
+      }
+      assert(err, 'Error was not thrown');
     });
   });
 
   describe('patch, without id', () => {
-    it('patches all nondeleted items if no filter', done => {
-      user.patch(null, { x: 'x' })
-        .then(data => {
-          let expected = clone(
-            [ storeInit['0'], storeInit['1'], storeInit['3'], storeInit['4'] ]);
-          expected.forEach(obj => { obj.x = 'x'; });
-          assert.deepEqual(data, expected);
+    it('patches all nondeleted items if no filter', async () => {
+      const x = 'x';
 
-          expected = clone(storeInit);
-          [0, 1, 3, 4].forEach(i => { expected[i].x = 'x'; });
-          assert.deepEqual(store, expected);
+      const data = await user.patch(null, { x });
 
-          done();
-        });
+      let expected = [0, 1, 3, 4].map(index => merge(storeInit[index], { x }));
+      assert.deepEqual(data, expected);
+
+      const { store } = user;
+
+      expected = clone(storeInit);
+      [0, 1, 3, 4].forEach(i => { expected[i].x = x; });
+      assert.deepEqual(store, expected);
     });
 
-    it('patches filtered, nondeleted items', done => {
-      user.patch(null, { x: 'x' }, { query: { key: 'a' } })
-        .then(data => {
-          let expected = clone([ storeInit['0'], storeInit['1'] ])
-            .map(obj => Object.assign({}, obj, { x: 'x' }));
-          assert.deepEqual(data, expected);
+    it('patches filtered, nondeleted items', async () => {
+      const query = { key: 'a' };
+      const x = 'x';
+      const data = await user.patch(null, { x }, { query });
 
-          expected = clone(storeInit);
-          [0, 1].forEach(i => { expected[i].x = 'x'; });
-          assert.deepEqual(store, expected);
-          done();
-        });
+      let expected = [0, 1].map(index => merge(storeInit[index], { x }));
+      assert.deepEqual(data, expected);
+
+      const { store } = user;
+
+      expected = clone(storeInit);
+      [0, 1].forEach(i => { expected[i].x = x; });
+      assert.deepEqual(store, expected);
     });
   });
 
   describe('remove, with id', () => {
-    it('marks item as deleted', done => {
-      user.remove(0)
-        .then(data => {
-          assert.deepEqual(data, Object.assign({}, store['0'], { deleted: true }));
-          done();
-        });
+    it('marks item as deleted', async () => {
+      const removed = await user.remove(0);
+
+      const { store } = user;
+
+      assert.deepEqual(removed, merge(store[0], { deleted: true }));
     });
 
-    it('throws if item already deleted', done => {
-      user.remove(2)
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws if item already deleted', async () => {
+      let err;
+      try {
+        await user.remove(2);
+      } catch (e) {
+        err = e;
+      }
+
+      assert(err, 'Error not thrown');
     });
 
-    it('throws if item missing', done => {
-      user.remove(99)
-        .catch(() => {
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
+    it('throws if item missing', async () => {
+      let err;
+      try {
+        await user.remove(99);
+      } catch (e) {
+        err = e;
+      }
+
+      assert(err, 'Error not thrown');
     });
   });
 
   describe('remove, without id', () => {
-    it('marks filtered items as deleted', done => {
-      user.remove(null, { query: { key: 'a' } })
-        .then(data => {
-          assert.deepEqual(data, [
-            Object.assign({}, store['0'], { deleted: true }),
-            Object.assign({}, store['1'], { deleted: true })
-          ]);
-          done();
-        });
+    it('marks filtered items as deleted', async () => {
+      const query = { key: 'a' };
+      const removed = await user.remove(null, { query });
+
+      const { store } = user;
+
+      const shouldBe = [0, 1].map(index => merge(store[index], { deleted: true }));
+
+      assert.deepEqual(removed, shouldBe);
     });
 
-    it('handles nothing found', done => {
-      user.remove(null, { query: { key: 'z' } })
-        .then(data => {
-          assert.deepEqual(data, []);
-          done();
-        });
+    it('handles nothing found', async () => {
+      const query = { key: 'z' };
+
+      const removed = await user.remove(null, { query });
+
+      assert.deepEqual(removed, []);
     });
   });
 
   describe('handles params', () => {
-    it('uses all params for get', done => {
+    it('uses all params for get', async () => {
       getCallParams = null;
 
       const params = { a: 1, b: 2 };
       const expected = { a: 1, b: 2, query: { $disableSoftDelete: true } };
 
-      user.get(0, params)
-        .then(data => {
-          assert.deepEqual(data, storeInit['0']);
-          assert.equal(user.get_call_count, 1);
-          assert.deepEqual(getCallParams, expected);
-          done();
-        });
+      const data = await user.get(0, params);
+
+      assert.deepEqual(data, storeInit['0']);
+      assert.equal(user.get_call_count, 1);
+      assert.deepEqual(getCallParams, expected);
     });
 
-    it('uses selected params for other methods', done => {
+    it('uses selected params for other methods', async () => {
       getCallParams = null;
 
       const params = { a: 1, b: 2, authenticated: 'a', user: 'b' };
-      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b' };
+      const expected = { query: { $disableSoftDelete: true }, authenticated: 'a', user: 'b', _populate: 'skip' };
 
-      user.patch(0, { x: 1 }, params)
-        .then(data => {
-          assert.equal(user.get_call_count, 1);
-          assert.deepEqual(getCallParams, expected);
-          done();
-        });
+      await user.patch(0, { x: 1 }, params);
+
+      assert.equal(user.get_call_count, 1);
+      assert.deepEqual(getCallParams, expected);
     });
   });
 });
-
-function clone (obj) {
-  return JSON.parse(JSON.stringify(obj));
-}
