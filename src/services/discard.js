@@ -5,7 +5,7 @@ import getItems from './get-items';
 
 export default function (...fieldNames) {
   return hook => {
-    checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'delete');
+    checkContextIf(hook, 'before', ['create', 'update', 'patch'], 'discard');
 
     _remove(getItems(hook), fieldNames);
 
