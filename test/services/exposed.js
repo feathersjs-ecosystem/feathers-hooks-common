@@ -20,6 +20,7 @@ const hookNames = [
   'getByDot',
   'getItems',
   'isProvider',
+  'keep',
   'legacyPopulate',
   'lowerCase',
   'paramsForServer',
