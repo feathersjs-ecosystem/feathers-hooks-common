@@ -1,82 +1,139 @@
-
-import feathersErrors from 'feathers-errors';
+import { NotFound } from 'feathers-errors';
 import checkContext from './check-context';
 
-const errors = feathersErrors.errors;
+/******************************************************************************/
+// Data
+/******************************************************************************/
 
-export default function (field) {
-  const deleteField = field || 'deleted';
+const DEFAULTS = {
+  field: 'deleted',
+  disableParam: '$disableSoftDelete',
+  allowClientDisable: true,
+  setDeleted: () => true
+};
 
-  return function (hook) {
-    const service = hook.service;
-    hook.data = hook.data || {};
-    hook.params.query = hook.params.query || {};
+const NOT_DELETED = { $in: [ false, null, undefined ] };
+
+/******************************************************************************/
+// Helpers
+/******************************************************************************/
+
+function validate (config) {
+  if (config && typeof config === 'string') { // no blank strings
+    config = { field: config };
+  }
+
+  if (!config || typeof config !== 'object') {
+    config = { };
+  }
+
+  const options = Object.assign({}, DEFAULTS, config);
+  if (typeof options.setDeleted !== 'function') {
+    throw new Error('config.setDeleted must be a function.');
+  }
+
+  return options;
+}
+
+async function throwIfDeleted (hook, { field, disableParam }) {
+  const { service, id, method, app, params } = hook;
+
+  const auth = app.get('auth');
+  const entity = (auth && auth.entity) || 'user';
+  const { provider, authenticated } = params;
+
+  const getParams = Object.assign(
+    {},
+    method === 'get'
+    ? params
+    : {
+      query: {},
+      provider,
+      authenticated,
+      _populate: 'skip',
+      [entity]: params[entity]
+    },
+    { [disableParam]: true }
+  );
+
+  const doc = await service.get(id, getParams);
+  if (doc[field]) {
+    throw new NotFound(`Record for id '${id}' has been soft deleted.`);
+  }
+
+  return doc;
+}
+
+function sortParams (params, { allowClientDisable, disableParam }) {
+  params.query = params.query || {};
+
+  if (disableParam in params.query && (allowClientDisable || !params.provider)) {
+    params[disableParam] = params.query[disableParam];
+  }
+
+  delete params.query[disableParam];
+
+  return params;
+}
+
+/******************************************************************************/
+// Export
+/******************************************************************************/
+
+export default function (config) {
+  const opt = validate(config);
+
+  return async function (hook) {
     checkContext(hook, 'before', null, 'softDelete');
 
-    if (hook.params.query.$disableSoftDelete) {
-      delete hook.params.query.$disableSoftDelete;
+    const { method, service, params } = hook;
+
+    hook.params = sortParams(params, opt);
+    if (hook.params[opt.disableParam]) {
       return hook;
     }
 
-    switch (hook.method) {
+    switch (method) {
       case 'find':
-        hook.params.query[deleteField] = { $ne: true };
-        return hook;
+        hook.params.query[opt.field] = NOT_DELETED;
+        break;
+
       case 'get':
-        return throwIfItemDeleted(hook.id, true)
-          .then(data => {
-            hook.result = data;
-            return hook;
-          });
-      case 'create':
-        return hook;
+        hook.result = await throwIfDeleted(hook, opt);
+        break;
+
       case 'update': // fall through
       case 'patch':
         if (hook.id !== null) {
-          return throwIfItemDeleted(hook.id)
-            .then(() => hook);
+          await throwIfDeleted(hook, opt);
         }
-        hook.params.query[deleteField] = { $ne: true };
-        return hook;
+        hook.params.query[opt.field] = NOT_DELETED;
+        break;
+
       case 'remove':
-        return Promise.resolve()
-          .then(() => hook.id ? throwIfItemDeleted(hook.id) : null)
-          .then(() => {
-            hook.data[deleteField] = true;
-            hook.params.query[deleteField] = { $ne: true };
-            hook.params.query.$disableSoftDelete = true;
+        if (hook.id) {
+          await throwIfDeleted(hook, opt);
+        }
 
-            return service.patch(hook.id, hook.data, hook.params)
-              .then(result => {
-                hook.result = result;
-                return hook;
-              });
-          });
+        hook.data = hook.data || {};
+        hook.data[opt.field] = await opt.setDeleted(hook);
+        if (!hook.data[opt.field]) {
+          throw new Error('config.setDeleted must return a truthy value.');
+        }
+
+        hook.params.query[opt.field] = NOT_DELETED;
+
+        const patchParams = Object.assign({}, hook.params, { [opt.disableParam]: true });
+
+        hook.result = await service.patch(hook.id, hook.data, patchParams);
+
+        break;
+
+      case 'create':
+      // No soft deleting needs to happen on reate
+        break;
     }
 
-    function throwIfItemDeleted (id, isGet) {
-      const params = isGet ? hook.params : {
-        query: {},
-        provider: hook.params.provider,
-        _populate: 'skip',
-        authenticated: hook.params.authenticated,
-        user: hook.params.user
-      };
-
-      params.query.$disableSoftDelete = true;
-
-      return service.get(id, params)
-        .then(data => {
-          delete params.query.$disableSoftDelete;
-
-          if (data[deleteField]) {
-            throw new errors.NotFound('Item has been soft deleted.');
-          }
-          return data;
-        })
-        .catch(() => {
-          throw new errors.NotFound('Item not found.');
-        });
-    }
+    return hook;
   };
 }
