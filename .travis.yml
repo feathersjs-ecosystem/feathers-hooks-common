@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - 'node'
   - '6'
-  - '4'
 addons:
   code_climate:
     repo_token: c78cf71f87560d21b8e34dcec80a513b6b0dd5435bb7d9ea9d7ca3aa2be289b2
