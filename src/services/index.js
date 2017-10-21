@@ -16,6 +16,7 @@ import existsByDot from '../common/exists-by-dot';
 import getByDot from '../common/get-by-dot';
 import getItems from './get-items';
 import isProvider from './is-provider';
+import keep from './keep';
 import legacyPopulate from './legacy-populate';
 import lowerCase from './lower-case';
 import paramsForServer from './params-for-server';
@@ -64,6 +65,7 @@ export default Object.assign(
     getByDot,
     getItems,
     isProvider,
+    keep,
     legacyPopulate,
     lowerCase,
     paramsForServer,
