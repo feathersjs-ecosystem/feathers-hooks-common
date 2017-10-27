@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { client } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  client
+} = require('../../lib/services');
 
 describe('services params-from-client', () => {
   describe('basics', () => {

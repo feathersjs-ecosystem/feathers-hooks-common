@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
-const { stashBefore } = require('../../src/services');
+const { stashBefore } = require('../../lib/services');
 
 const startId = 6;
 const storeInit = {

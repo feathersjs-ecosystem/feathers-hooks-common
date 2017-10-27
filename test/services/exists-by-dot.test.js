@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { existsByDot } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  existsByDot
+} = require('../../lib/services');
 
 const objTest = { name: { first: 'John', last: 'Doe', a: { b: 1, c: { d: 2, e: {} } } } };
 let obj;

@@ -1,6 +1,9 @@
 
-import { assert } from 'chai';
-import filters from '../../src/filters';
+const {
+  assert
+} = require('chai');
+
+const filters = require('../../lib/filters');
 
 var data;
 var dataArray;

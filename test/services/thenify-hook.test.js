@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { thenifyHook } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  thenifyHook
+} = require('../../lib/services');
 
 let app = { a: 'a' };
 let params = { p: 'p' };

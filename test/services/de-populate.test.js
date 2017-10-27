@@ -1,6 +1,6 @@
 
 const assert = require('assert');
-const { dePopulate } = require('../../src/services/index');
+const { dePopulate } = require('../../lib/services/index');
 
 describe('services dePopulate - not dot notation', () => {
   let hookAfter;

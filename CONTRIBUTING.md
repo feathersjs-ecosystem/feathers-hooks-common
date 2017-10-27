@@ -98,7 +98,7 @@ This command needs to complete successfully before you submit a PR.
 
 The build:
 
-* Add your code to `/src`. The build step expands it into `/lib`.
+* Add your code to `/lib`. The build step expands it into `/lib`.
 * Babel is set up to use plugin babel-preset-es2015. Add others if your really have to.
 
 Linting and docs:

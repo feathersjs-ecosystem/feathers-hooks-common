@@ -1,6 +1,9 @@
 
-import { assert } from 'chai';
-import permissions from '../../src/permissions';
+const {
+  assert
+} = require('chai');
+
+const permissions = require('../../lib/permissions');
 
 var hook;
 var hookBefore;

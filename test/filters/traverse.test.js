@@ -1,6 +1,6 @@
 
-import assert from 'assert';
-import filter from '../../src/filters';
+const assert = require('assert');
+const filter = require('../../lib/filters');
 
 describe('filters traverse', () => {
   let data;

@@ -1,6 +1,9 @@
 
-import { assert } from 'chai';
-import permissions from '../../src/permissions';
+const {
+  assert
+} = require('chai');
+
+const permissions = require('../../lib/permissions');
 
 const permissionFalse = () => (hook) => {
   hook.data.callers.push('permissionFalse');

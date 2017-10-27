@@ -1,2 +1,1 @@
-
-import './params-from-client.test';
+require('./params-from-client.test');

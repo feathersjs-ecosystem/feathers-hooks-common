@@ -1,5 +1,10 @@
-import { assert } from 'chai';
-import { disallow } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  disallow
+} = require('../../lib/services');
 
 describe('services disallow', () => {
   describe('disallow is compatible with .disable (without predicate)', () => {

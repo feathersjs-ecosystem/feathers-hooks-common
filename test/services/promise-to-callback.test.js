@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { promiseToCallback } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  promiseToCallback
+} = require('../../lib/services');
 
 const promise1 = (ifResolve) => new Promise((resolve, reject) => {
   return ifResolve ? resolve('ok') : reject(new Error('bad'));

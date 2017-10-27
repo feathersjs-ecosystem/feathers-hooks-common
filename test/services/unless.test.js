@@ -1,6 +1,9 @@
 
-import { assert } from 'chai';
-import hooks from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const hooks = require('../../lib/services');
 
 var hook;
 var hookBefore;

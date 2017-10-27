@@ -3,7 +3,7 @@ const assert = require('chai').assert;
 const feathers = require('feathers');
 const memory = require('feathers-memory');
 const feathersHooks = require('feathers-hooks');
-const { iff, populate } = require('../../src/services/index');
+const { iff, populate } = require('../../lib/services/index');
 
 const userId = 6;
 const userInit = {

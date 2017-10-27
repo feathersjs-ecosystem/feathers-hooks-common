@@ -1,6 +1,6 @@
 
 const assert = require('assert');
-const { populate } = require('../../src/services/index');
+const { populate } = require('../../lib/services/index');
 
 describe('services populate - finds items in hook', () => {
   let hookAfter;

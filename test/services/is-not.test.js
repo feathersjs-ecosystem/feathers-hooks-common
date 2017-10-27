@@ -1,7 +1,10 @@
 
-import { assert } from 'chai';
-import hooks from '../../src/services';
-import hooksCommon from '../../src';
+const {
+  assert
+} = require('chai');
+
+const hooks = require('../../lib/services');
+const hooksCommon = require('../../lib');
 
 const isNot = hooks.isNot;
 const isProvider = hooksCommon.isProvider;
