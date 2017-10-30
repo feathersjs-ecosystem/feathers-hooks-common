@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { disableMultiItemChange } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  disableMultiItemChange
+} = require('../../lib/services');
 
 var hookBefore;
 

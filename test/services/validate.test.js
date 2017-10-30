@@ -1,7 +1,10 @@
 
-import { assert } from 'chai';
-import hooks from '../../src/services';
-import errors from 'feathers-errors';
+const {
+  assert
+} = require('chai');
+
+const hooks = require('../../lib/services');
+const errors = require('feathers-errors');
 
 let fcnSync;
 let fcnPromise;

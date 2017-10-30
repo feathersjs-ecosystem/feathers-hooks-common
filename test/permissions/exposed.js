@@ -1,7 +1,8 @@
-// test what hooks are exposed
+const {
+  assert
+} = require('chai');
 
-import { assert } from 'chai';
-import hooks from '../../src/permissions';
+const hooks = require('../../lib/permissions');
 
 const hookNames = [
   'combine',

@@ -1,6 +1,6 @@
 
-import assert from 'assert';
-import hooks from '../../src/services';
+const assert = require('assert');
+const hooks = require('../../lib/services');
 
 describe('services traverse', () => {
   let hookBefore;

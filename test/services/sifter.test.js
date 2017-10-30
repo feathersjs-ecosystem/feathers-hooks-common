@@ -1,8 +1,10 @@
 
-import { assert } from 'chai';
-import sift from 'sift';
+const {
+  assert
+} = require('chai');
 
-import hooks from '../../src/services';
+const sift = require('sift');
+const hooks = require('../../lib/services');
 
 const dataCanada = [
   { name: 'john', address: { city: 'montreal', country: 'canada' } },

@@ -1,7 +1,13 @@
 
-import { assert } from 'chai';
-import fs from 'fs';
-import { callbackToPromise } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const fs = require('fs');
+
+const {
+  callbackToPromise
+} = require('../../lib/services');
 
 const isPromise = obj => (
   obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'

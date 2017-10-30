@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { paramsForServer } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  paramsForServer
+} = require('../../lib/services');
 
 describe('services paramsToServer', () => {
   it('handles empty params', () => {

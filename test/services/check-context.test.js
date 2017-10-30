@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { checkContext } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  checkContext
+} = require('../../lib/services');
 
 describe('services checkContext', () => {
   var hook; // eslint-disable-line no-var

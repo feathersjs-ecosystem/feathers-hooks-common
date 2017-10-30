@@ -1,7 +1,10 @@
 
-import { assert } from 'chai';
-import hooks from '../../src/services';
-import feathersFakes from 'feathers-tests-fake-app-users';
+const {
+  assert
+} = require('chai');
+
+const hooks = require('../../lib/services');
+const feathersFakes = require('feathers-tests-fake-app-users');
 
 const fakeUsersDb = [ // faked in-memory database
   { _id: 'a', name: 'John Doe', isVerified: false, password: 'secret' },

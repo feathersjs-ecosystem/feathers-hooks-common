@@ -1,7 +1,13 @@
 
-import { assert } from 'chai';
-import { validateSchema } from '../../src/services';
-import Ajv from 'ajv';
+const {
+  assert
+} = require('chai');
+
+const {
+  validateSchema
+} = require('../../lib/services');
+
+const Ajv = require('ajv');
 
 const ajv = new Ajv({ allErrors: true });
 ajv.addFormat('startWithJo', '^Jo');

@@ -1,6 +1,11 @@
 
-import { assert } from 'chai';
-import { preventChanges } from '../../src/services';
+const {
+  assert
+} = require('chai');
+
+const {
+  preventChanges
+} = require('../../lib/services');
 
 let hookBefore;
 

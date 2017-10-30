@@ -1,5 +1,5 @@
 
-import hooksCommon from '../../src/services';
+const hooksCommon = require('../../lib/services');
 
 describe('services debug', () => {
   it('does not crash', () => {
