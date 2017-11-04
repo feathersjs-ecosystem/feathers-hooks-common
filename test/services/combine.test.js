@@ -1,8 +1,7 @@
 
 const assert = require('chai').assert;
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const hooks = require('../../lib/services');
 
 const startId = 6;
@@ -34,65 +33,67 @@ function user () {
     startId
   }));
 
-  app.service('users').before({
-    all: [
-      function (hook) {
-        if (hook.app !== app) { throw new Error('App wrong 0.'); }
-        service = this;
-
-        hook.data = { a: 'a' };
-
-        hookId = hook.id;
-        hookData = clone(hook.data);
-        hookParamsQuery = clone(hook.params.query);
-
-        return hook;
-      },
-      hooks.combine(
+  app.service('users').hooks({
+    before: {
+      all: [
         function (hook) {
-          if (hook.app !== app) { throw new Error('App wrong 1.'); }
-          if (service !== this) { throw new Error('Service wrong 1.'); }
-          hook.params.trace = ['sync1'];
+          if (hook.app !== app) { throw new Error('App wrong 0.'); }
+          service = this;
+
+          hook.data = { a: 'a' };
+
+          hookId = hook.id;
+          hookData = clone(hook.data);
+          hookParamsQuery = clone(hook.params.query);
+
           return hook;
         },
-        function (hook) {
-          if (hook.app !== app) { throw new Error('App wrong 2.'); }
-          if (service !== this) { throw new Error('Service wrong 2.'); }
+        hooks.combine(
+          function (hook) {
+            if (hook.app !== app) { throw new Error('App wrong 1.'); }
+            if (service !== this) { throw new Error('Service wrong 1.'); }
+            hook.params.trace = ['sync1'];
+            return hook;
+          },
+          function (hook) {
+            if (hook.app !== app) { throw new Error('App wrong 2.'); }
+            if (service !== this) { throw new Error('Service wrong 2.'); }
 
-          if (hook.params.query.key === 'b') { throw new Error('Requested throw.'); }
+            if (hook.params.query.key === 'b') { throw new Error('Requested throw.'); }
 
-          hook.params.trace.push('promise1');
-          return Promise.resolve(hook);
-        },
+            hook.params.trace.push('promise1');
+            return Promise.resolve(hook);
+          },
+          function (hook) {
+            if (hook.app !== app) { throw new Error('App wrong 3.'); }
+            if (service !== this) { throw new Error('Service wrong 3.'); }
+            hook.params.trace.push('sync2');
+          },
+          function (hook, cb) {
+            if (hook.app !== app) { throw new Error('App wrong 4.'); }
+            if (service !== this) { throw new Error('Service wrong 4.'); }
+            hook.params.trace.push('cb1');
+            cb(null, hook);
+          },
+          function (hook) {
+            if (hook.app !== app) { throw new Error('App wrong 5.'); }
+            if (service !== this) { throw new Error('Service wrong 5.'); }
+            hook.params.trace.push('sync3');
+            return hook;
+          }
+        ),
         function (hook) {
-          if (hook.app !== app) { throw new Error('App wrong 3.'); }
-          if (service !== this) { throw new Error('Service wrong 3.'); }
-          hook.params.trace.push('sync2');
-        },
-        function (hook, cb) {
-          if (hook.app !== app) { throw new Error('App wrong 4.'); }
-          if (service !== this) { throw new Error('Service wrong 4.'); }
-          hook.params.trace.push('cb1');
-          cb(null, hook);
-        },
-        function (hook) {
-          if (hook.app !== app) { throw new Error('App wrong 5.'); }
-          if (service !== this) { throw new Error('Service wrong 5.'); }
-          hook.params.trace.push('sync3');
-          return hook;
+          if (hook.app !== app) { throw new Error('App wrong 9.'); }
+          if (service !== this) { throw new Error('Service wrong 9.'); }
+
+          assert.equal(hook.id, hookId);
+          assert.deepEqual(hook.data, hookData);
+          assert.deepEqual(hook.params.query, hookParamsQuery);
+
+          assert.deepEqual(hook.params.trace, ['sync1', 'promise1', 'sync2', 'cb1', 'sync3']);
         }
-      ),
-      function (hook) {
-        if (hook.app !== app) { throw new Error('App wrong 9.'); }
-        if (service !== this) { throw new Error('Service wrong 9.'); }
-
-        assert.equal(hook.id, hookId);
-        assert.deepEqual(hook.data, hookData);
-        assert.deepEqual(hook.params.query, hookParamsQuery);
-
-        assert.deepEqual(hook.params.trace, ['sync1', 'promise1', 'sync2', 'cb1', 'sync3']);
-      }
-    ]
+      ]
+    }
   });
 }
 
@@ -102,7 +103,6 @@ describe('services combine', () => {
 
   beforeEach(() => {
     app = feathers()
-      .configure(feathersHooks())
       .configure(services);
     user = app.service('users');
   });

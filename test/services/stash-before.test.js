@@ -1,8 +1,7 @@
 
 const assert = require('chai').assert;
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const { stashBefore } = require('../../lib/services');
 
 const startId = 6;
@@ -32,18 +31,20 @@ function users () {
     startId
   }));
 
-  app.service('users').before({
-    all: [
-      context => {
-        if ((context.params.query || {}).$disableStashBefore === true) {
-          innerCallParams = context.params;
+  app.service('users').hooks({
+    before: {
+      all: [
+        context => {
+          if ((context.params.query || {}).$disableStashBefore === true) {
+            innerCallParams = context.params;
+          }
+        },
+        stashBefore(),
+        context => {
+          finalParams = context.params;
         }
-      },
-      stashBefore(),
-      context => {
-        finalParams = context.params;
-      }
-    ]
+      ]
+    }
   });
 }
 
@@ -55,7 +56,6 @@ describe('services stash-before', () => {
     innerCallParams = finalParams = null;
 
     app = feathers()
-      .configure(feathersHooks())
       .configure(services);
 
     users = app.service('users');

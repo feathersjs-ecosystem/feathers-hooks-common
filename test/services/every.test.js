@@ -1,8 +1,7 @@
 
 const assert = require('chai').assert;
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const hooks = require('../../lib/services');
 
 describe('services every', () => {
@@ -10,7 +9,6 @@ describe('services every', () => {
 
   beforeEach(() => {
     app = feathers()
-      .configure(feathersHooks())
       .use('/users', memory());
   });
 

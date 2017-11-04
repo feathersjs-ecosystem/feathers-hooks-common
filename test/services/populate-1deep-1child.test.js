@@ -19,10 +19,12 @@ let provider;
       app = configApp(['posts', 'recommendation']);
       recommendation = clone(getInitDb('recommendation').store);
 
-      app.service('posts').before({
-        all: [
-          hook => { provider = hook.params.provider; }
-        ]
+      app.service('posts').hooks({
+        before: {
+          all: [
+            hook => { provider = hook.params.provider; }
+          ]
+        }
       });
 
       hookAfter = {
