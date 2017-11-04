@@ -1,7 +1,6 @@
 
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const getInitDb = require('./get-init-db');
 
 module.exports = function (dbNames) {
@@ -14,7 +13,6 @@ module.exports = function (dbNames) {
   };
 
   return feathers()
-    .configure(feathersHooks())
     .configure(services);
 
   function services () {

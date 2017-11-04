@@ -1,8 +1,7 @@
 
 const assert = require('chai').assert;
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const { iff, populate } = require('../../lib/services/index');
 
 const userId = 6;
@@ -138,10 +137,12 @@ function user () {
     }
   }));
 
-  app.service('users').before({
-    all: [
-      hook => { userHookFlag1 = hook.params.userHookFlag1; }
-    ]
+  app.service('users').hooks({
+    before: {
+      all: [
+        hook => { userHookFlag1 = hook.params.userHookFlag1; }
+      ]
+    }
   });
 }
 
@@ -153,17 +154,19 @@ function team () {
     startId: teamId
   }));
 
-  app.service('teams').after({
-    all: [
-      hook => { teamHookFlag1 = hook.params.teamHookFlag1; },
-      iff(() => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
-      iff(() => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
-      iff(() => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
-      iff(() => whichSchema === 'schema1', populate({ schema: schema1 })),
-      iff(() => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
-      iff(() => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams })),
-      iff(() => whichSchema === 'schemaDefaultFcn', populate({ schema: schemaFcn }))
-    ]
+  app.service('teams').hooks({
+    after: {
+      all: [
+        hook => { teamHookFlag1 = hook.params.teamHookFlag1; },
+        iff(() => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
+        iff(() => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
+        iff(() => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
+        iff(() => whichSchema === 'schema1', populate({ schema: schema1 })),
+        iff(() => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
+        iff(() => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams })),
+        iff(() => whichSchema === 'schemaDefaultFcn', populate({ schema: schemaFcn }))
+      ]
+    }
   });
 }
 
@@ -173,7 +176,6 @@ describe('services populate - hook.params passed to includes', () => {
 
   beforeEach(() => {
     app = feathers()
-      .configure(feathersHooks())
       .configure(services);
     teams = app.service('teams');
     userHookFlag1 = null;
@@ -246,7 +248,6 @@ describe('services populate - schema may be a function', () => {
 
   beforeEach(() => {
     app = feathers()
-      .configure(feathersHooks())
       .configure(services);
     teams = app.service('teams');
     userHookFlag1 = null;

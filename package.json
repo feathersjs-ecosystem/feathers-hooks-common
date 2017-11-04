@@ -47,16 +47,16 @@
   },
   "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
   "dependencies": {
+    "@feathersjs/commons": "^1.2.0",
+    "@feathersjs/errors": "^3.0.0",
     "ajv": "^5.2.0",
     "debug": "^3.0.0",
-    "feathers-errors": "^2.4.0",
-    "feathers-hooks": "^2.0.1",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
+    "@feathersjs/feathers": "^3.0.0",
     "chai": "^4.0.0",
     "coveralls": "^2.11.14",
-    "feathers": "^2.0.3",
     "feathers-memory": "^1.0.1",
     "feathers-tests-fake-app-users": "^1.0.0",
     "istanbul": "^1.1.0-alpha.1",

@@ -4,7 +4,7 @@ const {
 } = require('chai');
 
 const hooks = require('../../lib/services');
-const errors = require('feathers-errors');
+const errors = require('@feathersjs/errors');
 
 let fcnSync;
 let fcnPromise;

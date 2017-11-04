@@ -1,8 +1,7 @@
 
 const assert = require('chai').assert;
-const feathers = require('feathers');
+const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const feathersHooks = require('feathers-hooks');
 const hooks = require('../../lib/services');
 
 const startId = 6;
@@ -40,15 +39,17 @@ function user () {
 
   app.use('/users', new UsersService({store, startId}));
 
-  app.service('users').before({
-    all: [
-      hook => {
-        if (hook.method === 'get') {
-          getCallParams = clone(hook.params);
-        }
-      },
-      hooks.softDelete()
-    ]
+  app.service('users').hooks({
+    before: {
+      all: [
+        hook => {
+          if (hook.method === 'get') {
+            getCallParams = clone(hook.params);
+          }
+        },
+        hooks.softDelete()
+      ]
+    }
   });
 }
 
@@ -58,7 +59,6 @@ describe('services softDelete', () => {
 
   beforeEach(() => {
     app = feathers()
-      .configure(feathersHooks())
       .configure(services);
 
     user = app.service('users');
@@ -98,18 +98,6 @@ describe('services softDelete', () => {
 
     it('throws on missing item', done => {
       user.get(99)
-        .catch(() => {
-          assert.equal(user.get_call_count, 1);
-          done();
-        })
-        .then(data => {
-          assert.fail(true, false);
-          done();
-        });
-    });
-
-    it('throws on null id', done => {
-      user.get()
         .catch(() => {
           assert.equal(user.get_call_count, 1);
           done();
