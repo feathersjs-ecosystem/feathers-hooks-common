@@ -37,11 +37,11 @@
     "permission"
   ],
   "author": {
-    "name": "Feathers contributors",
-    "email": "hello@feathersjs.com",
-    "url": "https://feathersjs.com"
+    "name": "John J. Szwaronek",
+    "email": "johnsz9999@gmail.com",
+    "url": "https://feathers-plus.github.io"
   },
-  "license": "MIT",
+  "license": "Modified MIT",
   "bugs": {
     "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
   },
