@@ -1,9 +1,9 @@
 
 const { assert } = require('chai');
 const BatchLoader = require('@feathers-plus/batch-loader');
-const { fastJoin, makeCallingParams } = require('../../lib');
+const { fastJoin, makeCallingParams } = require('../lib/index');
 
-const { posts, users, comments } = require('../helpers/make-services');
+const { posts, users, comments } = require('../tests/helpers/make-services');
 
 const { getResultsByKey, getUniqueKeys, loaderFactory } = BatchLoader;
 
