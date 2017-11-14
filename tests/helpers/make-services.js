@@ -40,7 +40,7 @@ module.exports = {
 function makeService (store1, name) {
   return {
     get (id) {
-      console.log(`... ${name} get ${id}`);
+      //console.log(`... ${name} get ${id}`);
       const store = clone(store1);
 
       for (let i = 0, leni = store.length; i < leni; i++) {
@@ -51,7 +51,7 @@ function makeService (store1, name) {
     },
 
     find (params) {
-      console.log(`... ${name} find`, params ? params.query : '');
+      //console.log(`... ${name} find`, params ? params.query : '');
       const store = clone(store1);
 
       if (!params || !params.query) return asyncReturn(store);
