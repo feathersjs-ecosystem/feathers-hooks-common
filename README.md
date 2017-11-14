@@ -11,35 +11,32 @@
 
 > Useful hooks for use with Feathers services.
 
-## Migration to v3 from v2
+---
 
-Some hooks had features which were not initially apparent,
-e.g. `remove` did not remove when the call was made on the server.
-These features have been removed when they were infrequently used,
-or, when removal would result in a significant breaking change,
-new hooks have been introduced which deprecate the original ones.
+> Use feathers-hooks-common v3.10.0 with FeathersJS v3 (Auk).
 
-Such features can be re-implemented using conditional hooks,
-with the additional benefit of making what is happening clearer.
+> Use feathers-hooks-common v4.x.x with FeathersJS v4 (Buzzard).
 
-Breaking changes:
-- All hooks and utilities are obtained from `feathers-hooks-common`
-rather than some from, say, `feathers-hooks-common/promisify`.
-- Some functions supported a deprecated predicate as their last param.
-This feature has been removed.
-- The populate hook now ignores pagination on joined services by default.
+## Migration to v4 (for FeathersJS v2 Auk) from v3 (for FeathersJSv3 Buzzard).
 
-Deprecated:
-- The legacy populate hook -- with signature (string, ...) --
-will be removed next version. Use the regular `populate` hook.
-- Use `deleteByDot` rather than `setByDot(obj, path, value, true)`.
-- The `disallow` hook should be used instead of `disable`.
-- The `discard` hook should be used instead of `remove`.
-You will need to wrap `discard` in an conditional if you want it to work like `remove` does.
+  - Docs moved to [feathers-plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html)
+  
+  - v4.x.x now supports FeathersJS v3 (Buzzard). Continue using v3.10.0 for FeathersJS v2 (Auk).
+    - Removed:
+      - Removed support for the deprecated legacy syntax in `populate`.
+      - Removed the deprecated `remove` hook.
+      
+    - Deprecated. These will be removed in FeathersJS v3 (Crow).
+      - Deprecated `pluck` in favor of `iff(isProvider('external'),` `keep(...fieldNames))`. **Be careful!**
+      - Deprecated the `client` in favor of the `paramsFromClient`.
+      
+    - Added modules. They work with both FeathersJS v2 and v3.
+      - `fastJoin` hook - Very fast alternative to `populate`.
+      - `makeCallingParams` utility - Help construct `context.params` when calling services.
 
 ## Documentation
 
-Refer to [Feathersjs documentation](https://docs.feathersjs.com/api/hooks-common.html). 
+Refer to [Feathers-Plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html). 
 
 ## Installation
 
@@ -51,4 +48,4 @@ Run `npm install feathers-hooks-common --save` in your project folder (installs 
 
 ## License
 
-MIT. See LICENSE.
+See LICENSE.

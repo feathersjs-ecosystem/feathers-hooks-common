@@ -1,3 +1,8 @@
+- check tests keep
+- deprecate pluck
+- deprecate client
+
+
 
 *** eddyystop:
 DONE - ? wrapper hook to conditionally run a nested hook. iff()

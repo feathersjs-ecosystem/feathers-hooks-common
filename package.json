@@ -37,25 +37,27 @@
     "permission"
   ],
   "author": {
-    "name": "Feathers contributors",
-    "email": "hello@feathersjs.com",
-    "url": "https://feathersjs.com"
+    "name": "John J. Szwaronek",
+    "email": "johnsz9999@gmail.com",
+    "url": "https://feathers-plus.github.io"
   },
-  "license": "MIT",
+  "license": "Modified MIT",
   "bugs": {
     "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
   },
   "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
   "dependencies": {
+    "@feathers-plus/batch-loader": "0.3.0",
     "@feathersjs/commons": "^1.2.0",
     "@feathersjs/errors": "^3.0.0",
     "ajv": "^5.2.0",
     "debug": "^3.0.0",
+    "process": "0.11.10",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
     "@feathersjs/feathers": "^3.0.0",
-    "chai": "^4.0.0",
+    "chai": "4.1.2",
     "coveralls": "^2.11.14",
     "feathers-memory": "^1.0.1",
     "feathers-tests-fake-app-users": "^1.0.0",
