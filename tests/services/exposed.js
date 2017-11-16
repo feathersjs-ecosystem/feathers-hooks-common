@@ -62,8 +62,6 @@ describe('services exposed hooks', () => {
   });
 
   it('no unexpected hooks', () => {
-    console.log(Object.keys(hooks).sort());
-    console.log(hookNames);
     assert.deepEqual(
       Object.keys(hooks).sort(),
       [].concat(hookNames, 'default').sort()
