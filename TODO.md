@@ -1,8 +1,17 @@
-- check tests keep
-- deprecate pluck
-- deprecate client
 
+- write keepQuery, deprecate pluckQuery
+- write discardQuery, deprecate removeQuery
+- deprevate setCreateAt and setUpdateAt for setNow('createdAt') and setNow('updatedAt')
+- deprecate callbackToPromise.
 
+- typescript
+  module.exports = funcName;
+  module.exports.default = funcName
+  
+- test every module
+  it('adds an ES module `default` export', () => {
+    assert.equal(feathers, feathers.default);
+  });
 
 *** eddyystop:
 DONE - ? wrapper hook to conditionally run a nested hook. iff()
