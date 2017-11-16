@@ -62,9 +62,11 @@ describe('services exposed hooks', () => {
   });
 
   it('no unexpected hooks', () => {
+    console.log(Object.keys(hooks).sort());
+    console.log(hookNames);
     assert.deepEqual(
       Object.keys(hooks).sort(),
-      hookNames
+      [].concat(hookNames, 'default').sort()
     );
   });
 });
