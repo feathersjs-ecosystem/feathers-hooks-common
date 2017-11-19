@@ -83,7 +83,7 @@ describe('services thenifyHook', () => {
 
     const paymentResolvers = {
       joins: {
-        patient: () => async payment => {
+        patient: () => payment => {
           payment.patient = (
             patientsRecords.filter(patient => patient._id === payment.patientId)
           )[0];
