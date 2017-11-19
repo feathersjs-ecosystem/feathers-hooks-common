@@ -1,22 +1,13 @@
 
 - write keepQuery, deprecate pluckQuery
 - write discardQuery, deprecate removeQuery
-- deprevate setCreateAt and setUpdateAt for setNow('createdAt') and setNow('updatedAt')
-- deprecate callbackToPromise.
+- write is-transport, deprecate is-provider
 
 - typescript
   module.exports = funcName;
   module.exports.default = funcName
-  
-- test every module
-  it('adds an ES module `default` export', () => {
-    assert.equal(feathers, feathers.default);
-  });
 
 *** eddyystop:
-DONE - ? wrapper hook to conditionally run a nested hook. iff()
-DONE - build and coverage badges. Feathersjs accts on Travis & Coverall? 
-
 - merge the validate... hooks.
 if the last param in the called fcn defn is provided and is a fcn, then assume cb.
 else check if a promise is returned.
