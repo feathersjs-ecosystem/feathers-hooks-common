@@ -1,12 +1,12 @@
 
 const { assert } = require('chai');
-const { fastJoin, keep, thenifyHook } = require('../../lib/services');
+const { fastJoin, keep, runHook } = require('../../lib/services');
 
 let app = { a: 'a' };
 let params = { p: 'p' };
 let service = { s: 's' };
-let thenify;
-let thenified;
+let runHooks1;
+let runHooks2;
 let hook;
 
 const testHook = hook1 => {
@@ -16,17 +16,17 @@ const testHook = hook1 => {
   return hook1;
 };
 
-describe('services thenifyHook', () => {
+describe('services runHooks', () => {
   beforeEach(() => {
-    thenify = thenifyHook({ app, params, service });
-    thenified = thenifyHook();
+    runHooks1 = runHook({ app, params, service });
+    runHooks2 = runHook();
   });
 
   it('get expected hook & object result', () => {
     const data = { name: 'john' };
 
     return Promise.resolve(data)
-        .then(thenify(testHook))
+        .then(runHooks1(testHook))
         .then(result => {
           assert.deepEqual(result, data, 'test result');
           assert.deepEqual(hook, {
@@ -39,7 +39,7 @@ describe('services thenifyHook', () => {
     const data = [{ name: 'john' }];
 
     return Promise.resolve(data)
-      .then(thenify(testHook))
+      .then(runHooks1(testHook))
       .then(result => {
         assert.deepEqual(result, data, 'test result');
       });
@@ -49,7 +49,7 @@ describe('services thenifyHook', () => {
     const data = { total: 1, data: [{ name: 'john' }] };
 
     return Promise.resolve(data)
-      .then(thenify(testHook))
+      .then(runHooks1(testHook))
       .then(result => {
         assert.deepEqual(result, data, 'test result');
       });
@@ -59,7 +59,7 @@ describe('services thenifyHook', () => {
     const data = [{ name: 'John', job: 'dev', address: { city: 'Montreal', postal: 'H4T 2A1' } }];
 
     return Promise.resolve(data)
-      .then(thenified(keep('name', 'address.city')))
+      .then(runHooks2(keep('name', 'address.city')))
       .then(result => {
         assert.deepEqual(result, [{ name: 'John', address: { city: 'Montreal' } }]);
       });
@@ -100,7 +100,7 @@ describe('services thenifyHook', () => {
       { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } } ];
 
     return Promise.resolve(paymentsRecords)
-      .then(thenified(fastJoin(paymentResolvers)))
+      .then(runHooks2(fastJoin(paymentResolvers)))
       .then(result => {
         assert.deepEqual(result, expected);
       });

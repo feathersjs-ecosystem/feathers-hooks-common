@@ -1,7 +1,5 @@
-const {
-  assert
-} = require('chai');
 
+const { assert } = require('chai');
 const hooks = require('../../lib');
 
 const hookNames = [
@@ -34,6 +32,7 @@ const hookNames = [
   'promiseToCallback',
   'removeQuery',
   'replaceItems',
+  'runHook',
   'serialize',
   'setByDot',
   'setCreatedAt',
@@ -43,7 +42,6 @@ const hookNames = [
   'sifter',
   'softDelete',
   'stashBefore',
-  'thenifyHook',
   'traverse',
   'validate',
   'validateSchema',
