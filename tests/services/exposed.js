@@ -1,8 +1,9 @@
 
 const { assert } = require('chai');
-const hooks = require('../../lib');
+const hooks = require('../../lib/index');
 
 const hookNames = [
+  'alterItems',
   'callbackToPromise',
   'checkContext',
   'checkContextIf',
