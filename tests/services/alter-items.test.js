@@ -41,6 +41,18 @@ describe('services alterItems', () => {
     };
   });
 
+  it('default func is a no-op', () => {
+    alterItems()(hookBefore);
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
+  });
+
+  it('context is 2nd param', () => {
+    let contextParam;
+    alterItems((rec, context) => { contextParam = context; })(hookBefore);
+
+    assert.deepEqual(contextParam, hookBefore);
+  });
+
   it('updates hook before::create', () => {
     alterItems(rec => { rec.state = 'UT'; })(hookBefore);
     assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
