@@ -21,6 +21,7 @@ const hookNames = [
   'getItems',
   'isProvider',
   'keep',
+  'keepQuery',
   'lowerCase',
   'makeCallingParams',
   'paramsForServer',
