@@ -16,6 +16,7 @@ const hookNames = [
   'disallow',
   'disableMultiItemChange',
   'discard',
+  'discardQuery',
   'existsByDot',
   'fastJoin',
   'getByDot',

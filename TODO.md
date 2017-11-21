@@ -1,7 +1,14 @@
 
-- write keepQuery, deprecate pluckQuery
 - write discardQuery, deprecate removeQuery
 - write is-transport, deprecate is-provider
+
+- cache
+  - before: cacheClear(cache, keyFieldName) - default to context.service.id, or _id, id if that was falsey.
+    - get - return cache entry if exists, else continue
+    - find, create - no-op
+    - update, patch, remove - remove id or _id from cache
+  - after: cacheAdd(cache, keyFieldName)
+    - all methods - **add each record to cache** with its id, _id.
 
 - typescript
   module.exports = funcName;
