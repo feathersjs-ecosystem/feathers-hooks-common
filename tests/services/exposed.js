@@ -4,6 +4,7 @@ const hooks = require('../../lib/index');
 
 const hookNames = [
   'alterItems',
+  'cache',
   'callbackToPromise',
   'checkContext',
   'checkContextIf',
