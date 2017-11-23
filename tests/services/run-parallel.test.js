@@ -41,7 +41,7 @@ describe('services runParallel', () => {
   });
 
   it('defaults to uncloned context', done => {
-    runParallel(test(tester), clone)(contextBefore);
+    runParallel(test(tester), clone, 0)(contextBefore);
     contextBefore._foo = true;
 
     function tester (contextCloned) {
@@ -51,7 +51,7 @@ describe('services runParallel', () => {
   });
 
   it('clones', done => {
-    runParallel(test(tester), clone, 1)(contextBefore);
+    runParallel(test(tester), clone)(contextBefore);
     contextBefore._foo = true;
 
     function tester (contextCloned) {
