@@ -39,6 +39,7 @@ const hookNames = [
   'replaceItems',
   'required',
   'runHook',
+  'runParallel',
   'serialize',
   'setByDot',
   'setCreatedAt',
