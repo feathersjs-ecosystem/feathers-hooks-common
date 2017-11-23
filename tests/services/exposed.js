@@ -37,6 +37,7 @@ const hookNames = [
   'promiseToCallback',
   'removeQuery',
   'replaceItems',
+  'required',
   'runHook',
   'serialize',
   'setByDot',
