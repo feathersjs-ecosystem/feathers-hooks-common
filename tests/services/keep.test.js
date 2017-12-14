@@ -87,24 +87,54 @@ describe('services keep', () => {
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
 
-    it('does not throw if field is undefined', () => {
+    it('keeps undefined values', () => {
       const hook = {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
         data: { first: undefined, last: 'Doe' } };
       hooks.keep('first')(hook);
-      assert.deepEqual(hook.data, {}); // todo note this
+      assert.deepEqual(hook.data, { first: undefined });
     });
 
-    it('does not throw if field is null', () => {
+    it('keeps null values', () => {
       const hook = {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
         data: { first: null, last: 'Doe' } };
       hooks.keep('first')(hook);
-      assert.deepEqual(hook.data, {});
+      assert.deepEqual(hook.data, { first: null });
+    });
+
+    it('keeps false values', () => {
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: { first: false, last: 'Doe' } };
+      hooks.keep('first')(hook);
+      assert.deepEqual(hook.data, { first: false });
+    });
+
+    it('keeps 0 values', () => {
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: { first: 0, last: 'Doe' } };
+      hooks.keep('first')(hook);
+      assert.deepEqual(hook.data, { first: 0 });
+    });
+
+    it('keeps empty string values', () => {
+      const hook = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: { first: '', last: 'Doe' } };
+      hooks.keep('first')(hook);
+      assert.deepEqual(hook.data, { first: '' });
     });
   });
 
