@@ -13,11 +13,11 @@
 
 ---
 
-> Use feathers-hooks-common v3.10.0 with FeathersJS v3 (Auk).
+> Use feathers-hooks-common v3.10.0 with FeathersJS v2 (Auk).
 
-> Use feathers-hooks-common v4.x.x with FeathersJS v4 (Buzzard).
+> Use feathers-hooks-common v4.x.x with FeathersJS v3 (Buzzard).
 
-## Migration to v4 (for FeathersJS v2 Auk) from v3 (for FeathersJSv3 Buzzard).
+## Migration to v4 (for FeathersJS v3 Buzzard) from v3 (for FeathersJSv2 Auk).
 
   - Docs moved to [feathers-plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html)
   
