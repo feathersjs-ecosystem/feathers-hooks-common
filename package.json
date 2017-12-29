@@ -1,6 +1,6 @@
 {
   "name": "feathers-hooks-common",
-  "version": "3.10.0",
+  "version": "4.1.0",
   "description": "Useful hooks for use with Feathersjs services.",
   "main": "lib/",
   "directories": {
