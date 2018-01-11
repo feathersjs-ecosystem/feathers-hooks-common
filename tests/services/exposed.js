@@ -15,6 +15,7 @@ const hookNames = [
   'dePopulate',
   'disable',
   'disableMultiItemChange',
+  'disableMultiItemCreate',
   'disablePagination',
   'disallow',
   'discard',
