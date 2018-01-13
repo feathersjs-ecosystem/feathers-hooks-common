@@ -78,4 +78,30 @@ describe('services alterItems', () => {
     alterItems(rec => { rec.new = rec.first; })(hookAfter);
     assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
+
+  it('updates hook before::create with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore);
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  });
+
+  it('updates hook after::find with pagination with new item returned', () => {
+    alterItems(rec => Object.assign({}, { first: rec.first }))(hookFindPaginate);
+    assert.deepEqual(hookFindPaginate.result.data, [
+      { first: 'John' },
+      { first: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after::find with no pagination with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookFind);
+    assert.deepEqual(hookFind.result, [
+      { first: 'John', last: 'Doe', new: 'John' },
+      { first: 'Jane', last: 'Doe', new: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookAfter);
+    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  });
 });
