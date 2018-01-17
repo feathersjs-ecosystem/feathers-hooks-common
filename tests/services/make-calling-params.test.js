@@ -6,17 +6,17 @@ let context;
 
 describe('service make-calling-params.test.js', () => {
   beforeEach(() => {
-    context = { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', params: { user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
+    context = { query: { aaa: 'bbb' }, params: { foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
   });
 
   it('retains default context', () => {
     const res = makeCallingParams(context);
-    assert.deepEqual(res, { _populate: 'skip', params: { user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } });
+    assert.deepEqual(res, { _populate: 'skip', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
   });
 
   it('sets query', () => {
     const res = makeCallingParams(context, { a: 1 });
-    assert.deepEqual(res, { query: { a: 1 }, _populate: 'skip', params: { user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } });
+    assert.deepEqual(res, { query: { a: 1 }, _populate: 'skip', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
   });
 
   it('sets include string', () => {
@@ -37,11 +37,6 @@ describe('service make-calling-params.test.js', () => {
   it('injects', () => {
     const res = makeCallingParams(context, null, null, { aa: 2 });
     assert.deepEqual(res, { aa: 2, _populate: 'skip' });
-  });
-
-  it('injects params by dot', () => {
-    const res = makeCallingParams(context, null, 'params.user', { aa: 2 });
-    assert.deepEqual(res, { aa: 2, _populate: 'skip', params: { user: { name: 'Matt' } } });
   });
 
   it('injects overwrites _populate', () => {
