@@ -70,6 +70,13 @@ describe('services stash-before', () => {
     });
   });
 
+  it(`Do not stash when query is used in remove`, () => {
+    return users.remove(null, {query: {}})
+      .then(() => {
+        assert.notProperty(finalParams, 'before');
+      });
+  });
+
   ['create', 'find'].forEach(method => {
     it(`throws on ${method}`, done => {
       users[method]({})
