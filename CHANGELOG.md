@@ -1,5 +1,75 @@
 # Change Log
 
+## [v4.3.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.3.0) (2018-01-29)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.10.0...v4.3.0)
+
+**Implemented enhancements:**
+
+- makeCallingParams include not working [\#334](https://github.com/feathers-plus/feathers-hooks-common/issues/334)
+- \[feature request\] alterItems allows async func? [\#307](https://github.com/feathers-plus/feathers-hooks-common/issues/307)
+- preventChanges - add an option [\#275](https://github.com/feathers-plus/feathers-hooks-common/issues/275)
+- debug\(\) to show more optional info [\#273](https://github.com/feathers-plus/feathers-hooks-common/issues/273)
+- Add a hook to disable pagination [\#263](https://github.com/feathers-plus/feathers-hooks-common/issues/263)
+- populate: using cache to reduce the data query \[super-populate\] [\#256](https://github.com/feathers-plus/feathers-hooks-common/issues/256)
+- pluck: Always pluck regardless of provider [\#252](https://github.com/feathers-plus/feathers-hooks-common/issues/252)
+- Populate a field in an array \(and place data in that field\) [\#247](https://github.com/feathers-plus/feathers-hooks-common/issues/247)
+- Internationalize validateSchema messages [\#242](https://github.com/feathers-plus/feathers-hooks-common/issues/242)
+- Simple validation hook [\#223](https://github.com/feathers-plus/feathers-hooks-common/issues/223)
+- Prevent certain fields from being changed [\#145](https://github.com/feathers-plus/feathers-hooks-common/issues/145)
+- Update makeCallingParams hook to use getByDot/setByDot [\#335](https://github.com/feathers-plus/feathers-hooks-common/pull/335) ([Mattchewone](https://github.com/Mattchewone))
+- close \#308, add disableMultiItemCreate [\#330](https://github.com/feathers-plus/feathers-hooks-common/pull/330) ([beeplin](https://github.com/beeplin))
+- Fixed preventChanges to log deprecated syntax msg even if hook not called. [\#329](https://github.com/feathers-plus/feathers-hooks-common/pull/329) ([eddyystop](https://github.com/eddyystop))
+- Verify deprecated syntax outside the hook function [\#325](https://github.com/feathers-plus/feathers-hooks-common/pull/325) ([guillaumerxl](https://github.com/guillaumerxl))
+- Fixed version\# [\#324](https://github.com/feathers-plus/feathers-hooks-common/pull/324) ([eddyystop](https://github.com/eddyystop))
+- Support a Promise result from alterItems to indicate mutations are complete. [\#313](https://github.com/feathers-plus/feathers-hooks-common/pull/313) ([eddyystop](https://github.com/eddyystop))
+- Convert to using @feathersjs/errors properly [\#312](https://github.com/feathers-plus/feathers-hooks-common/pull/312) ([eddyystop](https://github.com/eddyystop))
+- Added runParallel hook. [\#304](https://github.com/feathers-plus/feathers-hooks-common/pull/304) ([eddyystop](https://github.com/eddyystop))
+- Added required hook to check fields dot notation. [\#303](https://github.com/feathers-plus/feathers-hooks-common/pull/303) ([eddyystop](https://github.com/eddyystop))
+- Added disablePagination hook. [\#302](https://github.com/feathers-plus/feathers-hooks-common/pull/302) ([eddyystop](https://github.com/eddyystop))
+- Added features to debug\(\). context.params keys & display selected values. [\#301](https://github.com/feathers-plus/feathers-hooks-common/pull/301) ([eddyystop](https://github.com/eddyystop))
+- Added option to preventChanges to remove invalid prop names rather th… [\#300](https://github.com/feathers-plus/feathers-hooks-common/pull/300) ([eddyystop](https://github.com/eddyystop))
+- Added integration test feathers+fastJoin+persistent cache. [\#298](https://github.com/feathers-plus/feathers-hooks-common/pull/298) ([eddyystop](https://github.com/eddyystop))
+- Added cache hook. Can interface with LRU cache or Map\(\). [\#296](https://github.com/feathers-plus/feathers-hooks-common/pull/296) ([eddyystop](https://github.com/eddyystop))
+- Added discard-query to deprecate remove-query for naming consistency. [\#295](https://github.com/feathers-plus/feathers-hooks-common/pull/295) ([eddyystop](https://github.com/eddyystop))
+- Passing context to alterItems. Improved tests [\#294](https://github.com/feathers-plus/feathers-hooks-common/pull/294) ([eddyystop](https://github.com/eddyystop))
+- Add alterItems hook with imperative API [\#293](https://github.com/feathers-plus/feathers-hooks-common/pull/293) ([eddyystop](https://github.com/eddyystop))
+- Added keepQuery to replace pluckQuery for more consistent naming [\#292](https://github.com/feathers-plus/feathers-hooks-common/pull/292) ([eddyystop](https://github.com/eddyystop))
+- Renamed thenifyHook to runHook so its more appropriate for async/awair [\#291](https://github.com/feathers-plus/feathers-hooks-common/pull/291) ([eddyystop](https://github.com/eddyystop))
+- Added tests for thenifyHook examples used in API docs [\#290](https://github.com/feathers-plus/feathers-hooks-common/pull/290) ([eddyystop](https://github.com/eddyystop))
+- Changed hook object's field name from hook to context. [\#286](https://github.com/feathers-plus/feathers-hooks-common/pull/286) ([eddyystop](https://github.com/eddyystop))
+- Deprecate hook. Play nice with TypeScript and Babel `import`. [\#285](https://github.com/feathers-plus/feathers-hooks-common/pull/285) ([eddyystop](https://github.com/eddyystop))
+- Deprecated pluck and client hooks [\#283](https://github.com/feathers-plus/feathers-hooks-common/pull/283) ([eddyystop](https://github.com/eddyystop))
+- Added fastJoin and related makeCallingParams plus tests [\#281](https://github.com/feathers-plus/feathers-hooks-common/pull/281) ([eddyystop](https://github.com/eddyystop))
+- Remove deprecated hooks [\#279](https://github.com/feathers-plus/feathers-hooks-common/pull/279) ([daffl](https://github.com/daffl))
+- Remove filters and permissions [\#278](https://github.com/feathers-plus/feathers-hooks-common/pull/278) ([daffl](https://github.com/daffl))
+- Update and verify compatibility with Feathers v3 [\#277](https://github.com/feathers-plus/feathers-hooks-common/pull/277) ([daffl](https://github.com/daffl))
+- Update to new plugin infrastructure [\#274](https://github.com/feathers-plus/feathers-hooks-common/pull/274) ([daffl](https://github.com/daffl))
+
+**Fixed bugs:**
+
+- StashBefore should skip the id check when a query is provided [\#337](https://github.com/feathers-plus/feathers-hooks-common/issues/337)
+- Fixed issue \#337 and included relevant test - ignore missing id when … [\#338](https://github.com/feathers-plus/feathers-hooks-common/pull/338) ([Protoss78](https://github.com/Protoss78))
+- Fixed issue with params being populated at the wrong level [\#336](https://github.com/feathers-plus/feathers-hooks-common/pull/336) ([Mattchewone](https://github.com/Mattchewone))
+- Modify keep hook to only ignore undefined values. [\#316](https://github.com/feathers-plus/feathers-hooks-common/pull/316) ([otang](https://github.com/otang))
+- Fixed fastJoin bug in nested joins with no args [\#311](https://github.com/feathers-plus/feathers-hooks-common/pull/311) ([eddyystop](https://github.com/eddyystop))
+- Fix feathersErrors.errors === undefined error [\#310](https://github.com/feathers-plus/feathers-hooks-common/pull/310) ([SteffenLanger](https://github.com/SteffenLanger))
+- Deprecate client hook properly so a msg is logged only when its used. [\#297](https://github.com/feathers-plus/feathers-hooks-common/pull/297) ([eddyystop](https://github.com/eddyystop))
+- Node v6 will not run fastJoin async tests [\#282](https://github.com/feathers-plus/feathers-hooks-common/pull/282) ([eddyystop](https://github.com/eddyystop))
+
+**Closed issues:**
+
+- can you please push 4.1.0 to npm [\#326](https://github.com/feathers-plus/feathers-hooks-common/issues/326)
+- TypeError: disablePagination is not a function [\#323](https://github.com/feathers-plus/feathers-hooks-common/issues/323)
+- populate: Using a function for schema [\#214](https://github.com/feathers-plus/feathers-hooks-common/issues/214)
+- Rename hook object to context [\#201](https://github.com/feathers-plus/feathers-hooks-common/issues/201)
+- populate a field in an array [\#142](https://github.com/feathers-plus/feathers-hooks-common/issues/142)
+
+**Merged pull requests:**
+
+- Improve alterItems hook: can map to a newly created object [\#332](https://github.com/feathers-plus/feathers-hooks-common/pull/332) ([beeplin](https://github.com/beeplin))
+- Minor semver change for disableMultiItemCreate hook. [\#331](https://github.com/feathers-plus/feathers-hooks-common/pull/331) ([eddyystop](https://github.com/eddyystop))
+- corrections re versions [\#320](https://github.com/feathers-plus/feathers-hooks-common/pull/320) ([musicformellons](https://github.com/musicformellons))
+
 ## [v3.10.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.10.0) (2017-10-21)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.9.0...v3.10.0)
 
@@ -9,17 +79,14 @@
 ## [v3.8.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.8.0) (2017-10-21)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.7.3...v3.8.0)
 
-**Closed issues:**
-
-- devDependencies packages in package-lock.json [\#267](https://github.com/feathers-plus/feathers-hooks-common/issues/267)
-- Preserve createdAt on updates [\#264](https://github.com/feathers-plus/feathers-hooks-common/issues/264)
-- iff doesn't bind hook functions to service instance [\#258](https://github.com/feathers-plus/feathers-hooks-common/issues/258)
-- Populate hook includes data from wrong db service when using a custom query in find [\#254](https://github.com/feathers-plus/feathers-hooks-common/issues/254)
-
-**Merged pull requests:**
+**Implemented enhancements:**
 
 - Drop Node4 testing [\#269](https://github.com/feathers-plus/feathers-hooks-common/pull/269) ([eddyystop](https://github.com/eddyystop))
 - Keep hook [\#266](https://github.com/feathers-plus/feathers-hooks-common/pull/266) ([Mattchewone](https://github.com/Mattchewone))
+
+**Closed issues:**
+
+- Populate hook includes data from wrong db service when using a custom query in find [\#254](https://github.com/feathers-plus/feathers-hooks-common/issues/254)
 
 ## [v3.7.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.7.3) (2017-09-17)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.7.2...v3.7.3)
@@ -35,7 +102,6 @@
 
 **Closed issues:**
 
-- serialize running twice [\#255](https://github.com/feathers-plus/feathers-hooks-common/issues/255)
 - An in-range update of feathers is breaking the build 🚨 [\#249](https://github.com/feathers-plus/feathers-hooks-common/issues/249)
 
 **Merged pull requests:**
@@ -74,7 +140,6 @@
 
 **Closed issues:**
 
-- Insert commonhook into a function. [\#241](https://github.com/feathers-plus/feathers-hooks-common/issues/241)
 - Get user is called 4 times in main usage case instead of 1 [\#164](https://github.com/feathers-plus/feathers-hooks-common/issues/164)
 
 ## [v3.6.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.6.1) (2017-07-27)
@@ -97,7 +162,6 @@
 
 **Closed issues:**
 
-- How to break and return a value to client in before hook [\#231](https://github.com/feathers-plus/feathers-hooks-common/issues/231)
 - Store `deleted` \(soft-delete\) fields as a date instead of a boolean [\#228](https://github.com/feathers-plus/feathers-hooks-common/issues/228)
 - populate: hook.params.user is not populated in child items [\#220](https://github.com/feathers-plus/feathers-hooks-common/issues/220)
 
@@ -110,11 +174,8 @@
 
 **Fixed bugs:**
 
-- Updated stashBefore so it clones context.data rather than references it. [\#219](https://github.com/feathers-plus/feathers-hooks-common/pull/219) ([eddyystop](https://github.com/eddyystop))
-
-**Closed issues:**
-
 - Setting useInnerPopulate to false causes child schema to populate [\#218](https://github.com/feathers-plus/feathers-hooks-common/issues/218)
+- Updated stashBefore so it clones context.data rather than references it. [\#219](https://github.com/feathers-plus/feathers-hooks-common/pull/219) ([eddyystop](https://github.com/eddyystop))
 
 ## [v3.5.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.5.3) (2017-06-19)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.5.2...v3.5.3)
