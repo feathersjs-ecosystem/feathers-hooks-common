@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.5.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.1) (2018-02-03)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.0...v4.5.1)
+
+**Fixed bugs:**
+
+- Fixed mongoKeys [\#349](https://github.com/feathers-plus/feathers-hooks-common/pull/349) ([eddyystop](https://github.com/eddyystop))
+
+**Merged pull requests:**
+
+- Fixed mongoKeys. [\#350](https://github.com/feathers-plus/feathers-hooks-common/pull/350) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.5.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.0) (2018-02-03)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.3.0...v4.5.0)
 
