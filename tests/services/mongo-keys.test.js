@@ -85,6 +85,6 @@ describe('services mongoKeys', () => {
 });
 
 function wrapper (keys, query) {
-  const newContext = mongoKeys(ObjectID, keys)({ params: { query } });
+  const newContext = mongoKeys(ObjectID, keys)({ params: { query }, type: 'before', method: 'find' });
   return newContext.params.query;
 }
