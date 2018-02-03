@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.5.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.0) (2018-02-03)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.3.0...v4.5.0)
+
+**Implemented enhancements:**
+
+- Added mongoKeys hook. [\#348](https://github.com/feathers-plus/feathers-hooks-common/pull/348) ([eddyystop](https://github.com/eddyystop))
+
+**Closed issues:**
+
+- Publish v4 on npm [\#343](https://github.com/feathers-plus/feathers-hooks-common/issues/343)
+
 ## [v4.3.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.3.0) (2018-01-29)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.10.0...v4.3.0)
 
