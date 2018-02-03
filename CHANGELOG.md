@@ -1,7 +1,7 @@
 # Change Log
 
-## [v4.4.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.4.0) (2018-02-03)
-[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.3.0...v4.4.0)
+## [v4.5.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.0) (2018-02-03)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.3.0...v4.5.0)
 
 **Implemented enhancements:**
 
