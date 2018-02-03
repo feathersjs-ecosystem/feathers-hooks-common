@@ -29,6 +29,7 @@ const hookNames = [
   'keepQuery',
   'lowerCase',
   'makeCallingParams',
+  'mongoKeys',
   'paramsForServer',
   'paramsFromClient',
   'populate',
