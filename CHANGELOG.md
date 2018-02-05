@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.5.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.6) (2018-02-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.5...v4.5.6)
+
+**Implemented enhancements:**
+
+- hook to increment a value [\#226](https://github.com/feathers-plus/feathers-hooks-common/issues/226)
+
+**Merged pull requests:**
+
+- Fixed issue with mongoKeys and $sort [\#356](https://github.com/feathers-plus/feathers-hooks-common/pull/356) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.5.5](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.5) (2018-02-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.4...v4.5.5)
 
