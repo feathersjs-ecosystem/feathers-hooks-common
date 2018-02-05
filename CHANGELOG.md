@@ -1,5 +1,19 @@
 # Change Log
 
+## [v4.5.4](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.4) (2018-02-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.3...v4.5.4)
+
+## [v4.5.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.3) (2018-02-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.2...v4.5.3)
+
+**Fixed bugs:**
+
+- Fixed bug in cache for get, update, patch, remove. [\#352](https://github.com/feathers-plus/feathers-hooks-common/pull/352) ([eddyystop](https://github.com/eddyystop))
+
+**Closed issues:**
+
+- cache has TypeError with JWT authentication [\#327](https://github.com/feathers-plus/feathers-hooks-common/issues/327)
+
 ## [v4.5.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.2) (2018-02-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.1...v4.5.2)
 
