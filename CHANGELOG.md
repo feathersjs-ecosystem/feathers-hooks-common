@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.7.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.7.0) (2018-02-08)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.6...v4.7.0)
+
+**Merged pull requests:**
+
+- Changed license to MIT [\#357](https://github.com/feathers-plus/feathers-hooks-common/pull/357) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.5.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.5.6) (2018-02-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.5...v4.5.6)
 
