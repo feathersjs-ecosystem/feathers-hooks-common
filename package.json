@@ -41,7 +41,7 @@
     "email": "johnsz9999@gmail.com",
     "url": "https://feathers-plus.github.io"
   },
-  "license": "Modified MIT",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
   },
