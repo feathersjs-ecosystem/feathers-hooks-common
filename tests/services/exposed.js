@@ -3,6 +3,8 @@ const { assert } = require('chai');
 const hooks = require('../../lib/index');
 
 const hookNames = [
+  'actOnDefault',
+  'actOnDispatch',
   'alterItems',
   'cache',
   'callbackToPromise',
@@ -49,6 +51,7 @@ const hookNames = [
   'setSlug',
   'setUpdatedAt',
   'sifter',
+  'skipRemainingHooks',
   'softDelete',
   'stashBefore',
   'traverse',

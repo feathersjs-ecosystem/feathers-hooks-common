@@ -5,6 +5,8 @@ const {
 
 const hooks = require('../../lib/services');
 
+// Tests when context.params._actOn === 'dispatch' are in act-on.test.js
+
 describe('services getItems & replaceItems', () => {
   let hookBefore;
   let hookAfter;
