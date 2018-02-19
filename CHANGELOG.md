@@ -1,5 +1,24 @@
 # Change Log
 
+## [v4.8.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.8.0) (2018-02-19)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.7.0...v4.8.0)
+
+**Implemented enhancements:**
+
+- `mongoKeys` can also used in `before` `update/patch/remove` [\#361](https://github.com/feathers-plus/feathers-hooks-common/issues/361)
+- Consider returning `feathers.SKIP` whenever context.result is set. [\#355](https://github.com/feathers-plus/feathers-hooks-common/issues/355)
+- support for context.dispatch [\#340](https://github.com/feathers-plus/feathers-hooks-common/issues/340)
+- Standardize on a way to pass go/no-go flags to hooks [\#309](https://github.com/feathers-plus/feathers-hooks-common/issues/309)
+- Does context.result = null skip remaining hooks?  [\#240](https://github.com/feathers-plus/feathers-hooks-common/issues/240)
+- Cancelling further hooks [\#236](https://github.com/feathers-plus/feathers-hooks-common/issues/236)
+- allow mongoKeys running for all methods [\#363](https://github.com/feathers-plus/feathers-hooks-common/pull/363) ([beeplin](https://github.com/beeplin))
+- Allow `mongoKeys` for update/patch/remove [\#362](https://github.com/feathers-plus/feathers-hooks-common/pull/362) ([beeplin](https://github.com/beeplin))
+
+**Closed issues:**
+
+- How to filter fastjoin datas [\#360](https://github.com/feathers-plus/feathers-hooks-common/issues/360)
+- fastjoin strange results, $sort not respected [\#359](https://github.com/feathers-plus/feathers-hooks-common/issues/359)
+
 ## [v4.7.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.7.0) (2018-02-08)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.5.6...v4.7.0)
 
