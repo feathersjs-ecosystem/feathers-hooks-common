@@ -38,6 +38,7 @@ const hookNames = [
   'pluck',
   'pluckQuery',
   'preventChanges',
+  'preventUpdateChanges',
   'promiseToCallback',
   'removeQuery',
   'replaceItems',
