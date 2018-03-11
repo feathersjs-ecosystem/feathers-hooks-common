@@ -1,5 +1,19 @@
 # Change Log
 
+## [v4.10.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.10.0) (2018-03-11)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.9.0...v4.10.0)
+
+## [v4.9.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.9.0) (2018-03-11)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.8.0...v4.9.0)
+
+**Implemented enhancements:**
+
+- consider a new `disableMultiItemCreate` just like `disableMultiItemChange`? [\#308](https://github.com/feathers-plus/feathers-hooks-common/issues/308)
+
+**Merged pull requests:**
+
+- Revert ajv from 6.1.1 to 5.5.2. Errors testing schemas in existing ajv instances. [\#373](https://github.com/feathers-plus/feathers-hooks-common/pull/373) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.8.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.8.0) (2018-02-19)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.7.0...v4.8.0)
 
