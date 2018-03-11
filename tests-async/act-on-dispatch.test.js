@@ -1,6 +1,6 @@
 
 const { assert } = require('chai');
-const { actOnDefault, actOnDispatch, combine, getItems, replaceItems } = require('../../lib');
+const { actOnDefault, actOnDispatch, combine, getItems, replaceItems } = require('../lib');
 
 let hookBefore;
 
