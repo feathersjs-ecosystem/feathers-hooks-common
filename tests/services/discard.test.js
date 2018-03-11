@@ -152,5 +152,32 @@ describe('services discard', () => {
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
       );
     });
+
+    it('discards multiple fields', () => {
+      let hook = {
+        type: 'after',
+        method: 'get',
+        result: {
+          roles: [ 'super' ],
+          _id: 'a',
+          email: 'foo',
+          password: 'bar',
+          name: 'Rafael',
+          id: 'b',
+        },
+        query: {},
+      };
+
+      hooks.discard('email', 'password')(hook);
+
+      assert.deepEqual(hook.result, {
+        roles: [ 'super' ],
+        _id: 'a',
+        //email: 'foo',
+        //password: 'bar',
+        name: 'Rafael',
+        id: 'b',
+      });
+    });
   });
 });
