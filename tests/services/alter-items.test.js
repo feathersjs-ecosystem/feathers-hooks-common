@@ -44,87 +44,113 @@ describe('services alterItems', () => {
     };
   });
 
-  it('default func is a no-op', async () => {
-    await alterItems()(hookBefore);
-    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
+  it('default func is a no-op', () => {
+    return alterItems()(hookBefore).then(() => {
+      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
+    });
   });
 
-  it('context is 2nd param', async () => {
+  it('context is 2nd param', () => {
     let contextParam;
-    await alterItems((rec, context) => { contextParam = context; })(hookBefore);
-
-    assert.deepEqual(contextParam, hookBefore);
+    return alterItems((rec, context) => { contextParam = context; })(hookBefore).then(() => {
+      assert.deepEqual(contextParam, hookBefore);
+    });
   });
 
-  it('throws if 1st param is not a func', async () => {
+  it('throws if 1st param is not a func', () => {
     try {
-      await alterItems('no-func')(hookBefore);
+      alterItems('no-func');
     } catch (error) {
-      assert.equal(error.message, "Function required. (alter)")
-      return
+      assert.equal(error.message, "Function required. (alter)");
+      return;
     }
-    throw new Error('alterItems does not throw an error if 1st param is not a function')
+    throw new Error('alterItems does not throw an error if 1st param is not a function');
   });
 
-  it('returns a promise that contains context', async () => {
-    const context = await alterItems(rec => { rec.state = 'UT'; })(hookBefore);
-    assert.deepEqual(context, hookBefore);
+  it('returns a promise that contains context', () => {
+    return alterItems(rec => { rec.state = 'UT'; })(hookBefore).then(context => {
+      assert.deepEqual(context, hookBefore);
+    });
   });
 
-  it('works with an async function', async () => {
-    await alterItems(async rec => { rec.state = 'UT'; })(hookBefore);
-    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  it('updates hook before::create', () => {
+    return alterItems(rec => { rec.state = 'UT'; })(hookBefore).then(() => {
+      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+    })
   });
 
-  it('updates hook before::create', async () => {
-    await alterItems(rec => { rec.state = 'UT'; })(hookBefore);
-    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  it('updates hook before::create with new item returned', () => {
+    return alterItems(rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore).then(() => {
+      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+    });
   });
 
-  it('updates hook after::find with pagination', async () => {
-    await alterItems(rec => { delete rec.last; })(hookFindPaginate);
-    assert.deepEqual(hookFindPaginate.result.data, [
-      { first: 'John' },
-      { first: 'Jane' }
-    ]);
+  it('updates hook before::create async', () => {
+    const alterFunc = rec => {
+      return new Promise(res => {
+        rec.state = 'UT';
+        res()
+      })
+    }
+    return alterItems(alterFunc)(hookBefore).then(() => {
+      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+    })
   });
 
-  it('updates hook after::find with no pagination', async () => {
-    await alterItems(rec => { rec.new = rec.first; })(hookFind);
-    assert.deepEqual(hookFind.result, [
-      { first: 'John', last: 'Doe', new: 'John' },
-      { first: 'Jane', last: 'Doe', new: 'Jane' }
-    ]);
+  it('updates hook before::create async with new item returned', () => {
+    const alterFunc = rec => {
+      return Promise.resolve(Object.assign({}, rec, { state: 'UT' }))
+    }
+    return alterItems(alterFunc)(hookBefore).then(() => {
+      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+    })
   });
 
-  it('updates hook after', async () => {
-    await alterItems(rec => { rec.new = rec.first; })(hookAfter);
-    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  it('updates hook after::create', () => {
+    return alterItems(rec => { rec.new = rec.first; })(hookAfter).then(() => {
+      assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+    });
   });
 
-  it('updates hook before::create with new item returned', async () => {
-    await alterItems(rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore);
-    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  it('updates hook after::create with new item returned', () => {
+    return alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookAfter).then(() => {
+      assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+    });
   });
 
-  it('updates hook after::find with pagination with new item returned', async () => {
-    await alterItems(rec => Object.assign({}, { first: rec.first }))(hookFindPaginate);
-    assert.deepEqual(hookFindPaginate.result.data, [
-      { first: 'John' },
-      { first: 'Jane' }
-    ]);
+  it('updates hook after::find with pagination', () => {
+    return alterItems(rec => { delete rec.last; })(hookFindPaginate).then(() => {
+      assert.deepEqual(hookFindPaginate.result.data, [
+        { first: 'John' },
+        { first: 'Jane' }
+      ]);
+    });
   });
 
-  it('updates hook after::find with no pagination with new item returned', async () => {
-    await alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookFind);
-    assert.deepEqual(hookFind.result, [
-      { first: 'John', last: 'Doe', new: 'John' },
-      { first: 'Jane', last: 'Doe', new: 'Jane' }
-    ]);
+  it('updates hook after::find with no pagination', () => {
+    return alterItems(rec => { rec.new = rec.first; })(hookFind).then(() => {
+      assert.deepEqual(hookFind.result, [
+        { first: 'John', last: 'Doe', new: 'John' },
+        { first: 'Jane', last: 'Doe', new: 'Jane' }
+      ]);
+    });
   });
 
-  it('updates hook after with new item returned', async () => {
-    await alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookAfter);
-    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  it('updates hook after::find with pagination with new item returned', () => {
+    return alterItems(rec => Object.assign({}, { first: rec.first }))(hookFindPaginate).then(() => {
+      assert.deepEqual(hookFindPaginate.result.data, [
+        { first: 'John' },
+        { first: 'Jane' }
+      ]);
+    });
+  });
+
+  it('updates hook after::find with no pagination with new item returned', () => {
+    return alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookFind).then(() => {
+      assert.deepEqual(hookFind.result, [
+        { first: 'John', last: 'Doe', new: 'John' },
+        { first: 'Jane', last: 'Doe', new: 'Jane' }
+      ]);
+    });
   });
 });
