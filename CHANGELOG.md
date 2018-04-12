@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.11.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.0) (2018-04-12)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.10.0...v4.11.0)
+
+**Implemented enhancements:**
+
+- Fix deletion of array items [\#375](https://github.com/feathers-plus/feathers-hooks-common/pull/375) ([RubyRubenstahl](https://github.com/RubyRubenstahl))
+
+**Fixed bugs:**
+
+- preventChange: example does not have a boolean as the first param. [\#374](https://github.com/feathers-plus/feathers-hooks-common/issues/374)
+
 ## [v4.10.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.10.0) (2018-03-11)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.9.0...v4.10.0)
 
