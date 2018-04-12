@@ -50,6 +50,13 @@ describe('test deleteByDot', () => {
     assert.deepEqual(obj, {});
   });
 
+  it('delete an array item', ()=> {
+    let obj1 = {arr:['a', 'b', 'c']};
+    deleteByDot(obj1, 'arr.1');
+    assert.equal(obj1.arr[1], 'c');
+    assert.equal(obj1.arr.length, 2);
+  });
+
   it('does not throw if path ends prematurely', () => {
     deleteByDot(obj, 'x');
     assert.deepEqual(obj, objTest, '1');
