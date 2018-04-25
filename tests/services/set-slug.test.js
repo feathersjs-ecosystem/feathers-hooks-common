@@ -20,6 +20,7 @@ describe('services setSlug', () => {
     });
 
     it('ignore feathers-rest', () => {
+      hook.params.route = {};
       hook.params.route.storeId = ':storeId';
       hooksCommon.setSlug('stockId')(hook);
       assert.deepEqual(hook.params.query, { a: 'a' });
@@ -28,6 +29,7 @@ describe('services setSlug', () => {
 
   describe('handles raw HTTP clients', () => {
     it('copies slug to query', () => {
+      hook.params.route = {};
       hook.params.route.storeId = '123';
       hooksCommon.setSlug('storeId')(hook);
       assert.deepEqual(hook.params.query, { a: 'a', storeId: '123' });
@@ -36,6 +38,7 @@ describe('services setSlug', () => {
 
   describe('handles field name', () => {
     it('copies slug to query', () => {
+      hook.params.route = {};
       hook.params.route.storeId = '123';
       hooksCommon.setSlug('storeId', 'slugger')(hook);
       assert.equal(hook.params.slugger, '123');
@@ -44,6 +47,7 @@ describe('services setSlug', () => {
 
   describe('handles field name with dot notation', () => {
     it('copies slug to query', () => {
+      hook.params.route = {};
       hook.params.route.storeId = '123';
       hooksCommon.setSlug('storeId', 'query.slugger')(hook);
       assert.deepEqual(hook.params.query, { a: 'a', slugger: '123' });
