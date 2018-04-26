@@ -1,5 +1,21 @@
 # Change Log
 
+## [v4.11.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.1) (2018-04-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.0...v4.11.1)
+
+**Implemented enhancements:**
+
+- fastJoin Guide and API examples now all show pagination being disabled. [\#376](https://github.com/feathers-plus/feathers-hooks-common/issues/376)
+
+**Fixed bugs:**
+
+- set-slug corrected for feathers buzzard [\#381](https://github.com/feathers-plus/feathers-hooks-common/pull/381) ([m4n0v31](https://github.com/m4n0v31))
+
+**Closed issues:**
+
+- sub include relations with Sequelize: Query error [\#378](https://github.com/feathers-plus/feathers-hooks-common/issues/378)
+- Add allowChanges as a hook [\#377](https://github.com/feathers-plus/feathers-hooks-common/issues/377)
+
 ## [v4.11.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.0) (2018-04-12)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.10.0...v4.11.0)
 
