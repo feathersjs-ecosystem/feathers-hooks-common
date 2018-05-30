@@ -18,8 +18,8 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         author: { id: 101, name: 'John' },
         starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ] } ],
       params: {},
@@ -39,8 +39,8 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         author: { id: 101, name: 'John' } } ],
       params: {},
       _loaders: undefined
@@ -59,13 +59,13 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         author: { id: 101, name: 'John' },
         starers: [
-            { id: 102, name: 'Marshall' },
-            { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' }]
+          { id: 102, name: 'Marshall' },
+          { id: 103, name: 'Barbara' },
+          { id: 104, name: 'Aubree' }]
       }],
       params: {},
       _loaders: undefined
@@ -84,8 +84,8 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         starerCount: 3,
         author: { id: 101, name: 'John' },
         starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ]
@@ -107,8 +107,8 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         comments:
         [ { id: 11,
           text: 'John post Marshall comment 11',
@@ -143,8 +143,8 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         comments:
         [ { id: 11,
           text: 'John post Marshall comment 11',
@@ -179,13 +179,13 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         author: { id: 101, name: 'John' },
         starers:
         [ { id: 102, name: 'Marshall' },
-              { id: 103, name: 'Barbara' },
-              { id: 104, name: 'Aubree' } ]
+          { id: 103, name: 'Barbara' },
+          { id: 104, name: 'Aubree' } ]
       } ],
       params: {},
       _loaders: undefined
@@ -204,13 +204,13 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1 },
-              { userId: 103, points: 1 },
-              { userId: 104, points: 1 } ],
+          { userId: 103, points: 1 },
+          { userId: 104, points: 1 } ],
         author: { id: 101, name: 'John' },
         starers:
         [ { id: 102, name: 'Marshall' },
-              { id: 103, name: 'Barbara' },
-              { id: 104, name: 'Aubree' } ]
+          { id: 103, name: 'Barbara' },
+          { id: 104, name: 'Aubree' } ]
       } ],
       params: {},
       _loaders: undefined
@@ -229,13 +229,13 @@ describe('service fast-join', () => {
         starIds: [ 102, 103, 104 ],
         reputation:
         [ { userId: 102, points: 1, author: 'Marshall' },
-              { userId: 103, points: 1, author: 'Barbara' },
-              { userId: 104, points: 1, author: 'Aubree' } ],
+          { userId: 103, points: 1, author: 'Barbara' },
+          { userId: 104, points: 1, author: 'Aubree' } ],
         author: { id: 101, name: 'John' },
         starers:
         [ { id: 102, name: 'Marshall' },
-              { id: 103, name: 'Barbara' },
-              { id: 104, name: 'Aubree' } ],
+          { id: 103, name: 'Barbara' },
+          { id: 104, name: 'Aubree' } ],
         comments:
         [ { id: 11,
           text: 'John post Marshall comment 11',
@@ -259,8 +259,8 @@ describe('service fast-join', () => {
         author: { id: 102, name: 'Marshall' },
         starers:
         [ { id: 101, name: 'John' },
-                { id: 103, name: 'Barbara' },
-                { id: 104, name: 'Aubree' } ],
+          { id: 103, name: 'Barbara' },
+          { id: 104, name: 'Aubree' } ],
         comments:
         [ { id: 14,
           text: 'Marshall post John comment 14',
@@ -484,7 +484,7 @@ async function ex8 () {
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
         return getResultsByKey(keys, result, user => user.id, '!');
       },
-        { context }
+      { context }
       );
     },
 
@@ -523,14 +523,14 @@ async function ex9 () {
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
         return getResultsByKey(keys, result, user => user.id, '!');
       },
-        { context }
+      { context }
       );
 
       context._loaders.comments.postId = new BatchLoader(async (keys, context) => {
         const result = await comments.find(makeCallingParams(context, { postId: { $in: getUniqueKeys(keys) } }));
         return getResultsByKey(keys, result, comment => comment.postId, '[!]');
       },
-        { context }
+      { context }
       );
     },
 
