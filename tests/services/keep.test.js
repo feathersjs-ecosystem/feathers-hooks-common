@@ -181,4 +181,18 @@ describe('services keep', () => {
       assert.deepEqual(hookBefore.data, {});
     });
   });
+
+  describe('conserves falsy', () => {
+    beforeEach(() => {
+      hookBefore = {
+        type: 'before',
+        method: 'update',
+        result: null
+      };
+    });
+    it('conserves null result', () => {
+      hooks.keep('xx')(hookBefore);
+      assert.equal(hookBefore.result, null);
+    });
+  });
 });
