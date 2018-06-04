@@ -58,6 +58,10 @@ describe('services byDot', () => {
     it('does not throw on missing path, at leaf', () => {
       assert.equal(getByDot(obj, 'manager.employee.address.xxx'), undefined);
     });
+
+    it('does not throw on null', () => {
+      assert.equal(getByDot(null, 'manager.employee'), undefined);
+    });
   });
 
   describe('test setByDot', () => {
