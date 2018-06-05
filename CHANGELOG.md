@@ -1,5 +1,36 @@
 # Change Log
 
+## [v4.11.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.3) (2018-06-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.2...v4.11.3)
+
+## [v4.11.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.2) (2018-06-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.1...v4.11.2)
+
+**Implemented enhancements:**
+
+- keep transform null result to an empty object. [\#394](https://github.com/feathers-plus/feathers-hooks-common/issues/394)
+- runHook before [\#384](https://github.com/feathers-plus/feathers-hooks-common/issues/384)
+
+**Fixed bugs:**
+
+- `discard` fails on null properties [\#368](https://github.com/feathers-plus/feathers-hooks-common/issues/368)
+
+**Closed issues:**
+
+- checkContext should use isProvider [\#393](https://github.com/feathers-plus/feathers-hooks-common/issues/393)
+- Issue with populate subdocument field [\#392](https://github.com/feathers-plus/feathers-hooks-common/issues/392)
+- Only serialize a populated field if it exists [\#391](https://github.com/feathers-plus/feathers-hooks-common/issues/391)
+- Doc url in header [\#388](https://github.com/feathers-plus/feathers-hooks-common/issues/388)
+- Coerce result [\#387](https://github.com/feathers-plus/feathers-hooks-common/issues/387)
+
+**Merged pull requests:**
+
+- getByDot no-ops non-obejct records [\#403](https://github.com/feathers-plus/feathers-hooks-common/pull/403) ([eddyystop](https://github.com/eddyystop))
+- keep hook ignores records which are not objects [\#402](https://github.com/feathers-plus/feathers-hooks-common/pull/402) ([eddyystop](https://github.com/eddyystop))
+- closes \#368 [\#400](https://github.com/feathers-plus/feathers-hooks-common/pull/400) ([bertho-zero](https://github.com/bertho-zero))
+- Enable Semistandard and update code style [\#396](https://github.com/feathers-plus/feathers-hooks-common/pull/396) ([daffl](https://github.com/daffl))
+- Update all dependencies and badges [\#395](https://github.com/feathers-plus/feathers-hooks-common/pull/395) ([daffl](https://github.com/daffl))
+
 ## [v4.11.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.1) (2018-04-26)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.0...v4.11.1)
 
@@ -450,7 +481,6 @@
 
 - Soft delete doubles calls for service.get [\#161](https://github.com/feathers-plus/feathers-hooks-common/issues/161)
 - test for validate-schema with ajv instance passed [\#162](https://github.com/feathers-plus/feathers-hooks-common/pull/162) ([beeplin](https://github.com/beeplin))
-- Soft delete will call service.get only once [\#160](https://github.com/feathers-plus/feathers-hooks-common/pull/160) ([NikitaVlaznev](https://github.com/NikitaVlaznev))
 
 **Merged pull requests:**
 
@@ -487,6 +517,7 @@
 - Disable multi-record patch and update [\#29](https://github.com/feathers-plus/feathers-hooks-common/issues/29)
 - disable hook seems to have wrong true/false logic [\#28](https://github.com/feathers-plus/feathers-hooks-common/issues/28)
 - Distinct Search hook [\#16](https://github.com/feathers-plus/feathers-hooks-common/issues/16)
+- Soft delete will call service.get only once [\#160](https://github.com/feathers-plus/feathers-hooks-common/pull/160) ([NikitaVlaznev](https://github.com/NikitaVlaznev))
 
 **Closed issues:**
 
