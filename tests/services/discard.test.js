@@ -179,5 +179,24 @@ describe('services discard', () => {
         id: 'b'
       });
     });
+
+    it('null prop', () => {
+      let hook = {
+        type: 'after',
+        method: 'get',
+        result: {
+          property: null,
+          other: 'bar'
+        },
+        query: {},
+      };
+
+      hooks.discard('property.secret')(hook);
+
+      assert.deepEqual(hook.result, {
+        property: null,
+        other: 'bar'
+      });
+    });
   });
 });
