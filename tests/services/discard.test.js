@@ -188,7 +188,7 @@ describe('services discard', () => {
           property: null,
           other: 'bar'
         },
-        query: {},
+        query: {}
       };
 
       hooks.discard('property.secret')(hook);
