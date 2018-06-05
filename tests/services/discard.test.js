@@ -163,9 +163,9 @@ describe('services discard', () => {
           email: 'foo',
           password: 'bar',
           name: 'Rafael',
-          id: 'b',
+          id: 'b'
         },
-        query: {},
+        query: {}
       };
 
       hooks.discard('email', 'password')(hook);
@@ -173,10 +173,10 @@ describe('services discard', () => {
       assert.deepEqual(hook.result, {
         roles: [ 'super' ],
         _id: 'a',
-        //email: 'foo',
-        //password: 'bar',
+        // email: 'foo',
+        // password: 'bar',
         name: 'Rafael',
-        id: 'b',
+        id: 'b'
       });
     });
   });

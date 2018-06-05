@@ -98,7 +98,7 @@ describe('services preventChanges', () => {
       let context = preventChanges(false, 'name', 'first')(clone(hookBefore));
       assert.deepEqual(context.data,
         { last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } },
-      '1');
+        '1');
 
       context = preventChanges(false, 'name', 'a')(clone(hookBefore));
       assert.deepEqual(context.data,

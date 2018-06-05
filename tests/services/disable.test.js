@@ -94,7 +94,7 @@ describe('services disable', () => {
     it('does not allow when false', (next) => {
       hooks.disable(
         () => new Promise(resolve => { resolve(false); })
-        )(hookSocketio)
+      )(hookSocketio)
         .catch(() => { next(); }); // todo Note this cannot be caught with assert.thrown
     });
   });

@@ -38,7 +38,7 @@ const userBatchLoader = new BatchLoader(async (keys, context) => {
   const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
   return getResultsByKey(keys, result, user => user.id, '!');
 },
-  { context: {}, cacheMap: cacheMapUsers }
+{ context: {}, cacheMap: cacheMapUsers }
 );
 
 function services () {
@@ -135,8 +135,8 @@ describe('services fastJoin & cache', () => {
           author: { id: 101, name: 'John' },
           starers:
           [ { id: 102, name: 'Marshall' },
-                { id: 103, name: 'Barbara' },
-                { id: 104, name: 'Aubree' } ]
+            { id: 103, name: 'Barbara' },
+            { id: 104, name: 'Aubree' } ]
         } ],
         params: {},
         _loaders: undefined
@@ -157,8 +157,8 @@ describe('services fastJoin & cache', () => {
           author: { id: 101, name: 'John' },
           starers:
           [ { id: 102, name: 'Marshall' },
-                { id: 103, name: 'Barbara' },
-                { id: 104, name: 'Aubree' } ]
+            { id: 103, name: 'Barbara' },
+            { id: 104, name: 'Aubree' } ]
         } ],
         params: {},
         _loaders: undefined
@@ -186,8 +186,8 @@ describe('services fastJoin & cache', () => {
           author: { id: 101, name: 'John' },
           starers:
           [ { id: 102, name: 'Marshall' },
-                { id: 103, name: 'Barbara' },
-                { id: 104, name: 'Aubree' } ]
+            { id: 103, name: 'Barbara' },
+            { id: 104, name: 'Aubree' } ]
         } ],
         params: {},
         _loaders: undefined
@@ -210,8 +210,8 @@ describe('services fastJoin & cache', () => {
           author: { id: 101, name: 'John' },
           starers:
           [ { id: 102, name: 'Marshall' },
-                { id: 103, name: 'Barbara' },
-                { id: 104, name: 'Aubree' } ]
+            { id: 103, name: 'Barbara' },
+            { id: 104, name: 'Aubree' } ]
         } ],
         params: {},
         _loaders: undefined
@@ -250,7 +250,7 @@ async function ex8 () {
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
         return getResultsByKey(keys, result, user => user.id, '!');
       },
-        { context }
+      { context }
       );
     },
 
@@ -282,7 +282,7 @@ async function ex8a () {
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
         return getResultsByKey(keys, result, user => user.id, '!');
       },
-        { context, cacheMap }
+      { context, cacheMap }
       );
     },
 

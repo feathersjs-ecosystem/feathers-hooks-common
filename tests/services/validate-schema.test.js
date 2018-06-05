@@ -189,8 +189,8 @@ describe('services validateSchema', () => {
         validate: (item) => new Promise((resolve, reject) => {
           setTimeout(() => {
             (item.length === 3 || item.length === 4)
-            ? resolve(true)
-            : resolve(false);
+              ? resolve(true)
+              : resolve(false);
           }, 50);
         })
       });

@@ -68,9 +68,9 @@ describe('services isNot - predicate', () => {
         assert.equal(result, false);
         done();
       })
-    .catch(() => {
-      assert.equal(true, false, 'unexpected catch');
-    });
+      .catch(() => {
+        assert.equal(true, false, 'unexpected catch');
+      });
   });
 
   it('negates an async function 2', (done) => {

@@ -1,5 +1,4 @@
 
-
 if (process.version.substr(0, 2) >= 'v8') {
   require('../../tests-async/act-on-dispatch.test');
 } else {

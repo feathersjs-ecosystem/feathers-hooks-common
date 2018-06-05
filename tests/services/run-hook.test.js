@@ -26,13 +26,13 @@ describe('services runHooks', () => {
     const data = { name: 'john' };
 
     return Promise.resolve(data)
-        .then(runHooks1(testHook))
-        .then(result => {
-          assert.deepEqual(result, data, 'test result');
-          assert.deepEqual(hook, {
-            app, params, service, _called: 'called', result: data, type: 'after'
-          }, 'test hook');
-        });
+      .then(runHooks1(testHook))
+      .then(result => {
+        assert.deepEqual(result, data, 'test result');
+        assert.deepEqual(hook, {
+          app, params, service, _called: 'called', result: data, type: 'after'
+        }, 'test hook');
+      });
   });
 
   it('get expected array result', () => {

@@ -333,9 +333,9 @@ describe('services iff - runs .else()', () => {
       hookFcnSync
     )
       .else(
-      hookFcnSync,
-      hookFcnSync,
-      hookFcnSync
+        hookFcnSync,
+        hookFcnSync,
+        hookFcnSync
       )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 3);
@@ -492,9 +492,9 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
       hookFcnCb
     )
       .else(
-      hookFcnSync,
-      hooks.iff(true, hookFcnAsync),
-      hookFcnSync
+        hookFcnSync,
+        hooks.iff(true, hookFcnAsync),
+        hookFcnSync
       )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
@@ -510,9 +510,9 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
       hookFcnCb
     )
       .else(
-      hookFcnSync,
-      hooks.iff(false, hookFcnSync).else(hookFcnAsync),
-      hookFcnSync
+        hookFcnSync,
+        hooks.iff(false, hookFcnSync).else(hookFcnAsync),
+        hookFcnSync
       )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
@@ -574,10 +574,10 @@ describe('services iff - multiple iff() sequentially', () => {
       hookFcnCb
     )
       .else(
-      hookFcnSync,
-      hooks.iff(true, hookFcnAsync),
-      hooks.iff(false, hookFcnSync).else(hookFcnCb),
-      hookFcnSync
+        hookFcnSync,
+        hooks.iff(true, hookFcnAsync),
+        hooks.iff(false, hookFcnSync).else(hookFcnCb),
+        hookFcnSync
       )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
