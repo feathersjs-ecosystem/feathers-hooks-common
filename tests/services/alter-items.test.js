@@ -61,7 +61,7 @@ describe('services alterItems', () => {
     try {
       alterItems('no-func');
     } catch (error) {
-      assert.equal(error.message, "Function required. (alter)");
+      assert.equal(error.message, 'Function required. (alter)');
       return;
     }
     throw new Error('alterItems does not throw an error if 1st param is not a function');
@@ -76,7 +76,7 @@ describe('services alterItems', () => {
   it('updates hook before::create', () => {
     return alterItems(rec => { rec.state = 'UT'; })(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    })
+    });
   });
 
   it('updates hook before::create with new item returned', () => {
@@ -87,23 +87,23 @@ describe('services alterItems', () => {
 
   it('updates hook before::create async', () => {
     const alterFunc = rec => {
-      return new Promise(res => {
+      return new Promise(resolve => {
         rec.state = 'UT';
-        res()
-      })
-    }
+        resolve();
+      });
+    };
     return alterItems(alterFunc)(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    })
+    });
   });
 
   it('updates hook before::create async with new item returned', () => {
     const alterFunc = rec => {
-      return Promise.resolve(Object.assign({}, rec, { state: 'UT' }))
-    }
+      return Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
+    };
     return alterItems(alterFunc)(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    })
+    });
   });
 
   it('updates hook after::create', () => {
