@@ -1,5 +1,18 @@
 # Change Log
 
+## [v4.12.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.12.0) (2018-06-05)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.3...v4.12.0)
+
+**Implemented enhancements:**
+
+- Async functions in alterItems don't work [\#367](https://github.com/feathers-plus/feathers-hooks-common/issues/367)
+- Add hooks for GraphQL [\#319](https://github.com/feathers-plus/feathers-hooks-common/issues/319)
+
+**Merged pull requests:**
+
+- Correct linting. [\#404](https://github.com/feathers-plus/feathers-hooks-common/pull/404) ([eddyystop](https://github.com/eddyystop))
+- alterItems now works with an async callback function [\#371](https://github.com/feathers-plus/feathers-hooks-common/pull/371) ([sean-nicholas](https://github.com/sean-nicholas))
+
 ## [v4.11.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.3) (2018-06-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.2...v4.11.3)
 
@@ -481,6 +494,7 @@
 
 - Soft delete doubles calls for service.get [\#161](https://github.com/feathers-plus/feathers-hooks-common/issues/161)
 - test for validate-schema with ajv instance passed [\#162](https://github.com/feathers-plus/feathers-hooks-common/pull/162) ([beeplin](https://github.com/beeplin))
+- Soft delete will call service.get only once [\#160](https://github.com/feathers-plus/feathers-hooks-common/pull/160) ([NikitaVlaznev](https://github.com/NikitaVlaznev))
 
 **Merged pull requests:**
 
@@ -517,7 +531,6 @@
 - Disable multi-record patch and update [\#29](https://github.com/feathers-plus/feathers-hooks-common/issues/29)
 - disable hook seems to have wrong true/false logic [\#28](https://github.com/feathers-plus/feathers-hooks-common/issues/28)
 - Distinct Search hook [\#16](https://github.com/feathers-plus/feathers-hooks-common/issues/16)
-- Soft delete will call service.get only once [\#160](https://github.com/feathers-plus/feathers-hooks-common/pull/160) ([NikitaVlaznev](https://github.com/NikitaVlaznev))
 
 **Closed issues:**
 
