@@ -1,14 +1,12 @@
 
-const {
-  assert
-} = require('chai');
+const { assert } = require('chai');
 
 const hooks = require('../../lib/services');
 
-var hookBefore;
-var hookAfter;
-var hookFindPaginate;
-var hookFind;
+let hookBefore;
+let hookAfter;
+let hookFindPaginate;
+let hookFind;
 
 describe('services keep', () => {
   describe('removes fields', () => {
@@ -179,6 +177,36 @@ describe('services keep', () => {
     it('ignores bad or missing no dot path', () => {
       hooks.keep('xx')(hookBefore);
       assert.deepEqual(hookBefore.data, {});
+    });
+  });
+
+  describe('ignore non-object records', () => {
+    beforeEach(() => {
+      hookBefore = {
+        type: 'before',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }, null, undefined, Infinity]
+      };
+      hookAfter = {
+        type: 'after',
+        method: 'create',
+        params: { provider: 'rest' },
+        result: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] };
+    });
+
+    it('before', () => {
+      hooks.keep('empl')(hookBefore);
+      assert.deepEqual(hookBefore.data,
+        [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }, null, undefined, Infinity]
+      );
+    });
+
+    it('after', () => {
+      hooks.keep('first')(hookAfter);
+      assert.deepEqual(hookAfter.result,
+        [{ first: 'Jane' }, null, undefined, Infinity]
+      );
     });
   });
 });
