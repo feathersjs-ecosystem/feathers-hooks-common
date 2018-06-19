@@ -45,16 +45,14 @@ describe('services alterItems', () => {
   });
 
   it('default func is a no-op', () => {
-    return alterItems()(hookBefore).then(() => {
-      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
-    });
+    alterItems()(hookBefore);
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
   });
 
   it('context is 2nd param', () => {
     let contextParam;
-    return alterItems((rec, context) => { contextParam = context; })(hookBefore).then(() => {
-      assert.deepEqual(contextParam, hookBefore);
-    });
+    alterItems((rec, context) => { contextParam = context; })(hookBefore);
+    assert.deepEqual(contextParam, hookBefore);
   });
 
   it('throws if 1st param is not a func', () => {
@@ -67,26 +65,72 @@ describe('services alterItems', () => {
     throw new Error('alterItems does not throw an error if 1st param is not a function');
   });
 
+  it('updates hook before::create', () => {
+    alterItems(rec => { rec.state = 'UT'; })(hookBefore);
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  });
+
+  it('updates hook after::find with pagination', () => {
+    alterItems(rec => { delete rec.last; })(hookFindPaginate);
+    assert.deepEqual(hookFindPaginate.result.data, [
+      { first: 'John' },
+      { first: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after::find with no pagination', () => {
+    alterItems(rec => { rec.new = rec.first; })(hookFind);
+    assert.deepEqual(hookFind.result, [
+      { first: 'John', last: 'Doe', new: 'John' },
+      { first: 'Jane', last: 'Doe', new: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after', () => {
+    alterItems(rec => { rec.new = rec.first; })(hookAfter);
+    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  });
+
+  it('updates hook before::create with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore);
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  });
+
+  it('updates hook after::find with pagination with new item returned', () => {
+    alterItems(rec => Object.assign({}, { first: rec.first }))(hookFindPaginate);
+    assert.deepEqual(hookFindPaginate.result.data, [
+      { first: 'John' },
+      { first: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after::find with pagination with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookFind);
+    assert.deepEqual(hookFind.result, [
+      { first: 'John', last: 'Doe', new: 'John' },
+      { first: 'Jane', last: 'Doe', new: 'Jane' }
+    ]);
+  });
+
+  it('updates hook after with new item returned', () => {
+    alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookAfter);
+    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  });
+
   it('returns a promise that contains context', () => {
-    return alterItems(rec => { rec.state = 'UT'; })(hookBefore).then(context => {
+    return alterItems(async rec => { rec.state = 'UT'; })(hookBefore).then(context => {
       assert.deepEqual(context, hookBefore);
     });
   });
 
-  it('updates hook before::create', () => {
-    return alterItems(rec => { rec.state = 'UT'; })(hookBefore).then(() => {
-      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    });
-  });
-
   it('updates hook before::create with new item returned', () => {
-    return alterItems(rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore).then(() => {
+    return alterItems(async rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
     });
   });
 
   it('updates hook before::create async', () => {
-    const alterFunc = rec => {
+    const alterFunc = async rec => {
       return new Promise(resolve => {
         rec.state = 'UT';
         resolve();
@@ -98,7 +142,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook before::create async with new item returned', () => {
-    const alterFunc = rec => {
+    const alterFunc = async rec => {
       return Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
     };
     return alterItems(alterFunc)(hookBefore).then(() => {
@@ -107,19 +151,19 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::create', () => {
-    return alterItems(rec => { rec.new = rec.first; })(hookAfter).then(() => {
+    return alterItems(async rec => { rec.new = rec.first; })(hookAfter).then(() => {
       assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
     });
   });
 
   it('updates hook after::create with new item returned', () => {
-    return alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookAfter).then(() => {
+    return alterItems(async rec => Object.assign({}, rec, { new: rec.first }))(hookAfter).then(() => {
       assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
     });
   });
 
   it('updates hook after::find with pagination', () => {
-    return alterItems(rec => { delete rec.last; })(hookFindPaginate).then(() => {
+    return alterItems(async rec => { delete rec.last; })(hookFindPaginate).then(() => {
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'John' },
         { first: 'Jane' }
@@ -128,7 +172,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with no pagination', () => {
-    return alterItems(rec => { rec.new = rec.first; })(hookFind).then(() => {
+    return alterItems(async rec => { rec.new = rec.first; })(hookFind).then(() => {
       assert.deepEqual(hookFind.result, [
         { first: 'John', last: 'Doe', new: 'John' },
         { first: 'Jane', last: 'Doe', new: 'Jane' }
@@ -137,7 +181,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with pagination with new item returned', () => {
-    return alterItems(rec => Object.assign({}, { first: rec.first }))(hookFindPaginate).then(() => {
+    return alterItems(async rec => Object.assign({}, { first: rec.first }))(hookFindPaginate).then(() => {
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'John' },
         { first: 'Jane' }
@@ -146,7 +190,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with no pagination with new item returned', () => {
-    return alterItems(rec => Object.assign({}, rec, { new: rec.first }))(hookFind).then(() => {
+    return alterItems(async rec => Object.assign({}, rec, { new: rec.first }))(hookFind).then(() => {
       assert.deepEqual(hookFind.result, [
         { first: 'John', last: 'Doe', new: 'John' },
         { first: 'Jane', last: 'Doe', new: 'Jane' }
