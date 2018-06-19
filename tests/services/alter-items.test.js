@@ -118,23 +118,24 @@ describe('services alterItems', () => {
   });
 
   it('returns a promise that contains context', () => {
-    return alterItems(async rec => { rec.state = 'UT'; })(hookBefore).then(context => {
+    return alterItems(rec => {
+      rec.state = 'UT';
+      return Promise.resolve();
+    })(hookBefore).then(context => {
       assert.deepEqual(context, hookBefore);
     });
   });
 
   it('updates hook before::create with new item returned', () => {
-    return alterItems(async rec => Object.assign({}, rec, { state: 'UT' }))(hookBefore).then(() => {
+    return alterItems(rec => Promise.resolve(Object.assign({}, rec, { state: 'UT' })))(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
     });
   });
 
   it('updates hook before::create async', () => {
-    const alterFunc = async rec => {
-      return new Promise(resolve => {
-        rec.state = 'UT';
-        resolve();
-      });
+    const alterFunc = rec => {
+      rec.state = 'UT';
+      return Promise.resolve();
     };
     return alterItems(alterFunc)(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
@@ -142,7 +143,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook before::create async with new item returned', () => {
-    const alterFunc = async rec => {
+    const alterFunc = rec => {
       return Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
     };
     return alterItems(alterFunc)(hookBefore).then(() => {
@@ -151,19 +152,25 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::create', () => {
-    return alterItems(async rec => { rec.new = rec.first; })(hookAfter).then(() => {
+    return alterItems(rec => {
+      rec.new = rec.first;
+      return Promise.resolve();
+    })(hookAfter).then(() => {
       assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
     });
   });
 
   it('updates hook after::create with new item returned', () => {
-    return alterItems(async rec => Object.assign({}, rec, { new: rec.first }))(hookAfter).then(() => {
+    return alterItems(rec => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(hookAfter).then(() => {
       assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
     });
   });
 
   it('updates hook after::find with pagination', () => {
-    return alterItems(async rec => { delete rec.last; })(hookFindPaginate).then(() => {
+    return alterItems(rec => {
+      delete rec.last;
+      return Promise.resolve();
+    })(hookFindPaginate).then(() => {
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'John' },
         { first: 'Jane' }
@@ -172,7 +179,10 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with no pagination', () => {
-    return alterItems(async rec => { rec.new = rec.first; })(hookFind).then(() => {
+    return alterItems(rec => {
+      rec.new = rec.first;
+      return Promise.resolve();
+    })(hookFind).then(() => {
       assert.deepEqual(hookFind.result, [
         { first: 'John', last: 'Doe', new: 'John' },
         { first: 'Jane', last: 'Doe', new: 'Jane' }
@@ -181,7 +191,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with pagination with new item returned', () => {
-    return alterItems(async rec => Object.assign({}, { first: rec.first }))(hookFindPaginate).then(() => {
+    return alterItems(rec => Promise.resolve(Object.assign({}, { first: rec.first })))(hookFindPaginate).then(() => {
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'John' },
         { first: 'Jane' }
@@ -190,7 +200,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook after::find with no pagination with new item returned', () => {
-    return alterItems(async rec => Object.assign({}, rec, { new: rec.first }))(hookFind).then(() => {
+    return alterItems(rec => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(hookFind).then(() => {
       assert.deepEqual(hookFind.result, [
         { first: 'John', last: 'Doe', new: 'John' },
         { first: 'Jane', last: 'Doe', new: 'Jane' }
