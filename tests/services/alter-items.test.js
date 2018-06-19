@@ -143,9 +143,7 @@ describe('services alterItems', () => {
   });
 
   it('updates hook before::create async with new item returned', () => {
-    const alterFunc = rec => {
-      return Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
-    };
+    const alterFunc = rec => Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
     return alterItems(alterFunc)(hookBefore).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
     });
