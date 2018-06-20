@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.12.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.12.1) (2018-06-20)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.12.0...v4.12.1)
+
+**Closed issues:**
+
+- \[Question\] Modify Another Resources using An Services [\#407](https://github.com/feathers-plus/feathers-hooks-common/issues/407)
+
+**Merged pull requests:**
+
+- restore alterItems for works with sync methods [\#409](https://github.com/feathers-plus/feathers-hooks-common/pull/409) ([bertho-zero](https://github.com/bertho-zero))
+
 ## [v4.12.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.12.0) (2018-06-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.3...v4.12.0)
 
@@ -7,11 +18,11 @@
 
 - Async functions in alterItems don't work [\#367](https://github.com/feathers-plus/feathers-hooks-common/issues/367)
 - Add hooks for GraphQL [\#319](https://github.com/feathers-plus/feathers-hooks-common/issues/319)
+- alterItems now works with an async callback function [\#371](https://github.com/feathers-plus/feathers-hooks-common/pull/371) ([sean-nicholas](https://github.com/sean-nicholas))
 
 **Merged pull requests:**
 
 - Correct linting. [\#404](https://github.com/feathers-plus/feathers-hooks-common/pull/404) ([eddyystop](https://github.com/eddyystop))
-- alterItems now works with an async callback function [\#371](https://github.com/feathers-plus/feathers-hooks-common/pull/371) ([sean-nicholas](https://github.com/sean-nicholas))
 
 ## [v4.11.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.11.3) (2018-06-05)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.11.2...v4.11.3)
