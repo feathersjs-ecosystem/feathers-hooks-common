@@ -1,5 +1,24 @@
 # Change Log
 
+## [v4.14.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.0) (2018-06-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.13.0...v4.14.0)
+
+## [v4.13.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.13.0) (2018-06-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.12.1...v4.13.0)
+
+**Fixed bugs:**
+
+- SoftDelete catches all errors [\#257](https://github.com/feathers-plus/feathers-hooks-common/issues/257)
+
+**Closed issues:**
+
+- softDelete does not trace the errors that occur in the get call [\#389](https://github.com/feathers-plus/feathers-hooks-common/issues/389)
+
+**Merged pull requests:**
+
+- Added callingParams, callingParamsDefault hooks. Replaced makeCallingParams [\#411](https://github.com/feathers-plus/feathers-hooks-common/pull/411) ([eddyystop](https://github.com/eddyystop))
+- Update soft-delete.js [\#410](https://github.com/feathers-plus/feathers-hooks-common/pull/410) ([bertho-zero](https://github.com/bertho-zero))
+
 ## [v4.12.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.12.1) (2018-06-20)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.12.0...v4.12.1)
 
