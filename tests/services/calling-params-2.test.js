@@ -4,7 +4,7 @@ const { makeCallingParams } = require('../../lib');
 
 let context;
 
-describe('service make-calling-params.test.js', () => {
+describe('service calling-params-2.test.js', () => {
   beforeEach(() => {
     context = { query: { aaa: 'bbb' }, params: { foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
   });

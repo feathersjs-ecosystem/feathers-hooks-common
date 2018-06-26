@@ -7,6 +7,8 @@ const hookNames = [
   'actOnDispatch',
   'alterItems',
   'cache',
+  'callingParams',
+  'callingParamsDefaults',
   'callbackToPromise',
   'checkContext',
   'checkContextIf',
