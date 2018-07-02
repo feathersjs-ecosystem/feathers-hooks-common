@@ -538,6 +538,28 @@ let provider;
           });
       });
     });
+
+    describe('populate does not change original schema object', () => {
+      it('check include field', () => {
+        const hook = clone(hookAfterArray);
+        hook.app = app;
+
+        const includeOptions = () => ({
+          service: 'posts',
+          nameAs: 'post',
+          parentField: 'postId',
+          childField: 'id'
+        });
+
+        const include = makeInclude(type, includeOptions());
+        const expected = makeInclude(type, includeOptions());
+
+        return populate({ schema: {include}, profile: true })(hook)
+          .then(hook1 => {
+            assert.deepEqual(include, expected);
+          });
+      });
+    });
   });
 });
 
