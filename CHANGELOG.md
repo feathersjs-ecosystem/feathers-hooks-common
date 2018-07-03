@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.14.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.1) (2018-07-03)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.0...v4.14.1)
+
+**Merged pull requests:**
+
+- \[security issue\] fix populate injecting provider into source schema argument [\#414](https://github.com/feathers-plus/feathers-hooks-common/pull/414) ([antarasi](https://github.com/antarasi))
+
 ## [v4.14.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.0) (2018-06-26)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.13.0...v4.14.0)
 
