@@ -1,5 +1,19 @@
 # Change Log
 
+## [v4.14.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.3) (2018-07-09)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.2...v4.14.3)
+
+## [v4.14.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.2) (2018-07-09)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.1...v4.14.2)
+
+**Closed issues:**
+
+- How to stop requests from 'external'? [\#415](https://github.com/feathers-plus/feathers-hooks-common/issues/415)
+
+**Merged pull requests:**
+
+- Fix prevent changes and discard hooks [\#406](https://github.com/feathers-plus/feathers-hooks-common/pull/406) ([SteffenLanger](https://github.com/SteffenLanger))
+
 ## [v4.14.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.1) (2018-07-03)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.0...v4.14.1)
 
