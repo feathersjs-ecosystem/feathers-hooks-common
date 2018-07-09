@@ -37,7 +37,7 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } } };
+        data: { first: 'John', last: 'Doe', 'name.first': 'John', a: { b: undefined, c: { d: { e: 1 } } } } };
     });
 
     it('does not throw if props not found', () => {
@@ -51,6 +51,7 @@ describe('services preventChanges', () => {
       assert.throw(() => preventChanges('name', 'a.b')(hookBefore));
       assert.throw(() => preventChanges('name', 'a.c')(hookBefore));
       assert.throw(() => preventChanges('name', 'a.c.d.e')(hookBefore));
+      assert.throw(() => preventChanges('name.first')(hookBefore));
     });
   });
 
