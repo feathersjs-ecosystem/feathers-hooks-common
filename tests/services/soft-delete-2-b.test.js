@@ -123,6 +123,66 @@ describe('services softDelete2-b', () => {
     });
   });
 
+  describe('test context.params.$ignoreDeletedAt', () => {
+    let app;
+    let users;
+    let hooksRun;
+
+    beforeEach(() => {
+      hooksRun = [];
+      app = feathers()
+        .configure(services({ recs: recsInit }));
+      users = app.service('users');
+    });
+
+    it('returns deleted record', () => {
+      users.hooks({
+        before: {
+          all: softDelete2()
+        },
+        after: {
+          all: softDelete2()
+        }
+      });
+
+      return users.get(4, { $ignoreDeletedAt: true })
+        .then(data => {
+          assert.deepEqual(data, recsInit[4], 'unexpected data');
+          assert.deepEqual(hooksRun, [], 'unexpected hooksRun');
+        });
+    });
+  });
+
+  describe('test allowIgnoreDeletedAt', () => {
+    let app;
+    let users;
+
+    beforeEach(() => {
+      app = feathers()
+        .configure(services({ recs: recsInit }));
+      users = app.service('users');
+    });
+
+    it('throws on inactive record', () => {
+      users.hooks({
+        before: {
+          all: softDelete2({ allowIgnoreDeletedAt: false })
+        },
+        after: {
+          all: softDelete2({ allowIgnoreDeletedAt: false })
+        }
+      });
+
+      return users.get(4, { $ignoreDeletedAt: true })
+        .then(() => {
+          assert(false, 'data returned unexpectedly');
+        })
+        .catch(() => {
+          assert(true, 'failed correctly');
+        });
+    });
+  });
+
   describe('test custom probing get function', () => {
     let app;
     let users;
