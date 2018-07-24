@@ -12,24 +12,31 @@ const local = require('@feathersjs/authentication-local');
 const memory = require('feathers-memory');
 const socketio = require('@feathersjs/socketio');
 
+const { restrictToOwner } = require('feathers-authentication-hooks');
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
-const { softDelete2 } = require('../../lib/services');
+const { softDelete2, paramsForServer, paramsFromClient } = require('../../lib/services');
 
 const ioOptions = {
   transports: ['websocket'],
   forceNew: true,
   reconnection: false
 };
+const deletedMessage = 'Record not found, is logically deleted.';
+const restrictToOwnerMessage = 'You do not have the permissions to access this.';
+let restrictCalls = [];
 
 const usersDB = [ // Note that deletedAt is set to -1 upon users.create()
   { id: 0, email: 'feathersjs@gmail.com', password: 'hooks-common' },
-  { id: 1, email: 'react@gmail.com', password: 'redux' }
+  { id: 1, email: 'react@gmail.com', password: 'redux' }, // deleted during init
+  { id: 2, email: 'vuet@gmail.com', password: 'vuex' }
 ];
 
 const postsDB = [ // Note that deletedAt is set to -1 upon posts.create()
-  { id: 0, subject: 'post 0' },
-  { id: 1, subject: 'post 1' }
+  { id: 0, subject: 'post 0', ownerId: 0 },
+  { id: 1, subject: 'post 1', ownerId: 0 }, // deleted during init
+  { id: 2, subject: 'post 2', ownerId: 2 },
+  { id: 3, subject: 'post 3', ownerId: 2 } // deleted during remove test
 ];
 
 describe('services softDelete2-c', () => {
@@ -104,33 +111,29 @@ describe('services softDelete2-c', () => {
     let usersClient;
     let postsClient;
 
-    beforeEach(function (done) {
+    before(async function () {
       // configure server
       ({ app, server } = makeServerAuth());
       users = app.service('users');
       posts = app.service('posts');
-      server.on('listening', () => done());
+      server.on('listening', () => {
+        console.log('Listening');
+      });
 
       // configure client
       appClient = makeClientAuth();
       usersClient = appClient.service('users');
       postsClient = appClient.service('posts');
-    });
 
-    afterEach(function (done) {
-      server.shutdown(() => { done(); });
-    });
-
-    // We're testing a few things at once to save the time required to login for each separately.
-    async function testConnection () {
+      // configure authentication
       users.hooks({
         before: {
           all: [],
-          find: [ softDelete2(), authenticate('jwt') ],
-          get: [ softDelete2(), authenticate('jwt') ],
-          create: [ softDelete2(), hashPassword() ],
-          update: [ softDelete2(), hashPassword(), authenticate('jwt') ],
-          patch: [ softDelete2(), hashPassword(), authenticate('jwt') ],
+          find: [ authenticate('jwt'), softDelete2() ],
+          get: [ authenticate('jwt'), softDelete2() ],
+          create: [ hashPassword(), authenticate('jwt'), softDelete2() ],
+          update: [ hashPassword(), authenticate('jwt'), softDelete2() ],
+          patch: [ hashPassword(), authenticate('jwt'), softDelete2() ],
           remove: [ authenticate('jwt'), softDelete2() ]
         },
         after: {
@@ -141,9 +144,16 @@ describe('services softDelete2-c', () => {
 
       posts.hooks({
         before: {
-          all: [ softDelete2(), authenticate('jwt') ]
+          all:    [ paramsFromClient('$ignoreDeletedAt'), authenticate('jwt') ],
+          get:    [ softDelete2(), restrict('get') ],
+          create: [ softDelete2(), restrict('create') ],
+          update: [ softDelete2(), restrict('update') ],
+          patch:  [ softDelete2(), restrict('patch') ],
+          remove: [ restrict('remove'), softDelete2() ]
         },
-        after: {},
+        after: {
+          all: softDelete2()
+        },
         error: {}
       });
 
@@ -159,41 +169,216 @@ describe('services softDelete2-c', () => {
       rec = await posts.remove(1);
       assert.isAtLeast(rec.deletedAt, 0); // ensure record is now logically deleted
 
-      // log in
+      // login as user id = 0
       await login(appClient, 'feathersjs@gmail.com', 'hooks-common');
+    });
 
-      // do successful client call on user-entity
-      let rec1 = await usersClient.get(0);
-      assert.deepEqual(rec1, {
-        id: 0, email: 'feathersjs@gmail.com', deletedAt: -1
-      }, 'successful: unexpected user-entity data');
+    after(function (done) {
+      server.shutdown(() => { done(); });
+    });
 
-      // do client call on user-entity which throws
-      try {
-        const rec2 = await usersClient.get(1);
-        console.log(rec2);
-      } catch (err) {
-        return;
-      }
-      assert.isOk(false, 'unsuccessful: unexpectedly read user-entity record');
+    describe('Test client calls on user-entity', () => {
+      describe('Test get', () => {
+        it('Can do successful client get call on user-entity', async () => {
+          const rec1 = await usersClient.get(0);
 
-      // do successful client call on service
-      rec1 = await postsClient.get(0);
-      assert.deepEqual(rec1, {
-        id: 0, subject: 'post 0', deletedAt: -1
-      }, 'successful: unexpected service data');
+          assert.deepEqual(rec1, {
+            id: 0, email: 'feathersjs@gmail.com', deletedAt: -1
+          }, 'successful: unexpected user-entity data');
+        });
 
-      // do client call on user-entity which throws
-      try {
-        const rec2 = await postsClient.get(1);
-        console.log(rec2);
-      } catch (err) {
-        return;
-      }
-      assert.isOk(false, 'unsuccessful: unexpectedly read service record');
+        it('Can do client get call on user-entity which throws', async () => {
+          try {
+            await usersClient.get(1);
+          } catch (err) {
+            return;
+          }
+          assert.isOk(false, 'unsuccessful: unexpectedly read user-entity record');
+        });
+      });
+    });
+
+    describe('Test client calls on service', () => {
+      beforeEach(() => {
+        restrictCalls = [];
+      });
+
+      describe('Test get', () => {
+        it('Can do successful client get call on service', async () => {
+          const rec1 = await postsClient.get(0);
+
+          assert.deepEqual(rec1, {
+            id: 0, subject: 'post 0', ownerId: 0, deletedAt: -1
+          }, 'successful: unexpected service data');
+          assert.deepEqual(restrictCalls, [
+            ['get', 'before', 'get', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ]);
+        });
+
+        it('Can do client get call on service which throws due to deleted record', async () => {
+          try {
+            await postsClient.get(1);
+          } catch (err) {
+            assert.equal(err.message, deletedMessage, 'unexpected error');
+            assert.deepEqual(restrictCalls, []);
+            return;
+          }
+          assert.isOk(false, 'unsuccessful: unexpectedly read service record');
+        });
+
+        it('Can do client get call on service which throws due to restrictToOwner', async () => {
+          try {
+            await postsClient.get(2);
+          } catch (err) {
+            assert.deepEqual(restrictCalls, [
+              ['get', 'before', 'get', undefined], // restrictToOwner hook for original service call
+              ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+            ]);
+            return;
+          }
+          assert.isOk(false, 'unsuccessful: unexpectedly read service record');
+        });
+
+        it('Can use $ignoreDeletedAt', async () => {
+          const rec1 = await postsClient.get(1, paramsForServer({ $ignoreDeletedAt: true }));
+
+          assert.isAtLeast(rec1.deletedAt, 0);
+          delete rec1.deletedAt;
+
+          assert.deepEqual(rec1, {
+            id: 1, subject: 'post 1', ownerId: 0
+          }, 'successful: unexpected service data');
+          assert.deepEqual(restrictCalls, [
+            ['get', 'before', 'get', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ], 'unexpected restrictedCalls');
+        });
+      });
+
+      describe('Test patch', () => {
+        it('Can do successful client get call on service', async () => {
+          const rec1 = await postsClient.patch(0, { a: 'a' });
+
+          assert.deepEqual(rec1, {
+            id: 0, subject: 'post 0', ownerId: 0, deletedAt: -1, a: 'a'
+          }, 'successful: unexpected service data');
+          assert.deepEqual(restrictCalls, [
+            ['patch', 'before', 'patch', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ]);
+        });
+
+        it('Can do client get call on service which throws due to deleted record', async () => {
+          try {
+            await postsClient.patch(1, { b: 'b' });
+          } catch (err) {
+            assert.equal(err.message, deletedMessage, 'unexpected error');
+            assert.deepEqual(restrictCalls, []);
+            return;
+          }
+          assert.isOk(false, 'unsuccessful: unexpectedly read service record');
+        });
+
+        it('Can do client get call on service which throws due to restrictToOwner', async () => {
+          try {
+            await postsClient.patch(2, { b: 'b' });
+          } catch (err) {
+            assert.deepEqual(restrictCalls, [
+              ['patch', 'before', 'patch', undefined], // restrictToOwner hook for original service call
+              ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+            ]);
+            return;
+          }
+          assert.isOk(false, 'unsuccessful: unexpectedly read service record');
+        });
+
+        it('Can use $ignoreDeletedAt', async () => {
+          const rec1 = await postsClient.patch(1, { b: 'b' }, paramsForServer({ $ignoreDeletedAt: true }));
+
+          assert.isAtLeast(rec1.deletedAt, 0);
+          delete rec1.deletedAt;
+
+          assert.deepEqual(rec1, {
+            id: 1, subject: 'post 1', ownerId: 0, b: 'b'
+          }, 'successful: unexpected service data');
+          assert.deepEqual(restrictCalls, [
+            ['patch', 'before', 'patch', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ], 'unexpected restrictedCalls');
+        });
+      });
+
+      describe('Test remove', () => {
+        it('Can remove active record', async () => {
+          const data = await postsClient.remove(0);
+
+          const dataReturned = clone(data);
+          const data1 = clone(data);
+          delete data1.deletedAt;
+
+          assert.deepEqual(data1, {
+            id: 0, subject: 'post 0', ownerId: 0, a: 'a'
+          }, 'unexpected data');
+          assert.isAtLeast(data.deletedAt, 0);
+          assert.deepEqual(restrictCalls, [
+            ['remove', 'before', 'remove', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ]);
+
+          const rec = await posts.get(0, { $ignoreDeletedAt: true });
+          assert.deepEqual(rec, dataReturned, 'unexpected data');
+        });
+
+        it('Can throw on inactive record', async () => {
+          try {
+            await postsClient.remove(1);
+            assert(false, 'data returned unexpectedly');
+          } catch (err) {
+            assert.equal(err.message, deletedMessage, 'unexpected error');
+            assert.deepEqual(restrictCalls, [
+              ['remove', 'before', 'remove', undefined] // restrictToOwner hook for original service call
+            ], 'unexpected restrictedCalls');
+          }
+        });
+
+        it('Can throw due to restrictToOwner', async () => {
+          try {
+            await postsClient.remove(2);
+            assert(false, 'data returned unexpectedly');
+          } catch (err) {
+            assert.equal(err.message, restrictToOwnerMessage, 'unexpected error');
+            assert.deepEqual(restrictCalls, [
+              ['remove', 'before', 'remove', undefined], // restrictToOwner hook for original service call
+              ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+            ], 'unexpected restrictedCalls');
+          }
+        });
+
+        it('Can use $ignoreDeletedAt', async () => {
+          const rec1 = await postsClient.remove(1, paramsForServer({ $ignoreDeletedAt: true }));
+
+          assert.isAtLeast(rec1.deletedAt, 0); // ensure record is still logically deleted
+          delete rec1.deletedAt;
+
+          assert.deepEqual(rec1, {
+            id: 1, subject: 'post 1', ownerId: 0, b: 'b'
+          }, 'successful: unexpected service data');
+          assert.deepEqual(restrictCalls, [
+            ['remove', 'before', 'remove', undefined], // restrictToOwner hook for original service call
+            ['get', 'before', 'get', undefined] // restrictToOwner hook for get call made by restrictToOwner
+          ], 'unexpected restrictedCalls');
+        });
+      });
+    });
+
+    function restrict (where) {
+      return context => {
+        restrictCalls.push([where, context.type, context.method, context.params.$disableSoftDelete2]);
+
+        return restrictToOwner({ idField: 'id', ownerField: 'ownerId' })(context);
+      };
     }
-
-    it('test user-entity & normal service', testConnection);
   });
 });
 

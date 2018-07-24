@@ -2,7 +2,7 @@
 const assert = require('chai').assert;
 const feathers = require('@feathersjs/feathers');
 const memory = require('feathers-memory');
-const { callingParams, softDelete2 } = require('../../lib/services');
+const { callingParams, softDelete2, stashBefore } = require('../../lib/services');
 
 const recsInit = [
   { id: 0, email: 'a', password: 'a', key1: 'a', key2: '1', deletedAt: -1, foo: 1 },
@@ -248,6 +248,45 @@ describe('services softDelete2-b', () => {
           assert.isAtLeast(data.deletedAt, 0);
           assert.isOk(customRemovingPatch, 'unexpected hooksRun');
         });
+    });
+  });
+
+  describe('test with stashBefore', () => {
+    let app;
+    let users;
+    let beforeRec;
+
+    beforeEach(() => {
+      app = feathers()
+        .configure(services({ recs: recsInit }));
+      users = app.service('users');
+
+      beforeRec = null;
+    });
+
+    it('works', async () => {
+      users.hooks({
+        before: {
+          all: softDelete2(),
+          patch: [
+            stashBefore(),
+            ctx => {
+              beforeRec = clone(ctx.params.before);
+            }]
+        },
+        after: {
+          all: softDelete2()
+        }
+      });
+
+      const data = await users.patch(3, { a: 'a' });
+
+      assert.deepEqual(data, {
+        id: 3, email: 'd', password: 'd', key1: 'a', key2: '2', deletedAt: -1, foo: -1, a: 'a'
+      }, 'unexpected data');
+      assert.deepEqual(beforeRec, {
+        id: 3, email: 'd', password: 'd', key1: 'a', key2: '2', deletedAt: -1, foo: -1
+      }, 'unexpected before data');
     });
   });
 });
