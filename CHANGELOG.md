@@ -1,5 +1,49 @@
 # Change Log
 
+## [v4.15.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.15.0) (2018-07-24)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.3...v4.15.0)
+
+**Implemented enhancements:**
+
+- softDelete with a date instead of boolean [\#385](https://github.com/feathers-plus/feathers-hooks-common/issues/385)
+- Consider some ideas for softDelete [\#339](https://github.com/feathers-plus/feathers-hooks-common/issues/339)
+- See if there are features to add to validateSchema [\#317](https://github.com/feathers-plus/feathers-hooks-common/issues/317)
+- Headers info is removed which makes custom API KEY authorization impossible [\#306](https://github.com/feathers-plus/feathers-hooks-common/issues/306)
+- Add hooks from feathers-hooks-extra [\#276](https://github.com/feathers-plus/feathers-hooks-common/issues/276)
+- softDelete preliminary get should not cause populate to run [\#270](https://github.com/feathers-plus/feathers-hooks-common/issues/270)
+- Feature Request: Querying for sub relationships on related data [\#248](https://github.com/feathers-plus/feathers-hooks-common/issues/248)
+- Generalized `get` utility for use in a hook [\#217](https://github.com/feathers-plus/feathers-hooks-common/issues/217)
+- Add some \(trivial\) Sequelize-oriented hooks [\#210](https://github.com/feathers-plus/feathers-hooks-common/issues/210)
+- Implicit eager-loading when querying with dot-notation [\#207](https://github.com/feathers-plus/feathers-hooks-common/issues/207)
+- convert date for db adapters [\#153](https://github.com/feathers-plus/feathers-hooks-common/issues/153)
+
+**Fixed bugs:**
+
+- Using softDelete and stashBefore results in infinite loop [\#345](https://github.com/feathers-plus/feathers-hooks-common/issues/345)
+- Interaction between softDelete and populate on get\(\) [\#284](https://github.com/feathers-plus/feathers-hooks-common/issues/284)
+- SoftDelete Hook still called twice [\#238](https://github.com/feathers-plus/feathers-hooks-common/issues/238)
+
+**Closed issues:**
+
+- validateSchema with type: array [\#364](https://github.com/feathers-plus/feathers-hooks-common/issues/364)
+- How to use getResultsByKey when querying a field with array of ids [\#358](https://github.com/feathers-plus/feathers-hooks-common/issues/358)
+- add, remove, replace hooks dynamically. \(Consider services too.\) [\#322](https://github.com/feathers-plus/feathers-hooks-common/issues/322)
+- Suggestion: Hooks specialized for Sequelize [\#321](https://github.com/feathers-plus/feathers-hooks-common/issues/321)
+- Follow mongoose schema validation repo [\#299](https://github.com/feathers-plus/feathers-hooks-common/issues/299)
+- Suggestion: Hooks specialized for MongoDB [\#280](https://github.com/feathers-plus/feathers-hooks-common/issues/280)
+- How to handle streams in a hook [\#262](https://github.com/feathers-plus/feathers-hooks-common/issues/262)
+- iff doesn't bind hook functions to service instance [\#258](https://github.com/feathers-plus/feathers-hooks-common/issues/258)
+- serialize for Sequelize [\#245](https://github.com/feathers-plus/feathers-hooks-common/issues/245)
+- Common Hooks validateschema error [\#229](https://github.com/feathers-plus/feathers-hooks-common/issues/229)
+- There may be an interaction between softDelete and authentication [\#185](https://github.com/feathers-plus/feathers-hooks-common/issues/185)
+- Convert fields coming in from query params [\#184](https://github.com/feathers-plus/feathers-hooks-common/issues/184)
+- Allow softDelete to support dates/timestamps [\#130](https://github.com/feathers-plus/feathers-hooks-common/issues/130)
+- hook.params.query.$disableSoftDelete is a security issue [\#128](https://github.com/feathers-plus/feathers-hooks-common/issues/128)
+
+**Merged pull requests:**
+
+- Final changes and tests for softDelete2 [\#419](https://github.com/feathers-plus/feathers-hooks-common/pull/419) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.14.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.3) (2018-07-09)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.2...v4.14.3)
 
