@@ -22,7 +22,7 @@
   - v4.x.x now supports FeathersJS v3 (Buzzard). Continue using v3.10.0 for FeathersJS v2 (Auk).
     - Removed:
       - Removed support for the deprecated legacy syntax in `populate`.
-      - Removed the deprecated `remove` hook in favor of `delete`.
+      - Removed the deprecated `remove` hook in favor of `discard`.
       
     - Deprecated. These will be removed in FeathersJS v3 (Crow).
       - Deprecated `pluck` in favor of `iff(isProvider('external'),` `keep(...fieldNames))`. **Be careful!**
