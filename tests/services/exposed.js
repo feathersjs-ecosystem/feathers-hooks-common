@@ -30,7 +30,7 @@ const hookNames = [
   'getItems',
   'isProvider',
   'keep',
-  'keepIn',
+  'keepInArray',
   'keepQuery',
   'lowerCase',
   'makeCallingParams',
