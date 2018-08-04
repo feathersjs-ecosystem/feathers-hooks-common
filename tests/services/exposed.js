@@ -55,6 +55,7 @@ const hookNames = [
   'setUpdatedAt',
   'sifter',
   'skipRemainingHooks',
+  'skipRemainingHooksOnFlag',
   'softDelete',
   'softDelete2',
   'stashBefore',
