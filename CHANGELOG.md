@@ -1,5 +1,15 @@
 # Change Log
 
+## [v4.16.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.0) (2018-08-04)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.15.0...v4.16.0)
+
+**Merged pull requests:**
+
+- Added prep for skipRemaingHooksOnFlag [\#423](https://github.com/feathers-plus/feathers-hooks-common/pull/423) ([eddyystop](https://github.com/eddyystop))
+- Delete's not a thing [\#421](https://github.com/feathers-plus/feathers-hooks-common/pull/421) ([rayfoss](https://github.com/rayfoss))
+- Added `keepInArray` hook to keep fields from a nested array [\#420](https://github.com/feathers-plus/feathers-hooks-common/pull/420) ([dekelev](https://github.com/dekelev))
+- remove hook removal explained [\#405](https://github.com/feathers-plus/feathers-hooks-common/pull/405) ([rayfoss](https://github.com/rayfoss))
+
 ## [v4.15.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.15.0) (2018-07-24)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.3...v4.15.0)
 
