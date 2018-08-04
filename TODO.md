@@ -1,5 +1,7 @@
 
 - write is-transport, deprecate is-provider
+- setUserId
+- skipHooksIfRawRecord
 
 *** eddyystop:
 - merge the validate... hooks.

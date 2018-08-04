@@ -144,11 +144,11 @@ describe('services softDelete2-c', () => {
 
       posts.hooks({
         before: {
-          all:    [ paramsFromClient('$ignoreDeletedAt'), authenticate('jwt') ],
-          get:    [ softDelete2(), restrict('get') ],
+          all: [ paramsFromClient('$ignoreDeletedAt'), authenticate('jwt') ],
+          get: [ softDelete2(), restrict('get') ],
           create: [ softDelete2(), restrict('create') ],
           update: [ softDelete2(), restrict('update') ],
-          patch:  [ softDelete2(), restrict('patch') ],
+          patch: [ softDelete2(), restrict('patch') ],
           remove: [ restrict('remove'), softDelete2() ]
         },
         after: {
