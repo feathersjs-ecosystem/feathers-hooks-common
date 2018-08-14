@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.16.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.1) (2018-08-14)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.0...v4.16.1)
+
+**Merged pull requests:**
+
+- Allows custom methods in checkContext [\#426](https://github.com/feathers-plus/feathers-hooks-common/pull/426) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.16.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.0) (2018-08-04)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.15.0...v4.16.0)
 
