@@ -7,6 +7,7 @@ let cacheMap;
 let hookBeforeSingle;
 let hookBeforeMulti;
 let hookAfterSingle;
+let hookAfterSingleNormalize;
 let hookAfterMulti;
 let hookAfterPaginated;
 let hookBeforeUuid;
@@ -15,6 +16,8 @@ let hookBeforeMultiMixed;
 let hookAfterMultiMixed;
 let map;
 let cloneCount;
+
+const makeCacheKey = key => -key;
 
 describe('service cache', () => {
   beforeEach(() => {
@@ -45,6 +48,13 @@ describe('service cache', () => {
       method: undefined,
       params: { provider: 'rest' },
       result: { id: 1, first: 'Jane', last: 'Doe' }
+    };
+    hookAfterSingleNormalize = {
+      type: 'after',
+      id: undefined,
+      method: undefined,
+      params: { provider: 'rest' },
+      result: { id: -1, first: 'Jane', last: 'Doe' }
     };
     hookAfterMulti = {
       type: 'after',
@@ -183,6 +193,13 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), undefined, 'id 1');
       assert.deepEqual(cacheMap.get(2), undefined, 'id 2');
     });
+
+    it('Normalizes record', () => {
+      hookAfterSingleNormalize.method = 'create';
+
+      cache(cacheMap, 'id', { makeCacheKey })(hookAfterSingleNormalize);
+      assert.deepEqual(cacheMap.get(1), { id: -1, first: 'Jane', last: 'Doe' });
+    });
   });
 
   describe('Gets from cache', () => {
@@ -196,6 +213,18 @@ describe('service cache', () => {
 
       assert.deepEqual(cacheMap.get(1), { foo: 'bar' }, 'cache');
       assert.deepEqual(hookBeforeSingle.result, { foo: 'bar' });
+    });
+
+    it('Normalizes record', () => {
+      hookBeforeSingle.method = 'get';
+      hookBeforeSingle.id = -1;
+
+      cacheMap.set(1, { id: -1, foo: 'bar' });
+
+      cache(cacheMap, 'id', { makeCacheKey })(hookBeforeSingle);
+
+      assert.deepEqual(cacheMap.get(1), { id: -1, foo: 'bar' }, 'cache');
+      assert.deepEqual(hookBeforeSingle.result, { id: -1, foo: 'bar' });
     });
   });
 
