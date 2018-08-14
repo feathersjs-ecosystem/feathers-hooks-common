@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.16.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.2) (2018-08-14)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.1...v4.16.2)
+
+**Merged pull requests:**
+
+- Enhanced cache with MongoDB/Mongoose support [\#427](https://github.com/feathers-plus/feathers-hooks-common/pull/427) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.16.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.1) (2018-08-14)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.0...v4.16.1)
 
