@@ -76,4 +76,11 @@ describe('services checkContext', () => {
     assert.equal(checkContext(hook, 'before', ['create']), undefined);
     assert.equal(checkContext(hook, 'before', ['create', 'update', 'remove']), undefined);
   });
+
+  it('allows custom methods', () => {
+    hook.type = 'before';
+    hook.method = 'custom';
+    assert.equal(checkContext(hook, 'before', ['create']), undefined);
+    assert.equal(checkContext(hook, 'before', ['create', 'update', 'remove']), undefined);
+  });
 });
