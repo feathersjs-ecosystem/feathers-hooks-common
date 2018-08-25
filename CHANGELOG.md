@@ -1,5 +1,21 @@
 # Change Log
 
+## [v4.16.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.2...v4.16.3)
+
+**Implemented enhancements:**
+
+- Cache with mongoose ObjectId will fail to find the keyFieldName in cache [\#424](https://github.com/feathers-plus/feathers-hooks-common/issues/424)
+
+**Closed issues:**
+
+- Create TypeScript typings for this package [\#432](https://github.com/feathers-plus/feathers-hooks-common/issues/432)
+
+**Merged pull requests:**
+
+- Added `keepQuery` support for keeping props with dot in their name [\#431](https://github.com/feathers-plus/feathers-hooks-common/pull/431) ([dekelev](https://github.com/dekelev))
+- Update alter-items.js [\#428](https://github.com/feathers-plus/feathers-hooks-common/pull/428) ([bertho-zero](https://github.com/bertho-zero))
+
 ## [v4.16.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.2) (2018-08-14)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.1...v4.16.2)
 
