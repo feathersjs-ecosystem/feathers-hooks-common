@@ -43,7 +43,7 @@ describe('services keepQuery', () => {
         type: 'before',
         method: 'create',
         params: {
-          query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+          query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct', 'owner.id': 1, 'owner.admin': false }
         } };
     });
 
@@ -55,9 +55,9 @@ describe('services keepQuery', () => {
     });
 
     it('prop with 1 dot', () => {
-      hooks.keepQuery('empl.name', 'dept')(hookBefore);
+      hooks.keepQuery('empl.name', 'dept', 'owner.id', 'owner.admin')(hookBefore);
       assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct' }
+        { empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct', 'owner.id': 1, 'owner.admin': false }
       );
     });
 
