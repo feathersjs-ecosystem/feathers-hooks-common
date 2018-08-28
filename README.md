@@ -38,7 +38,7 @@ Refer to [Feathers-Plus web site.](https://feathers-plus.github.io/v1/feathers-h
 
 ## Installation
 
-Run `npm install feathers-hooks-common --save` in your project folder (installs the latest v2 release).
+Run `npm install feathers-hooks-common --save` in your project folder (installs the latest v4 release).
 
 ## Tests
 
