@@ -457,49 +457,49 @@ export function isNot(predicate: PredicateFn): AsyncPredicateFn;
 /**
  * @deprecated Deprecated callbackToPromise in favor of Node’s require('util').promisify.
  */
-export function callbackToPromise(): any;
+export function callbackToPromise(...args: any[]): any;
 
 /**
  * @deprecated Deprecated client in favor of paramsFromClient for naming consistency.
  */
-export function client(): any;
+export function client(...args: any[]): any;
 
 /**
  * @deprecated Deprecated pluck in favor of keep, e.g. iff(isProvider('external'), keep(...fieldNames)). This deprecates the last hook with unexpected internal “magic”. Be careful!
  */
-export function pluck(): any;
+export function pluck(...args: any[]): any;
 
 /**
  * @deprecated Deprecated pluckQuery in favor of keepQuery for naming consistency.
  */
-export function pluckQuery(): any;
+export function pluckQuery(...args: any[]): any;
 
 /**
  * @deprecated Deprecated promiseToCallback as there’s probably no need for it anymore.
  */
-export function promiseToCallback(): any;
+export function promiseToCallback(...args: any[]): any;
 
 /**
  * @deprecated Deprecated removeQuery in favor of discardQuery for naming consistency.
  */
-export function removeQuery(): any;
+export function removeQuery(...args: any[]): any;
 
 /**
  * @deprecated Deprecated in favor of setNow.
  */
-export function setCreatedAt(): any;
+export function setCreatedAt(...args: any[]): any;
 
 /**
  * @deprecated Deprecated in favor of setNow.
  */
-export function setUpdatedAt(): any;
+export function setUpdatedAt(...args: any[]): any;
 
 /**
  * @deprecated DEPRECATED. Use the softDelete2 hook instead. It is a noteable improvement over softDelete.
  */
-export function softDelete(): any;
+export function softDelete(...args: any[]): any;
 
 /**
  * @deprecated DEPRECATED. Use disallow instead.
  */
-export function disable(): any;
+export function disable(...args: any[]): any;
