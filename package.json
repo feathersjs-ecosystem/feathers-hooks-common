@@ -3,6 +3,7 @@
   "version": "4.16.3",
   "description": "Useful hooks for use with Feathersjs services.",
   "main": "lib/",
+  "types": "types/",
   "directories": {
     "lib": "lib"
   },
@@ -14,6 +15,7 @@
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "semistandard --fix",
+    "lint:types": "dtslint types/",
     "mocha": "mocha --opts mocha.opts",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run lint && npm run coverage"
@@ -65,9 +67,11 @@
     "@feathersjs/express": "^1.2.3",
     "@feathersjs/socketio": "^3.2.2",
     "@feathersjs/socketio-client": "^1.1.0",
+    "@types/feathersjs__feathers": "^3.0.4",
     "chai": "^4.1.2",
     "clone": "^2.1.1",
     "coveralls": "^3.0.0",
+    "dtslint": "^0.3.0",
     "feathers-authentication-hooks": "^0.3.0",
     "feathers-memory": "^2.1.0",
     "feathers-tests-fake-app-users": "^1.0.0",
