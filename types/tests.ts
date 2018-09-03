@@ -88,6 +88,7 @@ actOnDefault(hook1, hook2, hook3, hook4);
 // $ExpectType Hook
 actOnDispatch(hook1, hook2, hook3, hook4);
 
+
 // $ExpectType Hook
 alterItems(rec => {
     delete rec.password;
