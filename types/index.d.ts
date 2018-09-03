@@ -1,0 +1,505 @@
+// TypeScript Version: 2.3
+
+import { Hook, HookContext, Params, Query, Paginated } from '@feathersjs/feathers';
+import * as ajv from 'ajv';
+
+export type HookType = 'before' | 'after' | 'error';
+export type MethodName = 'find' | 'get' | 'update' | 'patch' | 'remove';
+export type TransportName = 'socketio' | 'primus' | 'rest' | 'external' | 'server';
+export type Disablable = 'populate' | 'fastJoin' | 'ignoreDeletedAt' | 'softDelete' | 'softDelete2' | 'stashBefore';
+
+export type SyncContextFunction<T> = (context: HookContext) => T;
+export type AsyncContextFunction<T> = (context: HookContext) => Promise<T>;
+
+export type SyncPredicateFn = SyncContextFunction<boolean>;
+export type AsyncPredicateFn = AsyncContextFunction<boolean>;
+export type PredicateFn = SyncPredicateFn | AsyncPredicateFn;
+
+/**
+ * Runs a series of hooks which mutate context.data or context.result (the Feathers default).
+ */
+export function actOnDefault(...hooks: Hook[]): Hook;
+
+/**
+ * Runs a series of hooks which mutate context.dispatch.
+ */
+export function actOnDispatch(...hooks: Hook[]): Hook;
+
+/**
+ * Make changes to data or result items. Very flexible.
+ */
+export function alterItems<T = any>(cb: (record: T, context: HookContext<T>) => any): Hook;
+
+export type CacheMap<T> = Map<string, T>;
+
+export interface CacheOptions<T, K> {
+    clone?(item: T): T;
+
+    makeCacheKey?(id: K): string;
+}
+
+/**
+ * Persistent, least-recently-used record cache for services.
+ */
+export function cache<T, K extends keyof T>(cacheMap: CacheMap<T>, keyField?: K, options?: CacheOptions<T, K>): Hook;
+
+export interface CallingParamsOptions {
+    /**
+     * The params.query for the calling params.
+     */
+    query?: any;
+    /**
+     * The names of the props in context.params to include in the new params.
+     */
+    propNames?: string[];
+    /**
+     * Additional props to add to the new params.
+     */
+    newProps?: any;
+    /**
+     * The names of hooks to disable during the service call. populate, fastJoin, softDelete and stashBefore are supported.
+     */
+    hooksToDisable?: Disablable[] | Disablable;
+    /**
+     *    Ignore the defaults propNames and newProps.
+     */
+    ignoreDefaults?: boolean;
+}
+
+/**
+ * Build params for a service call. (Utility function.)
+ */
+export function callingParams(options: CallingParamsOptions): SyncContextFunction<Params>;
+
+/**
+ * Set defaults for building params for service calls with callingParams. (Utility function.)
+ */
+export function callingParamsDefaults(propNames: string[], newProps: any): void;
+
+/**
+ * Restrict a hook to run for certain methods and method types. (Utility function.)
+ */
+export function checkContext(context: HookContext, type?: HookType | HookType[] | null, methods?: MethodName | MethodName[] | null, label?: string): void;
+
+/**
+ * Like checkContext, but only if the given type matches the hook's type.
+ * Restrict a hook to run for certain methods and method types. (Utility function.)
+ */
+export function checkContextIf(context: HookContext, type: HookType, methods?: MethodName | MethodName[] | null, label?: string): void;
+
+/**
+ * Sequentially execute multiple sync or async hooks.
+ */
+export function combine(...hooks: Hook[]): Hook;
+
+/**
+ * Display the current hook context for debugging.
+ */
+export function debug(): Hook;
+
+/**
+ * Deletes a property from an object using dot notation, e.g. address.city. (Utility function.)
+ */
+export function deleteByDot(object: any, path: string): void;
+
+/**
+ * Remove records and properties created by the populate hook.
+ */
+export function dePopulate(): Hook;
+
+/**
+ * Prevents null from being used as an id in patch and remove service methods.
+ */
+export function disableMultiItemChange(): Hook;
+
+/**
+ * Prevents multi-item creates.
+ */
+export function disableMultiItemCreate(): Hook;
+
+/**
+ * Disables pagination when query.$limit is -1 or '-1'.
+ */
+export function disablePagination(): Hook;
+
+/**
+ * Prevents access to a service method completely or for specific transports.
+ */
+export function disallow(...transports: TransportName[]): Hook;
+
+/**
+ * Delete certain fields from the record(s).
+ */
+export function discard(...fieldNames: string[]): Hook;
+
+/**
+ * Delete certain fields from the query object.
+ */
+export function discardQuery(...fieldNames: string[]): Hook;
+
+/**
+ * Check if a property exists in an object by using dot notation, e.g. address.city. (Utility function.)
+ */
+export function existsByDot(object: any, path: string): boolean;
+
+export type SimpleResolver<T> = (...args: any[]) => (item: T) => Promise<any>;
+
+export interface RecursiveResolver<T> {
+    resolver: SimpleResolver<T>;
+    joins: ResolverMap<any>;
+}
+
+export interface ResolverMap<T> {
+    after?: AsyncContextFunction<void>;
+    before?: AsyncContextFunction<void>;
+    joins: {
+        [property: string]: SimpleResolver<T> | RecursiveResolver<T>;
+    };
+}
+
+/**
+ * We often want to combine rows from two or more tables based on a relationship between them. The fastJoin hook
+ * will select records that have matching values in both tables. It can batch service calls and cache records,
+ * thereby needing roughly an order of magnitude fewer database calls than the populate hook, i.e. 2 calls instead
+ * of 20. It uses a GraphQL-like imperative API.
+ *
+ * fastJoin is not restricted to using data from Feathers services. Resources for which there are no Feathers
+ * adapters can also be used.
+ *
+ *
+ * fastJoin(postResolvers)
+ * fastJoin(postResolvers, query)
+ * fastJoin(context => postResolvers)
+ * fastJoin(postResolvers, context => query) // supports queries from client
+ */
+export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
+
+/**
+ * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
+ */
+export function getByDot(object: object, path: string): any;
+
+/**
+ * Get the records in context.data or context.result[.data]. (Utility function.)
+ */
+export function getItems(context: HookContext): any; // any[] | any | undefined;
+
+/**
+ * Check which transport provided the service call.
+ */
+export function isProvider(...transports: TransportName[]): PredicateFn;
+
+/**
+ * Keep certain fields in the record(s), deleting the rest.
+ */
+export function keep(...fieldNames: string[]): Hook;
+
+/**
+ * Keep certain fields in a nested array inside the record(s), deleting the rest.
+ */
+export function keepInArray(arrayName: string, fieldNames: string[]): Hook;
+
+/**
+ * Keep certain fields in the query object, deleting the rest.
+ */
+export function keepQuery(...fieldNames: string[]): Hook;
+
+/**
+ * Convert certain field values to lower case.
+ */
+export function lowerCase(...fieldNames: string[]): Hook;
+
+/**
+ * You should prefer using the callingParams utility to makeCallingParams.
+ * Build context.params for service calls. (Utility function.)
+ */
+export function makeCallingParams(context: HookContext, query: any, include: string | string[], inject: object): Params;
+
+/**
+ * Wrap MongoDB foreign keys in ObjectID.
+ */
+export function mongoKeys(objectId: new (id?: string | number) => any, keyFields: string | string[]): Hook;
+
+/**
+ * Pass an explicit context.params from client to server. Client-side. (Utility function.)
+ */
+export function paramsForServer(params: Params, ...whitelist: string[]): Params;
+
+/**
+ * Pass context.params from client to server. Server hook.
+ */
+export function paramsFromClient(...whitelist: string[]): Hook;
+
+export interface PopulateOptions {
+    schema: Partial<PopulateSchema>;
+
+    checkPermissions?: boolean;
+    profile?: boolean;
+}
+
+export interface PopulateSchema {
+    /**
+     * The name of the service providing the items, actually its path.
+     */
+    service: string;
+    /**
+     * Where to place the items from the join
+     * dot notation
+     */
+    nameAs: string;
+    /**
+     * The name of the field in the parent item for the relation.
+     * dot notation
+     */
+    parentField: string;
+    /**
+     * The name of the field in the child item for the relation.
+     * Dot notation is allowed and will result in a query like { 'name.first': 'John' } which is not suitable for all DBs.
+     * You may use query or select to create a query suitable for your DB.
+     */
+    childField: string;
+
+    /**
+     * Who is allowed to perform this join. See checkPermissions above.
+     */
+    permissions: any;
+
+    /**
+     * An object to inject into context.params.query.
+     */
+    query: any;
+
+    /**
+     * A function whose result is injected into the query.
+     */
+    select: (context: HookContext, parentItem: any, depth: number) => any;
+
+    /**
+     * Force a single joined item to be stored as an array.
+     */
+    asArray: boolean;
+
+    /**
+     * Controls pagination for this service.
+     */
+    paginate: boolean | number;
+
+    /**
+     * Perform any populate or fastJoin registered on this service.
+     */
+    useInnerPopulate: boolean;
+    /**
+     * Call the service as the server, not with the client’s transport.
+     */
+    provider: string;
+    include: Partial<PopulateSchema>;
+}
+
+export function populate(options: PopulateOptions): Hook;
+
+/**
+ * Prevent patch service calls from changing certain fields.
+ */
+export function preventChanges(ifThrow: boolean, ...fieldNames: string[]): Hook;
+
+/**
+ * Replace the records in context.data or context.result[.data]. (Utility function.)
+ */
+export function replaceItems(context: HookContext, records: any): void;
+
+/**
+ * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
+ */
+export function required(...fieldNames: string[]): Hook;
+
+/**
+ * Let's you call a hook right after the service call. (Utility function.)
+ */
+export function runHook(context?: HookContext): (hook: Hook) => (data: any[] | Paginated<any>) => Promise<any>;
+
+/**
+ * Run a hook in parallel to the other hooks and the service call.
+ */
+export function runParallel<T = any>(hook: Hook, clone: (item: T) => T, depth?: number): Hook;
+
+export interface SerializeSchema {
+    only?: string | string[];
+    exclude?: string | string[];
+    computed?: {
+        [propName: string]: (record: any, context: HookContext) => any
+    };
+
+    [key: string]: SerializeSchema | SerializeSchema['computed'] | string | string[] | undefined;
+}
+
+/**
+ * Prune values from related records. Calculate new values.
+ */
+export function serialize(schema?: SerializeSchema | SyncContextFunction<SerializeSchema>): Hook;
+
+/**
+ * Set a property value in an object using dot notation, e.g. address.city. (Utility function.)
+ */
+export function setByDot(object: object, path: string, value: any): void;
+
+/**
+ * Create/update certain fields to the current date-time.
+ */
+export function setNow(...fieldNames: string[]): Hook;
+
+/**
+ * Fix slugs in URL, e.g. /stores/:storeId.
+ */
+export function setSlug(slug: string, fieldName?: string): Hook;
+
+/**
+ * Filter data or result records using a MongoDB-like selection syntax.
+ */
+export function sifter(siftFunc: SyncContextFunction<(item: any) => boolean>): Hook;
+
+/**
+ * Conditionally skip running all remaining hooks.
+ */
+export function skipRemainingHooks(predicate?: SyncPredicateFn | boolean): Hook;
+
+export function skipRemainingHooksOnFlag(flagNames: string | string[]): Hook;
+
+export interface SoftDelete2Options {
+    deletedAt?: string;
+    keepOnCreate?: boolean;
+    skipProbeOnGet?: boolean;
+    allowIgnoreDeletedAt?: boolean;
+    probeCall?: (context: HookContext, options: SoftDelete2Options) => Promise<any>;
+    patchCall?: (context: HookContext, options: SoftDelete2Options) => Promise<any>;
+}
+
+/**
+ * Flag records as logically deleted instead of physically removing them.
+ */
+export function softDelete2(options?: SoftDelete2Options): Hook;
+
+/**
+ * Stash current value of record, usually before mutating it. Performs a get call.
+ */
+export function stashBefore(fieldName?: string): Hook;
+
+/**
+ * Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
+ * Check docs at https://github.com/substack/js-traverse for info on transformContext!
+ */
+export function traverse(transformer: (this: any, transformContext: any) => any, getObject?: SyncContextFunction<any>): Hook;
+
+export type SyncValidatorFn = (values: any, context: HookContext) => { [key: string]: string } | null;
+export type AsyncValidatorFn = (values: any, context: HookContext) => Promise<object | null>;
+export type ValidatorFn = SyncValidatorFn | AsyncValidatorFn;
+
+/**
+ * Validate data using a validation function.
+ */
+export function validate(validator: ValidatorFn): Hook;
+
+export type AjvOrNewable = ajv.Ajv | (new (options?: ajv.Options) => ajv.Ajv);
+
+export interface ValidateSchemaOptions extends ajv.Options {
+    /**
+     * The hook will throw if the data does not match the JSON-Schema. error.errors will, by default, contain an array
+     * of error messages. You may change this with a custom formatting function. Its a reducing function which works
+     * similarly to Array.reduce().
+     */
+    addNewError: (currentFormattedMessages: any, ajvErrorObject: ajv.ErrorObject, itemsLen: number, itemIndex: number) => any;
+}
+
+/**
+ * Validate data using JSON-Schema.
+ */
+export function validateSchema(schema: object, ajv: AjvOrNewable, options?: ValidateSchemaOptions): Hook;
+
+/**
+ * Execute one array of hooks or another based on a sync or async predicate.
+ */
+export function iffElse(predicate: SyncPredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
+
+export interface IffHook extends Hook {
+    else(...hooks: Hook[]): Hook;
+}
+
+/**
+ * Execute one or another series of hooks depending on a sync or async predicate.
+ */
+export function iff(predicate: SyncPredicateFn, ...hooks: Hook[]): IffHook;
+
+/**
+ * Alias for iff
+ * Execute one or another series of hooks depending on a sync or async predicate.
+ */
+export const when: typeof iff;
+
+/**
+ * Execute a series of hooks if a sync or async predicate is falsey.
+ */
+export function unless(predicate: boolean | PredicateFn, ...hooks: Hook[]): Hook;
+
+/**
+ * Return the or of a series of sync or async predicate functions.
+ */
+export function some(...predicates: PredicateFn[]): AsyncPredicateFn;
+
+/**
+ * Return the and of a series of sync or async predicate functions.
+ */
+export function every(...predicates: PredicateFn[]): AsyncPredicateFn;
+
+/**
+ * Negate a sync or async predicate function.
+ */
+export function isNot(predicate: PredicateFn): AsyncPredicateFn;
+
+/**
+ * @deprecated Deprecated callbackToPromise in favor of Node’s require('util').promisify.
+ */
+export function callbackToPromise(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated client in favor of paramsFromClient for naming consistency.
+ */
+export function client(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated pluck in favor of keep, e.g. iff(isProvider('external'), keep(...fieldNames)). This deprecates the last hook with unexpected internal “magic”. Be careful!
+ */
+export function pluck(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated pluckQuery in favor of keepQuery for naming consistency.
+ */
+export function pluckQuery(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated promiseToCallback as there’s probably no need for it anymore.
+ */
+export function promiseToCallback(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated removeQuery in favor of discardQuery for naming consistency.
+ */
+export function removeQuery(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated in favor of setNow.
+ */
+export function setCreatedAt(...args: any[]): any;
+
+/**
+ * @deprecated Deprecated in favor of setNow.
+ */
+export function setUpdatedAt(...args: any[]): any;
+
+/**
+ * @deprecated DEPRECATED. Use the softDelete2 hook instead. It is a noteable improvement over softDelete.
+ */
+export function softDelete(...args: any[]): any;
+
+/**
+ * @deprecated DEPRECATED. Use disallow instead.
+ */
+export function disable(...args: any[]): any;
