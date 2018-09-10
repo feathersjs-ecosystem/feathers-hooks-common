@@ -1,5 +1,27 @@
 # Change Log
 
+## [v4.17.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.2) (2018-09-10)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.1...v4.17.2)
+
+## [v4.17.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.1) (2018-09-10)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.0...v4.17.1)
+
+## [v4.17.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.0) (2018-09-10)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.3...v4.17.0)
+
+**Closed issues:**
+
+- Which hook to use? [\#436](https://github.com/feathers-plus/feathers-hooks-common/issues/436)
+- discard not working [\#435](https://github.com/feathers-plus/feathers-hooks-common/issues/435)
+
+**Merged pull requests:**
+
+- typings CI testing [\#440](https://github.com/feathers-plus/feathers-hooks-common/pull/440) ([j2L4e](https://github.com/j2L4e))
+- Revert "\[WIP\] Typings: Set up CI testing" [\#439](https://github.com/feathers-plus/feathers-hooks-common/pull/439) ([eddyystop](https://github.com/eddyystop))
+- \[WIP\] Typings: Set up CI testing [\#438](https://github.com/feathers-plus/feathers-hooks-common/pull/438) ([j2L4e](https://github.com/j2L4e))
+- add typings file + infrastructure [\#437](https://github.com/feathers-plus/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
+- Update npm installed version [\#434](https://github.com/feathers-plus/feathers-hooks-common/pull/434) ([bravo-kernel](https://github.com/bravo-kernel))
+
 ## [v4.16.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.16.2...v4.16.3)
 
