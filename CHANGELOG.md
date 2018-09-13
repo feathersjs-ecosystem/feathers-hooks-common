@@ -1,5 +1,15 @@
 # Change Log
 
+## [v4.17.4](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.4) (2018-09-13)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.3...v4.17.4)
+
+## [v4.17.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.3) (2018-09-13)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.2...v4.17.3)
+
+**Merged pull requests:**
+
+- Add documentation links to typings [\#442](https://github.com/feathers-plus/feathers-hooks-common/pull/442) ([j2L4e](https://github.com/j2L4e))
+
 ## [v4.17.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.2) (2018-09-10)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.1...v4.17.2)
 
