@@ -17,16 +17,19 @@ export type PredicateFn = SyncPredicateFn | AsyncPredicateFn;
 
 /**
  * Runs a series of hooks which mutate context.data or context.result (the Feathers default).
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ActOnDefault}
  */
 export function actOnDefault(...hooks: Hook[]): Hook;
 
 /**
  * Runs a series of hooks which mutate context.dispatch.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ActOnDispatch}
  */
 export function actOnDispatch(...hooks: Hook[]): Hook;
 
 /**
  * Make changes to data or result items. Very flexible.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#AlterItems}
  */
 export function alterItems<T = any>(cb: (record: T, context: HookContext<T>) => any): Hook;
 
@@ -40,6 +43,7 @@ export interface CacheOptions<T, K> {
 
 /**
  * Persistent, least-recently-used record cache for services.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Cache}
  */
 export function cache<T, K extends keyof T>(cacheMap: CacheMap<T>, keyField?: K, options?: CacheOptions<T, K>): Hook;
 
@@ -68,77 +72,92 @@ export interface CallingParamsOptions {
 
 /**
  * Build params for a service call. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CallingParams}
  */
 export function callingParams(options: CallingParamsOptions): SyncContextFunction<Params>;
 
 /**
  * Set defaults for building params for service calls with callingParams. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CallingParamsDefaults}
  */
 export function callingParamsDefaults(propNames: string[], newProps: any): void;
 
 /**
  * Restrict a hook to run for certain methods and method types. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CheckContext}
  */
 export function checkContext(context: HookContext, type?: HookType | HookType[] | null, methods?: MethodName | MethodName[] | null, label?: string): void;
 
 /**
  * Like checkContext, but only if the given type matches the hook's type.
  * Restrict a hook to run for certain methods and method types. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CheckContextIf}
  */
 export function checkContextIf(context: HookContext, type: HookType, methods?: MethodName | MethodName[] | null, label?: string): void;
 
 /**
  * Sequentially execute multiple sync or async hooks.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Combine}
  */
 export function combine(...hooks: Hook[]): Hook;
 
 /**
  * Display the current hook context for debugging.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Debug}
  */
 export function debug(): Hook;
 
 /**
  * Deletes a property from an object using dot notation, e.g. address.city. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DeleteByDot}
  */
 export function deleteByDot(object: any, path: string): void;
 
 /**
  * Remove records and properties created by the populate hook.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DePopulate}
  */
 export function dePopulate(): Hook;
 
 /**
  * Prevents null from being used as an id in patch and remove service methods.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisableMultiItemChange}
  */
 export function disableMultiItemChange(): Hook;
 
 /**
  * Prevents multi-item creates.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisableMultiItemCreate}
  */
 export function disableMultiItemCreate(): Hook;
 
 /**
  * Disables pagination when query.$limit is -1 or '-1'.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisablePagination}
  */
 export function disablePagination(): Hook;
 
 /**
  * Prevents access to a service method completely or for specific transports.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Disallow}
  */
 export function disallow(...transports: TransportName[]): Hook;
 
 /**
  * Delete certain fields from the record(s).
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Discard}
  */
 export function discard(...fieldNames: string[]): Hook;
 
 /**
  * Delete certain fields from the query object.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DiscardQuery}
  */
 export function discardQuery(...fieldNames: string[]): Hook;
 
 /**
  * Check if a property exists in an object by using dot notation, e.g. address.city. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ExistsByDot}
  */
 export function existsByDot(object: any, path: string): boolean;
 
@@ -171,62 +190,74 @@ export interface ResolverMap<T> {
  * fastJoin(postResolvers, query)
  * fastJoin(context => postResolvers)
  * fastJoin(postResolvers, context => query) // supports queries from client
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#FastJoin}
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
 /**
  * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#GetByDot}
  */
 export function getByDot(object: object, path: string): any;
 
 /**
  * Get the records in context.data or context.result[.data]. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#GetItems}
  */
 export function getItems(context: HookContext): any; // any[] | any | undefined;
 
 /**
  * Check which transport provided the service call.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IsProvider}
  */
 export function isProvider(...transports: TransportName[]): PredicateFn;
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Keep}
  */
 export function keep(...fieldNames: string[]): Hook;
 
 /**
  * Keep certain fields in a nested array inside the record(s), deleting the rest.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#KeepInArray}
  */
 export function keepInArray(arrayName: string, fieldNames: string[]): Hook;
 
 /**
  * Keep certain fields in the query object, deleting the rest.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#KeepQuery}
  */
 export function keepQuery(...fieldNames: string[]): Hook;
 
 /**
  * Convert certain field values to lower case.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#LowerCase}
  */
 export function lowerCase(...fieldNames: string[]): Hook;
 
 /**
  * You should prefer using the callingParams utility to makeCallingParams.
  * Build context.params for service calls. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#MakeCallingParams}
  */
 export function makeCallingParams(context: HookContext, query: any, include: string | string[], inject: object): Params;
 
 /**
  * Wrap MongoDB foreign keys in ObjectID.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#MongoKeys}
  */
 export function mongoKeys(objectId: new (id?: string | number) => any, keyFields: string | string[]): Hook;
 
 /**
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ParamsForServer}
  */
 export function paramsForServer(params: Params, ...whitelist: string[]): Params;
 
 /**
  * Pass context.params from client to server. Server hook.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ParamsFromClient}
  */
 export function paramsFromClient(...whitelist: string[]): Hook;
 
@@ -295,30 +326,39 @@ export interface PopulateSchema {
     include: Partial<PopulateSchema>;
 }
 
+/**
+ * Join related records.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Populate}
+ */
 export function populate(options: PopulateOptions): Hook;
 
 /**
  * Prevent patch service calls from changing certain fields.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#PreventChanges}
  */
 export function preventChanges(ifThrow: boolean, ...fieldNames: string[]): Hook;
 
 /**
  * Replace the records in context.data or context.result[.data]. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ReplaceItems}
  */
 export function replaceItems(context: HookContext, records: any): void;
 
 /**
  * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Required}
  */
 export function required(...fieldNames: string[]): Hook;
 
 /**
  * Let's you call a hook right after the service call. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#RunHook}
  */
 export function runHook(context?: HookContext): (hook: Hook) => (data: any[] | Paginated<any>) => Promise<any>;
 
 /**
  * Run a hook in parallel to the other hooks and the service call.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#RunParallel}
  */
 export function runParallel<T = any>(hook: Hook, clone: (item: T) => T, depth?: number): Hook;
 
@@ -334,31 +374,37 @@ export interface SerializeSchema {
 
 /**
  * Prune values from related records. Calculate new values.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Serialize}
  */
 export function serialize(schema?: SerializeSchema | SyncContextFunction<SerializeSchema>): Hook;
 
 /**
  * Set a property value in an object using dot notation, e.g. address.city. (Utility function.)
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetByDot}
  */
 export function setByDot(object: object, path: string, value: any): void;
 
 /**
  * Create/update certain fields to the current date-time.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetNow}
  */
 export function setNow(...fieldNames: string[]): Hook;
 
 /**
  * Fix slugs in URL, e.g. /stores/:storeId.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetSlug}
  */
 export function setSlug(slug: string, fieldName?: string): Hook;
 
 /**
  * Filter data or result records using a MongoDB-like selection syntax.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Sifter}
  */
 export function sifter(siftFunc: SyncContextFunction<(item: any) => boolean>): Hook;
 
 /**
  * Conditionally skip running all remaining hooks.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SkipRemainingHooks}
  */
 export function skipRemainingHooks(predicate?: SyncPredicateFn | boolean): Hook;
 
@@ -375,17 +421,20 @@ export interface SoftDelete2Options {
 
 /**
  * Flag records as logically deleted instead of physically removing them.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SoftDelete2}
  */
 export function softDelete2(options?: SoftDelete2Options): Hook;
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#StashBefore}
  */
 export function stashBefore(fieldName?: string): Hook;
 
 /**
  * Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
  * Check docs at https://github.com/substack/js-traverse for info on transformContext!
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Traverse}
  */
 export function traverse(transformer: (this: any, transformContext: any) => any, getObject?: SyncContextFunction<any>): Hook;
 
@@ -395,6 +444,7 @@ export type ValidatorFn = SyncValidatorFn | AsyncValidatorFn;
 
 /**
  * Validate data using a validation function.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Validate}
  */
 export function validate(validator: ValidatorFn): Hook;
 
@@ -411,11 +461,13 @@ export interface ValidateSchemaOptions extends ajv.Options {
 
 /**
  * Validate data using JSON-Schema.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#ValidateSchema}
  */
 export function validateSchema(schema: object, ajv: AjvOrNewable, options?: ValidateSchemaOptions): Hook;
 
 /**
  * Execute one array of hooks or another based on a sync or async predicate.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IffElse}
  */
 export function iffElse(predicate: SyncPredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
 
@@ -425,6 +477,7 @@ export interface IffHook extends Hook {
 
 /**
  * Execute one or another series of hooks depending on a sync or async predicate.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Iff}
  */
 export function iff(predicate: SyncPredicateFn, ...hooks: Hook[]): IffHook;
 
@@ -436,70 +489,84 @@ export const when: typeof iff;
 
 /**
  * Execute a series of hooks if a sync or async predicate is falsey.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Unless}
  */
 export function unless(predicate: boolean | PredicateFn, ...hooks: Hook[]): Hook;
 
 /**
  * Return the or of a series of sync or async predicate functions.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Some}
  */
 export function some(...predicates: PredicateFn[]): AsyncPredicateFn;
 
 /**
  * Return the and of a series of sync or async predicate functions.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Every}
  */
 export function every(...predicates: PredicateFn[]): AsyncPredicateFn;
 
 /**
  * Negate a sync or async predicate function.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IsNot}
  */
 export function isNot(predicate: PredicateFn): AsyncPredicateFn;
 
 /**
  * @deprecated Deprecated callbackToPromise in favor of Node’s require('util').promisify.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CallbackToPromise}
  */
 export function callbackToPromise(...args: any[]): any;
 
 /**
  * @deprecated Deprecated client in favor of paramsFromClient for naming consistency.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Client}
  */
 export function client(...args: any[]): any;
 
 /**
  * @deprecated Deprecated pluck in favor of keep, e.g. iff(isProvider('external'), keep(...fieldNames)). This deprecates the last hook with unexpected internal “magic”. Be careful!
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Pluck}
  */
 export function pluck(...args: any[]): any;
 
 /**
  * @deprecated Deprecated pluckQuery in favor of keepQuery for naming consistency.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#PluckQuery}
  */
 export function pluckQuery(...args: any[]): any;
 
 /**
  * @deprecated Deprecated promiseToCallback as there’s probably no need for it anymore.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#PromiseToCallback}
  */
 export function promiseToCallback(...args: any[]): any;
 
 /**
  * @deprecated Deprecated removeQuery in favor of discardQuery for naming consistency.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#RemoveQuery}
  */
 export function removeQuery(...args: any[]): any;
 
 /**
  * @deprecated Deprecated in favor of setNow.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetCreatedAt}
  */
 export function setCreatedAt(...args: any[]): any;
 
 /**
  * @deprecated Deprecated in favor of setNow.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetUpdatedAt}
  */
 export function setUpdatedAt(...args: any[]): any;
 
 /**
  * @deprecated DEPRECATED. Use the softDelete2 hook instead. It is a noteable improvement over softDelete.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SoftDelete}
  */
 export function softDelete(...args: any[]): any;
 
 /**
  * @deprecated DEPRECATED. Use disallow instead.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Disable}
  */
 export function disable(...args: any[]): any;
