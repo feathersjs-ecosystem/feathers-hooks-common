@@ -210,7 +210,7 @@ export function getItems(context: HookContext): any; // any[] | any | undefined;
  * Check which transport provided the service call.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IsProvider}
  */
-export function isProvider(...transports: TransportName[]): SyncPredicateFn;
+export function isProvider(...transports: TransportName[]): SyncContextFunction<boolean>;
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
