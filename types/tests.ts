@@ -196,7 +196,7 @@ getByDot({}, 'abc.def');
 // $ExpectType any
 getItems(context1);
 
-// $ExpectType PredicateFn
+// $ExpectType SyncContextFunction<boolean>
 isProvider();
 
 // $ExpectType Hook
