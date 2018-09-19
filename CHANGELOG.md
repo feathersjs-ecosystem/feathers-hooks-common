@@ -1,5 +1,15 @@
 # Change Log
 
+## [v4.17.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.6) (2018-09-19)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.5...v4.17.6)
+
+## [v4.17.5](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.5) (2018-09-19)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.4...v4.17.5)
+
+**Merged pull requests:**
+
+- fix: isProvider returns a boolean [\#444](https://github.com/feathers-plus/feathers-hooks-common/pull/444) ([bitflower](https://github.com/bitflower))
+
 ## [v4.17.4](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.4) (2018-09-13)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.3...v4.17.4)
 
