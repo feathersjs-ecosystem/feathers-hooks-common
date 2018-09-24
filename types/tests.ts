@@ -181,6 +181,21 @@ const postResolvers: ResolverMap<any> = {
     }
 };
 
+const userResolvers: ResolverMap<any> = {
+    joins: {
+        memberships: () => async (user, context) => {
+            const memberships: any = (await context.app!.service
+            ('memberships').find({query: {
+                    user: user._id,
+                    $populate: 'role',
+                }}));
+            user.memberships = memberships.data;
+        }
+    }
+};
+
+// $ExpectType Hook
+fastJoin(userResolvers);
 // $ExpectType Hook
 fastJoin(postResolvers);
 // $ExpectType Hook
