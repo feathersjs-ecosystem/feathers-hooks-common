@@ -182,9 +182,9 @@ const postResolvers: ResolverMap<any> = {
     }
 };
 
-const userResolvers = {
+const userResolvers: ResolverMap<any> = {
     joins: {
-        memberships: () => async (user: any, context: HookContext) => {
+        memberships: () => async (user, context) => {
             const memberships: any = (await context.app!.service
             ('memberships').find({query: {
                     user: user._id,

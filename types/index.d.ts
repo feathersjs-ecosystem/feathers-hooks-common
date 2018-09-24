@@ -142,7 +142,11 @@ export function discardQuery(...fieldNames: string[]): Hook;
  */
 export function existsByDot(object: any, path: string): boolean;
 
-export type SimpleResolver<T> = (...args: any[]) => (item: T, context: HookContext) => Promise<any>;
+export interface ResolverContext<T = any> extends HookContext<T> {
+    _loaders: any
+}
+
+export type SimpleResolver<T> = (...args: any[]) => (item: T, context: ResolverContext) => Promise<any>;
 
 export interface RecursiveResolver<T> {
     resolver: SimpleResolver<T>;
@@ -150,8 +154,8 @@ export interface RecursiveResolver<T> {
 }
 
 export interface ResolverMap<T> {
-    after?: AsyncContextFunction<void>;
-    before?: AsyncContextFunction<void>;
+    after?: (context: ResolverContext) => void | Promise<void>;
+    before?: (context: ResolverContext) => void | Promise<void>;
     joins: {
         [property: string]: SimpleResolver<T> | RecursiveResolver<T>;
     };
