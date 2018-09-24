@@ -142,7 +142,7 @@ export function discardQuery(...fieldNames: string[]): Hook;
  */
 export function existsByDot(object: any, path: string): boolean;
 
-export type SimpleResolver<T> = (...args: any[]) => (item: T) => Promise<any>;
+export type SimpleResolver<T> = (...args: any[]) => (item: T, context: HookContext) => Promise<any>;
 
 export interface RecursiveResolver<T> {
     resolver: SimpleResolver<T>;
