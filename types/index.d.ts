@@ -143,7 +143,7 @@ export function discardQuery(...fieldNames: string[]): Hook;
 export function existsByDot(object: any, path: string): boolean;
 
 export interface ResolverContext<T = any> extends HookContext<T> {
-    _loaders: any
+    _loaders: any;
 }
 
 export type SimpleResolver<T> = (...args: any[]) => (item: T, context: ResolverContext) => Promise<any>;
