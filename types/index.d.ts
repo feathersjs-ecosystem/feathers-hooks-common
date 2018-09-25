@@ -4,7 +4,7 @@ import { Hook, HookContext, Params, Query, Paginated } from '@feathersjs/feather
 import * as ajv from 'ajv';
 
 export type HookType = 'before' | 'after' | 'error';
-export type MethodName = 'find' | 'get' | 'update' | 'patch' | 'remove';
+export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remove';
 export type TransportName = 'socketio' | 'primus' | 'rest' | 'external' | 'server';
 export type Disablable = 'populate' | 'fastJoin' | 'ignoreDeletedAt' | 'softDelete' | 'softDelete2' | 'stashBefore';
 
