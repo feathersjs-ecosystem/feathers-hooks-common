@@ -1,7 +1,7 @@
-
 const {
   assert
 } = require('chai');
+const feathers = require('@feathersjs/feathers');
 
 const hooks = require('../../lib/services');
 
@@ -64,6 +64,53 @@ const hookFcnCb = (hook, cb) => {
 
   cb(null, hook);
 };
+
+describe('services iff - function context', () => {
+  let app;
+  let service;
+
+  beforeEach(() => {
+    app = feathers();
+
+    app.use('test', {
+      find () {
+        return Promise.resolve();
+      }
+    });
+
+    service = app.service('test');
+  });
+
+  it(`correctly binds 'this' of predicate fn`, async () => {
+    service.hooks({
+      before: [
+        hooks.iff(
+          function (ctx) {
+            assert.strictEqual(ctx.service, this);
+          },
+          []
+        )
+      ]
+    });
+
+    await service.find();
+  });
+
+  it(`correctly binds 'this' of hook fn`, async () => {
+    service.hooks({
+      before: [
+        hooks.iff(
+          true,
+          function (ctx) {
+            assert.strictEqual(ctx.service, this);
+          }
+        )
+      ]
+    });
+
+    await service.find();
+  });
+});
 
 describe('services iff - sync predicate, sync hook', () => {
   beforeEach(() => {
