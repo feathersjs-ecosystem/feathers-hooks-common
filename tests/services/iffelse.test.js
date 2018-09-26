@@ -1,4 +1,3 @@
-
 const {
   assert
 } = require('chai');
@@ -55,6 +54,75 @@ const predicateTrue = function (hook, more2, more3, more4) {
 
   return true;
 };
+
+describe('services iffElse - function context', () => {
+  let app;
+  let service;
+
+  beforeEach(() => {
+    app = require('@feathersjs/feathers')();
+
+    app.use('test', {
+      find () {
+        return Promise.resolve();
+      }
+    });
+
+    service = app.service('test');
+  });
+
+  it(`correctly binds 'this' of predicate fn`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iffElse(
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            },
+            []
+          )
+        ]
+      }
+    });
+
+    await service.find();
+  });
+
+  it(`correctly binds 'this' of hook fn (true)`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iffElse(
+            true,
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            },
+            []
+          )
+        ]
+      }
+    });
+
+    await service.find();
+  });
+
+  it(`correctly binds 'this' of hook fn (false)`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iffElse(
+            false,
+            [],
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            })
+        ]
+      }
+    });
+
+    await service.find();
+  });
+});
 
 describe('services iffElse', () => {
   beforeEach(() => {

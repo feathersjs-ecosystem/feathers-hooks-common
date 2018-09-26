@@ -83,14 +83,16 @@ describe('services iff - function context', () => {
 
   it(`correctly binds 'this' of predicate fn`, async () => {
     service.hooks({
-      before: [
-        hooks.iff(
-          function (ctx) {
-            assert.strictEqual(ctx.service, this);
-          },
-          []
-        )
-      ]
+      before: {
+        all: [
+          hooks.iff(
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            },
+            []
+          )
+        ]
+      }
     });
 
     await service.find();
@@ -98,14 +100,16 @@ describe('services iff - function context', () => {
 
   it(`correctly binds 'this' of hook fn`, async () => {
     service.hooks({
-      before: [
-        hooks.iff(
-          true,
-          function (ctx) {
-            assert.strictEqual(ctx.service, this);
-          }
-        )
-      ]
+      before: {
+        all: [
+          hooks.iff(
+            true,
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            }
+          )
+        ]
+      }
     });
 
     await service.find();

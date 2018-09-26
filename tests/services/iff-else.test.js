@@ -67,6 +67,74 @@ const hookFcnCb = (hook, cb) => {
   cb(null, hook);
 };
 
+describe('services iff.else - function context', () => {
+  let app;
+  let service;
+
+  beforeEach(() => {
+    app = require('@feathersjs/feathers')();
+
+    app.use('test', {
+      find () {
+        return Promise.resolve();
+      }
+    });
+
+    service = app.service('test');
+  });
+
+  it(`correctly binds 'this' of predicate fn`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iff(
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            },
+            []
+          )
+        ]
+      }
+    });
+
+    await service.find();
+  });
+
+  it(`correctly binds 'this' of hook fn (true)`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iff(
+            true,
+            function (ctx) {
+              assert.strictEqual(ctx.service, this);
+            }
+          ).else()
+        ]
+      }
+    });
+
+    await service.find();
+  });
+
+  it(`correctly binds 'this' of hook fn (false)`, async () => {
+    service.hooks({
+      before: {
+        all: [
+          hooks.iff(
+            false,
+            []
+          ).else(function (ctx) {
+            assert.strictEqual(ctx.service, this);
+          })
+        ]
+      }
+    });
+
+    await service.find();
+  });
+});
+
 describe('services iff - sync predicate, sync hook', () => {
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
