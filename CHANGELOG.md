@@ -1,5 +1,19 @@
 # Change Log
 
+## [v4.17.10](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.10) (2018-09-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.9...v4.17.10)
+
+## [v4.17.9](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.9) (2018-09-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.8...v4.17.9)
+
+**Closed issues:**
+
+- How to pass query parameters from the client to fastJoin [\#447](https://github.com/feathers-plus/feathers-hooks-common/issues/447)
+
+**Merged pull requests:**
+
+- Add missing 'create' method in MethodName type [\#449](https://github.com/feathers-plus/feathers-hooks-common/pull/449) ([murbanowicz](https://github.com/murbanowicz))
+
 ## [v4.17.8](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.8) (2018-09-24)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.7...v4.17.8)
 
@@ -8,7 +22,6 @@
 
 **Closed issues:**
 
-- How to pass query parameters from the client to fastJoin [\#447](https://github.com/feathers-plus/feathers-hooks-common/issues/447)
 - fastJoin applied but not sent to client when called from server [\#446](https://github.com/feathers-plus/feathers-hooks-common/issues/446)
 
 **Merged pull requests:**
