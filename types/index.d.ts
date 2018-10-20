@@ -235,6 +235,12 @@ export function keepInArray(arrayName: string, fieldNames: string[]): Hook;
 export function keepQuery(...fieldNames: string[]): Hook;
 
 /**
+ * Keep certain fields in a nested array inside the query object, deleting the rest.
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#KeepQueryInArray}
+ */
+export function keepQueryInArray(arrayName: string, fieldNames: string[]): Hook;
+
+/**
  * Convert certain field values to lower case.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#LowerCase}
  */

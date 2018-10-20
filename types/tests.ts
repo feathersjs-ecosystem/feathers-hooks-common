@@ -32,6 +32,7 @@ import {
     keep,
     keepInArray,
     keepQuery,
+    keepQueryInArray,
     lowerCase,
     makeCallingParams,
     mongoKeys,
@@ -222,6 +223,9 @@ keepInArray('array', ['fieldName', 'fieldName']);
 
 // $ExpectType Hook
 keepQuery('name', 'address.city');
+
+// $ExpectType Hook
+keepQueryInArray('array', ['fieldName', 'fieldName']);
 
 // $ExpectType Hook
 lowerCase('email', 'username', 'div.dept');

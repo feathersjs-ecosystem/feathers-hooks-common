@@ -32,6 +32,7 @@ const hookNames = [
   'keep',
   'keepInArray',
   'keepQuery',
+  'keepQueryInArray',
   'lowerCase',
   'makeCallingParams',
   'mongoKeys',
