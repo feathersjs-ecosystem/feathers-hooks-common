@@ -26,6 +26,7 @@ const hookNames = [
   'discardQuery',
   'existsByDot',
   'fastJoin',
+  'fgraphql',
   'getByDot',
   'getItems',
   'isProvider',
