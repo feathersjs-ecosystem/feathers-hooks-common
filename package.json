@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@feathers-plus/cache": "^1.4.0",
+    "@feathers-plus/graphql": "^1.9.0",
     "@feathersjs/authentication": "^2.1.7",
     "@feathersjs/authentication-jwt": "^2.0.1",
     "@feathersjs/authentication-local": "^1.2.1",
@@ -74,6 +75,7 @@
     "feathers-authentication-hooks": "^0.3.0",
     "feathers-memory": "^2.1.0",
     "feathers-tests-fake-app-users": "^1.0.0",
+    "graphql": "^14.0.2",
     "http-shutdown": "^1.2.0",
     "istanbul": "^1.1.0-alpha.1",
     "mkdirp": "^0.5.1",
