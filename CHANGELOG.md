@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.17.11](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.11) (2018-10-26)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.10...v4.17.11)
+
+**Closed issues:**
+
+- fastJoin loop [\#453](https://github.com/feathers-plus/feathers-hooks-common/issues/453)
+
+**Merged pull requests:**
+
+- Added fgraphql hook. [\#457](https://github.com/feathers-plus/feathers-hooks-common/pull/457) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.17.10](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.10) (2018-09-26)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.9...v4.17.10)
 
@@ -507,7 +518,7 @@
 
 **Merged pull requests:**
 
-- Update debug to the latest version 🚀 [\#244](https://github.com/feathers-plus/feathers-hooks-common/pull/244) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
+- Update debug to the latest version 🚀 [\#244](https://github.com/feathers-plus/feathers-hooks-common/pull/244) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v3.7.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.7.1) (2017-08-07)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.7.0...v3.7.1)
@@ -552,7 +563,7 @@
 
 **Merged pull requests:**
 
-- Update sift to the latest version 🚀 [\#230](https://github.com/feathers-plus/feathers-hooks-common/pull/230) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
+- Update sift to the latest version 🚀 [\#230](https://github.com/feathers-plus/feathers-hooks-common/pull/230) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v3.5.5](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.5.5) (2017-06-20)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.5.3...v3.5.5)
@@ -581,7 +592,7 @@
 **Merged pull requests:**
 
 - Unpin AJV dependency [\#216](https://github.com/feathers-plus/feathers-hooks-common/pull/216) ([daffl](https://github.com/daffl))
-- Update ajv to the latest version 🚀 [\#215](https://github.com/feathers-plus/feathers-hooks-common/pull/215) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
+- Update ajv to the latest version 🚀 [\#215](https://github.com/feathers-plus/feathers-hooks-common/pull/215) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - fix: pin ajv to 5.1.5 [\#212](https://github.com/feathers-plus/feathers-hooks-common/pull/212) ([eddyystop](https://github.com/eddyystop))
 
 ## [v3.5.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.5.1) (2017-05-30)
@@ -703,11 +714,11 @@
 
 **Merged pull requests:**
 
-- Update ajv to the latest version 🚀 [\#157](https://github.com/feathers-plus/feathers-hooks-common/pull/157) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
-- Update semistandard to the latest version 🚀 [\#156](https://github.com/feathers-plus/feathers-hooks-common/pull/156) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
+- Update ajv to the latest version 🚀 [\#157](https://github.com/feathers-plus/feathers-hooks-common/pull/157) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update semistandard to the latest version 🚀 [\#156](https://github.com/feathers-plus/feathers-hooks-common/pull/156) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - validateSchema's 2nd parameter can be ajv instance [\#155](https://github.com/feathers-plus/feathers-hooks-common/pull/155) ([beeplin](https://github.com/beeplin))
-- Update feathers-hooks to the latest version 🚀 [\#151](https://github.com/feathers-plus/feathers-hooks-common/pull/151) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
-- Update dependencies to enable Greenkeeper 🌴 [\#148](https://github.com/feathers-plus/feathers-hooks-common/pull/148) ([greenkeeper[bot]](https://github.com/marketplace/greenkeeper))
+- Update feathers-hooks to the latest version 🚀 [\#151](https://github.com/feathers-plus/feathers-hooks-common/pull/151) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#148](https://github.com/feathers-plus/feathers-hooks-common/pull/148) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 
 ## [v3.0.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v3.0.0) (2017-04-08)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v3.0.0-pre.1...v3.0.0)
