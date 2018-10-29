@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.17.12](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.12) (2018-10-29)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.11...v4.17.12)
+
+**Merged pull requests:**
+
+- Added custom dePopulate func to dePopulate hook.' [\#458](https://github.com/feathers-plus/feathers-hooks-common/pull/458) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.17.11](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.11) (2018-10-26)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.10...v4.17.11)
 
