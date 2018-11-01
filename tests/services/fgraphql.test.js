@@ -21,6 +21,8 @@ describe('services fgraphql', () => {
     ['opt server-', s('str'),  r('full'),   'User',     q('obj'),   o('server-'), afterJane(),  false,  a('janeFull-') ],
     ['opt client-', s('str'),  r('full'),   'User',     q('obj'),   o('client-'), afterJane(),  true,   a('janeFull-') ],
     ['before hook', s('str'),  r('full'),   'User',     q('obj'),   o('both'),    beforeJane(), false,  a('janeFull')  ],
+    ['func params', s('param'),r('params'), 'User',     q('params'),o('both'),    afterJane(),  false,  a('janeParams')],
+    ['join names',  s('str'),  r('full'),   'User',     q('obj'),   o('join-'),   afterJane(),  false,  a('janeJoin')  ],
     // Test conversion of resolver results
     // desc,        schema,    resolvers,   recordType, query,      options,      context,      client, result
     ['undef->null', s('cnv0'), r('undefin'),'User',     q('obj'),   o('both'),    beforeJane(), false,  a('janeNull')  ],
@@ -177,6 +179,15 @@ type User {
           fullName: { nonNullTypeField: true, typeof: 'String' }
         }
       };
+    case 'param':
+      return {
+        User: {
+          firstName: { typeof: 'String' },
+          lastName: { typeof: 'String' },
+          fullName: { nonNullTypeField: true, typeof: 'String' },
+          params: { typeof: 'JSON' }
+        }
+      };
     case 'err1':
       return () => null;
 
@@ -215,6 +226,16 @@ function r (typ) {
                 parent.first = 'foo';
                 return returns;
               }
+          }
+        };
+      case 'params':
+        return {
+          User: {
+            // fullName: String!
+            fullName:
+              (parent, args, content, ast) => `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
+            params:
+              (parent, args, content, ast) => ({ args, ast })
           }
         };
       case 'err1':
@@ -319,6 +340,10 @@ function q (typ) {
       return        { fullName: '', first: null, last: 1              }   ;
     case 'fcn':
       return () => ({ fullName: {}                                    }  );
+    case 'params':
+      return        { fullName: {},                        params: {
+        _args: { key: 1, query: { foo: 2 }, params: { bar: 3 }, baz: 4 }
+        } }   ;
     case 'err1':
       return undefined;
 
@@ -419,6 +444,12 @@ function o (typ) {
         inclAllFieldsClient: true,
         extraAuthProps: ['foo']
       };
+    case 'join-':
+      return {
+        inclAllFieldsServer: true,
+        inclAllFieldsClient: true,
+        inclJoinedNames: false
+      };
     default:
       throw new Error(`Invalid typ ${typ} for "o" function.`);
   }
@@ -429,21 +460,28 @@ function a (typ) {
   switch (typ) {
     /* eslint-disable */
     case 'janeNull' :
-      return { first: 'Jane', last: 'Doe', fullName: null         };
+      return { first: 'Jane', last: 'Doe', fullName: null,         _include: ['fullName'] };
     case 'janeFull' :
-      return { first: 'Jane', last: 'Doe', fullName: 'Jane Doe'   };
+      return { first: 'Jane', last: 'Doe', fullName: 'Jane Doe',   _include: ['fullName'] };
     case 'janeArray' :
-      return { first: 'Jane', last: 'Doe', fullName: ['Jane Doe'] };
+      return { first: 'Jane', last: 'Doe', fullName: ['Jane Doe'], _include: ['fullName'] };
     case 'janeArray0' :
-      return { first: 'Jane', last: 'Doe', fullName: []           };
+      return { first: 'Jane', last: 'Doe', fullName: [],           _include: ['fullName'] };
     case 'janeFull-' :
-      return {                             fullName: 'Jane Doe'   };
+      return {                             fullName: 'Jane Doe',   _include: ['fullName'] };
     case 'janeMess' :
-      return { first: 'foo',  last: 'Doe', fullName: 'Jane Doe'   };
+      return { first: 'foo',  last: 'Doe', fullName: 'Jane Doe',   _include: ['fullName'] };
     case 'jane0' :
-      return { first: 'Jane'                                      };
+      return { first: 'Jane'                                                              };
     case 'janeFalsey' :
-      return {                last: 'Doe'                         };
+      return {                last: 'Doe'                                                 };
+    case 'janeJoin' :
+      return { first: 'Jane', last: 'Doe', fullName: 'Jane Doe'                           };
+    case 'janeParams' :
+      return { first: 'Jane', last: 'Doe', fullName: 'Jane Doe',   _include: ['fullName', 'params'],
+        params: {
+          args: { key: 1, query: { foo: 2 }, params: { bar: 3 }, baz: 4 }, ast: undefined
+        } };
 
     case 'S2post' :
       return {
@@ -452,7 +490,8 @@ function a (typ) {
         posts: [
           { _id: '1001', body: 'foo body' },
           { _id: '1002', body: 'bar body' },
-        ]
+        ],
+        _include: ['posts']
       };
     case 'S2parm' :
       return {
@@ -461,7 +500,8 @@ function a (typ) {
         posts: [
           { _id: '1001', body: 'foo body' },
           { _id: '9999', body: 'bar body' },
-        ]
+        ],
+        _include: ['posts']
       };
     case 'S2comm' :
       return {
@@ -470,7 +510,8 @@ function a (typ) {
         comments: [
           { _id: '2001', comment: 'foo comment' },
           { _id: '2002', comment: 'bar comment' },
-        ]
+        ],
+        _include: ['comments']
       };
     case 'S2cont' :
       return {
@@ -479,7 +520,8 @@ function a (typ) {
         posts: [
           { _id: '1001', body: 'foo body' },
           { _id: '9999', body: 'bar body' },
-        ]
+        ],
+        _include: ['posts']
       };
     case 'S2both' :
       return {
@@ -492,7 +534,8 @@ function a (typ) {
         comments: [
           { _id: '2001', comment: 'foo comment' },
           { _id: '2002', comment: 'bar comment' },
-        ]
+        ],
+        _include: ['posts', 'comments']
       };
 
     case 'S3all' :
@@ -502,25 +545,30 @@ function a (typ) {
         posts: [
           { _id: '1001',
             body: 'foo body',
-            author: { _id: '3001', first: 'Jane', last: 'Doe' }
+            author: { _id: '3001', first: 'Jane', last: 'Doe' },
+            _include: ['author']
           },
           {
             _id: '1002',
             body: 'bar body',
-            author: { _id: '3001', first: 'Jane', last: 'Doe' }
+            author: { _id: '3001', first: 'Jane', last: 'Doe' },
+            _include: ['author']
           }
         ],
         comments: [
           { _id: '2001',
             comment: 'foo comment',
-            author: { _id: '4001', first: 'Jane', last: 'Doe' }
+            author: { _id: '4001', first: 'Jane', last: 'Doe' },
+            _include: ['author']
           },
           {
             _id: '2002',
             comment: 'bar comment',
-            author: { _id: '4001', first: 'Jane', last: 'Doe' }
+            author: { _id: '4001', first: 'Jane', last: 'Doe' },
+            _include: ['author']
           }
-        ]
+        ],
+        _include: ['posts', 'comments']
       }
 
     default:
@@ -528,3 +576,11 @@ function a (typ) {
   }
   /* eslint-enable */
 }
+
+/*
+const { inspect } = require('util');
+function inspector(desc, obj) {
+  console.log(desc);
+  console.log(inspect(obj, { colors: true, depth: 5 }));
+}
+*/
