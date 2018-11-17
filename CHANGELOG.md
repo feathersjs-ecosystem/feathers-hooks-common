@@ -1,5 +1,24 @@
 # Change Log
 
+## [v4.19.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.0) (2018-11-17)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.18.0...v4.19.0)
+
+## [v4.18.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.18.0) (2018-11-17)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.14...v4.18.0)
+
+**Implemented enhancements:**
+
+- Document KeepQueryInarray [\#465](https://github.com/feathers-plus/feathers-hooks-common/issues/465)
+
+**Closed issues:**
+
+- Difference between serialize and alterItems [\#464](https://github.com/feathers-plus/feathers-hooks-common/issues/464)
+- softDelete2 returns error on delete [\#462](https://github.com/feathers-plus/feathers-hooks-common/issues/462)
+
+**Merged pull requests:**
+
+- Added `keepQueryInArray` hook to keep query fields from a nested array [\#454](https://github.com/feathers-plus/feathers-hooks-common/pull/454) ([dekelev](https://github.com/dekelev))
+
 ## [v4.17.14](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.14) (2018-11-01)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.13...v4.17.14)
 
@@ -75,7 +94,6 @@
 **Merged pull requests:**
 
 - Add documentation links to typings [\#442](https://github.com/feathers-plus/feathers-hooks-common/pull/442) ([j2L4e](https://github.com/j2L4e))
-- \[security issue\] fix populate injecting provider into source schema argument [\#414](https://github.com/feathers-plus/feathers-hooks-common/pull/414) ([antarasi](https://github.com/antarasi))
 
 ## [v4.17.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.2) (2018-09-10)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.1...v4.17.2)
@@ -199,6 +217,10 @@
 
 ## [v4.14.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.1) (2018-07-03)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.14.0...v4.14.1)
+
+**Merged pull requests:**
+
+- \[security issue\] fix populate injecting provider into source schema argument [\#414](https://github.com/feathers-plus/feathers-hooks-common/pull/414) ([antarasi](https://github.com/antarasi))
 
 ## [v4.14.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.14.0) (2018-06-26)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.13.0...v4.14.0)
