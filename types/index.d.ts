@@ -199,41 +199,40 @@ export interface ResolverMap<T> {
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
-interface IFGraphqlOptions {
-    parse: (schema: GraphQLSchema) => any;
-    recordType: string;
-    resolvers: (app: Application, runtime: any) => ResolverMap<any>;
-    schema: GraphQLSchema;
-    query: any /* Query? */;
-    runTime: any;
-    skipHookWhen?: Hook,
-    /**
-     * @default true
-     */
-    inclAllFieldsServer?: boolean,
-    /**
-     * @default true
-     */
-    inclAllFieldsClient?: boolean,
+import * as GraphQL from 'graphql';
 
-    /**
-     * @default null
-     */
-    inclAllFields?: Hook,
-    /**
-     * @default true
-     */
-    inclJoinedNames?: boolean,
-    /**
-     * @default []
-     */
-    extraAuthProps?: string[]
+export interface ResolversFunction {
+    (app: Application, runtime: any): ResolversObject
+}
+export interface ResolversObject {
+    [i: string]: {
+        [i: string]: (parent: any, args: any, content: any, ast: any) => any
+    };
+    Query: {
+        [i: string]: (parent: any, args: any, content: any, ast: any) => any
+    }
+}
+
+export interface FGraphqlOptions {
+    recordType: string;
+    schema: string;
+    resolvers: ResolversObject | ResolversFunction;
+    query: Query | SyncContextFunction<Query>;
+    skipHookWhen?: SyncContextFunction<boolean>;
+    inclAllFieldsServer?: boolean;
+    inclAllFieldsClient?: boolean;
+    inclAllFields?: boolean;
+    inclJoinedNames?: boolean;
+    extraAuthProps?: string[];
+    runTime: any;
+    parse: typeof GraphQL.parse
 }
 
 /**
- * fgraphql hook
+ * Generate Graphql Resolvers for services
+ * {@link https://medium.com/@eddyystop/38faee75dd1}
  */
-export function fgraphql(options: IFGraphqlOptions): Hook;
+export function fgraphql(options?: FGraphqlOptions): Hook;
 
 /**
  * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)

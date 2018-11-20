@@ -23,6 +23,7 @@ import {
     every,
     existsByDot,
     fastJoin,
+    fgraphql,
     getByDot,
     getItems,
     iff,
@@ -61,8 +62,10 @@ import {
     validate,
     validateSchema,
     when,
+    FGraphqlOptions,
 } from 'feathers-hooks-common';
 import ajv = require('ajv');
+import { parse } from 'graphql';
 
 const context1: HookContext = {
     type: 'before',
@@ -159,10 +162,12 @@ existsByDot({}, 'abc.def');
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
-        author: $select => async comment => { comment.author = (await service1.find({
-            query: { id: comment.userId, $select: $select || [ 'name' ] },
-            paginate: false
-        }) as any)[0]; },
+        author: $select => async comment => {
+            comment.author = (await service1.find({
+                query: { id: comment.userId, $select: $select || ['name'] },
+                paginate: false
+            }) as any)[0];
+        },
     },
 };
 
@@ -186,10 +191,12 @@ const userResolvers: ResolverMap<any> = {
     joins: {
         memberships: () => async (user, context) => {
             const memberships: any = (await context.app!.service
-            ('memberships').find({query: {
-                    user: user._id,
-                    $populate: 'role',
-                }}));
+                ('memberships').find({
+                    query: {
+                        user: user._id,
+                        $populate: 'role',
+                    }
+                }));
             user.memberships = memberships.data;
         }
     }
@@ -205,6 +212,52 @@ fastJoin(postResolvers, { abc: 'def' });
 fastJoin(ctx => postResolvers);
 // $ExpectType Hook
 fastJoin(postResolvers);
+
+// used from https://github.com/feathers-plus/hooks-graphql-example
+let fgraphqlOptions: FGraphqlOptions = {
+    parse,
+    runTime: null,
+    schema: ``,
+    recordType: "user",
+    query: {
+        posts: {},
+        comments: {},
+        followed_by: {},
+        following: {},
+        likes: {}
+    },
+    resolvers: () => {
+        return {
+            Comment: {
+                author: () => { return {}; },
+                likes: () => { return {}; },
+            },
+            Query: {}
+        };
+    }
+};
+// $ExpectType any
+fgraphql(fgraphqlOptions);
+
+const fgraphqlOptions2: FGraphqlOptions = {
+    ...fgraphqlOptions,
+    query: (context: HookContext) => ({
+        posts: {},
+        comments: {},
+        followed_by: {},
+        following: {},
+        likes: {}
+    }),
+    resolvers: {
+        Comment: {
+            author: () => { return {}; },
+            likes: () => { return {}; },
+        },
+        Query: {}
+    }
+};
+// $ExpectType any
+fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
 getByDot({}, 'abc.def');
@@ -337,8 +390,8 @@ skipRemainingHooksOnFlag('__flag');
 softDelete2({
     allowIgnoreDeletedAt: true,
     deletedAt: 'someKey',
-    patchCall: async (context, options) => {},
-    probeCall: async (context, options) => {},
+    patchCall: async (context, options) => { },
+    probeCall: async (context, options) => { },
     keepOnCreate: true,
     skipProbeOnGet: true
 });
@@ -349,13 +402,13 @@ stashBefore();
 stashBefore('abc');
 
 // $ExpectType Hook
-traverse(function(node) {
+traverse(function (node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 });
 // $ExpectType Hook
-traverse(function(node) {
+traverse(function (node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
