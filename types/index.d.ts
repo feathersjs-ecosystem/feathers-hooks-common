@@ -1,6 +1,6 @@
 // TypeScript Version: 2.3
 
-import { Hook, HookContext, Params, Query, Paginated } from '@feathersjs/feathers';
+import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
 import { GraphQLSchema } from 'graphql';
 
@@ -200,9 +200,9 @@ export interface ResolverMap<T> {
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
 interface IFGraphqlOptions {
-    parse: (schema: any /* GraphqlSchema */) => any;
+    parse: (schema: GraphQLSchema) => any;
     recordType: string;
-    resolvers: (app: any /* App */, runtime: any) => ResolverMap<any>;
+    resolvers: (app: Application, runtime: any) => ResolverMap<any>;
     schema: GraphQLSchema;
     query: any /* Query? */;
     runTime: any;
