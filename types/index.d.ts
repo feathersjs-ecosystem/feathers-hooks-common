@@ -2,6 +2,7 @@
 
 import { Hook, HookContext, Params, Query, Paginated } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
+import { GraphQLSchema } from 'graphql';
 
 export type HookType = 'before' | 'after' | 'error';
 export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remove';
@@ -197,6 +198,42 @@ export interface ResolverMap<T> {
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#FastJoin}
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
+
+interface IFGraphqlOptions {
+    parse: (schema: any /* GraphqlSchema */) => any;
+    recordType: string;
+    resolvers: (app: any /* App */, runtime: any) => ResolverMap<any>;
+    schema: GraphQLSchema;
+    query: any /* Query? */;
+    runTime: any;
+    skipHookWhen?: Hook,
+    /**
+     * @default true
+     */
+    inclAllFieldsServer?: boolean,
+    /**
+     * @default true
+     */
+    inclAllFieldsClient?: boolean,
+
+    /**
+     * @default null
+     */
+    inclAllFields?: Hook,
+    /**
+     * @default true
+     */
+    inclJoinedNames?: boolean,
+    /**
+     * @default []
+     */
+    extraAuthProps?: string[]
+}
+
+/**
+ * fgraphql hook
+ */
+export function fgraphql(options: IFGraphqlOptions): Hook;
 
 /**
  * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
