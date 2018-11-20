@@ -199,7 +199,7 @@ export interface ResolverMap<T> {
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
-type ResolversFunction = (app: Application, runtime: any) => ResolversObject;
+export type ResolversFunction = (app: Application, runtime: any) => ResolversObject;
 
 export interface ResolversObject {
     [i: string]: {
@@ -207,7 +207,7 @@ export interface ResolversObject {
     };
     Query: {
         [i: string]: (parent: any, args: any, content: any, ast: any) => any;
-    }
+    };
 }
 
 export interface FGraphqlOptions {
@@ -222,7 +222,7 @@ export interface FGraphqlOptions {
     inclJoinedNames?: boolean;
     extraAuthProps?: string[];
     runTime: any;
-    parse: typeof parse
+    parse: typeof parse;
 }
 
 /**
