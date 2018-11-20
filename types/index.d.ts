@@ -2,7 +2,7 @@
 
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema, parse } from 'graphql';
 
 export type HookType = 'before' | 'after' | 'error';
 export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remove';
@@ -199,17 +199,14 @@ export interface ResolverMap<T> {
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
-import * as GraphQL from 'graphql';
+type ResolversFunction = (app: Application, runtime: any) => ResolversObject;
 
-export interface ResolversFunction {
-    (app: Application, runtime: any): ResolversObject
-}
 export interface ResolversObject {
     [i: string]: {
-        [i: string]: (parent: any, args: any, content: any, ast: any) => any
+        [i: string]: (parent: any, args: any, content: any, ast: any) => any;
     };
     Query: {
-        [i: string]: (parent: any, args: any, content: any, ast: any) => any
+        [i: string]: (parent: any, args: any, content: any, ast: any) => any;
     }
 }
 
@@ -225,7 +222,7 @@ export interface FGraphqlOptions {
     inclJoinedNames?: boolean;
     extraAuthProps?: string[];
     runTime: any;
-    parse: typeof GraphQL.parse
+    parse: typeof parse
 }
 
 /**

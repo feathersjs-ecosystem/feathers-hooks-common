@@ -214,7 +214,7 @@ fastJoin(ctx => postResolvers);
 fastJoin(postResolvers);
 
 // used from https://github.com/feathers-plus/hooks-graphql-example
-let fgraphqlOptions: FGraphqlOptions = {
+const fgraphqlOptions: FGraphqlOptions = {
     parse,
     runTime: null,
     schema: ``,
@@ -226,17 +226,15 @@ let fgraphqlOptions: FGraphqlOptions = {
         following: {},
         likes: {}
     },
-    resolvers: () => {
-        return {
-            Comment: {
-                author: () => { return {}; },
-                likes: () => { return {}; },
-            },
-            Query: {}
-        };
-    }
+    resolvers: () => ({
+        Comment: {
+            author: () => ({}),
+            likes: () => ({}),
+        },
+        Query: {}
+    })
 };
-// $ExpectType any
+// $ExpectType Hook
 fgraphql(fgraphqlOptions);
 
 const fgraphqlOptions2: FGraphqlOptions = {
@@ -250,13 +248,13 @@ const fgraphqlOptions2: FGraphqlOptions = {
     }),
     resolvers: {
         Comment: {
-            author: () => { return {}; },
-            likes: () => { return {}; },
+            author: () => ({}),
+            likes: () => ({}),
         },
         Query: {}
     }
 };
-// $ExpectType any
+// $ExpectType Hook
 fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
@@ -402,13 +400,13 @@ stashBefore();
 stashBefore('abc');
 
 // $ExpectType Hook
-traverse(function (node) {
+traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 });
 // $ExpectType Hook
-traverse(function (node) {
+traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
