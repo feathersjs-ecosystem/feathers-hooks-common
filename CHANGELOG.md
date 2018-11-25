@@ -1,5 +1,20 @@
 # Change Log
 
+## [v4.19.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.2) (2018-11-25)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.1...v4.19.2)
+
+## [v4.19.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.1) (2018-11-25)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.0...v4.19.1)
+
+**Fixed bugs:**
+
+- Cache Fails When Using $select [\#472](https://github.com/feathers-plus/feathers-hooks-common/issues/472)
+
+**Merged pull requests:**
+
+- Fixed cache to ignore find calls with [\#473](https://github.com/feathers-plus/feathers-hooks-common/pull/473) ([eddyystop](https://github.com/eddyystop))
+- required\(\) of value false throws fieldname is null [\#470](https://github.com/feathers-plus/feathers-hooks-common/pull/470) ([antarasi](https://github.com/antarasi))
+
 ## [v4.19.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.0) (2018-11-17)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.18.0...v4.19.0)
 
