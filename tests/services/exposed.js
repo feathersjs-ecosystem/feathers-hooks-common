@@ -17,6 +17,7 @@ const hookNames = [
   'debug',
   'deleteByDot',
   'dePopulate',
+  'dialablePhoneNumber',
   'disable',
   'disableMultiItemChange',
   'disableMultiItemCreate',
