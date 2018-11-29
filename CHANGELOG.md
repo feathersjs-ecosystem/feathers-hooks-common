@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.19.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.3) (2018-11-29)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.2...v4.19.3)
+
+**Merged pull requests:**
+
+- Added dialablePhoneNumber hook [\#475](https://github.com/feathers-plus/feathers-hooks-common/pull/475) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.19.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.2) (2018-11-25)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.1...v4.19.2)
 
@@ -89,6 +96,7 @@
 **Merged pull requests:**
 
 - Typings: Add context to resolver callback arguments. [\#448](https://github.com/feathers-plus/feathers-hooks-common/pull/448) ([j2L4e](https://github.com/j2L4e))
+- add typings file + infrastructure [\#437](https://github.com/feathers-plus/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.17.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.17.6) (2018-09-19)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.17.5...v4.17.6)
@@ -129,7 +137,6 @@
 - typings CI testing [\#440](https://github.com/feathers-plus/feathers-hooks-common/pull/440) ([j2L4e](https://github.com/j2L4e))
 - Revert "\[WIP\] Typings: Set up CI testing" [\#439](https://github.com/feathers-plus/feathers-hooks-common/pull/439) ([eddyystop](https://github.com/eddyystop))
 - \[WIP\] Typings: Set up CI testing [\#438](https://github.com/feathers-plus/feathers-hooks-common/pull/438) ([j2L4e](https://github.com/j2L4e))
-- add typings file + infrastructure [\#437](https://github.com/feathers-plus/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
 - Update npm installed version [\#434](https://github.com/feathers-plus/feathers-hooks-common/pull/434) ([bravo-kernel](https://github.com/bravo-kernel))
 
 ## [v4.16.3](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
