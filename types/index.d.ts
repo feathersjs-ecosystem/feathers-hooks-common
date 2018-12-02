@@ -3,6 +3,7 @@
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
 import { GraphQLSchema, parse } from 'graphql';
+import * as libphonenumberjs from 'libphonenumber-js';
 
 export type HookType = 'before' | 'after' | 'error';
 export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remove';
@@ -119,6 +120,18 @@ export function deleteByDot(object: any, path: string): void;
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DePopulate}
  */
 export function dePopulate(): Hook;
+
+// todo: dialablePhoneNumber docs
+/**
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DialablePhoneNumber}
+ */
+export function dialablePhoneNumber(
+    libphonenumberJs: typeof libphonenumberjs,
+    defaultCountry?: libphonenumberjs.CountryCode,
+    phoneField?: string,
+    dialableField?: string,
+    countryField?: string
+): Hook;
 
 /**
  * Prevents null from being used as an id in patch and remove service methods.
