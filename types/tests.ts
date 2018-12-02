@@ -14,6 +14,7 @@ import {
     debug,
     deleteByDot,
     dePopulate,
+    dialablePhoneNumber,
     disableMultiItemChange,
     disableMultiItemCreate,
     disablePagination,
@@ -66,6 +67,7 @@ import {
 } from 'feathers-hooks-common';
 import ajv = require('ajv');
 import { parse } from 'graphql';
+import * as libphonenumberjs from 'libphonenumber-js';
 
 const context1: HookContext = {
     type: 'before',
@@ -138,6 +140,9 @@ deleteByDot({}, 'abc.def');
 
 // $ExpectType Hook
 dePopulate();
+
+// $ExpectType Hook
+dialablePhoneNumber(libphonenumberjs);
 
 // $ExpectType Hook
 disableMultiItemChange();
