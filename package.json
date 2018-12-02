@@ -69,6 +69,7 @@
     "@feathersjs/socketio": "^3.2.2",
     "@feathersjs/socketio-client": "^1.1.0",
     "@types/feathersjs__feathers": "^3.0.4",
+    "@types/graphql": "^14.0.3",
     "chai": "^4.1.2",
     "clone": "^2.1.1",
     "coveralls": "^3.0.0",
