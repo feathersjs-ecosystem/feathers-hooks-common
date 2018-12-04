@@ -102,12 +102,5 @@ describe('services byDot', () => {
       setByDot(obj, 'name', { firstest: 'Donald', lastest: 'Duck' });
       assert.deepEqual(obj, { name: { firstest: 'Donald', lastest: 'Duck' } });
     });
-
-    it('deletes undefined values', () => {
-      setByDot(obj, 'name.first', undefined, true);
-      assert.deepEqual(obj, { name: { last: 'Doe' } });
-      setByDot(obj, 'name', undefined, true);
-      assert.deepEqual(obj, {});
-    });
   });
 });
