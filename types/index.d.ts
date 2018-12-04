@@ -237,7 +237,7 @@ export interface FGraphQLHookOptions {
     schema: string;
     resolvers: FGraphQLResolverMap | FGraphQLResolverMapFactory;
     query: Query | SyncContextFunction<Query>;
-    options: FGraphQLOptions;
+    options?: FGraphQLOptions;
     runTime: any;
     parse: typeof parse;
 }

@@ -63,7 +63,7 @@ import {
     validate,
     validateSchema,
     when,
-    FGraphqlOptions,
+    FGraphQLHookOptions,
 } from 'feathers-hooks-common';
 import ajv = require('ajv');
 import { parse } from 'graphql';
@@ -219,7 +219,7 @@ fastJoin(ctx => postResolvers);
 fastJoin(postResolvers);
 
 // used from https://github.com/feathers-plus/hooks-graphql-example
-const fgraphqlOptions: FGraphqlOptions = {
+const fgraphqlOptions: FGraphQLHookOptions = {
     parse,
     runTime: null,
     schema: ``,
@@ -242,7 +242,7 @@ const fgraphqlOptions: FGraphqlOptions = {
 // $ExpectType Hook
 fgraphql(fgraphqlOptions);
 
-const fgraphqlOptions2: FGraphqlOptions = {
+const fgraphqlOptions2: FGraphQLHookOptions = {
     ...fgraphqlOptions,
     query: (context: HookContext) => ({
         posts: {},
@@ -257,6 +257,14 @@ const fgraphqlOptions2: FGraphqlOptions = {
             likes: () => ({}),
         },
         Query: {}
+    },
+    options: {
+        extraAuthProps:  ['asdf' ],
+        inclAllFields: false,
+        inclJoinedNames: false,
+        inclAllFieldsClient: true,
+        inclAllFieldsServer: true,
+        skipHookWhen: (context) => { context.data; return false}
     }
 };
 // $ExpectType Hook
