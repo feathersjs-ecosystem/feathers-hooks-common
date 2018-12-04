@@ -264,7 +264,7 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
         inclJoinedNames: false,
         inclAllFieldsClient: true,
         inclAllFieldsServer: true,
-        skipHookWhen: (context) => { context.data; return false}
+        skipHookWhen: (context) => { context.data; return false; }
     }
 };
 // $ExpectType Hook
