@@ -212,9 +212,9 @@ export interface ResolverMap<T> {
  */
 export function fastJoin(resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>, query?: Query | SyncContextFunction<Query>): Hook;
 
-export type ResolversFunction = (app: Application, runtime: any) => ResolversObject;
+export type FGraphQLResolverMapFactory = (app: Application, runtime: any) => FGraphQLResolverMap;
 
-export interface ResolversObject {
+export interface FGraphQLResolverMap {
     [i: string]: {
         [i: string]: (parent: any, args: any, content: any, ast: any) => any;
     };
@@ -223,17 +223,21 @@ export interface ResolversObject {
     };
 }
 
-export interface FGraphqlOptions {
-    recordType: string;
-    schema: string;
-    resolvers: ResolversObject | ResolversFunction;
-    query: Query | SyncContextFunction<Query>;
+export interface FGraphQLOptions {
     skipHookWhen?: SyncContextFunction<boolean>;
     inclAllFieldsServer?: boolean;
     inclAllFieldsClient?: boolean;
     inclAllFields?: boolean;
     inclJoinedNames?: boolean;
     extraAuthProps?: string[];
+}
+
+export interface FGraphQLHookOptions {
+    recordType: string;
+    schema: string;
+    resolvers: FGraphQLResolverMap | FGraphQLResolverMapFactory;
+    query: Query | SyncContextFunction<Query>;
+    options: FGraphQLOptions;
     runTime: any;
     parse: typeof parse;
 }
@@ -242,7 +246,7 @@ export interface FGraphqlOptions {
  * Generate Graphql Resolvers for services
  * {@link https://medium.com/@eddyystop/38faee75dd1}
  */
-export function fgraphql(options?: FGraphqlOptions): Hook;
+export function fgraphql(options?: FGraphQLHookOptions): Hook;
 
 /**
  * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
