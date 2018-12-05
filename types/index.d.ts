@@ -2,7 +2,7 @@
 
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
-import { GraphQLSchema, parse } from 'graphql';
+import { GraphQLSchema, parse, GraphQLFieldResolver } from 'graphql';
 import * as libphonenumberjs from 'libphonenumber-js';
 
 export type HookType = 'before' | 'after' | 'error';
@@ -216,10 +216,10 @@ export type FGraphQLResolverMapFactory = (app: Application, runtime: any) => FGr
 
 export interface FGraphQLResolverMap {
     [i: string]: {
-        [i: string]: (parent: any, args: any, content: any, ast: any) => any;
+        [i: string]: GraphQLFieldResolver<any, any>
     };
     Query: {
-        [i: string]: (parent: any, args: any, content: any, ast: any) => any;
+        [i: string]: GraphQLFieldResolver<any, any>
     };
 }
 
