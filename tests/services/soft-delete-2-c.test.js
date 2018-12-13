@@ -100,7 +100,7 @@ describe('services softDelete2-c', () => {
   });
 
   describe('test client/server interaction with authentication', function () {
-    this.timeout(15000);
+    this.timeout(50000);
 
     let app;
     let server;
