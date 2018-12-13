@@ -1,4 +1,4 @@
-// TypeScript Version: 2.3
+// TypeScript Version: 2.6
 
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
