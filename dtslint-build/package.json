@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "dtslint": "^0.3.0"
+  },
+  "scripts": {
+    "dtslint": "dtslint ../types"
+  }
+}
