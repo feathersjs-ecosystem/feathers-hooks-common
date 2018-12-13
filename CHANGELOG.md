@@ -1,5 +1,26 @@
 # Change Log
 
+## [v4.19.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.6) (2018-12-13)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.5...v4.19.6)
+
+## [v4.19.5](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.4...v4.19.5)
+
+**Closed issues:**
+
+- TS for keepQueryInArray [\#468](https://github.com/feathers-plus/feathers-hooks-common/issues/468)
+- dtslint-build folder in installed package? [\#461](https://github.com/feathers-plus/feathers-hooks-common/issues/461)
+
+**Merged pull requests:**
+
+- Trying to fix situational test failure soft-delete2-c timeout [\#486](https://github.com/feathers-plus/feathers-hooks-common/pull/486) ([eddyystop](https://github.com/eddyystop))
+- Merge forced by pr\#484 [\#485](https://github.com/feathers-plus/feathers-hooks-common/pull/485) ([eddyystop](https://github.com/eddyystop))
+- add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathers-plus/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
+- update names and fix the options property [\#481](https://github.com/feathers-plus/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
+- add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathers-plus/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
+- Add initial types for fgraphql [\#469](https://github.com/feathers-plus/feathers-hooks-common/pull/469) ([NickBolles](https://github.com/NickBolles))
+- remove dtslint workaround in favor of npx [\#463](https://github.com/feathers-plus/feathers-hooks-common/pull/463) ([j2L4e](https://github.com/j2L4e))
+
 ## [v4.19.4](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.4) (2018-11-29)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.3...v4.19.4)
 
