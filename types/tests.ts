@@ -304,8 +304,8 @@ makeCallingParams(
 
 // tslint:disable-next-line
 class ObjId {
-    constructor(id?: string | number) {
-    }
+    // tslint:disable-next-line
+    constructor(id?: string | number) {}
 }
 
 // $ExpectType Hook
