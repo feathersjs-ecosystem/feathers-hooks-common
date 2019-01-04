@@ -1,5 +1,20 @@
 # Change Log
 
+## [v4.19.7](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.7) (2019-01-04)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.6...v4.19.7)
+
+**Closed issues:**
+
+- @feathersjs/commons dependency  [\#492](https://github.com/feathers-plus/feathers-hooks-common/issues/492)
+- Validation hook for restful api [\#491](https://github.com/feathers-plus/feathers-hooks-common/issues/491)
+- TS for keep fgraphql [\#467](https://github.com/feathers-plus/feathers-hooks-common/issues/467)
+
+**Merged pull requests:**
+
+- Remove redundant $eq to be compatible with all database adapters [\#494](https://github.com/feathers-plus/feathers-hooks-common/pull/494) ([KidkArolis](https://github.com/KidkArolis))
+- fix typings test [\#489](https://github.com/feathers-plus/feathers-hooks-common/pull/489) ([j2L4e](https://github.com/j2L4e))
+- fix: use graphql as a dependency to resolve TS type definition problems [\#488](https://github.com/feathers-plus/feathers-hooks-common/pull/488) ([PowerMogli](https://github.com/PowerMogli))
+
 ## [v4.19.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.6) (2018-12-13)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.5...v4.19.6)
 
