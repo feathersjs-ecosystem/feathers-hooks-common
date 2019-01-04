@@ -1,5 +1,20 @@
 # Change Log
 
+## [v4.19.8](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.8) (2019-01-04)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.7...v4.19.8)
+
+**Fixed bugs:**
+
+- Typings needed for libphonenumber-js [\#495](https://github.com/feathers-plus/feathers-hooks-common/issues/495)
+
+**Closed issues:**
+
+- graphql dependency [\#487](https://github.com/feathers-plus/feathers-hooks-common/issues/487)
+
+**Merged pull requests:**
+
+- move `@types/graphql` package from `devDependencies` into `dependencies` [\#496](https://github.com/feathers-plus/feathers-hooks-common/pull/496) ([j2L4e](https://github.com/j2L4e))
+
 ## [v4.19.7](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.7) (2019-01-04)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.6...v4.19.7)
 
