@@ -50,6 +50,7 @@ const hookNames = [
   'required',
   'runHook',
   'runParallel',
+  'sequelizeConvert',
   'serialize',
   'setByDot',
   'setCreatedAt',
