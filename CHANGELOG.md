@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.20.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.0) (2019-01-07)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.8...v4.20.0)
+
+**Merged pull requests:**
+
+- Delete unused fgraphql-async. Added sequelizeConvert. [\#499](https://github.com/feathers-plus/feathers-hooks-common/pull/499) ([eddyystop](https://github.com/eddyystop))
+
 ## [v4.19.8](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.19.8) (2019-01-04)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.7...v4.19.8)
 
