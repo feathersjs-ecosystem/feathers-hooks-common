@@ -107,7 +107,7 @@ export function combine(...hooks: Hook[]): Hook;
  * Display the current hook context for debugging.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Debug}
  */
-export function debug(msg: string, fieldNames?: string[]): Hook;
+export function debug(msg: string, ...fieldNames: string[]): Hook;
 
 /**
  * Deletes a property from an object using dot notation, e.g. address.city. (Utility function.)

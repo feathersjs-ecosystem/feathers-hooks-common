@@ -133,7 +133,7 @@ checkContextIf(context1, 'before', ['update', 'patch'], 'hookName');
 combine(hook1, hook2, hook3);
 
 // $ExpectType Hook
-debug();
+debug('label', 'abc.def', 'ghi.jkl');
 
 // $ExpectType void
 deleteByDot({}, 'abc.def');
