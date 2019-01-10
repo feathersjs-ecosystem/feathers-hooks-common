@@ -456,6 +456,24 @@ export function setNow(...fieldNames: string[]): Hook;
  */
 export function setSlug(slug: string, fieldName?: string): Hook;
 
+export interface SequelizeConversion {
+    js: (sqlValue: any) => any;
+    sql: (jsValue: any) => any;
+}
+
+export interface SequelizeConverts<C> {
+    [name: string]: keyof C | 'boolean' | 'date' | 'json';
+}
+
+/**
+ * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SequelizeConvert}
+ */
+export function sequelizeConvert<C extends {[name: string]: SequelizeConversion}>(
+    converts: SequelizeConverts<C> | null | undefined | false,
+    ignores: string[] | null | undefined | false,
+    conversions?: C
+): Hook;
+
 /**
  * Filter data or result records using a MongoDB-like selection syntax.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Sifter}

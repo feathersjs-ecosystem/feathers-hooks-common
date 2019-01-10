@@ -25,6 +25,7 @@ import {
     existsByDot,
     fastJoin,
     fgraphql,
+    FGraphQLHookOptions,
     getByDot,
     getItems,
     iff,
@@ -47,6 +48,7 @@ import {
     ResolverMap,
     runHook,
     runParallel,
+    sequelizeConvert,
     serialize,
     setByDot,
     setNow,
@@ -63,11 +65,10 @@ import {
     validate,
     validateSchema,
     when,
-    FGraphQLHookOptions,
 } from 'feathers-hooks-common';
-import ajv = require('ajv');
 import { parse } from 'graphql';
 import * as libphonenumberjs from 'libphonenumber-js';
+import ajv = require('ajv');
 
 const context1: HookContext = {
     type: 'before',
@@ -385,6 +386,19 @@ setNow('createdAt', 'updatedAt');
 
 // $ExpectType Hook
 setSlug('storeId');
+
+// $ExpectType Hook
+sequelizeConvert ({
+    aBool: 'boolean',
+    aDate: 'date',
+    anObject: 'json',
+    aNumber: 'strToInt'
+}, null, {
+    strToInt: {
+        js: (sqlValue: string) => +sqlValue,
+        sql: (jsValue: number) => `${jsValue}`,
+    }
+});
 
 // $ExpectType Hook
 sifter(ctx => item => true);
