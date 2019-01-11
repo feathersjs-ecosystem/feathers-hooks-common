@@ -1,5 +1,16 @@
 # Change Log
 
+## [v4.20.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.2) (2019-01-11)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.1...v4.20.2)
+
+**Closed issues:**
+
+- Add typings for sequelizeConvert [\#498](https://github.com/feathers-plus/feathers-hooks-common/issues/498)
+
+**Merged pull requests:**
+
+- add types for sequelizeConvert hook [\#502](https://github.com/feathers-plus/feathers-hooks-common/pull/502) ([j2L4e](https://github.com/j2L4e))
+
 ## [v4.20.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.1) (2019-01-11)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.0...v4.20.1)
 
