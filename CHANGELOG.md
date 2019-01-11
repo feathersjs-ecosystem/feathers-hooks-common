@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.20.1](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.1) (2019-01-11)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.0...v4.20.1)
+
+**Merged pull requests:**
+
+- update type definition for debug hook [\#500](https://github.com/feathers-plus/feathers-hooks-common/pull/500) ([brane53](https://github.com/brane53))
+
 ## [v4.20.0](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.0) (2019-01-07)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.19.8...v4.20.0)
 
