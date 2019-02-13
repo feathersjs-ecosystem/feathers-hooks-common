@@ -547,7 +547,7 @@ export function validateSchema(schema: object, ajv: AjvOrNewable, options?: Vali
  * Execute one array of hooks or another based on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IffElse}
  */
-export function iffElse(predicate: SyncPredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
+export function iffElse(predicate: PredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
 
 export interface IffHook extends Hook {
     else(...hooks: Hook[]): Hook;
@@ -557,7 +557,7 @@ export interface IffHook extends Hook {
  * Execute one or another series of hooks depending on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Iff}
  */
-export function iff(predicate: SyncPredicateFn, ...hooks: Hook[]): IffHook;
+export function iff(predicate: PredicateFn, ...hooks: Hook[]): IffHook;
 
 /**
  * Alias for iff
