@@ -260,7 +260,7 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
         Query: {}
     },
     options: {
-        extraAuthProps:  ['asdf' ],
+        extraAuthProps: ['asdf'],
         inclAllFields: false,
         inclJoinedNames: false,
         inclAllFieldsClient: true,
@@ -306,7 +306,7 @@ makeCallingParams(
 // tslint:disable-next-line
 class ObjId {
     // tslint:disable-next-line
-    constructor(id?: string | number) {}
+    constructor(id?: string | number) { }
 }
 
 // $ExpectType Hook
@@ -388,17 +388,17 @@ setNow('createdAt', 'updatedAt');
 setSlug('storeId');
 
 // $ExpectType Hook
-sequelizeConvert ({
+sequelizeConvert({
     aBool: 'boolean',
     aDate: 'date',
     anObject: 'json',
     aNumber: 'strToInt'
 }, null, {
-    strToInt: {
-        js: (sqlValue: string) => +sqlValue,
-        sql: (jsValue: number) => `${jsValue}`,
-    }
-});
+        strToInt: {
+            js: (sqlValue: string) => +sqlValue,
+            sql: (jsValue: number) => `${jsValue}`,
+        }
+    });
 
 // $ExpectType Hook
 sifter(ctx => item => true);
@@ -449,11 +449,17 @@ validateSchema({}, ajv);
 
 // $ExpectType Hook
 iffElse(syncTrue, [hook1, hook2], [hook3, hook4]);
+// $ExpectType Hook
+iffElse(asyncTrue, [hook1, hook2], [hook3, hook4]);
 
 // $ExpectType IffHook
 iff(syncTrue, hook1, hook2);
+// $ExpectType IffHook
+iff(asyncTrue, hook1, hook2);
 // $ExpectType Hook
 iff(syncTrue, hook1, hook2).else(hook3, hook4);
+// $ExpectType Hook
+iff(asyncTrue, hook1, hook2).else(hook3, hook4);
 
 // $ExpectType IffHook
 when(syncTrue, hook1, hook2);
