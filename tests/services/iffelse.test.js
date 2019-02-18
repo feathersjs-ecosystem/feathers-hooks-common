@@ -65,6 +65,28 @@ describe('services iffElse', () => {
     hookFcnAsyncCalls = 0;
   });
 
+  describe('runs single hook', () => {
+    it('when true', () => {
+      return hooks.iffElse(true, hookFcnSync, hookFcnAsync)(hook)
+        .then(hook => {
+          assert.deepEqual(hook, hookAfter);
+          assert.equal(hookFcnSyncCalls, 1);
+          assert.equal(hookFcnAsyncCalls, 0);
+          assert.deepEqual(hook, hookAfter);
+        });
+    });
+
+    it('when false', () => {
+      return hooks.iffElse(false, hookFcnSync, hookFcnAsync)(hook)
+        .then(hook => {
+          assert.deepEqual(hook, hookAfter);
+          assert.equal(hookFcnSyncCalls, 0);
+          assert.equal(hookFcnAsyncCalls, 1);
+          assert.deepEqual(hook, hookAfter);
+        });
+    });
+  });
+
   describe('runs multiple hooks', () => {
     it('when true', () => {
       return hooks.iffElse(true, [hookFcnSync, hookFcnAsync, hookFcnCb], null)(hook)
@@ -154,6 +176,6 @@ describe('services iffElse', () => {
 
 // Helpers
 
-function clone (obj) {
+function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
