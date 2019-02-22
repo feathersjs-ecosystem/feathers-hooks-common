@@ -1,5 +1,30 @@
 # Change Log
 
+## [v4.20.7](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.7) (2019-02-22)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.6...v4.20.7)
+
+## [v4.20.6](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.6) (2019-02-22)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.5...v4.20.6)
+
+## [v4.20.5](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.5) (2019-02-22)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.4...v4.20.5)
+
+## [v4.20.4](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.4) (2019-02-22)
+[Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.2...v4.20.4)
+
+**Implemented enhancements:**
+
+- Finish dialablePhoneNumber hook [\#474](https://github.com/feathers-plus/feathers-hooks-common/issues/474)
+
+**Closed issues:**
+
+- query regarding set response to hook :after create [\#507](https://github.com/feathers-plus/feathers-hooks-common/issues/507)
+- Many-to-many fastJoin [\#504](https://github.com/feathers-plus/feathers-hooks-common/issues/504)
+
+**Merged pull requests:**
+
+- Update iff predicates typings to be either sync or async [\#509](https://github.com/feathers-plus/feathers-hooks-common/pull/509) ([NickBolles](https://github.com/NickBolles))
+
 ## [v4.20.2](https://github.com/feathers-plus/feathers-hooks-common/tree/v4.20.2) (2019-01-11)
 [Full Changelog](https://github.com/feathers-plus/feathers-hooks-common/compare/v4.20.1...v4.20.2)
 
