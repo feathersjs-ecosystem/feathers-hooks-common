@@ -10,49 +10,77 @@ let hookAfter;
 describe('services skipRemainingHooks', () => {
   describe('updated fields', () => {
     beforeEach(() => {
-      hookBefore = {type: 'before', method: 'create', data: {first: 'John', last: 'Doe'}};
-      hookAfter = {type: 'after', method: 'create', result: {first: 'Jane', last: 'Doe'}};
+      hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
+      hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
     });
 
     describe('predicate is not a function', () => {
       it('False returns context', () => {
-        const result = skipRemainingHooks(false)(hookBefore);
-
-        assert.equal(result, hookBefore);
+        return skipRemainingHooks(false)(hookBefore)
+          .then(result => assert.equal(result, hookBefore));
       });
 
       it('True returns skip token', () => {
-        const result = skipRemainingHooks(true)(hookBefore);
-
-        assert.equal(result, SKIP);
+        return skipRemainingHooks(true)(hookBefore)
+          .then(result => assert.equal(result, SKIP));
       });
     });
 
     describe('predicate is a function', () => {
       it('False returns context', () => {
-        const result = skipRemainingHooks(context => false)(hookBefore);
-
-        assert.equal(result, hookBefore);
+        return skipRemainingHooks(context => false)(hookBefore)
+          .then(result => assert.equal(result, hookBefore));
       });
 
       it('True returns skip token', () => {
-        const result = skipRemainingHooks(context => true)(hookBefore);
+        return skipRemainingHooks(context => true)(hookBefore)
+          .then(result => assert.equal(result, SKIP));
+      });
+    });
 
-        assert.equal(result, SKIP);
+    describe('predicate resolves to a promise', () => {
+      it('False returns context', () => {
+        return skipRemainingHooks(context => Promise.resolve(false))(hookBefore)
+          .then(result => assert.equal(result, hookBefore));
+      });
+
+      it('True returns skip token', () => {
+        return skipRemainingHooks(context => Promise.resolve(true))(hookBefore)
+          .then(result => assert.equal(result, SKIP));
+      });
+
+      it('Error returns skip token', () => {
+        return skipRemainingHooks(context => Promise.reject(new Error()))(hookBefore)
+          .then(result => assert.equal(result, SKIP));
+      });
+    });
+
+    describe('predicate is a promise', () => {
+      it('False returns context', () => {
+        return skipRemainingHooks(Promise.resolve(false))(hookBefore)
+          .then(result => assert.equal(result, hookBefore));
+      });
+
+      it('True returns skip token', () => {
+        return skipRemainingHooks(Promise.resolve(true))(hookBefore)
+          .then(result => assert.equal(result, SKIP));
+      });
+
+      it('Error returns skip token', () => {
+        return skipRemainingHooks(Promise.reject(new Error()))(hookBefore)
+          .then(result => assert.equal(result, SKIP));
       });
     });
 
     describe('default predicate checks context.result', () => {
       it('No context.result', () => {
-        const result = skipRemainingHooks()(hookBefore);
-
-        assert.equal(result, hookBefore);
+        return skipRemainingHooks()(hookBefore)
+          .then(result => assert.equal(result, hookBefore));
       });
 
       it('Has con text.result', () => {
-        const result = skipRemainingHooks()(hookAfter);
-
-        assert.equal(result, SKIP);
+        return skipRemainingHooks()(hookAfter)
+          .then(result => assert.equal(result, SKIP));
       });
     });
   });
