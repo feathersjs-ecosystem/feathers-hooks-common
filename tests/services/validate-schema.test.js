@@ -12,7 +12,7 @@ const Ajv = require('ajv');
 const ajv = new Ajv({ allErrors: true });
 ajv.addFormat('startWithJo', '^Jo');
 ajv.addSchema({
-  'id': 'syncSchema',
+  '$id': 'syncSchema',
   'properties': {
     'first': { 'type': 'string', 'format': 'startWithJo' },
     'last': { 'type': 'string' }
@@ -196,7 +196,7 @@ describe('services validateSchema', () => {
       });
 
       ajvAsync.addSchema({
-        'id': 'asyncSchema',
+        '$id': 'asyncSchema',
         '$async': true,
         'properties': {
           'first': {
