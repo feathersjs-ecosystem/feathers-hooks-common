@@ -10,13 +10,13 @@ var hookBefore;
 var hookAfter;
 var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
-var hookFcnCbCalls;
+var hookFcnCalls;
 var predicateParam1, predicateParam2, predicateParam3, predicateParam4;
 var context;
 var predicateTrueContext;
 var hookFcnSyncContext;
 var hookFcnAsyncContext;
-var hookFcnCbContext;
+var hookFcnContext;
 
 const hookFcnSync = function (hook) {
   hookFcnSyncContext = this;
@@ -38,11 +38,12 @@ const hookFcnAsync = function (hook) {
   });
 };
 
-const hookFcnCb = function (hook, cb) {
-  hookFcnCbContext = this;
+const hookFcn = function (hook, cb) {
+  hookFcnContext = this;
 
-  hookFcnCbCalls = +1;
-  cb(null, hook);
+  hookFcnCalls = +1;
+
+  return hook;
 };
 
 const predicateTrue = function (hook, more2, more3, more4) {
@@ -89,23 +90,23 @@ describe('services iffElse', () => {
 
   describe('runs multiple hooks', () => {
     it('when true', () => {
-      return hooks.iffElse(true, [hookFcnSync, hookFcnAsync, hookFcnCb], null)(hook)
+      return hooks.iffElse(true, [hookFcnSync, hookFcnAsync, hookFcn], null)(hook)
         .then(hook => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
-          assert.equal(hookFcnCbCalls, 1);
+          assert.equal(hookFcnCalls, 1);
           assert.deepEqual(hook, hookAfter);
         });
     });
 
     it('when false', () => {
-      return hooks.iffElse(false, null, [hookFcnSync, hookFcnAsync, hookFcnCb])(hook)
+      return hooks.iffElse(false, null, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
         .then(hook => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
-          assert.equal(hookFcnCbCalls, 1);
+          assert.equal(hookFcnCalls, 1);
           assert.deepEqual(hook, hookAfter);
         });
     });
@@ -113,7 +114,7 @@ describe('services iffElse', () => {
 
   describe('predicate gets right params', () => {
     it('when true', () => {
-      return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcnCb], null)(hook)
+      return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcn], null)(hook)
         .then(() => {
           assert.deepEqual(predicateParam1, hook, 'param1');
           assert.strictEqual(predicateParam2, undefined, 'param2');
@@ -124,7 +125,7 @@ describe('services iffElse', () => {
 
     it('every passes on correct params', () => {
       return hooks.iffElse(
-        hooks.every(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcnCb], null
+        hooks.every(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcn], null
       )(hook)
         .then(() => {
           assert.deepEqual(predicateParam1, hook, 'param1');
@@ -136,7 +137,7 @@ describe('services iffElse', () => {
 
     it('some passes on correct params', () => {
       return hooks.iffElse(
-        hooks.some(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcnCb], null
+        hooks.some(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcn], null
       )(hook)
         .then(() => {
           assert.deepEqual(predicateParam1, hook, 'param1');
@@ -153,22 +154,22 @@ describe('services iffElse', () => {
       predicateTrueContext = undefined;
       hookFcnSyncContext = undefined;
       hookFcnAsyncContext = undefined;
-      hookFcnCbContext = undefined;
+      hookFcnContext = undefined;
     });
 
     it('services', () => {
-      return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcnCb], null).call(context, hook)
+      return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcn], null).call(context, hook)
         .then(hook => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
-          assert.equal(hookFcnCbCalls, 1);
+          assert.equal(hookFcnCalls, 1);
           assert.deepEqual(hook, hookAfter);
 
           assert.deepEqual(predicateTrueContext, { service: 'abc' });
           assert.deepEqual(hookFcnSyncContext, { service: 'abc' });
           assert.deepEqual(hookFcnAsyncContext, { service: 'abc' });
-          assert.deepEqual(hookFcnCbContext, { service: 'abc' });
+          assert.deepEqual(hookFcnContext, { service: 'abc' });
         });
     });
   });
@@ -176,6 +177,6 @@ describe('services iffElse', () => {
 
 // Helpers
 
-function clone(obj) {
+function clone (obj) {
   return JSON.parse(JSON.stringify(obj));
 }

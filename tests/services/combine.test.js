@@ -69,11 +69,12 @@ function user () {
             if (service !== this) { throw new Error('Service wrong 3.'); }
             hook.params.trace.push('sync2');
           },
-          function (hook, cb) {
+          function (hook) {
             if (hook.app !== app) { throw new Error('App wrong 4.'); }
             if (service !== this) { throw new Error('Service wrong 4.'); }
             hook.params.trace.push('cb1');
-            cb(null, hook);
+
+            return hook;
           },
           function (hook) {
             if (hook.app !== app) { throw new Error('App wrong 5.'); }

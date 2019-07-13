@@ -28,7 +28,8 @@ function users () {
 
   app.use('users', memory({
     store,
-    startId
+    startId,
+    multi: true
   }));
 
   app.service('users').hooks({
