@@ -34,7 +34,7 @@
 
 ## Documentation
 
-Refer to [Feathers-Plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html). 
+Refer to [Feathers-Plus web site](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html). 
 
 ## Installation
 
