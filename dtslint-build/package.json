@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "dtslint": "^0.3.0"
+    "dtslint": "^0.9.9"
   },
   "scripts": {
     "dtslint": "dtslint ../types"
