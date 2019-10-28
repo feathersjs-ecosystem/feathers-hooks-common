@@ -42,6 +42,15 @@ describe('test existsByDot', () => {
     assert.equal(existsByDot({}, 'name'), false);
   });
 
+  it('finds property with dot in key', () => {
+    const obj = { 'name.first': 'John' };
+    assert.equal(existsByDot(obj, 'name.first'), true);
+    assert.equal(existsByDot(obj, 'name'), false);
+    assert.equal(existsByDot(obj, 'first'), false);
+    assert.equal(existsByDot(obj, 'namefirst'), false);
+    assert.equal(existsByDot(obj, 'name.first.foo'), false);
+  });
+
   it('does not throw if path ends prematurely', () => {
     assert.deepEqual(existsByDot(obj, 'x'), false);
     assert.deepEqual(existsByDot(obj, 'name.a.c.x'), false);
