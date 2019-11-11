@@ -54,7 +54,7 @@
     "@feathersjs/errors": "^4.3.11",
     "@feathersjs/feathers": "^4.3.11",
     "@types/graphql": "^14.0.4",
-    "ajv": "^5.5.2",
+    "ajv": "^6.10.0",
     "debug": "^3.1.0",
     "graphql": "^14.0.2",
     "libphonenumber-js": "^1.6.8",
