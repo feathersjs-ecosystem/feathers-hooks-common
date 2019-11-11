@@ -11,7 +11,8 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
     });
 
     it('does not throw on before patch', () => {
@@ -37,7 +38,8 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', 'name.first': 'John', a: { b: undefined, c: { d: { e: 1 } } } } };
+        data: { first: 'John', last: 'Doe', 'name.first': 'John', a: { b: undefined, c: { d: { e: 1 } } } }
+      };
     });
 
     it('does not throw if props not found', () => {
@@ -61,7 +63,8 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } } };
+        data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } }
+      };
     });
 
     it('does not throw if props not found', () => {
@@ -84,7 +87,8 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } } };
+        data: { first: 'John', last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } }
+      };
     });
 
     it('does not delete if props not found', () => {

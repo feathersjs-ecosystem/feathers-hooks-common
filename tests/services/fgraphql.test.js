@@ -112,29 +112,29 @@ describe('services fgraphql', () => {
     let result;
 
     const usersDb = {
-      '31': { _id: '31', name: 'user 31' },
-      '32': { _id: '32', name: 'user 32' },
-      '35': { _id: '35', name: 'user 35' },
-      '36': { _id: '36', name: 'user 36' },
-      '37': { _id: '37', name: 'user 37' }
+      31: { _id: '31', name: 'user 31' },
+      32: { _id: '32', name: 'user 32' },
+      35: { _id: '35', name: 'user 35' },
+      36: { _id: '36', name: 'user 36' },
+      37: { _id: '37', name: 'user 37' }
     };
 
     const postsDb = {
-      '11': { _id: '11', body: 'body 11', userId: '31' },
-      '12': { _id: '12', body: 'body 12', userId: '31' },
-      '13': { _id: '13', body: 'body 13', userId: '32' }
+      11: { _id: '11', body: 'body 11', userId: '31' },
+      12: { _id: '12', body: 'body 12', userId: '31' },
+      13: { _id: '13', body: 'body 13', userId: '32' }
     };
 
     const commentsDb = {
-      '21': { _id: '21', comment: 'comment 21', postId: '11', userId: '35' },
-      '22': { _id: '22', comment: 'comment 22', postId: '12', userId: '35' },
-      '23': { _id: '23', comment: 'comment 23', postId: '13', userId: '35' },
-      '24': { _id: '24', comment: 'comment 24', postId: '11', userId: '36' },
-      '25': { _id: '25', comment: 'comment 25', postId: '12', userId: '36' },
-      '26': { _id: '26', comment: 'comment 26', postId: '13', userId: '36' },
-      '27': { _id: '27', comment: 'comment 24', postId: '11', userId: '37' },
-      '28': { _id: '28', comment: 'comment 25', postId: '12', userId: '37' },
-      '29': { _id: '29', comment: 'comment 26', postId: '13', userId: '37' }
+      21: { _id: '21', comment: 'comment 21', postId: '11', userId: '35' },
+      22: { _id: '22', comment: 'comment 22', postId: '12', userId: '35' },
+      23: { _id: '23', comment: 'comment 23', postId: '13', userId: '35' },
+      24: { _id: '24', comment: 'comment 24', postId: '11', userId: '36' },
+      25: { _id: '25', comment: 'comment 25', postId: '12', userId: '36' },
+      26: { _id: '26', comment: 'comment 26', postId: '13', userId: '36' },
+      27: { _id: '27', comment: 'comment 24', postId: '11', userId: '37' },
+      28: { _id: '28', comment: 'comment 25', postId: '12', userId: '37' },
+      29: { _id: '29', comment: 'comment 26', postId: '13', userId: '37' }
     };
 
     beforeEach(() => {
@@ -256,7 +256,7 @@ describe('services fgraphql', () => {
         // inspector('actual=', newContext.data || newContext.result);
 
         assert.deepEqual(newContext.data || newContext.result, result, 'unexpected result');
-        assert.deepEqual(usersBatchLoaderCalls, [ ['31', '32', '35', '36', '37'] ], 'unexpected calls');
+        assert.deepEqual(usersBatchLoaderCalls, [['31', '32', '35', '36', '37']], 'unexpected calls');
       } catch (err) {
         console.log(err);
         throw err;
@@ -372,7 +372,7 @@ type User {
 // resolvers
 function r (typ) {
   return function resolvers (app, options) { // eslint-disable-line no-unused-vars
-    const {convertArgsToFeathers, extractAllItems, extractFirstItem} = options; // eslint-disable-line no-unused-vars
+    const { convertArgsToFeathers, extractAllItems, extractFirstItem } = options; // eslint-disable-line no-unused-vars
     const convertArgs = convertArgsToFeathers([]); // eslint-disable-line no-unused-vars
     //  let comments = app.service('/comments');
 

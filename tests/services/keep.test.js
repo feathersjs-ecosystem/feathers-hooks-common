@@ -15,12 +15,14 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane', last: 'Doe' } };
+        result: { first: 'Jane', last: 'Doe' }
+      };
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -31,7 +33,8 @@ describe('services keep', () => {
             { first: 'John', last: 'Doe' },
             { first: 'Jane', last: 'Doe' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -80,7 +83,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hooks.keep('last', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
@@ -90,7 +94,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: undefined, last: 'Doe' } };
+        data: { first: undefined, last: 'Doe' }
+      };
       hooks.keep('first')(hook);
       assert.deepEqual(hook.data, { first: undefined });
     });
@@ -100,7 +105,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: null, last: 'Doe' } };
+        data: { first: null, last: 'Doe' }
+      };
       hooks.keep('first')(hook);
       assert.deepEqual(hook.data, { first: null });
     });
@@ -110,7 +116,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: false, last: 'Doe' } };
+        data: { first: false, last: 'Doe' }
+      };
       hooks.keep('first')(hook);
       assert.deepEqual(hook.data, { first: false });
     });
@@ -120,7 +127,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 0, last: 'Doe' } };
+        data: { first: 0, last: 'Doe' }
+      };
       hooks.keep('first')(hook);
       assert.deepEqual(hook.data, { first: 0 });
     });
@@ -130,7 +138,8 @@ describe('services keep', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: '', last: 'Doe' } };
+        data: { first: '', last: 'Doe' }
+      };
       hooks.keep('first')(hook);
       assert.deepEqual(hook.data, { first: '' });
     });
@@ -192,7 +201,8 @@ describe('services keep', () => {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] };
+        result: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity]
+      };
     });
 
     it('before', () => {

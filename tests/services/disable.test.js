@@ -81,7 +81,8 @@ describe('services disable', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
     });
 
     it('allows when true', (next) => {

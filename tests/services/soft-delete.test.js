@@ -6,12 +6,12 @@ const hooks = require('../../lib/services');
 
 const startId = 6;
 const storeInit = {
-  '0': { name: 'Jane Doe', key: 'a', id: 0 },
-  '1': { name: 'Jack Doe', key: 'a', id: 1 },
-  '2': { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
-  '3': { name: 'Rick Doe', key: 'b', id: 3 },
-  '4': { name: 'Dick Doe', key: 'b', id: 4 },
-  '5': { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
+  0: { name: 'Jane Doe', key: 'a', id: 0 },
+  1: { name: 'Jack Doe', key: 'a', id: 1 },
+  2: { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
+  3: { name: 'Rick Doe', key: 'b', id: 3 },
+  4: { name: 'Dick Doe', key: 'b', id: 4 },
+  5: { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
 };
 
 let store;
@@ -30,6 +30,7 @@ function user () {
       super(...args);
       this.get_call_count = 0;
     }
+
     get (...args) {
       this.get_call_count += 1;
       return super.get(...args);
@@ -39,7 +40,7 @@ function user () {
   app.use('/users', new UsersService({
     store,
     startId,
-    multi: [ 'patch' ]
+    multi: ['patch']
   }));
 
   app.service('users').hooks({
@@ -71,7 +72,7 @@ describe.skip('services softDelete', () => {
     it('find - does not return deleted items', done => {
       user.find()
         .then(data => {
-          assert.deepEqual(data, [ store['0'], store['1'], store['3'], store['4'] ]);
+          assert.deepEqual(data, [store['0'], store['1'], store['3'], store['4']]);
           done();
         });
     });
@@ -92,7 +93,7 @@ describe.skip('services softDelete', () => {
         .then(() => assert.fail('Should never get here'))
         .catch(error => {
           assert.equal(error.name, 'NotFound');
-          assert.equal(error.message, `No record found for id '2'`);
+          assert.equal(error.message, 'No record found for id \'2\'');
         });
     });
 
@@ -147,7 +148,7 @@ describe.skip('services softDelete', () => {
       return user.update(2, { y: 'y' })
         .then(() => assert.fail('Should never get here'))
         .catch(error => {
-          assert.equal(error.message, `No record found for id '2'`);
+          assert.equal(error.message, 'No record found for id \'2\'');
           assert.equal(error.name, 'NotFound');
         });
     });
@@ -201,7 +202,7 @@ describe.skip('services softDelete', () => {
       return user.patch(null, { x: 'x' })
         .then(data => {
           let expected = clone(
-            [ storeInit['0'], storeInit['1'], storeInit['3'], storeInit['4'] ]);
+            [storeInit['0'], storeInit['1'], storeInit['3'], storeInit['4']]);
           expected.forEach(obj => { obj.x = 'x'; });
           assert.deepEqual(data, expected);
 
@@ -214,7 +215,7 @@ describe.skip('services softDelete', () => {
     it('patches filtered, nondeleted items', done => {
       user.patch(null, { x: 'x' }, { query: { key: 'a' } })
         .then(data => {
-          let expected = clone([ storeInit['0'], storeInit['1'] ])
+          let expected = clone([storeInit['0'], storeInit['1']])
             .map(obj => Object.assign({}, obj, { x: 'x' }));
           assert.deepEqual(data, expected);
 

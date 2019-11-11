@@ -6,12 +6,12 @@ const hooks = require('../../lib/services');
 
 const startId = 6;
 const storeInit = {
-  '0': { name: 'Jane Doe', key: 'a', id: 0 },
-  '1': { name: 'Jack Doe', key: 'a', id: 1 },
-  '2': { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
-  '3': { name: 'Rick Doe', key: 'b', id: 3 },
-  '4': { name: 'Dick Doe', key: 'b', id: 4 },
-  '5': { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
+  0: { name: 'Jane Doe', key: 'a', id: 0 },
+  1: { name: 'Jack Doe', key: 'a', id: 1 },
+  2: { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
+  3: { name: 'Rick Doe', key: 'b', id: 3 },
+  4: { name: 'Dick Doe', key: 'b', id: 4 },
+  5: { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
 };
 let store;
 
@@ -109,14 +109,14 @@ describe('services combine', () => {
   });
 
   it('runs successful hooks', done => {
-    user.find({query: { key: 'a' }})
+    user.find({ query: { key: 'a' } })
       .then(data => {
         done();
       });
   });
 
   it('throws on unsuccessful hook', done => {
-    user.find({query: { key: 'b' }})
+    user.find({ query: { key: 'b' } })
       .catch(() => {
         done();
       })

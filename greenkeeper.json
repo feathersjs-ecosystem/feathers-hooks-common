@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "dtslint-build/package.json",
+        "package.json"
+      ]
+    }
+  }
+}

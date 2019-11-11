@@ -1,5 +1,5 @@
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const { dePopulate } = require('../../lib/services/index');
 
 describe('services dePopulate - not dot notation', () => {
@@ -11,7 +11,7 @@ describe('services dePopulate - not dot notation', () => {
     hookAfter = {
       type: 'after',
       method: 'create',
-      params: {provider: 'rest'},
+      params: { provider: 'rest' },
       result: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
@@ -33,7 +33,7 @@ describe('services dePopulate - not dot notation', () => {
     hookBefore = {
       type: 'before',
       method: 'update',
-      params: {provider: 'rest'},
+      params: { provider: 'rest' },
       data: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
@@ -50,7 +50,7 @@ describe('services dePopulate - not dot notation', () => {
           postId: 1,
           updatedAt: 1480793101475,
           _include: ['post'],
-          _elapsed: {post: 3456238, total: 3642135},
+          _elapsed: { post: 3456238, total: 3642135 },
           post: {
             id: 1,
             title: 'Post 1',
@@ -65,7 +65,7 @@ describe('services dePopulate - not dot notation', () => {
           postId: 2,
           updatedAt: 1480793101475,
           _include: ['post'],
-          _elapsed: {post: 3457496, total: 3878535},
+          _elapsed: { post: 3457496, total: 3878535 },
           post: {
             id: 2,
             title: 'Post 2',
@@ -80,7 +80,7 @@ describe('services dePopulate - not dot notation', () => {
           postId: 1,
           updatedAt: 1480793101475,
           _include: ['post'],
-          _elapsed: {post: 3446912, total: 3857237},
+          _elapsed: { post: 3446912, total: 3857237 },
           post: {
             id: 1,
             title: 'Post 1',
@@ -148,7 +148,7 @@ describe('services dePopulate - dot notation', () => {
     hookAfter = {
       type: 'after',
       method: 'create',
-      params: {provider: 'rest'},
+      params: { provider: 'rest' },
       result: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
@@ -157,20 +157,24 @@ describe('services dePopulate - dot notation', () => {
         _elapsed: { post: 16051500, total: 20707798, x: 1 },
         _computed: ['a1', 'a1'],
         a1: 1,
-        post: { a: { b: {
-          id: 1,
-          title: 'Post 1',
-          content: 'Lorem ipsum dolor sit amet 4',
-          author: 'as61389dadhga62343hads6712',
-          readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-          createdAt: 1480793101559
-        }}}
+        post: {
+          a: {
+            b: {
+              id: 1,
+              title: 'Post 1',
+              content: 'Lorem ipsum dolor sit amet 4',
+              author: 'as61389dadhga62343hads6712',
+              readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
+              createdAt: 1480793101559
+            }
+          }
+        }
       }
     };
     hookBefore = {
       type: 'before',
       method: 'update',
-      params: {provider: 'rest'},
+      params: { provider: 'rest' },
       data: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
@@ -187,7 +191,7 @@ describe('services dePopulate - dot notation', () => {
           postId: 1,
           updatedAt: 1480793101475,
           _include: ['post.a'],
-          _elapsed: {post: 3456238, total: 3642135},
+          _elapsed: { post: 3456238, total: 3642135 },
           post: {
             a: {
               id: 1,
@@ -204,7 +208,7 @@ describe('services dePopulate - dot notation', () => {
           postId: 2,
           updatedAt: 1480793101475,
           _include: ['post.a', 'x', 'post.b.c', 'comments'],
-          _elapsed: {post: 3457496, total: 3878535},
+          _elapsed: { post: 3457496, total: 3878535 },
           comments: {},
           post: {
             a: {
@@ -222,7 +226,7 @@ describe('services dePopulate - dot notation', () => {
           postId: 1,
           updatedAt: 1480793101475,
           _include: ['post'],
-          _elapsed: {post: 3446912, total: 3857237},
+          _elapsed: { post: 3446912, total: 3857237 },
           post: {
             id: 1,
             title: 'Post 1',

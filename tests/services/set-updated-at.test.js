@@ -25,7 +25,8 @@ describe('services setUpdatedAt', () => {
             { first: 'John', last: 'Doe' },
             { first: 'Jane', last: 'Doe' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -107,7 +108,8 @@ describe('services setUpdatedAt', () => {
       assert.equal(Object.keys(hookBefore2.data.created).length, 2);
       delete hookBefore2.data.created.at;
       assert.deepEqual(hookBefore2.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        {
+          empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
           dept: 'Acct',
           created: { where: 'NYC' }
         }
