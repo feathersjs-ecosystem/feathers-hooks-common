@@ -22,7 +22,8 @@ describe('services byDot', () => {
             name: 'John',
             address: { line1: '100 5-th Avenue', city: 'New York' }
           }
-        }
+        },
+        'foo.bar': {}
       };
     });
 
@@ -45,6 +46,10 @@ describe('services byDot', () => {
     it('gets leaf level simple variable', () => {
       assert.equal(getByDot(obj, 'manager.employee.address.city'),
         obj.manager.employee.address.city);
+    });
+
+    it('gets top level property with dot in key', () => {
+      assert.equal(getByDot(obj, 'foo.bar'), obj['foo.bar']);
     });
 
     it('does not throw on missing path, at top', () => {

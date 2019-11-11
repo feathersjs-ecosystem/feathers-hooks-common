@@ -56,12 +56,13 @@ function postsService () {
       super(...args);
       this.foo = true;
     }
+
     get (...args) {
       return super.get(...args);
     }
   }
 
-  app.use('/posts', new PostsService({store, postsStoreStartId}));
+  app.use('/posts', new PostsService({ store, postsStoreStartId }));
 
   app.service('posts').hooks({
     before: {
@@ -79,12 +80,13 @@ function usersService () {
       super(...args);
       this.junk = true;
     }
+
     get (...args) {
       return super.get(...args);
     }
   }
 
-  app.use('/users', new UsersService({store, usersStoreStartId}));
+  app.use('/users', new UsersService({ store, usersStoreStartId }));
 
   app.service('users').hooks({
     before: {
@@ -126,18 +128,20 @@ describe('services fastJoin & cache', () => {
     it('no cacheMap, no cache hook', async () => {
       const context = await ex8();
 
-      const result = { method: 'find',
+      const result = {
+        method: 'find',
         result:
-        [ { id: 1,
+        [{
+          id: 1,
           body: 'John post',
           userId: 101,
-          starIds: [ 102, 103, 104 ],
+          starIds: [102, 103, 104],
           author: { id: 101, name: 'John' },
           starers:
-          [ { id: 102, name: 'Marshall' },
+          [{ id: 102, name: 'Marshall' },
             { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' } ]
-        } ],
+            { id: 104, name: 'Aubree' }]
+        }],
         params: {},
         _loaders: undefined
       };
@@ -148,18 +152,20 @@ describe('services fastJoin & cache', () => {
     it('with cacheMap, no cache hook', async () => {
       const context = await ex8a();
 
-      const result = { method: 'find',
+      const result = {
+        method: 'find',
         result:
-        [ { id: 1,
+        [{
+          id: 1,
           body: 'John post',
           userId: 101,
-          starIds: [ 102, 103, 104 ],
+          starIds: [102, 103, 104],
           author: { id: 101, name: 'John' },
           starers:
-          [ { id: 102, name: 'Marshall' },
+          [{ id: 102, name: 'Marshall' },
             { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' } ]
-        } ],
+            { id: 104, name: 'Aubree' }]
+        }],
         params: {},
         _loaders: undefined
       };
@@ -177,18 +183,20 @@ describe('services fastJoin & cache', () => {
     it('works for 1 call', async () => {
       const context = await ex8b();
 
-      const result = { method: 'find',
+      const result = {
+        method: 'find',
         result:
-        [ { id: 1,
+        [{
+          id: 1,
           body: 'John post',
           userId: 101,
-          starIds: [ 102, 103, 104 ],
+          starIds: [102, 103, 104],
           author: { id: 101, name: 'John' },
           starers:
-          [ { id: 102, name: 'Marshall' },
+          [{ id: 102, name: 'Marshall' },
             { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' } ]
-        } ],
+            { id: 104, name: 'Aubree' }]
+        }],
         params: {},
         _loaders: undefined
       };
@@ -201,18 +209,20 @@ describe('services fastJoin & cache', () => {
     it('uses persistent cache for 2 calls', async () => {
       assert.equal(cacheMapUsers.itemCount, 0, '0 cache');
 
-      const result = { method: 'find',
+      const result = {
+        method: 'find',
         result:
-        [ { id: 1,
+        [{
+          id: 1,
           body: 'John post',
           userId: 101,
-          starIds: [ 102, 103, 104 ],
+          starIds: [102, 103, 104],
           author: { id: 101, name: 'John' },
           starers:
-          [ { id: 102, name: 'Marshall' },
+          [{ id: 102, name: 'Marshall' },
             { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' } ]
-        } ],
+            { id: 104, name: 'Aubree' }]
+        }],
         params: {},
         _loaders: undefined
       };

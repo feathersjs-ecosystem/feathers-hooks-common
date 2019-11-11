@@ -1,4 +1,4 @@
-import { Hook, HookContext, Service } from '@feathersjs/feathers';
+import { Hook, HookContext, Service, default as feathers } from '@feathersjs/feathers';
 
 import {
     actOnDefault,
@@ -72,7 +72,11 @@ import ajv = require('ajv');
 
 const context1: HookContext = {
     type: 'before',
-    service: null!
+    app: feathers(),
+    method: '',
+    params: {},
+    path: '/',
+    service: null
 };
 
 const hook1: Hook = ctx => ctx;
@@ -169,10 +173,11 @@ existsByDot({}, 'abc.def');
 const commentResolvers: ResolverMap<any> = {
     joins: {
         author: $select => async comment => {
-            comment.author = (await service1.find({
+            const authors = await service1.find({
                 query: { id: comment.userId, $select: $select || ['name'] },
                 paginate: false
-            }) as any)[0];
+            });
+            comment.author = authors[0];
         },
     },
 };
@@ -196,13 +201,12 @@ const postResolvers: ResolverMap<any> = {
 const userResolvers: ResolverMap<any> = {
     joins: {
         memberships: () => async (user, context) => {
-            const memberships: any = (await context.app!.service
-                ('memberships').find({
-                    query: {
-                        user: user._id,
-                        $populate: 'role',
-                    }
-                }));
+            const memberships = await context.app.service('memberships').find({
+                query: {
+                    user: user._id,
+                    $populate: 'role',
+                }
+            });
             user.memberships = memberships.data;
         }
     }
@@ -437,7 +441,7 @@ traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
-}, context => context.params!.query);
+}, context => context.params.query);
 
 // $ExpectType Hook
 validate(async (data, context) => {

@@ -24,7 +24,8 @@ describe('services lowercase', () => {
             { first: 'John', last: 'Doe' },
             { first: 'Jane', last: 'Doe' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',

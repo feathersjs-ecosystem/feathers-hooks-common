@@ -2,9 +2,9 @@
 const { assert } = require('chai');
 const { fastJoin, keep, runHook } = require('../../lib/services');
 
-let app = { a: 'a' };
-let params = { p: 'p' };
-let service = { s: 's' };
+const app = { a: 'a' };
+const params = { p: 'p' };
+const service = { s: 's' };
 let runHooks1;
 let runHooks2;
 let hook;
@@ -97,7 +97,7 @@ describe('services runHooks', () => {
       { _id: 103, amount: 110, patientId: 1, patient: { _id: 1, name: 'John' } },
       { _id: 104, amount: 115, patientId: 2, patient: { _id: 2, name: 'Marshall' } },
       { _id: 105, amount: 120, patientId: 3, patient: { _id: 3, name: 'David' } },
-      { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } } ];
+      { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } }];
 
     return Promise.resolve(paymentsRecords)
       .then(runHooks2(fastJoin(paymentResolvers)))

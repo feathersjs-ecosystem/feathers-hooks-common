@@ -17,12 +17,14 @@ describe('services pluck', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane', last: 'Doe' } };
+        result: { first: 'Jane', last: 'Doe' }
+      };
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -33,7 +35,8 @@ describe('services pluck', () => {
             { first: 'John', last: 'Doe' },
             { first: 'Jane', last: 'Doe' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -82,7 +85,8 @@ describe('services pluck', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hooks.pluck('last', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
@@ -92,7 +96,8 @@ describe('services pluck', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: undefined, last: undefined } };
+        data: { first: undefined, last: undefined }
+      };
       hooks.pluck('first')(hook);
       assert.deepEqual(hook.data, {}); // todo note this
     });
@@ -102,7 +107,8 @@ describe('services pluck', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: null, last: null } };
+        data: { first: null, last: null }
+      };
       hooks.pluck('last')(hook);
       assert.deepEqual(hook.data, { last: null });
     });

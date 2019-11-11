@@ -1,5 +1,5 @@
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const configApp = require('../helpers/config-app');
 
 describe('services populate - test scaffolding', () => {
@@ -15,7 +15,7 @@ describe('services populate - test scaffolding', () => {
         return users.remove(0);
       })
       .then(() => {
-        return users.find({query: {}});
+        return users.find({ query: {} });
       })
       .then(data => {
         assert.equal(data.length, 1);
@@ -24,7 +24,7 @@ describe('services populate - test scaffolding', () => {
         const app1 = configApp(['users', 'comments', 'posts', 'recommendation']);
         const users1 = app1.service('users');
 
-        return users1.find({query: {}});
+        return users1.find({ query: {} });
       })
       .then(data => {
         assert.equal(data.length, 2);

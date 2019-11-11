@@ -1,4 +1,4 @@
-// TypeScript Version: 2.6
+// TypeScript Version: 3.0
 
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
@@ -44,7 +44,7 @@ export interface CacheOptions<T, K> {
 }
 
 /**
- * Persistent, least-recently-used record cache for services.
+ * Persistent, most-recently-used record cache for services.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Cache}
  */
 export function cache<T, K extends keyof T>(cacheMap: CacheMap<T>, keyField?: K, options?: CacheOptions<T, K>): Hook;

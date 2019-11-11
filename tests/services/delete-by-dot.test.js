@@ -51,7 +51,7 @@ describe('test deleteByDot', () => {
   });
 
   it('delete an array item', () => {
-    let obj1 = {arr: ['a', 'b', 'c']};
+    const obj1 = { arr: ['a', 'b', 'c'] };
     deleteByDot(obj1, 'arr.1');
     assert.equal(obj1.arr[1], 'c');
     assert.equal(obj1.arr.length, 2);

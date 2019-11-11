@@ -1,5 +1,5 @@
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const { populate } = require('../../lib/services/index');
 
 describe('services populate - finds items in hook', () => {
@@ -12,12 +12,14 @@ describe('services populate - finds items in hook', () => {
       type: 'after',
       method: 'create',
       params: { provider: 'rest' },
-      result: { first: 'Jane2', last: 'Doe2' } };
+      result: { first: 'Jane2', last: 'Doe2' }
+    };
     hookAfterArray = {
       type: 'after',
       method: 'create',
       params: { provider: 'rest' },
-      result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }] };
+      result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }]
+    };
     hookFindPaginate = {
       type: 'after',
       method: 'find',
@@ -28,7 +30,8 @@ describe('services populate - finds items in hook', () => {
           { first: 'John3', last: 'Doe3' },
           { first: 'Jane3', last: 'Doe3' }
         ]
-      } };
+      }
+    };
   });
 
   it('one item', () => {
@@ -64,7 +67,8 @@ describe('services populate - throws on bad params', () => { // run to increase 
       type: 'after',
       method: 'create',
       params: { provider: 'rest' },
-      result: { first: 'Jane2', last: 'Doe2' } };
+      result: { first: 'Jane2', last: 'Doe2' }
+    };
   });
 
   it('schema', () => {

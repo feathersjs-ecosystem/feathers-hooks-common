@@ -6,17 +6,17 @@ const { iff, populate } = require('../../lib/services/index');
 
 const userId = 6;
 const userInit = {
-  '0': { name: 'Jane Doe', key: 'a', id: 0 },
-  '1': { name: 'Jack Doe', key: 'a', id: 1 },
-  '2': { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
-  '3': { name: 'Rick Doe', key: 'b', id: 3 },
-  '4': { name: 'Dick Doe', key: 'b', id: 4 },
-  '5': { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
+  0: { name: 'Jane Doe', key: 'a', id: 0 },
+  1: { name: 'Jack Doe', key: 'a', id: 1 },
+  2: { name: 'Jack Doe', key: 'a', id: 2, deleted: true },
+  3: { name: 'Rick Doe', key: 'b', id: 3 },
+  4: { name: 'Dick Doe', key: 'b', id: 4 },
+  5: { name: 'Dick Doe', key: 'b', id: 5, deleted: true }
 };
 const teamId = 2;
 const teamInit = {
-  '0': { team: 'Does', memberIds: [0, 1, 2], id: 0 },
-  '1': { team: 'Dragons', memberIds: [3, 4, 5], id: 1 }
+  0: { team: 'Does', memberIds: [0, 1, 2], id: 0 },
+  1: { team: 'Dragons', memberIds: [3, 4, 5], id: 1 }
 };
 
 const schemaDefault = {
@@ -30,14 +30,15 @@ const schemaDefault = {
 
 const resultDefault = [{
   team: 'Does',
-  memberIds: [ 0, 1, 2 ],
+  memberIds: [0, 1, 2],
   id: 0,
-  _include: [ 'members' ],
+  _include: ['members'],
   members: [
     { name: 'Jane Doe', key: 'a', id: 0 },
     { name: 'Jack Doe', key: 'a', id: 1 },
     { name: 'Jack Doe', key: 'a', id: 2, deleted: true }
-  ]}
+  ]
+}
 ];
 
 const schemaDefaultTeams = {
@@ -82,13 +83,14 @@ const schemaTrue = {
 
 const resultTrue = [{
   team: 'Does',
-  memberIds: [ 0, 1, 2 ],
+  memberIds: [0, 1, 2],
   id: 0,
-  _include: [ 'members' ],
+  _include: ['members'],
   members: [
     { name: 'Jane Doe', key: 'a', id: 0 },
     { name: 'Jack Doe', key: 'a', id: 1 }
-  ]}
+  ]
+}
 ];
 
 const schema1 = {
@@ -103,9 +105,9 @@ const schema1 = {
 
 const result1 = [{
   team: 'Does',
-  memberIds: [ 0, 1, 2 ],
+  memberIds: [0, 1, 2],
   id: 0,
-  _include: [ 'members' ],
+  _include: ['members'],
   members: { name: 'Jane Doe', key: 'a', id: 0 }
 }];
 

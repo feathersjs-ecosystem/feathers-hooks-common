@@ -59,10 +59,10 @@ const hookFcnAsync = (hook) => new Promise(resolve => {
   resolve(hook);
 });
 
-const hookFcnCb = (hook, cb) => {
+const hookFcn = (hook) => {
   hookFcnCbCalls = +1;
 
-  cb(null, hook);
+  return hook;
 };
 
 describe('services iff - sync predicate, sync hook', () => {
@@ -390,7 +390,7 @@ describe('services iff - runs multiple hooks', () => {
   });
 
   it('runs successfully', (done) => {
-    hooks.iff(true, hookFcnSync, hookFcnAsync, hookFcnCb)(hook)
+    hooks.iff(true, hookFcnSync, hookFcnAsync, hookFcn)(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
@@ -403,7 +403,7 @@ describe('services iff - runs multiple hooks', () => {
   });
 
   it('runs successfully with the array syntax', (done) => {
-    hooks.iff(true, [hookFcnSync, hookFcnAsync, hookFcnCb])(hook)
+    hooks.iff(true, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);

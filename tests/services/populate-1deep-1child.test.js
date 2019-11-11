@@ -352,7 +352,7 @@ let provider;
       });
 
       it('checks permissions', () => {
-        let spy = [];
+        const spy = [];
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
 
@@ -554,7 +554,7 @@ let provider;
         const include = makeInclude(type, includeOptions());
         const expected = makeInclude(type, includeOptions());
 
-        return populate({ schema: {include}, profile: true })(hook)
+        return populate({ schema: { include }, profile: true })(hook)
           .then(hook1 => {
             assert.deepEqual(include, expected);
           });

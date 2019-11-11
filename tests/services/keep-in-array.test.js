@@ -16,12 +16,14 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 'John', last: 'Doe' }] } };
+        data: { users: [{ first: 'John', last: 'Doe' }] }
+      };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { users: [{ first: 'Jane', last: 'Doe' }] } };
+        result: { users: [{ first: 'Jane', last: 'Doe' }] }
+      };
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -32,7 +34,8 @@ describe('services keepInArray', () => {
             { users: [{ first: 'John', last: 'Doe' }] },
             { users: [{ first: 'Jane', last: 'Doe' }] }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -86,7 +89,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 'John', last: 'Doe' }] } };
+        data: { users: [{ first: 'John', last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['last', 'xx'])(hook);
       assert.deepEqual(hook.data, { users: [{ last: 'Doe' }] });
     });
@@ -96,7 +100,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: undefined, last: 'Doe' }] } };
+        data: { users: [{ first: undefined, last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: undefined }] });
     });
@@ -106,7 +111,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: null, last: 'Doe' }] } };
+        data: { users: [{ first: null, last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: null }] });
     });
@@ -116,7 +122,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: false, last: 'Doe' }] } };
+        data: { users: [{ first: false, last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: false }] });
     });
@@ -126,7 +133,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 0, last: 'Doe' }] } };
+        data: { users: [{ first: 0, last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: 0 }] });
     });
@@ -136,7 +144,8 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: '', last: 'Doe' }] } };
+        data: { users: [{ first: '', last: 'Doe' }] }
+      };
       hooks.keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: '' }] });
     });
@@ -215,7 +224,8 @@ describe('services keepInArray', () => {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: [{ users: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] }, null, undefined, Infinity] };
+        result: [{ users: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] }, null, undefined, Infinity]
+      };
     });
 
     it('before', () => {

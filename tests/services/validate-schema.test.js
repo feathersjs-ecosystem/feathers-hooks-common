@@ -12,12 +12,12 @@ const Ajv = require('ajv');
 const ajv = new Ajv({ allErrors: true });
 ajv.addFormat('startWithJo', '^Jo');
 ajv.addSchema({
-  'id': 'syncSchema',
-  'properties': {
-    'first': { 'type': 'string', 'format': 'startWithJo' },
-    'last': { 'type': 'string' }
+  $id: 'syncSchema',
+  properties: {
+    first: { type: 'string', format: 'startWithJo' },
+    last: { type: 'string' }
   },
-  'required': ['first', 'last']
+  required: ['first', 'last']
 });
 
 describe('services validateSchema', () => {
@@ -57,29 +57,29 @@ describe('services validateSchema', () => {
       ]
     };
     schema = {
-      'properties': {
-        'first': { 'type': 'string' },
-        'last': { 'type': 'string' }
+      properties: {
+        first: { type: 'string' },
+        last: { type: 'string' }
       },
-      'required': ['first', 'last']
+      required: ['first', 'last']
     };
     schemaForAjvInstance = {
-      'properties': {
-        'first': { 'type': 'string', 'format': 'startWithJo' },
-        'last': { 'type': 'string' }
+      properties: {
+        first: { type: 'string', format: 'startWithJo' },
+        last: { type: 'string' }
       },
-      'required': ['first', 'last']
+      required: ['first', 'last']
     };
   });
 
   describe('Sync validation', () => {
     beforeEach(() => {
       schema = {
-        'properties': {
-          'first': { 'type': 'string' },
-          'last': { 'type': 'string' }
+        properties: {
+          first: { type: 'string' },
+          last: { type: 'string' }
         },
-        'required': ['first', 'last']
+        required: ['first', 'last']
       };
     });
 
@@ -179,7 +179,7 @@ describe('services validateSchema', () => {
           setTimeout(() => {
             item === 'Doe'
               ? resolve(true)
-              : reject(new Ajv.ValidationError([{message: 'should be Doe'}]));
+              : reject(new Ajv.ValidationError([{ message: 'should be Doe' }]));
           }, 50);
         })
       });
@@ -196,36 +196,36 @@ describe('services validateSchema', () => {
       });
 
       ajvAsync.addSchema({
-        'id': 'asyncSchema',
-        '$async': true,
-        'properties': {
-          'first': {
-            'type': 'string',
-            'format': '3or4chars'
+        $id: 'asyncSchema',
+        $async: true,
+        properties: {
+          first: {
+            type: 'string',
+            format: '3or4chars'
           },
-          'last': {
-            'type': 'string',
-            'equalsDoe': true
+          last: {
+            type: 'string',
+            equalsDoe: true
           }
         },
-        'required': ['first', 'last']
+        required: ['first', 'last']
       });
     });
 
     beforeEach(() => {
       asyncSchema = {
-        '$async': true,
-        'properties': {
-          'first': {
-            'type': 'string',
-            'format': '3or4chars'
+        $async: true,
+        properties: {
+          first: {
+            type: 'string',
+            format: '3or4chars'
           },
-          'last': {
-            'type': 'string',
-            'equalsDoe': true
+          last: {
+            type: 'string',
+            equalsDoe: true
           }
         },
-        'required': ['first', 'last']
+        required: ['first', 'last']
       };
     });
 
