@@ -10,7 +10,7 @@ var hookBefore;
 var hookAfter;
 var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
-var hookFcnCbCalls;
+var hookFcnCalls;
 var predicateHook;
 var predicateOptions;
 var predicateValue;
@@ -59,10 +59,10 @@ const hookFcnAsync = (hook) => new Promise(resolve => {
   resolve(hook);
 });
 
-const hookFcnCb = (hook, cb) => {
-  hookFcnCbCalls = +1;
+const hookFcn = (hook) => {
+  hookFcnCalls = +1;
 
-  cb(null, hook);
+  return hook;
 };
 
 describe('services unless - sync predicate, sync hook', () => {
@@ -390,12 +390,12 @@ describe('services unless - runs multiple hooks', () => {
   });
 
   it('runs successfully', (done) => {
-    hooks.unless(false, hookFcnSync, hookFcnAsync, hookFcnCb)(hook)
+    hooks.unless(false, hookFcnSync, hookFcnAsync, hookFcn)(hook)
       .then(hook => {
         assert.deepEqual(hook, hookAfter);
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
         assert.deepEqual(hook, hookAfter);
 
         done();
