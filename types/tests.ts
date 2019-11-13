@@ -15,8 +15,6 @@ import {
     deleteByDot,
     dePopulate,
     dialablePhoneNumber,
-    disableMultiItemChange,
-    disableMultiItemCreate,
     disablePagination,
     disallow,
     discard,
@@ -56,7 +54,6 @@ import {
     sifter,
     skipRemainingHooks,
     skipRemainingHooksOnFlag,
-    softDelete2,
     some,
     stashBefore,
     SyncPredicateFn,
@@ -148,12 +145,6 @@ dePopulate();
 
 // $ExpectType Hook
 dialablePhoneNumber(libphonenumberjs);
-
-// $ExpectType Hook
-disableMultiItemChange();
-
-// $ExpectType Hook
-disableMultiItemCreate();
 
 // $ExpectType Hook
 disablePagination();
@@ -414,16 +405,6 @@ skipRemainingHooks(context => !context.result);
 
 // $ExpectType Hook
 skipRemainingHooksOnFlag('__flag');
-
-// $ExpectType Hook
-softDelete2({
-    allowIgnoreDeletedAt: true,
-    deletedAt: 'someKey',
-    patchCall: async (context, options) => { },
-    probeCall: async (context, options) => { },
-    keepOnCreate: true,
-    skipProbeOnGet: true
-});
 
 // $ExpectType Hook
 stashBefore();
