@@ -14,7 +14,6 @@ import {
     debug,
     deleteByDot,
     dePopulate,
-    dialablePhoneNumber,
     disablePagination,
     disallow,
     discard,
@@ -64,7 +63,6 @@ import {
     when,
 } from 'feathers-hooks-common';
 import { parse } from 'graphql';
-import * as libphonenumberjs from 'libphonenumber-js';
 import ajv = require('ajv');
 
 const context1: HookContext = {
@@ -142,9 +140,6 @@ deleteByDot({}, 'abc.def');
 
 // $ExpectType Hook
 dePopulate();
-
-// $ExpectType Hook
-dialablePhoneNumber(libphonenumberjs);
 
 // $ExpectType Hook
 disablePagination();
