@@ -15,7 +15,6 @@ const hookNames = [
   'debug',
   'deleteByDot',
   'dePopulate',
-  'dialablePhoneNumber',
   'disablePagination',
   'disallow',
   'discard',
