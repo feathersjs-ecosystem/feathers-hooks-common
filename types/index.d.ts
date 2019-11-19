@@ -224,12 +224,6 @@ export interface FGraphQLHookOptions {
 export function fgraphql(options?: FGraphQLHookOptions): Hook;
 
 /**
- * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#GetByDot}
- */
-export function getByDot(object: object, path: string): any;
-
-/**
  * Get the records in context.data or context.result[.data]. (Utility function.)
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#GetItems}
  */
@@ -412,12 +406,6 @@ export interface SerializeSchema {
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Serialize}
  */
 export function serialize(schema?: SerializeSchema | SyncContextFunction<SerializeSchema>): Hook;
-
-/**
- * Set a property value in an object using dot notation, e.g. address.city. (Utility function.)
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetByDot}
- */
-export function setByDot(object: object, path: string, value: any): void;
 
 /**
  * Create/update certain fields to the current date-time.

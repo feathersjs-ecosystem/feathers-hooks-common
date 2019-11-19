@@ -19,11 +19,9 @@ import {
     discard,
     discardQuery,
     every,
-    existsByDot,
     fastJoin,
     fgraphql,
     FGraphQLHookOptions,
-    getByDot,
     getItems,
     iff,
     iffElse,
@@ -47,7 +45,6 @@ import {
     runParallel,
     sequelizeConvert,
     serialize,
-    setByDot,
     setNow,
     setSlug,
     sifter,
@@ -152,9 +149,6 @@ discard('abc', 'def');
 
 // $ExpectType Hook
 discardQuery('abc', 'def');
-
-// $ExpectType boolean
-existsByDot({}, 'abc.def');
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
@@ -262,9 +256,6 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
 fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
-getByDot({}, 'abc.def');
-
-// $ExpectType any
 getItems(context1);
 
 // $ExpectType SyncContextFunction<boolean>
@@ -367,9 +358,6 @@ serialize({
         },
     },
 });
-
-// $ExpectType void
-setByDot({}, 'asd', 7);
 
 // $ExpectType Hook
 setNow('createdAt', 'updatedAt');
