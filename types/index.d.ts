@@ -3,7 +3,6 @@
 import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
 import { GraphQLSchema, parse, GraphQLFieldResolver } from 'graphql';
-import * as libphonenumberjs from 'libphonenumber-js';
 
 export type HookType = 'before' | 'after' | 'error';
 export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remove';
@@ -121,30 +120,6 @@ export function deleteByDot(object: any, path: string): void;
  */
 export function dePopulate(): Hook;
 
-// todo: dialablePhoneNumber docs
-/**
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DialablePhoneNumber}
- */
-export function dialablePhoneNumber(
-    libphonenumberJs: typeof libphonenumberjs,
-    defaultCountry?: libphonenumberjs.CountryCode,
-    phoneField?: string,
-    dialableField?: string,
-    countryField?: string
-): Hook;
-
-/**
- * Prevents null from being used as an id in patch and remove service methods.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisableMultiItemChange}
- */
-export function disableMultiItemChange(): Hook;
-
-/**
- * Prevents multi-item creates.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisableMultiItemCreate}
- */
-export function disableMultiItemCreate(): Hook;
-
 /**
  * Disables pagination when query.$limit is -1 or '-1'.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DisablePagination}
@@ -247,12 +222,6 @@ export interface FGraphQLHookOptions {
  * {@link https://medium.com/@eddyystop/38faee75dd1}
  */
 export function fgraphql(options?: FGraphQLHookOptions): Hook;
-
-/**
- * Return a property value from an object using dot notation, e.g. address.city. (Utility function.)
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#GetByDot}
- */
-export function getByDot(object: object, path: string): any;
 
 /**
  * Get the records in context.data or context.result[.data]. (Utility function.)
@@ -439,12 +408,6 @@ export interface SerializeSchema {
 export function serialize(schema?: SerializeSchema | SyncContextFunction<SerializeSchema>): Hook;
 
 /**
- * Set a property value in an object using dot notation, e.g. address.city. (Utility function.)
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetByDot}
- */
-export function setByDot(object: object, path: string, value: any): void;
-
-/**
  * Create/update certain fields to the current date-time.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetNow}
  */
@@ -590,61 +553,7 @@ export function every(...predicates: PredicateFn[]): AsyncPredicateFn;
 export function isNot(predicate: PredicateFn): AsyncPredicateFn;
 
 /**
- * @deprecated Deprecated callbackToPromise in favor of Node’s require('util').promisify.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#CallbackToPromise}
- */
-export function callbackToPromise(...args: any[]): any;
-
-/**
- * @deprecated Deprecated client in favor of paramsFromClient for naming consistency.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Client}
- */
-export function client(...args: any[]): any;
-
-/**
- * @deprecated Deprecated pluck in favor of keep, e.g. iff(isProvider('external'), keep(...fieldNames)). This deprecates the last hook with unexpected internal “magic”. Be careful!
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Pluck}
- */
-export function pluck(...args: any[]): any;
-
-/**
- * @deprecated Deprecated pluckQuery in favor of keepQuery for naming consistency.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#PluckQuery}
- */
-export function pluckQuery(...args: any[]): any;
-
-/**
- * @deprecated Deprecated promiseToCallback as there’s probably no need for it anymore.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#PromiseToCallback}
- */
-export function promiseToCallback(...args: any[]): any;
-
-/**
- * @deprecated Deprecated removeQuery in favor of discardQuery for naming consistency.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#RemoveQuery}
- */
-export function removeQuery(...args: any[]): any;
-
-/**
- * @deprecated Deprecated in favor of setNow.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetCreatedAt}
- */
-export function setCreatedAt(...args: any[]): any;
-
-/**
- * @deprecated Deprecated in favor of setNow.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetUpdatedAt}
- */
-export function setUpdatedAt(...args: any[]): any;
-
-/**
  * @deprecated DEPRECATED. Use the softDelete2 hook instead. It is a noteable improvement over softDelete.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SoftDelete}
  */
 export function softDelete(...args: any[]): any;
-
-/**
- * @deprecated DEPRECATED. Use disallow instead.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Disable}
- */
-export function disable(...args: any[]): any;

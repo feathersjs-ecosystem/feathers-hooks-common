@@ -4,21 +4,21 @@ const {
 } = require('chai');
 
 const {
-  client
+  paramsFromClient
 } = require('../../lib/services');
 
 describe('services params-from-client', () => {
   describe('basics', () => {
     it('works no params', () => {
       const hook = {};
-      const hook1 = client('populate', 'serialize')(hook);
+      const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, {});
     });
 
     it('works no query', () => {
       const hook = { params: {} };
-      const hook1 = client('populate', 'serialize')(hook);
+      const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, { params: {} });
     });
@@ -32,7 +32,7 @@ describe('services params-from-client', () => {
           }
         }
       };
-      const hook1 = client('populate', 'serialize')(hook);
+      const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -55,7 +55,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client('populate', 'serialize')(hook);
+      const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -81,7 +81,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client()(hook);
+      const hook1 = paramsFromClient()(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -104,7 +104,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client('populate', 'serialize')(hook);
+      const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -129,7 +129,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client('a', 'populate', 'b', 'serialize', 'q', 'r')(hook);
+      const hook1 = paramsFromClient('a', 'populate', 'b', 'serialize', 'q', 'r')(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -154,7 +154,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client('populate')(hook);
+      const hook1 = paramsFromClient('populate')(hook);
 
       assert.deepEqual(hook1, {
         params: {
@@ -178,7 +178,7 @@ describe('services params-from-client', () => {
         }
       };
 
-      const hook1 = client('q', 'q')(hook);
+      const hook1 = paramsFromClient('q', 'q')(hook);
 
       assert.deepEqual(hook1, {
         params: {

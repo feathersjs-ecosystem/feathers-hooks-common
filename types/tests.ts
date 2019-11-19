@@ -14,19 +14,14 @@ import {
     debug,
     deleteByDot,
     dePopulate,
-    dialablePhoneNumber,
-    disableMultiItemChange,
-    disableMultiItemCreate,
     disablePagination,
     disallow,
     discard,
     discardQuery,
     every,
-    existsByDot,
     fastJoin,
     fgraphql,
     FGraphQLHookOptions,
-    getByDot,
     getItems,
     iff,
     iffElse,
@@ -50,13 +45,11 @@ import {
     runParallel,
     sequelizeConvert,
     serialize,
-    setByDot,
     setNow,
     setSlug,
     sifter,
     skipRemainingHooks,
     skipRemainingHooksOnFlag,
-    softDelete2,
     some,
     stashBefore,
     SyncPredicateFn,
@@ -67,7 +60,6 @@ import {
     when,
 } from 'feathers-hooks-common';
 import { parse } from 'graphql';
-import * as libphonenumberjs from 'libphonenumber-js';
 import ajv = require('ajv');
 
 const context1: HookContext = {
@@ -147,15 +139,6 @@ deleteByDot({}, 'abc.def');
 dePopulate();
 
 // $ExpectType Hook
-dialablePhoneNumber(libphonenumberjs);
-
-// $ExpectType Hook
-disableMultiItemChange();
-
-// $ExpectType Hook
-disableMultiItemCreate();
-
-// $ExpectType Hook
 disablePagination();
 
 // $ExpectType Hook
@@ -166,9 +149,6 @@ discard('abc', 'def');
 
 // $ExpectType Hook
 discardQuery('abc', 'def');
-
-// $ExpectType boolean
-existsByDot({}, 'abc.def');
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
@@ -276,9 +256,6 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
 fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
-getByDot({}, 'abc.def');
-
-// $ExpectType any
 getItems(context1);
 
 // $ExpectType SyncContextFunction<boolean>
@@ -382,9 +359,6 @@ serialize({
     },
 });
 
-// $ExpectType void
-setByDot({}, 'asd', 7);
-
 // $ExpectType Hook
 setNow('createdAt', 'updatedAt');
 
@@ -414,16 +388,6 @@ skipRemainingHooks(context => !context.result);
 
 // $ExpectType Hook
 skipRemainingHooksOnFlag('__flag');
-
-// $ExpectType Hook
-softDelete2({
-    allowIgnoreDeletedAt: true,
-    deletedAt: 'someKey',
-    patchCall: async (context, options) => { },
-    probeCall: async (context, options) => { },
-    keepOnCreate: true,
-    skipProbeOnGet: true
-});
 
 // $ExpectType Hook
 stashBefore();

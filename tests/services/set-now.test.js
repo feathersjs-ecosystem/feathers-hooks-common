@@ -96,21 +96,21 @@ describe('services setNow', () => {
     });
 
     it('prop with no dots', () => {
-      hooks.setCreatedAt('madeAt')(hookBefore);
+      hooks.setNow('madeAt')(hookBefore);
       checkHook(hookBefore.data,
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
         , 'madeAt');
     });
 
     it('props with no dots', () => {
-      hooks.setCreatedAt('madeAt', 'builtAt')(hookBefore);
+      hooks.setNow('madeAt', 'builtAt')(hookBefore);
       checkHook(hookBefore.data,
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
         , ['madeAt', 'builtAt']);
     });
 
     it('prop with 1 dot', () => {
-      hooks.setCreatedAt('created.at')(hookBefore);
+      hooks.setNow('created.at')(hookBefore);
       assert.instanceOf(hookBefore.data.created.at, Date, 'not instance of Date');
       assert.equal(Object.keys(hookBefore.data.created).length, 1);
       delete hookBefore.data.created;
@@ -120,7 +120,7 @@ describe('services setNow', () => {
     });
 
     it('prop with 1 dot in existing obj', () => {
-      hooks.setCreatedAt('created.at')(hookBefore2);
+      hooks.setNow('created.at')(hookBefore2);
       assert.instanceOf(hookBefore2.data.created.at, Date, 'not instance of Date');
       assert.equal(Object.keys(hookBefore2.data.created).length, 2);
       delete hookBefore2.data.created.at;
@@ -134,7 +134,7 @@ describe('services setNow', () => {
     });
 
     it('prop with 2 dots', () => {
-      hooks.setCreatedAt('created.at.time')(hookBefore);
+      hooks.setNow('created.at.time')(hookBefore);
       assert.instanceOf(hookBefore.data.created.at.time, Date, 'not instance of Date');
       assert.equal(Object.keys(hookBefore.data.created.at).length, 1);
       assert.equal(Object.keys(hookBefore.data.created).length, 1);
