@@ -83,7 +83,7 @@
     "mongodb": "^3.3.3",
     "semistandard": "^14.2.0",
     "shx": "^0.3.2",
-    "sift": "^8.5.1"
+    "sift": "^9.0.0"
   },
   "engines": {
     "node": ">= 6"
