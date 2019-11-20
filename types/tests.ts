@@ -12,7 +12,6 @@ import {
     checkContextIf,
     combine,
     debug,
-    deleteByDot,
     dePopulate,
     disablePagination,
     disallow,
@@ -131,9 +130,6 @@ combine(hook1, hook2, hook3);
 
 // $ExpectType Hook
 debug('label', 'abc.def', 'ghi.jkl');
-
-// $ExpectType void
-deleteByDot({}, 'abc.def');
 
 // $ExpectType Hook
 dePopulate();

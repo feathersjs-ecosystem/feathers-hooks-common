@@ -91,17 +91,6 @@ describe('services discard', () => {
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
 
-    it('does not throw if field is undefined', () => {
-      const hook = {
-        type: 'before',
-        method: 'create',
-        params: { provider: 'rest' },
-        data: { first: undefined, last: 'Doe' }
-      };
-      hooks.discard('first')(hook);
-      assert.deepEqual(hook.data, { first: undefined, last: 'Doe' }); // todo note this
-    });
-
     it('does not throw if field is null', () => {
       const hook = {
         type: 'before',

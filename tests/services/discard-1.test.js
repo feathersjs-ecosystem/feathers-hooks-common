@@ -20,7 +20,7 @@ describe('common hook discard', () => {
       ['after',                     afterJane(),   'create', null,      ['last'],        { first: 'Jane'}                       ],
       ['call internally on server', afterJane(),   'create', undefined, ['last'],        { first: 'Jane'}                       ],
       ['not throw field missing',   beforeJohn(),  'create', 'rest',    ['first', 'xx'], { last: 'Doe' }                        ],
-      ['not throw field undefined', beforeUndef(), 'create', 'rest',    ['first'],       { first: undefined, last: 'Doe' }      ], // ???
+      ['not throw field undefined', beforeUndef(), 'create', 'rest',    ['first'],       { last: 'Doe' }      ],
       ['not throw field null',      beforeNull(),  'create', 'rest',    ['first'],       { last: 'Doe' }                        ],
     ];
     /* eslint-enable */
