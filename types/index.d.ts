@@ -109,12 +109,6 @@ export function combine(...hooks: Hook[]): Hook;
 export function debug(msg: string, ...fieldNames: string[]): Hook;
 
 /**
- * Deletes a property from an object using dot notation, e.g. address.city. (Utility function.)
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DeleteByDot}
- */
-export function deleteByDot(object: any, path: string): void;
-
-/**
  * Remove records and properties created by the populate hook.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#DePopulate}
  */

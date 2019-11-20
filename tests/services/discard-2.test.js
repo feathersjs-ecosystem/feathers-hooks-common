@@ -35,10 +35,6 @@ describe('common hook discard', () => {
       ['not throw field missing',   beforeJohn(),  'create', 'rest',    ['first', 'xx'], { last: 'Doe' }                        ],
       ['not throw field missing',   beforeJohn(),  'create', 'socketio',['first', 'xx'], { last: 'Doe' }                        ],
       ['not throw field missing',   beforeJohn(),  'create', 'primus',  ['first', 'xx'], { last: 'Doe' }                        ],
-      ['not throw field undefined', beforeUndef(), 'create', undefined, ['first'],       { first: undefined, last: 'Doe' }      ], // ???
-      ['not throw field undefined', beforeUndef(), 'create', 'rest',    ['first'],       { first: undefined, last: 'Doe' }      ], // ???
-      ['not throw field undefined', beforeUndef(), 'create', 'socketio',['first'],       { first: undefined, last: 'Doe' }      ], // ???
-      ['not throw field undefined', beforeUndef(), 'create', 'primus',  ['first'],       { first: undefined, last: 'Doe' }      ], // ???
       ['not throw field null',      beforeNull(),  'create', undefined, ['first'],       { last: 'Doe' }                        ],
       ['not throw field null',      beforeNull(),  'create', 'rest',    ['first'],       { last: 'Doe' }                        ],
       ['not throw field null',      beforeNull(),  'create', 'socketio',['first'],       { last: 'Doe' }                        ],

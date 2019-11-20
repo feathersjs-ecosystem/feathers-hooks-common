@@ -13,7 +13,6 @@ const hookNames = [
   'checkContextIf',
   'combine',
   'debug',
-  'deleteByDot',
   'dePopulate',
   'disablePagination',
   'disallow',
