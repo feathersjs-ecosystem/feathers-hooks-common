@@ -47,8 +47,7 @@ import {
     setNow,
     setSlug,
     sifter,
-    skipRemainingHooks,
-    skipRemainingHooksOnFlag,
+    softDelete,
     some,
     stashBefore,
     SyncPredicateFn,
@@ -145,6 +144,10 @@ discard('abc', 'def');
 
 // $ExpectType Hook
 discardQuery('abc', 'def');
+
+softDelete({
+    removeData: async () => ({})
+});
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
@@ -376,14 +379,6 @@ sequelizeConvert({
 
 // $ExpectType Hook
 sifter(ctx => item => true);
-
-// $ExpectType Hook
-skipRemainingHooks();
-// $ExpectType Hook
-skipRemainingHooks(context => !context.result);
-
-// $ExpectType Hook
-skipRemainingHooksOnFlag('__flag');
 
 // $ExpectType Hook
 stashBefore();

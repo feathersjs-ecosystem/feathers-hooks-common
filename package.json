@@ -15,7 +15,7 @@
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "semistandard --fix",
-    "lint:types": "npx dtslint types",
+    "lint:types": "dtslint types",
     "mocha": "mocha --opts mocha.opts",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run lint && npm run lint:types && npm run coverage"
@@ -74,6 +74,7 @@
     "chai": "^4.2.0",
     "clone": "^2.1.2",
     "coveralls": "^3.0.7",
+    "dtslint": "^2.0.2",
     "feathers-memory": "^4.1.0",
     "feathers-tests-fake-app-users": "^1.0.0",
     "http-shutdown": "^1.2.1",
