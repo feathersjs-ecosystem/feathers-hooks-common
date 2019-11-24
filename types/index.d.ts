@@ -401,6 +401,17 @@ export interface SerializeSchema {
  */
 export function serialize(schema?: SerializeSchema | SyncContextFunction<SerializeSchema>): Hook;
 
+export interface SetFieldOptions {
+    from: string;
+    as: string;
+    allowUndefined?: boolean;
+}
+
+/**
+ * Copy a field on the context to another field to e.g. restrict queries to the current user.
+ */
+export const setField: ((options?: SetFieldOptions) => Hook);
+
 /**
  * Create/update certain fields to the current date-time.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SetNow}

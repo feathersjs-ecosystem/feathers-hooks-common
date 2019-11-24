@@ -41,6 +41,7 @@ const hookNames = [
   'serialize',
   'setNow',
   'setSlug',
+  'setField',
   'sifter',
   'softDelete',
   'stashBefore',

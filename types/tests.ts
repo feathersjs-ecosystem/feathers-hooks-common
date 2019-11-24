@@ -44,6 +44,7 @@ import {
     runParallel,
     sequelizeConvert,
     serialize,
+    setField,
     setNow,
     setSlug,
     sifter,
@@ -356,6 +357,11 @@ serialize({
             exclude: 'content',
         },
     },
+});
+
+setField({
+    from: 'params.user.id',
+    as: 'params.query.userId'
 });
 
 // $ExpectType Hook
