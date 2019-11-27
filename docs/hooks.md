@@ -2254,7 +2254,7 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
 - **Details**
 
-  The hook always performs its own preliminary `get` call. If the original service call is also a `get`, its `context.params` is used for the preliminary `get`.
+  The hook performs its own preliminary `get` call. If the original service call is also a `get`, its `context.params` is used for the preliminary `get`.  The preliminary `get` will be skipped if `params.disableStashBefore` is truthy.
 
   For any other method the calling params are formed from the original calling context:
 
