@@ -493,7 +493,7 @@ export function validateSchema(schema: object, ajv: AjvOrNewable, options?: Vali
  * Execute one array of hooks or another based on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IffElse}
  */
-export function iffElse(predicate: PredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
+export function iffElse(predicate: boolean | PredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
 
 export interface IffHook extends Hook {
     else(...hooks: Hook[]): Hook;
@@ -503,7 +503,7 @@ export interface IffHook extends Hook {
  * Execute one or another series of hooks depending on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Iff}
  */
-export function iff(predicate: PredicateFn, ...hooks: Hook[]): IffHook;
+export function iff(predicate: boolean | PredicateFn, ...hooks: Hook[]): IffHook;
 
 /**
  * Alias for iff
@@ -533,4 +533,5 @@ export function every(...predicates: PredicateFn[]): AsyncPredicateFn;
  * Negate a sync or async predicate function.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IsNot}
  */
-export function isNot(predicate: PredicateFn): AsyncPredicateFn;
+
+export function isNot(predicate: boolean | PredicateFn): AsyncPredicateFn;
