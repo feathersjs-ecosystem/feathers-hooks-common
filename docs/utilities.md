@@ -150,7 +150,7 @@ title: Utilities
 
 {% hooksApiFootnote checkContext %}
 
-## combine( ...hookFuncs )
+## combine
 
 {% hooksApi combine %}
 
@@ -270,7 +270,7 @@ module.exports = { before: {
 
 {% hooksApiFootnote existsByDot %}
 
-## getByDot( obj, path )
+## getByDot
 
 {% hooksApi getByDot %}
 
@@ -308,7 +308,7 @@ module.exports = { before: {
 
 {% hooksApiFootnote getByDot %}
 
-## setByDot( obj, path, value )
+## setByDot
 
 {% hooksApi setByDot %}
 
