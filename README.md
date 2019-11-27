@@ -17,7 +17,7 @@
 
 ## Migration to v4 (for FeathersJS v3 Buzzard) from v3 (for FeathersJSv2 Auk).
 
-  - Docs moved to [feathers-plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html)
+  - Docs moved to [feathers-plus web site](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html).
   
   - v4.x.x now supports FeathersJS v3 (Buzzard). Continue using v3.10.0 for FeathersJS v2 (Auk).
     - Removed:
@@ -34,7 +34,7 @@
 
 ## Documentation
 
-Refer to [Feathers-Plus web site.](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html). 
+Refer to [Feathers-Plus web site](https://feathers-plus.github.io/v1/feathers-hooks-common/guide.html). 
 
 ## Installation
 
