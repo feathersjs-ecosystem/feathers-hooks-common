@@ -117,7 +117,8 @@ describe('service calling-params-1.test.js', () => {
         provider: 'socketio',
         user: { name: 'Matt' },
         _populate: 'skip',
-        query: { $disableSoftDelete: true, $disableStashBefore: true }
+        disableStashBefore: true,
+        query: { $disableSoftDelete: true }
       });
     });
 
@@ -143,7 +144,8 @@ describe('service calling-params-1.test.js', () => {
         hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore']
       })(context1);
       assert.deepEqual(res, {
-        query: { id: 1, aa: 'a1', $disableSoftDelete: true, $disableStashBefore: true },
+        disableStashBefore: true,
+        query: { id: 1, aa: 'a1', $disableSoftDelete: true },
         foo: 'bar',
         baz: 'faz',
         _populate: 'skip',
