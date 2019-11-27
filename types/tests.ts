@@ -84,20 +84,20 @@ const service1: Service<any> = null as any;
 
 // TESTS BEGIN
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 actOnDefault(hook1, hook2, hook3, hook4);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 actOnDispatch(hook1, hook2, hook3, hook4);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 alterItems(rec => {
     delete rec.password;
 });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 alterItems(rec => rec.email = 'somestring'.toLowerCase()); // Like `lowerCase('email')`.
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 cache(new Map(), 'a', { clone: x => x });
 
 // $ExpectType Params
@@ -124,25 +124,25 @@ checkContext(context1, 'before');
 // $ExpectType void
 checkContextIf(context1, 'before', ['update', 'patch'], 'hookName');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 combine(hook1, hook2, hook3);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 debug('label', 'abc.def', 'ghi.jkl');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 dePopulate();
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 disablePagination();
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 disallow('external', 'server');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 discard('abc', 'def');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 discardQuery('abc', 'def');
 
 softDelete({
@@ -191,15 +191,15 @@ const userResolvers: ResolverMap<any> = {
     }
 };
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fastJoin(userResolvers);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fastJoin(postResolvers);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fastJoin(postResolvers, { abc: 'def' });
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fastJoin(ctx => postResolvers);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fastJoin(postResolvers);
 
 // used from https://github.com/feathers-plus/hooks-graphql-example
@@ -223,7 +223,7 @@ const fgraphqlOptions: FGraphQLHookOptions = {
         Query: {}
     })
 };
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fgraphql(fgraphqlOptions);
 
 const fgraphqlOptions2: FGraphQLHookOptions = {
@@ -251,7 +251,7 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
         skipHookWhen: (context) => { context.data; return false; }
     }
 };
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
@@ -260,19 +260,19 @@ getItems(context1);
 // $ExpectType SyncContextFunction<boolean>
 isProvider();
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 keep('abc', 'def');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 keepInArray('array', ['fieldName', 'fieldName']);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 keepQuery('name', 'address.city');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 keepQueryInArray('array', ['fieldName', 'fieldName']);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 lowerCase('email', 'username', 'div.dept');
 
 // $ExpectType Params
@@ -289,9 +289,9 @@ class ObjId {
     constructor(id?: string | number) { }
 }
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 mongoKeys(ObjId, 'abc');
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 mongoKeys(ObjId, ['abc', 'def']);
 
 paramsForServer({
@@ -300,10 +300,10 @@ paramsForServer({
     serialize: 'po-mgr'
 });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 paramsFromClient('populate', 'serialize', 'otherProp');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 populate({
     schema: {
         include: {
@@ -315,13 +315,13 @@ populate({
     }
 });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 preventChanges(true, 'security.badge', 'abc');
 
 // $ExpectType void
 replaceItems(context1, [{}, {}]);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 required('field1', 'field2');
 
 // $ExpectType Promise<any>
@@ -329,12 +329,12 @@ runHook()(keep('abc'))([]);
 // $ExpectType Promise<any>
 runHook(context1)(keep('abc'))([]);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 runParallel(hook1, x => x);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 runParallel(hook1, x => x, 7);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 serialize({
     only: 'updatedAt',
     computed: {
@@ -358,13 +358,13 @@ serialize({
     },
 });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 setNow('createdAt', 'updatedAt');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 setSlug('storeId');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 sequelizeConvert({
     aBool: 'boolean',
     aDate: 'date',
@@ -377,57 +377,57 @@ sequelizeConvert({
         }
     });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 sifter(ctx => item => true);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 stashBefore();
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 stashBefore('abc');
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 });
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 }, context => context.params.query);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 validate(async (data, context) => {
     return { length: 'expected max 3, got 7' };
 });
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 validateSchema({}, ajv);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 iffElse(syncTrue, [hook1, hook2], [hook3, hook4]);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 iffElse(asyncTrue, [hook1, hook2], [hook3, hook4]);
 
 // $ExpectType IffHook
 iff(syncTrue, hook1, hook2);
 // $ExpectType IffHook
 iff(asyncTrue, hook1, hook2);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 iff(syncTrue, hook1, hook2).else(hook3, hook4);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 iff(asyncTrue, hook1, hook2).else(hook3, hook4);
 
 // $ExpectType IffHook
 when(syncTrue, hook1, hook2);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 when(syncTrue, hook1, hook2).else(hook3, hook4);
 
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 unless(asyncTrue, hook1, hook2);
-// $ExpectType Hook
+// $ExpectType Hook<any, Service<any>>
 unless(syncTrue, hook1, hook2);
 
 // $ExpectType AsyncContextFunction<boolean>
