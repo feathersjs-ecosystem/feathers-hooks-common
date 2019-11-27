@@ -8,6 +8,8 @@
     "lib": "lib"
   },
   "scripts": {
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:prerelease": "npm version prerelease && npm publish --tag pre",
     "release:patch": "npm version patch && npm publish",
@@ -84,7 +86,8 @@
     "mongodb": "^3.3.5",
     "semistandard": "^14.2.0",
     "shx": "^0.3.2",
-    "sift": "^9.0.0"
+    "sift": "^9.0.0",
+    "vuepress-theme-default-prefers-color-scheme": "^1.0.3"
   },
   "engines": {
     "node": ">= 6"
