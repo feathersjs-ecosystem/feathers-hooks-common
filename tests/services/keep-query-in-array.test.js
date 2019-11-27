@@ -11,7 +11,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: 'John', last: 'Doe' }] } };
+        query: { users: [{ first: 'John', last: 'Doe' }] }
+      };
     });
 
     it('updates hook before::find', () => {
@@ -29,7 +30,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: 'John', last: 'Doe' }] } };
+        query: { users: [{ first: 'John', last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['last', 'xx'])(hook);
       assert.deepEqual(hook.query, { users: [{ last: 'Doe' }] });
     });
@@ -39,7 +41,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: undefined, last: 'Doe' }] } };
+        query: { users: [{ first: undefined, last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['first'])(hook);
       assert.deepEqual(hook.query, { users: [{ first: undefined }] });
     });
@@ -49,7 +52,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: null, last: 'Doe' }] } };
+        query: { users: [{ first: null, last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['first'])(hook);
       assert.deepEqual(hook.query, { users: [{ first: null }] });
     });
@@ -59,7 +63,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: false, last: 'Doe' }] } };
+        query: { users: [{ first: false, last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['first'])(hook);
       assert.deepEqual(hook.query, { users: [{ first: false }] });
     });
@@ -69,7 +74,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: 0, last: 'Doe' }] } };
+        query: { users: [{ first: 0, last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['first'])(hook);
       assert.deepEqual(hook.query, { users: [{ first: 0 }] });
     });
@@ -79,7 +85,8 @@ describe('services keepQueryInArray', () => {
         type: 'before',
         method: 'find',
         params: { provider: 'rest' },
-        query: { users: [{ first: '', last: 'Doe' }] } };
+        query: { users: [{ first: '', last: 'Doe' }] }
+      };
       hooks.keepQueryInArray('users', ['first'])(hook);
       assert.deepEqual(hook.query, { users: [{ first: '' }] });
     });

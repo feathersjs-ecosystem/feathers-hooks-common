@@ -6,12 +6,12 @@ const { stashBefore } = require('../../lib/services');
 
 const startId = 6;
 const storeInit = {
-  '0': { name: 'Jane Doe', key: 'a', id: 0 },
-  '1': { name: 'Jack Doe', key: 'a', id: 1 },
-  '2': { name: 'John Doe', key: 'a', id: 2 },
-  '3': { name: 'Rick Doe', key: 'b', id: 3 },
-  '4': { name: 'Dick Doe', key: 'b', id: 4 },
-  '5': { name: 'Dork Doe', key: 'b', id: 5 }
+  0: { name: 'Jane Doe', key: 'a', id: 0 },
+  1: { name: 'Jack Doe', key: 'a', id: 1 },
+  2: { name: 'John Doe', key: 'a', id: 2 },
+  3: { name: 'Rick Doe', key: 'b', id: 3 },
+  4: { name: 'Dick Doe', key: 'b', id: 4 },
+  5: { name: 'Dork Doe', key: 'b', id: 5 }
 };
 let store;
 let finalParams;
@@ -28,7 +28,8 @@ function users () {
 
   app.use('users', memory({
     store,
-    startId
+    startId,
+    multi: true
   }));
 
   app.service('users').hooks({
@@ -70,8 +71,8 @@ describe('services stash-before', () => {
     });
   });
 
-  it(`Do not stash when query is used in remove`, () => {
-    return users.remove(null, {query: {}})
+  it('Do not stash when query is used in remove', () => {
+    return users.remove(null, { query: {} })
       .then(() => {
         assert.notProperty(finalParams, 'before');
       });

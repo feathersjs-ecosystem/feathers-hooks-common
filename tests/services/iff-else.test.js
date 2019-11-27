@@ -10,7 +10,7 @@ var hookBefore;
 var hookAfter;
 var hookFcnSyncCalls;
 var hookFcnAsyncCalls;
-var hookFcnCbCalls;
+var hookFcnCalls;
 var predicateHook;
 var predicateOptions;
 var predicateValue;
@@ -61,10 +61,10 @@ const hookFcnAsync = (hook) => new Promise(resolve => {
   resolve(hook);
 });
 
-const hookFcnCb = (hook, cb) => {
-  hookFcnCbCalls += 1;
+const hookCb = (hook) => {
+  hookFcnCalls += 1;
 
-  cb(null, hook);
+  return hook;
 };
 
 describe('services iff - sync predicate, sync hook', () => {
@@ -310,7 +310,7 @@ describe('services iff - runs .else()', () => {
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
-    hookFcnCbCalls = 0;
+    hookFcnCalls = 0;
   });
 
   it('using iff(true, ...)', () => {
@@ -322,7 +322,7 @@ describe('services iff - runs .else()', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 3);
         assert.equal(hookFcnAsyncCalls, 0);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -340,7 +340,7 @@ describe('services iff - runs .else()', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 3);
         assert.equal(hookFcnAsyncCalls, 0);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -358,7 +358,7 @@ describe('services iff - runs .else()', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 3);
         assert.equal(hookFcnAsyncCalls, 0);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -372,19 +372,19 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
-    hookFcnCbCalls = 0;
+    hookFcnCalls = 0;
   });
 
   it('using iff(true, iff(true, hookFcnSync))', () => {
     return hooks.iff(true,
       hookFcnAsync,
       hooks.iff(true, hookFcnSync),
-      hookFcnCb
+      hookCb
     )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -394,12 +394,12 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
     return hooks.iff(true,
       hookFcnSync,
       hooks.iff(true, hookFcnAsync),
-      hookFcnCb
+      hookCb
     )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -408,13 +408,13 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
   it('runs iff(true, iff(true, hookFcnCb))', () => {
     return hooks.iff(true,
       hookFcnSync,
-      hooks.iff(true, hookFcnCb),
+      hooks.iff(true, hookCb),
       hookFcnAsync
     )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -423,13 +423,13 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
   it('runs iff(true, iff(true, hookFcnCb)) with the array syntax', () => {
     return hooks.iff(true, [
       hookFcnSync,
-      hooks.iff(true, [hookFcnCb]),
+      hooks.iff(true, [hookCb]),
       hookFcnAsync
     ])(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -443,19 +443,19 @@ describe('services iff - runs iff(true, iff(false).else(...)', () => {
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
-    hookFcnCbCalls = 0;
+    hookFcnCalls = 0;
   });
 
   it('using iff(true, iff(false).else(hookFcnSync))', () => {
     return hooks.iff(true,
       hookFcnAsync,
-      hooks.iff(false, hookFcnCb).else(hookFcnSync),
+      hooks.iff(false, hookCb).else(hookFcnSync),
       hookFcnAsync
     )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 1);
         assert.equal(hookFcnAsyncCalls, 2);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -470,7 +470,7 @@ describe('services iff - runs iff(true, iff(false).else(...)', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -484,12 +484,12 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
-    hookFcnCbCalls = 0;
+    hookFcnCalls = 0;
   });
 
   it('using iff(false).else(iff(true, ...))', () => {
     return hooks.iff(false,
-      hookFcnCb
+      hookCb
     )
       .else(
         hookFcnSync,
@@ -499,7 +499,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -507,7 +507,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
 
   it('runs iff(false).else(iff(false).else(...))', () => {
     return hooks.iff(false,
-      hookFcnCb
+      hookCb
     )
       .else(
         hookFcnSync,
@@ -517,7 +517,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -525,7 +525,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
 
   it('runs iff(false).else(iff(false).else(...)) with the array syntax', () => {
     return hooks.iff(false,
-      [hookFcnCb]
+      [hookCb]
     )
       .else([
         hookFcnSync,
@@ -535,7 +535,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 0);
+        assert.equal(hookFcnCalls, 0);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -549,21 +549,21 @@ describe('services iff - multiple iff() sequentially', () => {
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
     hookFcnAsyncCalls = 0;
-    hookFcnCbCalls = 0;
+    hookFcnCalls = 0;
   });
 
   it('runs in iff(true, ...)', () => {
     return hooks.iff(true,
-      hookFcnCb,
+      hookCb,
       hooks.iff(true, hookFcnSync, hookFcnSync, hookFcnSync),
-      hookFcnCb,
+      hookCb,
       hooks.iff(true, hookFcnAsync, hookFcnAsync, hookFcnAsync, hookFcnAsync),
-      hookFcnCb
+      hookCb
     )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 3);
         assert.equal(hookFcnAsyncCalls, 4);
-        assert.equal(hookFcnCbCalls, 3);
+        assert.equal(hookFcnCalls, 3);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -571,18 +571,18 @@ describe('services iff - multiple iff() sequentially', () => {
 
   it('runs in iff(false).else(...)', () => {
     return hooks.iff(false,
-      hookFcnCb
+      hookCb
     )
       .else(
         hookFcnSync,
         hooks.iff(true, hookFcnAsync),
-        hooks.iff(false, hookFcnSync).else(hookFcnCb),
+        hooks.iff(false, hookFcnSync).else(hookCb),
         hookFcnSync
       )(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });
@@ -590,18 +590,18 @@ describe('services iff - multiple iff() sequentially', () => {
 
   it('runs in iff(false).else(...) with the array syntax', () => {
     return hooks.iff(false,
-      [hookFcnCb]
+      [hookCb]
     )
       .else([
         hookFcnSync,
         hooks.iff(true, [hookFcnAsync]),
-        hooks.iff(false, [hookFcnSync]).else([hookFcnCb]),
+        hooks.iff(false, [hookFcnSync]).else([hookCb]),
         hookFcnSync
       ])(hook)
       .then(hook => {
         assert.equal(hookFcnSyncCalls, 2);
         assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCbCalls, 1);
+        assert.equal(hookFcnCalls, 1);
 
         assert.deepEqual(hook, hookAfter);
       });

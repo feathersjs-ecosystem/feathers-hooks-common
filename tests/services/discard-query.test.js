@@ -39,7 +39,8 @@ describe('services discardQuery', () => {
         method: 'create',
         params: {
           query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-        } };
+        }
+      };
     });
 
     it('prop with no dots', () => {

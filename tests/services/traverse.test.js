@@ -1,5 +1,5 @@
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const hooks = require('../../lib/services');
 
 describe('services traverse', () => {

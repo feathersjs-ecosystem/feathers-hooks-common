@@ -44,7 +44,8 @@ describe('services keepQuery', () => {
         method: 'create',
         params: {
           query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct', 'owner.id': 1, 'owner.admin': false }
-        } };
+        }
+      };
     });
 
     it('prop with no dots', () => {

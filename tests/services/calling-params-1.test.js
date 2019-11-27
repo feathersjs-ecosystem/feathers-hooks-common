@@ -67,8 +67,8 @@ describe('service calling-params-1.test.js', () => {
 
   describe('can call', () => {
     beforeEach(() => {
-      context1 = { params: {
-        query: { aa: 'a1', bb: 'b1' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' }
+      context1 = {
+        params: { query: { aa: 'a1', bb: 'b1' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' }
       };
 
       callingParamsDefaults(['provider', 'authenticated', 'user'], {});

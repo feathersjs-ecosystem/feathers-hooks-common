@@ -10,18 +10,21 @@ const { getResultsByKey, getUniqueKeys, loaderFactory } = BatchLoader;
 describe('service fast-join', () => {
   it('Guide - resolvers', async () => {
     const context = await ex1();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         author: { id: 101, name: 'John' },
-        starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ] } ],
+        starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -31,17 +34,20 @@ describe('service fast-join', () => {
 
   it('Guide - shaping the result', async () => {
     const context = await ex2();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
-        author: { id: 101, name: 'John' } } ],
+          { userId: 104, points: 1 }],
+        author: { id: 101, name: 'John' }
+      }],
       params: {},
       _loaders: undefined
     };
@@ -51,16 +57,18 @@ describe('service fast-join', () => {
 
   it('Guide - Customize Resolver Operation', async () => {
     const context = await ex3();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         author: { id: 101, name: 'John' },
         starers: [
           { id: 102, name: 'Marshall' },
@@ -76,20 +84,22 @@ describe('service fast-join', () => {
 
   it('Guide - Calculated Fields', async () => {
     const context = await ex4();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         starerCount: 3,
         author: { id: 101, name: 'John' },
-        starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ]
-      } ],
+        starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -99,33 +109,41 @@ describe('service fast-join', () => {
 
   it('Guide - Recursive Operations', async () => {
     const context = await ex5();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         comments:
-        [ { id: 11,
+        [{
+          id: 11,
           text: 'John post Marshall comment 11',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 12,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 12,
           text: 'John post Marshall comment 12',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 13,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 13,
           text: 'John post Marshall comment 13',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } } ]
-      } ],
+          author: { id: 102, name: 'Marshall' }
+        }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -135,33 +153,41 @@ describe('service fast-join', () => {
 
   it('Guide - Keeping Resolvers DRY', async () => {
     const context = await ex6();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         comments:
-        [ { id: 11,
+        [{
+          id: 11,
           text: 'John post Marshall comment 11',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 12,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 12,
           text: 'John post Marshall comment 12',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 13,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 13,
           text: 'John post Marshall comment 13',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } } ]
-      } ],
+          author: { id: 102, name: 'Marshall' }
+        }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -171,22 +197,24 @@ describe('service fast-join', () => {
 
   it('Guide - Using a Simple Batch-Loader', async () => {
     const context = await ex7();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         author: { id: 101, name: 'John' },
         starers:
-        [ { id: 102, name: 'Marshall' },
+        [{ id: 102, name: 'Marshall' },
           { id: 103, name: 'Barbara' },
-          { id: 104, name: 'Aubree' } ]
-      } ],
+          { id: 104, name: 'Aubree' }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -196,22 +224,24 @@ describe('service fast-join', () => {
 
   it('Guide - Using Batch-Loaders', async () => {
     const context = await ex8();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1 },
+        [{ userId: 102, points: 1 },
           { userId: 103, points: 1 },
-          { userId: 104, points: 1 } ],
+          { userId: 104, points: 1 }],
         author: { id: 101, name: 'John' },
         starers:
-        [ { id: 102, name: 'Marshall' },
+        [{ id: 102, name: 'Marshall' },
           { id: 103, name: 'Barbara' },
-          { id: 104, name: 'Aubree' } ]
-      } ],
+          { id: 104, name: 'Aubree' }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -221,77 +251,100 @@ describe('service fast-join', () => {
 
   it('Guide - Putting It All Together', async () => {
     const context = await ex9();
-    const result = { method: 'find',
+    const result = {
+      method: 'find',
       result:
-      [ { id: 1,
+      [{
+        id: 1,
         body: 'John post',
         userId: 101,
-        starIds: [ 102, 103, 104 ],
+        starIds: [102, 103, 104],
         reputation:
-        [ { userId: 102, points: 1, author: 'Marshall' },
+        [{ userId: 102, points: 1, author: 'Marshall' },
           { userId: 103, points: 1, author: 'Barbara' },
-          { userId: 104, points: 1, author: 'Aubree' } ],
+          { userId: 104, points: 1, author: 'Aubree' }],
         author: { id: 101, name: 'John' },
         starers:
-        [ { id: 102, name: 'Marshall' },
+        [{ id: 102, name: 'Marshall' },
           { id: 103, name: 'Barbara' },
-          { id: 104, name: 'Aubree' } ],
+          { id: 104, name: 'Aubree' }],
         comments:
-        [ { id: 11,
+        [{
+          id: 11,
           text: 'John post Marshall comment 11',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 12,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 12,
           text: 'John post Marshall comment 12',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } },
-        { id: 13,
+          author: { id: 102, name: 'Marshall' }
+        },
+        {
+          id: 13,
           text: 'John post Marshall comment 13',
           postId: 1,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } } ] },
-      { id: 2,
+          author: { id: 102, name: 'Marshall' }
+        }]
+      },
+      {
+        id: 2,
         body: 'Marshall post',
         userId: 102,
-        starIds: [ 101, 103, 104 ],
+        starIds: [101, 103, 104],
         author: { id: 102, name: 'Marshall' },
         starers:
-        [ { id: 101, name: 'John' },
+        [{ id: 101, name: 'John' },
           { id: 103, name: 'Barbara' },
-          { id: 104, name: 'Aubree' } ],
+          { id: 104, name: 'Aubree' }],
         comments:
-        [ { id: 14,
+        [{
+          id: 14,
           text: 'Marshall post John comment 14',
           postId: 2,
           userId: 101,
-          author: { id: 101, name: 'John' } },
-        { id: 15,
+          author: { id: 101, name: 'John' }
+        },
+        {
+          id: 15,
           text: 'Marshall post John comment 15',
           postId: 2,
           userId: 101,
-          author: { id: 101, name: 'John' } } ] },
-      { id: 3,
+          author: { id: 101, name: 'John' }
+        }]
+      },
+      {
+        id: 3,
         body: 'Barbara post',
         userId: 103,
         author: { id: 103, name: 'Barbara' },
         comments:
-        [ { id: 16,
+        [{
+          id: 16,
           text: 'Barbara post John comment 16',
           postId: 3,
           userId: 101,
-          author: { id: 101, name: 'John' } } ] },
-      { id: 4,
+          author: { id: 101, name: 'John' }
+        }]
+      },
+      {
+        id: 4,
         body: 'Aubree post',
         userId: 104,
         author: { id: 104, name: 'Aubree' },
         comments:
-        [ { id: 17,
+        [{
+          id: 17,
           text: 'Aubree post Marshall comment 17',
           postId: 4,
           userId: 102,
-          author: { id: 102, name: 'Marshall' } } ] } ],
+          author: { id: 102, name: 'Marshall' }
+        }]
+      }],
       params: {},
       _loaders: undefined
     };
@@ -304,14 +357,18 @@ async function ex1 () {
   const postResolvers = {
     joins: {
       author: () => async post => {
-        post.author = (await users.find({ query: {
-          id: post.userId
-        } }))[0];
+        post.author = (await users.find({
+          query: {
+            id: post.userId
+          }
+        }))[0];
       },
       starers: $select => async post => {
-        post.starers = await users.find({ query: {
-          id: { $in: post.starIds }, $select: $select || ['name']
-        } });
+        post.starers = await users.find({
+          query: {
+            id: { $in: post.starIds }, $select: $select || ['name']
+          }
+        });
       }
     }
   };
@@ -325,14 +382,18 @@ async function ex2 () {
   const postResolvers = {
     joins: {
       author: () => async post => {
-        post.author = (await users.find({ query: {
-          id: post.userId
-        } }))[0];
+        post.author = (await users.find({
+          query: {
+            id: post.userId
+          }
+        }))[0];
       },
       starers: $select => async post => {
-        post.starers = await users.find({ query: {
-          id: { $in: post.starIds }, $select: $select || ['name']
-        } });
+        post.starers = await users.find({
+          query: {
+            id: { $in: post.starIds }, $select: $select || ['name']
+          }
+        });
       }
     }
   };
@@ -350,14 +411,18 @@ async function ex3 () {
   const postResolvers = {
     joins: {
       author: () => async post => {
-        post.author = (await users.find({ query: {
-          id: post.userId
-        } }))[0];
+        post.author = (await users.find({
+          query: {
+            id: post.userId
+          }
+        }))[0];
       },
       starers: $select => async post => {
-        post.starers = await users.find({ query: {
-          id: { $in: post.starIds }, $select: $select || ['name']
-        } });
+        post.starers = await users.find({
+          query: {
+            id: { $in: post.starIds }, $select: $select || ['name']
+          }
+        });
       }
     }
   };
@@ -376,14 +441,18 @@ async function ex4 () {
   const postResolvers = {
     joins: {
       author: () => async post => {
-        post.author = (await users.find({ query: {
-          id: post.userId
-        } }))[0];
+        post.author = (await users.find({
+          query: {
+            id: post.userId
+          }
+        }))[0];
       },
       starers: $select => async post => {
-        post.starers = await users.find({ query: {
-          id: { $in: post.starIds }, $select: $select || ['name']
-        } });
+        post.starers = await users.find({
+          query: {
+            id: { $in: post.starIds }, $select: $select || ['name']
+          }
+        });
       },
       starerCount: () => post => { post.starerCount = post.starIds.length; }
     }
@@ -399,16 +468,20 @@ async function ex5 () {
     joins: {
       comments: {
         resolver: ($select, $limit, $sort) => async post => {
-          post.comments = await comments.find({ query: {
-            postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
-          } });
+          post.comments = await comments.find({
+            query: {
+              postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
+            }
+          });
           return post.comments;
         },
         joins: {
           author: $select => async comment => {
-            comment.author = (await users.find({ query: {
-              id: comment.userId, $select: $select
-            } }))[0];
+            comment.author = (await users.find({
+              query: {
+                id: comment.userId, $select: $select
+              }
+            }))[0];
           }
         }
       }
@@ -424,9 +497,11 @@ async function ex6 () {
   const commentResolvers = {
     joins: {
       author: $select => async comment => {
-        comment.author = (await users.find({ query: {
-          id: comment.userId
-        } }))[0];
+        comment.author = (await users.find({
+          query: {
+            id: comment.userId
+          }
+        }))[0];
       }
     }
   };
@@ -435,9 +510,11 @@ async function ex6 () {
     joins: {
       comments: {
         resolver: ($select, $limit, $sort) => async post => {
-          post.comments = await comments.find({ query: {
-            postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
-          } });
+          post.comments = await comments.find({
+            query: {
+              postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
+            }
+          });
           return post.comments;
         },
         joins: commentResolvers

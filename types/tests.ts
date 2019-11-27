@@ -1,4 +1,4 @@
-import { Hook, HookContext, Service } from '@feathersjs/feathers';
+import { Hook, HookContext, Service, default as feathers } from '@feathersjs/feathers';
 
 import {
     actOnDefault,
@@ -12,21 +12,15 @@ import {
     checkContextIf,
     combine,
     debug,
-    deleteByDot,
     dePopulate,
-    dialablePhoneNumber,
-    disableMultiItemChange,
-    disableMultiItemCreate,
     disablePagination,
     disallow,
     discard,
     discardQuery,
     every,
-    existsByDot,
     fastJoin,
     fgraphql,
     FGraphQLHookOptions,
-    getByDot,
     getItems,
     iff,
     iffElse,
@@ -50,13 +44,10 @@ import {
     runParallel,
     sequelizeConvert,
     serialize,
-    setByDot,
     setNow,
     setSlug,
     sifter,
-    skipRemainingHooks,
-    skipRemainingHooksOnFlag,
-    softDelete2,
+    softDelete,
     some,
     stashBefore,
     SyncPredicateFn,
@@ -67,12 +58,15 @@ import {
     when,
 } from 'feathers-hooks-common';
 import { parse } from 'graphql';
-import * as libphonenumberjs from 'libphonenumber-js';
 import ajv = require('ajv');
 
 const context1: HookContext = {
     type: 'before',
-    service: null!
+    app: feathers(),
+    method: '',
+    params: {},
+    path: '/',
+    service: null
 };
 
 const hook1: Hook = ctx => ctx;
@@ -136,20 +130,8 @@ combine(hook1, hook2, hook3);
 // $ExpectType Hook
 debug('label', 'abc.def', 'ghi.jkl');
 
-// $ExpectType void
-deleteByDot({}, 'abc.def');
-
 // $ExpectType Hook
 dePopulate();
-
-// $ExpectType Hook
-dialablePhoneNumber(libphonenumberjs);
-
-// $ExpectType Hook
-disableMultiItemChange();
-
-// $ExpectType Hook
-disableMultiItemCreate();
 
 // $ExpectType Hook
 disablePagination();
@@ -163,16 +145,18 @@ discard('abc', 'def');
 // $ExpectType Hook
 discardQuery('abc', 'def');
 
-// $ExpectType boolean
-existsByDot({}, 'abc.def');
+softDelete({
+    removeData: async () => ({})
+});
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
         author: $select => async comment => {
-            comment.author = (await service1.find({
+            const authors = await service1.find({
                 query: { id: comment.userId, $select: $select || ['name'] },
                 paginate: false
-            }) as any)[0];
+            });
+            comment.author = authors[0];
         },
     },
 };
@@ -196,13 +180,12 @@ const postResolvers: ResolverMap<any> = {
 const userResolvers: ResolverMap<any> = {
     joins: {
         memberships: () => async (user, context) => {
-            const memberships: any = (await context.app!.service
-                ('memberships').find({
-                    query: {
-                        user: user._id,
-                        $populate: 'role',
-                    }
-                }));
+            const memberships = await context.app.service('memberships').find({
+                query: {
+                    user: user._id,
+                    $populate: 'role',
+                }
+            });
             user.memberships = memberships.data;
         }
     }
@@ -270,9 +253,6 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
 };
 // $ExpectType Hook
 fgraphql(fgraphqlOptions2);
-
-// $ExpectType any
-getByDot({}, 'abc.def');
 
 // $ExpectType any
 getItems(context1);
@@ -378,9 +358,6 @@ serialize({
     },
 });
 
-// $ExpectType void
-setByDot({}, 'asd', 7);
-
 // $ExpectType Hook
 setNow('createdAt', 'updatedAt');
 
@@ -404,24 +381,6 @@ sequelizeConvert({
 sifter(ctx => item => true);
 
 // $ExpectType Hook
-skipRemainingHooks();
-// $ExpectType Hook
-skipRemainingHooks(context => !context.result);
-
-// $ExpectType Hook
-skipRemainingHooksOnFlag('__flag');
-
-// $ExpectType Hook
-softDelete2({
-    allowIgnoreDeletedAt: true,
-    deletedAt: 'someKey',
-    patchCall: async (context, options) => { },
-    probeCall: async (context, options) => { },
-    keepOnCreate: true,
-    skipProbeOnGet: true
-});
-
-// $ExpectType Hook
 stashBefore();
 // $ExpectType Hook
 stashBefore('abc');
@@ -437,7 +396,7 @@ traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
-}, context => context.params!.query);
+}, context => context.params.query);
 
 // $ExpectType Hook
 validate(async (data, context) => {

@@ -1,8 +1,10 @@
 
 const chai = require('chai');
+const setByDot = require('lodash/set');
+
 const configApp = require('../helpers/config-app');
 const getInitDb = require('../helpers/get-init-db');
-const { populate, setByDot } = require('../../lib/services/index');
+const { populate } = require('../../lib/services/index');
 
 const assert = chai.assert;
 let provider;
@@ -352,7 +354,7 @@ let provider;
       });
 
       it('checks permissions', () => {
-        let spy = [];
+        const spy = [];
         const hook = clone(hookAfter);
         hook.app = app; // app is a func and wouldn't be cloned
 
@@ -554,7 +556,7 @@ let provider;
         const include = makeInclude(type, includeOptions());
         const expected = makeInclude(type, includeOptions());
 
-        return populate({ schema: {include}, profile: true })(hook)
+        return populate({ schema: { include }, profile: true })(hook)
           .then(hook1 => {
             assert.deepEqual(include, expected);
           });

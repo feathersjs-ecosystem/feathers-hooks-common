@@ -21,22 +21,26 @@ describe('services getItems & replaceItems', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hookBeforeArray = {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: [{ first: 'John', last: 'Doe' }, { first: 'Jane', last: 'Doe' }] };
+        data: [{ first: 'John', last: 'Doe' }, { first: 'Jane', last: 'Doe' }]
+      };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane2', last: 'Doe2' } };
+        result: { first: 'Jane2', last: 'Doe2' }
+      };
       hookAfterArray = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }] };
+        result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }]
+      };
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -47,7 +51,8 @@ describe('services getItems & replaceItems', () => {
             { first: 'John3', last: 'Doe3' },
             { first: 'Jane3', last: 'Doe3' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -125,7 +130,8 @@ describe('services getItems & replaceItems', () => {
         result: {
           total: 200,
           data: []
-        } };
+        }
+      };
       hookFind = {
         type: 'after', method: 'find', params: { provider: 'rest' }
       };

@@ -17,12 +17,14 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane', last: 'Doe' } };
+        result: { first: 'Jane', last: 'Doe' }
+      };
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -33,7 +35,8 @@ describe('services discard', () => {
             { first: 'John', last: 'Doe' },
             { first: 'Jane', last: 'Doe' }
           ]
-        } };
+        }
+      };
       hookFind = {
         type: 'after',
         method: 'find',
@@ -82,19 +85,10 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' } };
+        data: { first: 'John', last: 'Doe' }
+      };
       hooks.discard('first', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
-    });
-
-    it('does not throw if field is undefined', () => {
-      const hook = {
-        type: 'before',
-        method: 'create',
-        params: { provider: 'rest' },
-        data: { first: undefined, last: 'Doe' } };
-      hooks.discard('first')(hook);
-      assert.deepEqual(hook.data, { first: undefined, last: 'Doe' }); // todo note this
     });
 
     it('does not throw if field is null', () => {
@@ -102,7 +96,8 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: null, last: 'Doe' } };
+        data: { first: null, last: 'Doe' }
+      };
       hooks.discard('first')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
@@ -154,11 +149,11 @@ describe('services discard', () => {
     });
 
     it('discards multiple fields', () => {
-      let hook = {
+      const hook = {
         type: 'after',
         method: 'get',
         result: {
-          roles: [ 'super' ],
+          roles: ['super'],
           _id: 'a',
           email: 'foo',
           password: 'bar',
@@ -171,7 +166,7 @@ describe('services discard', () => {
       hooks.discard('email', 'password')(hook);
 
       assert.deepEqual(hook.result, {
-        roles: [ 'super' ],
+        roles: ['super'],
         _id: 'a',
         // email: 'foo',
         // password: 'bar',
@@ -181,7 +176,7 @@ describe('services discard', () => {
     });
 
     it('null prop', () => {
-      let hook = {
+      const hook = {
         type: 'after',
         method: 'get',
         result: {

@@ -1,12 +1,12 @@
 
 module.exports = function (name) {
   const users = {
-    '0': {id: 'as61389dadhga62343hads6712', name: 'Author 1', email: 'author1@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 55},
-    '1': {id: '167asdf3689348sdad7312131s', name: 'Author 2', email: 'author2@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 16}
+    0: { id: 'as61389dadhga62343hads6712', name: 'Author 1', email: 'author1@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 55 },
+    1: { id: '167asdf3689348sdad7312131s', name: 'Author 2', email: 'author2@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 16 }
   };
 
   const comments = {
-    '1': {
+    1: {
       id: 1,
       postId: 1,
       title: 'Comment 1',
@@ -14,7 +14,7 @@ module.exports = function (name) {
       author: 'as61389dadhga62343hads6712',
       createdAt: 1480793101559
     },
-    '2': {
+    2: {
       id: 2,
       postId: 2,
       title: 'Comment 2',
@@ -22,7 +22,7 @@ module.exports = function (name) {
       author: 'as61389dadhga62343hads6712',
       createdAt: 1480793101559
     },
-    '3': {
+    3: {
       id: 3,
       postId: 1,
       title: 'Comment 3',
@@ -33,7 +33,7 @@ module.exports = function (name) {
   };
 
   const posts = {
-    '1': {
+    1: {
       id: 1,
       title: 'Post 1',
       content: 'Lorem ipsum dolor sit amet 4',
@@ -41,7 +41,7 @@ module.exports = function (name) {
       readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
       createdAt: 1480793101559
     },
-    '2': {
+    2: {
       id: 2,
       title: 'Post 2',
       content: 'Lorem ipsum dolor sit amet 5',
@@ -49,7 +49,7 @@ module.exports = function (name) {
       readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
       createdAt: 1480793101559
     },
-    '3': {
+    3: {
       id: 3,
       title: 'Post 3',
       content: 'Lorem ipsum dolor sit amet 5',
@@ -57,7 +57,7 @@ module.exports = function (name) {
       readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
       createdAt: 1480793101559
     },
-    '4': {
+    4: {
       id: 4,
       title: 'Post 4',
       content: 'Lorem ipsum dolor sit amet 5',
@@ -68,17 +68,17 @@ module.exports = function (name) {
   };
 
   const recommendation = {
-    '1': {
+    1: {
       userId: 'as61389dadhga62343hads6712',
       postId: 1,
       updatedAt: 1480793101475
     },
-    '2': {
+    2: {
       userId: 'as61389dadhga62343hads6712',
       postId: 2,
       updatedAt: 1480793101475
     },
-    '3': {
+    3: {
       userId: '167asdf3689348sdad7312131s',
       postId: 1,
       updatedAt: 1480793101475

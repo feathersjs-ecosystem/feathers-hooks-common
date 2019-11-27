@@ -20,7 +20,8 @@ describe('services runParallel', () => {
       type: 'before',
       method: 'create',
       params: { provider: 'rest' },
-      data: { first: 'John', last: 'Doe' } };
+      data: { first: 'John', last: 'Doe' }
+    };
   });
 
   it('runs the func', done => {

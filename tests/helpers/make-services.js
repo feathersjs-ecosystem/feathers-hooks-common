@@ -1,6 +1,7 @@
 
 const postsStore = [
-  { id: 1,
+  {
+    id: 1,
     body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
@@ -8,7 +9,8 @@ const postsStore = [
       { userId: 102, points: 1 },
       { userId: 103, points: 1 },
       { userId: 104, points: 1 }
-    ]},
+    ]
+  },
   { id: 2, body: 'Marshall post', userId: 102, starIds: [101, 103, 104] },
   { id: 3, body: 'Barbara post', userId: 103 },
   { id: 4, body: 'Aubree post', userId: 104 }
@@ -57,8 +59,8 @@ function makeService (store1, name) {
       if (!params || !params.query) return asyncReturn(store);
 
       const field = Object.keys(params.query)[0];
-      let value = params.query[field];
-      let $select = params.query.$select;
+      const value = params.query[field];
+      const $select = params.query.$select;
 
       return asyncReturn(store
         .filter(post => {
