@@ -437,28 +437,17 @@ export function sequelizeConvert<C extends {[name: string]: SequelizeConversion}
  */
 export function sifter(siftFunc: SyncContextFunction<(item: any) => boolean>): Hook;
 
-/**
- * Conditionally skip running all remaining hooks.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SkipRemainingHooks}
- */
-export function skipRemainingHooks(predicate?: SyncPredicateFn | boolean): Hook;
+export type SoftDeleteOptionFunction = (context?: HookContext) => Promise<{ [key: string]: any }>;
 
-export function skipRemainingHooksOnFlag(flagNames: string | string[]): Hook;
-
-export interface SoftDelete2Options {
-    deletedAt?: string;
-    keepOnCreate?: boolean;
-    skipProbeOnGet?: boolean;
-    allowIgnoreDeletedAt?: boolean;
-    probeCall?: (context: HookContext, options: SoftDelete2Options) => Promise<any>;
-    patchCall?: (context: HookContext, options: SoftDelete2Options) => Promise<any>;
+export interface SoftDeleteOptions {
+    deletedQuery?: { [key: string]: any } | SoftDeleteOptionFunction;
+    removeData?: { [key: string]: any } | SoftDeleteOptionFunction;
 }
 
 /**
- * Flag records as logically deleted instead of physically removing them.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SoftDelete2}
+ * Allow to mark items as deleted instead of removing them.
  */
-export function softDelete2(options?: SoftDelete2Options): Hook;
+export function softDelete(options: SoftDeleteOptions): Hook;
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
@@ -504,7 +493,7 @@ export function validateSchema(schema: object, ajv: AjvOrNewable, options?: Vali
  * Execute one array of hooks or another based on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IffElse}
  */
-export function iffElse(predicate: PredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
+export function iffElse(predicate: boolean | PredicateFn, hooksTrue: Hook | Hook[], hooksFalse: Hook | Hook[]): Hook;
 
 export interface IffHook extends Hook {
     else(...hooks: Hook[]): Hook;
@@ -514,7 +503,7 @@ export interface IffHook extends Hook {
  * Execute one or another series of hooks depending on a sync or async predicate.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#Iff}
  */
-export function iff(predicate: PredicateFn, ...hooks: Hook[]): IffHook;
+export function iff(predicate: boolean | PredicateFn, ...hooks: Hook[]): IffHook;
 
 /**
  * Alias for iff
@@ -544,10 +533,5 @@ export function every(...predicates: PredicateFn[]): AsyncPredicateFn;
  * Negate a sync or async predicate function.
  * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#IsNot}
  */
-export function isNot(predicate: PredicateFn): AsyncPredicateFn;
 
-/**
- * @deprecated DEPRECATED. Use the softDelete2 hook instead. It is a noteable improvement over softDelete.
- * {@link https://feathers-plus.github.io/v1/feathers-hooks-common/index.html#SoftDelete}
- */
-export function softDelete(...args: any[]): any;
+export function isNot(predicate: boolean | PredicateFn): AsyncPredicateFn;
