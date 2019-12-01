@@ -367,6 +367,8 @@ title: Hooks
 
   When using the `patch` or `remove` methods, a `null` id could mutate many, even all the records in the database, so accidentally using it may cause undesirable results.
 
+  Will throw a `BadRequest` error when trying to `update`, `patch` or `delete` multiple items.
+
 {% hooksApiFootnote disableMultiItemChange %}
 
 ## disableMultiItemCreate
