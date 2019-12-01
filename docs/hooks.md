@@ -2243,7 +2243,7 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 - **Example**
 
   ```js
-  const { patch } = require('feathers-hooks-common')
+  const { stashBefore } = require('feathers-hooks-common')
 
   module.exports = {
     before: {
