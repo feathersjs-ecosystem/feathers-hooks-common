@@ -70,7 +70,7 @@
     "@feathersjs/express": "^4.4.1",
     "@feathersjs/socketio": "^4.4.1",
     "@feathersjs/socketio-client": "^4.4.1",
-    "@types/node": "^12.12.14",
+    "@types/node": "^13.1.0",
     "chai": "^4.2.0",
     "clone": "^2.1.2",
     "coveralls": "^3.0.9",
