@@ -7,9 +7,10 @@ module.exports = {
     docsDir: 'docs',
     editLinks: true,
     sidebar: [
-      '/getting-started.md',
+      './overview.md',
       '/hooks.md',
       '/utilities.md',
+      '/migrating.md',
       '/guides.md'
     ],
     serviceWorker: {

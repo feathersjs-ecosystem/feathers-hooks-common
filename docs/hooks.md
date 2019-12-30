@@ -1,14 +1,13 @@
----
-title: Hooks
----
-
 # Hooks
-
-<!--=============================================================================================-->
 
 ## actOnDefault
 
-{% hooksApi actOnDefault %}
+Runs a series of hooks which mutate context.data or content.result (the Feathers default).
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/act-on-dispatch.js)|
+
 
 - **Arguments**
 
@@ -43,13 +42,15 @@ title: Hooks
 
   The main purpose of `actOnDefault` is to "undo" `actOnDispatch`.
 
-{% hooksApiFootnote actOnDefault %}
-
-<!--=============================================================================================-->
 
 ## actOnDispatch
 
-{% hooksApi actOnDispatch %}
+Runs a series of hooks which mutate context.dispatch.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/act-on-dispatch.js)|
+  
 
 - **Arguments**
 
@@ -84,11 +85,15 @@ title: Hooks
 
   <p class="tip">context.dispatch is a writeable, optional property and contains a "safe" version of the data that should be sent to any client. If context.dispatch has not been set context.result will be sent to the client instead.<br/><br/>Note: context.dispatch only affects the data sent through a Feathers Transport like REST or Socet.io. An internal method call will still get the data set in context.result.</p>
 
-{% hooksApiFootnote actOnDispatch %}
 
 ## alterItems
 
-{% hooksApi alterItems %}
+Make changes to data or result items. Very flexible.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/alter-items.js)|
+
 
 - **Arguments**
   - `{Function} func`
@@ -158,11 +163,15 @@ title: Hooks
 
   `func` may alternatively return a replacement `item` rather than `undefined`. This is a convenience feature which permits, for example, use of functions from the [Lodash](https://lodash.com/) library, as such functions tend to return new objects.
 
-{% hooksApiFootnote alterItems %}
 
 ## cache
 
-{% hooksApi cache %}
+Persistent, least-recently-used record cache for services.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/cache.js)|
+
 
 - **Arguments**
 
@@ -268,11 +277,16 @@ title: Hooks
 | `item`       | `Object` |         | The record.        |
 | `clonedItem` | `Object` |         | A clone of `item`. |
 
-{% hooksApiFootnote cache %}
+
 
 ## debug
 
-{% hooksApi debug %}
+Display the current hook context for debugging.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/debug.js)|
+
 
 - **Arguments**
   - `{String} label`
@@ -313,11 +327,14 @@ title: Hooks
 
   `debug` is great for debugging issues with hooks. Log the hook context before and after a hook to see what the hook started with, and what it changed.
 
-{% hooksApiFootnote debug %}
 
 ## dePopulate
 
-{% hooksApi dePopulate %}
+Remove records and properties created by the populate hook.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/de-populate.js)|
 
 - **Arguments**
   - `{Function} customDepop`
@@ -342,60 +359,16 @@ title: Hooks
 
   Removes joined records, computed properties, and profile information created by [`populate`](#populate). Populated and serialized items may, after dePopulate, be used in service calls.
 
-  Removes fields created by resolver functions using `fgraphql`. Populated items may, after dePopulate, be used in a patch service call..
+  Removes fields created by resolver functions using `fgraphql`. Populated items may, after dePopulate, be used in a patch service call.
 
-{% hooksApiFootnote dePopulate %}
-
-## disableMultiItemChange
-
-{% hooksApi disableMultiItemChange %}
-
-- **Example**
-
-  ```js
-  const { disableMultiItemChange } = require('feathers-hooks-common')
-
-  module.exports = {
-    before: {
-      patch: disableMultiItemChange(),
-      remove: disableMultiItemChange()
-    }
-  }
-  ```
-
-- **Details**
-
-  When using the `patch` or `remove` methods, a `null` id could mutate many, even all the records in the database, so accidentally using it may cause undesirable results.
-
-  Will throw a `BadRequest` error when trying to `update`, `patch` or `delete` multiple items.
-
-{% hooksApiFootnote disableMultiItemChange %}
-
-## disableMultiItemCreate
-
-{% hooksApi disableMultiItemCreate %}
-
-- **Example**
-
-  ```js
-  const { disableMultiItemCreate } = require('feathers-hooks-common')
-
-  module.exports = {
-    before: {
-      create: disableMultiItemCreate()
-    }
-  }
-  ```
-
-- **Details**
-
-  The `create` method creates multiple record if passed an array of items. This hook prevents that, allowing only single records to be created.
-
-{% hooksApiFootnote disableMultiItemCreate %}
 
 ## disablePagination
 
-{% hooksApi disablePagination %}
+Disables pagination when query.$limit is -1 or '-1'.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|find|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/disable-pagination.js)|
 
 - **Example**
 
@@ -413,11 +386,14 @@ title: Hooks
 
   Pagination is disabled if `context.query.$limit` is -1 or '-1'. It works for all types of calls including REST.
 
-{% hooksApiFootnote disablePagination %}
 
 ## disallow
 
-{% hooksApi disallow %}
+Prevents access to a service method completely or for specific transports.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/disallow.js)|
 
 - **Arguments**
 
@@ -458,15 +434,24 @@ title: Hooks
 
   Prevents access to a service method completely or just for specific transports. All transports set the `context.params.provider` property, and `disallow` checks this.
 
-{% hooksApiFootnote disallow %}
 
 ## discard
 
-{% hooksApi discard %}
+Delete certain fields from the record(s).
 
-<p class="tip">The discard hook will remove fields even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discard(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/discard.js)|
+||yes|all|||
 
-{% hooksApiFieldNames discard "One or more fields you want to remove from the record(s)." %}
+> __Note:__ The discard hook will remove fields even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discard(...))`.
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|One or more fields you want to remove from the record(s).|
 
 - **Example**
 
@@ -485,15 +470,22 @@ title: Hooks
   Delete the fields either from `context.data` (before hook) or `context.result[.data]` (after hook).
   They are not modified if they are not an object, so a `null` value is supported.
 
-{% hooksApiFootnote discard %}
-
 ## discardQuery
 
-{% hooksApi discardQuery %}
+Delete certain fields from the query object.
 
-<p class="tip">The keep hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discardQuery(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/discard-query.js)|
 
-{% hooksApiFieldNames discardQuery "One or more fields you want to remove from the query." %}
+> __Note:__ The discardQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discardQuery(...))`.
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|One or more fields you want to remove from the query.|
 
 - **Example**
 
@@ -511,12 +503,15 @@ title: Hooks
 
   Delete the fields from `context.params.query`.
 
-{% hooksApiFootnote discardQuery %}
 
 ## every
 
-{% hooksApi every %}
+Return the and of a series of sync or async predicate functions.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/every.js)|
+  
 - **Arguments**
   - `{Array< Function >} predicates`
 
@@ -524,7 +519,15 @@ title: Hooks
 | ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
 | `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
 
-{% hooksApiReturns every "The logical and of <code>predicates</code>" %}
+
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The logical and of predicates
+
 
 - **Example**
 
@@ -540,11 +543,14 @@ title: Hooks
 
   `every` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if every predicate returns a truthy value.
 
-{% hooksApiFootnote every %}
 
 ## fastJoin
 
-{% hooksApi fastJoin %}
+Join related records.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/fast-join.js)|
 
 > `fastJoin` is preferred over using `populate`.
 
@@ -930,11 +936,14 @@ The `cache` hook also makes `get` service calls more efficient.
 
   The companion `@feathers-plus/cache` implements a least recently-used cache which discards the least recently used items first. When used in conjunction with the `cache` hook, it can be used to implement persistent caches for BatchLoaders. BatchLoaders configured this way would retain their cache between requests, eliminating the need to _prime_ the cache at the start of each request.
 
-{% hooksApiFootnote fastJoin %}
 
 ## iff
 
-{% hooksApi iff %}
+Execute one or another series of hooks depending on a sync or async predicate.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/iff.js)|
 
 - **Arguments**
   - `{Boolean | Promise | Function} predicate`
@@ -980,12 +989,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   The predicate and hook functions will not be called with `this` set to the service, as is normal for hook functions. Use `hook.service` instead.
 
-{% hooksApiFootnote iff %}
 
 ## iffElse
 
-{% hooksApi iffElse %}
+Execute one array of hooks or another based on a sync or async predicate.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/iff-else.js)|
+  
 - **Arguments**
   - `{Function} predicate`
   - `{Array< Functions >} hookFuncsTrue`
@@ -1016,11 +1028,14 @@ The `cache` hook also makes `get` service calls more efficient.
 
   The predicate and hook functions will not be called with `this` set to the service, as is normal for hook functions. Use `hook.service` instead.
 
-{% hooksApiFootnote iffElse %}
 
 ## isNot
 
-{% hooksApi isNot %}
+Negate a sync or async predicate function.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/is-not.js)|
 
 - **Arguments**
 
@@ -1030,7 +1045,13 @@ The `cache` hook also makes `get` service calls more efficient.
 | ----------- | :------------------: | ------- | --------------------------------------------------------------------------------------------- |
 | `predicate` | `Function` `Boolean` |         | A sync or async function which take the current hook as a param and returns a boolean result. |
 
-{% hooksApiReturns isNot "The not of <code>predicate</code>" %}
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The not of predicate
 
 - **Example**
 
@@ -1047,12 +1068,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   `isNot` is a predicate function for use in conditional hooks.
 
-{% hooksApiFootnote isNot %}
 
 ## isProvider
 
-{% hooksApi isProvider %}
+Check which transport provided the service call.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/is-provider.js)|
+  
 - **Arguments**
   - `{Array< String >} transports`
 
@@ -1068,7 +1092,15 @@ The `cache` hook also makes `get` service calls more efficient.
 | `external`   | Allow calls other than from server. |
 | `server`     |      Allow calls from server.       |
 
-{% hooksApiReturns isProvider "If the call was made by one of the <code>transports</code>." %}
+
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|If the call was made by one of the transports.
+
 
 - **Example**
 
@@ -1086,15 +1118,24 @@ The `cache` hook also makes `get` service calls more efficient.
 
   `isProvider` is a predicate function for use in conditional hooks. Its determines which transport provided the service call by checking `context.params.provider`.
 
-{% hooksApiFootnote isProvider %}
 
 ## keep
 
-{% hooksApi keep %}
+Keep certain fields in the record(s), deleting the rest.
 
-<p class="tip">The keep hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keep(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/keep.js)|
+||yes|all|||
 
-{% hooksApiFieldNames keep "The only fields you want to keep in the record(s)." %}
+> __Note:__ The keep hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keep(...))`.
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The only fields you want to keep in the record(s).|
 
 - **Example**
 
@@ -1113,13 +1154,17 @@ The `cache` hook also makes `get` service calls more efficient.
   Update either `context.data` (before hook) or `context.result[.data]` (after hook).
   Their values are returned if they are not an object, so a `null` value is supported.
 
-{% hooksApiFootnote keep %}
 
 ## keepInArray
 
-{% hooksApi keepInArray %}
+Keep certain fields in a nested array inside the record(s), deleting the rest.
 
-<p class="tip">The keepInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepInArray(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/keep-in-array.js)|
+||yes|all|||
+
+> __Note:__ The keepInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepInArray(...))`.
 
 - **Arguments**
   - `{String} arrayName`
@@ -1148,15 +1193,22 @@ The `cache` hook also makes `get` service calls more efficient.
   Update either `context.data` (before hook) or `context.result[.data]` (after hook).
   Their values are returned if they are not an object, so a `null` value is supported.
 
-{% hooksApiFootnote keepInArray %}
-
 ## keepQuery
 
-{% hooksApi keepQuery %}
+Keep certain fields in the query object, deleting the rest.
 
-<p class="tip">The keepQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQuery(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/keep-query.js)|
+ 
+> __Note:__ The keepQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQuery(...))`.
 
-{% hooksApiFieldNames keepQuery "The only fields you want to keep in the query object." %}
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The only fields you want to keep in the query object.|
 
 - **Example**
 
@@ -1174,15 +1226,23 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Updates `context.params.query`.
 
-{% hooksApiFootnote keepQuery %}
 
 ## keepQueryInArray
 
-{% hooksApi keepQueryInArray %}
+Keep certain fields in a nested array inside the query object, deleting the rest.
 
-<p class="tip">The keepQueryInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQueryInArray(...))`.</p>
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/keep-query-in-array.js)|
+ 
+> __Note:__ The keepQueryInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQueryInArray(...))`.
 
-{% hooksApiFieldNames keepQueryInArray "The only fields you want to keep in a nested array inside the query object." %}
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The only fields you want to keep in a nested array inside the query object.|
 
 - **Arguments**
   - `{String} arrayName`
@@ -1210,13 +1270,23 @@ The `cache` hook also makes `get` service calls more efficient.
   Updates `context.params.query`.
   Their values are returned if they are not an object, so a `null` value is supported.
 
-{% hooksApiFootnote keepQueryInArray %}
 
 ## lowerCase
 
-{% hooksApi lowerCase %}
+Convert certain field values to lower case.
 
-{% hooksApiFieldNames keep "The fields in the record(s) whose values are converted to lower case." %}
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/lower-case.js)|
+||yes|all|||
+  
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The fields in the record(s) whose values are converted to lower case.|
 
 - **Example**
 
@@ -1234,12 +1304,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Update either `context.data` (before hook) or `context.result[.data]` (after hook).
 
-{% hooksApiFootnote lowerCase %}
 
 ## mongoKeys
 
-{% hooksApi mongoKeys %}
+Wrap MongoDB foreign keys in ObjectID.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/mongo-keys.js)|
+ 
 - **Arguments**
 
   - `{Function} ObjectID`
@@ -1289,12 +1362,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   `mongoKeys` automates this, given the field names of all the foreign keys in the schema. This reduces the boilerplate cluuter and reduces the chance of bugs occurring.
 
-{% hooksApiFootnote mongoKeys %}
 
 ## paramsFromClient
 
-{% hooksApi paramsFromClient %}
+Pass `context.params` from client to server. Server hook.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/params-from-client.js)|
+ 
 - **Arguments**
 
   - `{Array< String > | String} whitelist`
@@ -1338,12 +1414,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   This technique also works for service calls made on the server.
 
-{% hooksApiFootnote paramsFromClient %}
 
 ## populate
 
-{% hooksApi populate %}
+Join related records.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/populate.js)|
+ 
 > `fastJoin` is preferred over using `populate`.
 
 - **Arguments**
@@ -1555,13 +1634,16 @@ The `cache` hook also makes `get` service calls more efficient.
 
   `populate` supports 1:1, 1:n and n:1 relationships. It can provide performance profile information.
 
-{% hooksApiFootnote populate %}
 
 ## preventChanges
 
-{% hooksApi preventChanges %}
+Prevent patch service calls from changing certain fields.
 
-- **Arguments**
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/prevent-changes.js)|
+ 
+ - **Arguments**
 
   - `{Boolean} ifThrow`
   - `{Array < String >} fieldNames`
@@ -1587,13 +1669,21 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Consider using validateSchema if you would rather specify which fields are allowed to change.
 
-{% hooksApiFootnote preventChanges %}
 
 ## required
 
-{% hooksApi required %}
+Check selected fields exist and are not falsey. Numeric 0 is acceptable.
 
-{% hooksApiFieldNames required "These fields must exist and not be falsey. Numeric 0 is acceptable." %}
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/required.js)|
+  
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|These fields must exist and not be falsey. Numeric 0 is acceptable.|
 
 - **Example**
 
@@ -1607,11 +1697,14 @@ The `cache` hook also makes `get` service calls more efficient.
   }
   ```
 
-{% hooksApiFootnote required %}
 
 ## runParallel
 
-{% hooksApi runParallel %}
+Run a hook in parallel to the other hooks and the service call.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/run-parallel.js)|
 
 - **Arguments**
 
@@ -1646,11 +1739,14 @@ The `cache` hook also makes `get` service calls more efficient.
 
   The hook was provided by bedeoverend. Thank you.
 
-{% hooksApiFootnote runParallel %}
 
 ## serialize
 
-{% hooksApi serialize %}
+Prune values from related records. Calculate new values.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/serialize.js)|
 
 - **Arguments**
   - `{Object | Function} schema`
@@ -1716,13 +1812,21 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Works with <code>fastJoin</code> and <code>populate</code>.
 
-{% hooksApiFootnote serialize %}
 
 ## setNow
 
-{% hooksApi setNow %}
+Create/update certain fields to the current date-time.
 
-{% hooksApiFieldNames setNow "The fields that you want to add or set to the current date-time." %}
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/set-now.js)|
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The fields that you want to add or set to the current date-time.|
 
 - **Example**
 
@@ -1740,12 +1844,15 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Update either `context.data` (before hook) or `context.result[.data]` (after hook).
 
-{% hooksApiFootnote setNow %}
 
 ## setSlug
 
-{% hooksApi setSlug %}
+Set slugs in URL, e.g. /stores/:storeId.
 
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/set-slug.js)|
+ 
 - **Arguments**
   - `{String} slug`
   - `{String} [ fieldName ]`
@@ -1782,11 +1889,14 @@ The `cache` hook also makes `get` service calls more efficient.
 
 This hook normalizes the difference between the transports.
 
-{% hooksApiFootnote setSlug %}
 
 ## sifter
 
-{% hooksApi sifter %}
+Filter data or result records using a MongoDB-like selection syntax.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|no|yes|find|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/sifter.js)|
 
 - **Arguments**
 
@@ -1832,378 +1942,21 @@ This hook normalizes the difference between the transports.
 
   `sifter` filters the result of a find call. Therefore more records will be physically read than needed. You can use the Feathers database adapters query to reduce this number.`
 
-{% hooksApiFootnote sifter %}
-
-## skipRemainingHooks
-
-{% hooksApi skipRemainingHooks %}
-
-  <p class="tip">The service call will only be skipped if `context.result` has been set manually.</p>
-
-- **Arguments**
-
-  - `{Function | Boolean} predicate`
-
-| Argument    |         Type          | Default                     | Description                                                                                                |
-| ----------- | :-------------------: | --------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `predicate` | `Function`, `Boolean` | `content => content.result` | A predicate. If true the remaining hooks are skipped. The default checks if `context.result` has been set. |
-
-- **Example**
-
-  Skip the remaining hooks if the record was found in the cache.
-
-  ```js
-  const { cache, skipRemainingHooks } = require('feathers-hooks-common')
-
-  module.exports = {
-    before: {
-      get: [cache(new Map()), skipRemainingHooks()]
-    }
-  }
-  ```
-
-  Skip all the `after` hooks if the service call was initiated by the server.
-
-  ```js
-  module.exports = {
-    after: {
-      all: [skipRemainingHooks(context => !context.provider)]
-    }
-  }
-  ```
-
-- **Details**
-
-  The remaining before hooks will be skipped is you use `shipRemainingHooks` as a before hook. However the after hooks will still be run.
-
-  `shipRemainingHooks` skips the remaining hooks in the before, after or error hooks. It will skip the remaining hooks if used within the `combine` hook.
-
-{% hooksApiFootnote skipRemainingHooks %}
-
 ## softDelete
 
-  <p class="tip">DEPRECATED. Use the **softDelete2** hook instead. It is a noteable improvement over softDelete.</p>
-
-{% hooksApi softDelete %}
-
-  <p class="tip">The softDelete2 hooks must be correctly positioned.</p>
-
-- **Arguments**
-  - `{String} fieldName`
-
-| Argument    |   Type   | Default     | Description                                           |
-| ----------- | :------: | ----------- | ----------------------------------------------------- |
-| `fieldName` | `String` | `'deleted'` | The name of the field for the logically deleted flag. |
-
-- **Example**
-
-  ```js
-  const { softDelete } = require('feathers-hooks-common');
-  const dept = app.service('departments');
-
-  module.exports = { before: {
-    all: softDelete(),
-  } };
-
-  // will throw if item is marked deleted.
-  dept.get(0).then(...)
-
-  // methods can be run avoiding softDelete handling
-  dept.get(0, { query: { $disableSoftDelete: true }}).then(...)
-  ```
-
-- **Detail**
-
-  Marks items as `{ deleted: true }` instead of physically removing them. This is useful when you want to discontinue use of, say, a department, but you have historical information which continues to refer to the discontinued department.
-
-  The hook performs its own preliminary `get` call if the original service call was not itself a `get`. The calling params for this prelinary `get` are formed from the original calling context:
-
-  ```js
-  { query: {},
-    provider: context.params.provider, // Keep the same transport.
-    _populate: 'skip', // Skip any `fastJoin` or `populate` hooks.
-    authenticated: context.params.authenticated, // Keep authentication status.
-    user: context.params.user // Keep authenticated user information
-  }
-  ```
-
-  <p class="tip">The `user` record is read by feathers-authentication` with a `get`. The `softDelete` hook will be run for this call unless it is conditioned to ignore it. This situation raises the most issues for this hook.</p>
-
-  <p class="tip">The hook will not function properly if you remove the `deleted` flag in your hooks. It has to returned in the record.</p>
-
-{% hooksApiFootnote softDelete %}
-
-## softDelete2
-
-{% hooksApi softDelete2 %}
-
-  <p class="tip">softDelete2 must be correctly positioned as both a before and an after hook. Refer to the **Details** section and the **Examples**.</p>
-
-- **Arguments**
-  - `{Object} options`
-
-| Argument  |   Type   | Default | Description                                                                                                    |
-| --------- | :------: | ------- | -------------------------------------------------------------------------------------------------------------- |
-| `options` | `Object` | `{}`    | The options for the hook. The allowed options differ depending on whether the hook is used in before or after. |
-
-When used as a before hook:
-
-| `options`                 | Argument   | Type             | Default                                                                                                                                                                                                                                                                                                                                                                             | Description |
-| ------------------------- | ---------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `deletedAt`               | `String`   | `'deletedAt'`    | The prop name whose value is the time stamp when the record was logically deleted. `Date.now()` is used as the time stamp.                                                                                                                                                                                                                                                          |
-| `keepOnCreate`            | `Boolean`  | `false`          | The prop `deletedAt` is set to -1 when a record is created. An option value of `true` will retain the existing value of `deletedAt` if one is provided. This is useful when loading a dataset with records.                                                                                                                                                                         |
-| `skipProbeOnGet`          | `Boolean`  | `false`          | softDelete2 makes a probing `get` call to determine if a record is active before mutating it. It makes this probing call even for a `get` call, though that's redundant. An option value of `true` results in a single `get` call, improving performance. This however may cause unexpected interactions with other hooks which is why performing the probing call is the default.  |
-| `allowIgnore` `DeletedAt` | `Boolean`  | `true`           | Your app usually has to access records even if they are logically deleted. softDelete2 acts like a no-op for calls with `params.$ignoreDeletedAt: true`. Clients can be prevented from using this with the `paramsFromClient` hook. If you consider it a security issue that server code is allowed to do this, an option value of `false` disables this capability in softDelete2. |
-| `probeCall`               | `Function` | built-in default | A custom function to perform the probing get call. Its signature is `(context, options)` where `options` is these options.)                                                                                                                                                                                                                                                         |
-| `patchCall`               | `Function` | built-in default | A custom function to perform the patch call which marks the record as deleted. Its signature is `(context, options)` where `options` is these options.)                                                                                                                                                                                                                             |
-
-When used as an after hook:
-
-| `options`                 | Argument  | Type          | Default                                                                     | Description |
-| ------------------------- | --------- | ------------- | --------------------------------------------------------------------------- | ----------- |
-| `deletedAt`               | `String`  | `'deletedAt'` | It must be specified in the after hook if its specified in the before hook. |
-| `skipProbeOnGet`          | `Boolean` | `false`       | It must be specified in the after hook if its specified in the before hook. |
-| `allowIgnore` `DeletedAt` | `Boolean` | `true`        | It must be specified in the after hook if its specified in the before hook. |
-
-- **Examples**
-
-Usage without authentication:
-
-```js
-// On server
-const { softDelete2 } = require('feathers-hooks-common');
-const posts = app.service('posts');
-
-module.exports = {
-  before: {
-    all: softDelete2()
-  },
-  after:
-    all: softDelete2()
-  }
-};
-
-// will throw if item is marked deleted.
-const rec = await posts.get(0);
-
-// methods can be run avoiding softDelete handling
-const rec = await posts.get(0, { $ignoreDeletedAt: true });
-```
-
-Usage with authentication:
-
-```js
-// On server
-const { authenticate } = require('@feathersjs/authentication').hooks
-const {
-  hashPassword,
-  protect
-} = require('@feathersjs/authentication-local').hooks
-const { restrictToOwner } = require('feathers-authentication-hooks')
-const { softDelete2, paramsFromClient } = require('feathers-hooks-common')
-
-const users = app.service('users')
-const posts = app.service('posts')
-
-users.hooks({
-  before: {
-    all: [],
-    find: [authenticate('jwt'), softDelete2()],
-    get: [authenticate('jwt'), softDelete2()],
-    create: [hashPassword(), authenticate('jwt'), softDelete2()],
-    update: [hashPassword(), authenticate('jwt'), softDelete2()],
-    patch: [hashPassword(), authenticate('jwt'), softDelete2()],
-    remove: [authenticate('jwt'), softDelete2()]
-  },
-  after: {
-    all: [
-      protect('password'),
-      softDelete2()
-    ] /* Must always be the last 2 hooks */
-  }
-})
-
-posts.hooks({
-  before: {
-    all: [paramsFromClient('$ignoreDeletedAt'), authenticate('jwt')],
-    get: [
-      softDelete2(),
-      restrictToOwner({ idField: 'id', ownerField: 'ownerId' })
-    ],
-    create: [
-      softDelete2(),
-      restrictToOwner({ idField: 'id', ownerField: 'ownerId' })
-    ],
-    update: [
-      softDelete2(),
-      restrictToOwner({ idField: 'id', ownerField: 'ownerId' })
-    ],
-    patch: [
-      softDelete2(),
-      restrictToOwner({ idField: 'id', ownerField: 'ownerId' })
-    ],
-    remove: [
-      restrictToOwner({ idField: 'id', ownerField: 'ownerId' }),
-      softDelete2()
-    ]
-  },
-  after: {
-    all: softDelete2()
-  }
-})
-
-// On client
-const {
-  paramsForServer
-} = require('feathers-hooks-common/lib/services/params-for-server')
-
-await app.authenticate({
-  strategy: 'local',
-  email: 'foo@gmail.com',
-  password: 'bar'
-})
-
-const posts = app.service('posts')
-
-// will throw if item is marked deleted.
-const rec1 = await posts.get(0)
-
-// methods can be run avoiding softDelete handling
-const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
-```
-
-- **Detail**
-
-  softDelete2 makes a probing get call to check if a record is logically deleted before allowing it to be accessed or mutated. It also replaces remove calls with ones to patch `deletedAt: Date.now()` into the record.
-
-  Find calls, plus patch or remove calls with a `null` id, do not need a probing get. softDelete2 modifies their `params.query` to ignore logically deleted records.
-
-- **An issue with hooks**
-
-  As mentioned, softDelete2 makes get and patch calls. You may want to use the authentication hook `restrictToOwner`, but that makes its own version of a probing get call. Other hooks, such as `stashBefore`, also make get calls.
-
-  A problem may arise because all such calls run the hooks associated with that call. Let's say, for example, the hooks on your get method include `fastJoin`. The `restrictToOwner` probing get call will run the `fastJoin` on its probing get call, degrading performance significantly. You have to find ways of explicitly disabling hooks like `fastJoin`.
-
-  Even worse, the nested running of such hooks can create incompatibilities resulting in errors.
-
-- **How softDelete2 controls hooks**
-
-  softDelete2 is run for every call on a service, so its careful to not run unnecessary hooks during its probing get and removal patch calls. The hooks following the before `softDelete2()` are skipped, as are those following the after `softDelete2()`. _This skipping occurs only for the probing get and removal patch calls. All hooks are executed for the original call._
-
-  In the example below:
-
-  - The hooks21 & hooks41 hooks on get and patch are run during the probing get and removing patch.
-  - The hooks22 & hooks42 hooks are not run during those calls.
-  - So on an update: hooks31 (for update), hooks21 (probing get), hooks32 (for update) are run.
-  - So on a remove: hooks51 (for remove), hooks21 (probing get), hooks41 (removal patch) are run.
-
-  ```js
-  module.exports = {
-    before: {
-      find: [...hooks01, softDelete(), ...hooks02],
-      create: [...hooks11, softDelete(), ...hooks12],
-      get: [...hooks21, softDelete(), ...hooks22],
-      update: [...hooks31, softDelete(), ...hooks32],
-      patch: [...hooks41, softDelete(), ...hooks42],
-      remove: [...hooks51, softDelete()] // softDelete must be the last hook run for remove calls.
-    },
-    after: {
-      all: softDelete2() // Must be the first hook run for get or patch calls.
-    }
-  }
-  ```
-
-- **options.allowIgnoreDeletedAt**
-
-  softDelete2 will allow access to logically deleted records if the call's params includes `$ignoreDeletedAt: true` while options.allowIgnoreDeletedAt is `true` (the default). Be careful setting it to `false` as not even server calls will be able to read logically deleted records.
-
-  You can prevent just client calls from using `$ignoreDeletedAt: true` by not specifying `$ignoreDeletedAt` in the [`paramsFromClient`](#paramsFromClient) hook.
-
-  You may need to prevent other hooks from running as well. You can use code similar to
-
-  ```js
-  iff(context => !context.params.$ignoreDeletedAt, restrictToOwner(...))
-  ```
-
-- **options.probeCall**
-
-  The default probing get call function is
-
-  ```js
-  const {
-    callingParams,
-    callingParamsDefault
-  } = require('feathers-hooks-common')
-
-  async function defaultProbeCall(context, options) {
-    const params = callingParams({
-      newProps: { provider: undefined },
-      hooksToDisable: ['softDelete2']
-    })(context)
-
-    return context.service.get(context.id, params)
-  }
-  ```
-
-  where `options` is the options provided softDelete2. Its resulting params will be:
-
-  ```js
-  params = {
-    authenticated: context.params.authenticated,
-    user: context.params.user,
-    provider: undefined,
-    $disableSoftDelete2: true
-  }
-  ```
-
-  You can change the params produced by the default function by calling [`callingParamsDefaults`](#callingparamsdefaults). You can instead provide your own probing call function using options.probeCall.
-
-- **options.patchCall**
-
-  The default function to perform the patch call which marks the record as deleted is
-
-  ```js
-  const {
-    callingParams,
-    callingParamsDefault
-  } = require('feathers-hooks-common')
-
-  async function defaultPatchCall(context, options) {
-    const deletedAt = options.deletedAt || defaultDeletedAt
-
-    const params = callingParams({
-      query: Object.assign({}, context.params.query, { [deletedAt]: -1 }),
-      newProps: { provider: undefined },
-      hooksToDisable: ['softDelete2']
-    })(context)
-
-    return context.service.patch(
-      context.id,
-      { [deletedAt]: Date.now() },
-      params
-    )
-  }
-  ```
-
-  where `options` is the options provided softDelete2. Its resulting params will be:
-
-  ```js
-  params = {
-    query: { ..., deletedAt: -1 },
-    authenticated: context.params.authenticated,
-    user: context.params.user,
-    provider: undefined,
-    $disableSoftDelete2: true
-  };
-  ```
-
-  You can change the params produced by the default function by calling [`callingParamsDefaults`](#callingparamsdefaults). You can instead provide your own probing call function using options.patchCall.
-
-{% hooksApiFootnote softDelete2 %}
+Flag records as logically deleted instead of physically removing them. Requires a Feathers v4 or later database adapter.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/soft-delete.js)|
 
 ## some
 
-{% hooksApi some %}
+Return the or of a series of sync or async predicate functions.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/some.js)|
 
 - **Arguments**
 
@@ -2213,7 +1966,13 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 | ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
 | `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
 
-{% hooksApiReturns some "The logical or of <code>predicates</code>" %}
+**Returns**
+
+  - `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The logical or of predicates
 
 - **Example**
 
@@ -2229,11 +1988,14 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
   `some` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if any predicate returns a truthy value.
 
-{% hooksApiFootnote some %}
 
 ## stashBefore
 
-{% hooksApi stashBefore %}
+Stash current value of record, usually before mutating it. Performs a get call.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|get, update, patch, remove|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/stash-before.js)|
 
 - **Arguments**
   - `{String} fieldName`
@@ -2266,11 +2028,14 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
     user: context.params.user }
   ```
 
-{% hooksApiFootnote stashBefore %}
 
 ## traverse
 
-{% hooksApi traverse %}
+Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/traverse.js)|
 
 - **Arguments**
   - `{Function} transformer`
@@ -2315,11 +2080,14 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
   > [substack/js-traverse](https://github.com/substack/js-traverse) documents the extensive methods and context available to the transformer function.
 
-{% hooksApiFootnote traverse %}
 
 ## unless
 
-{% hooksApi unless %}
+Execute a series of hooks if a sync or async predicate is falsey.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/common/unless.js)|
 
 - **Arguments**
   - `{Boolean | Promise | Function} predicate`
@@ -2353,11 +2121,14 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
   The predicate and hook functions will not be called with `this` set to the service, as is normal for hook functions. Use `hook.service` instead.
 
-{% hooksApiFootnote unless %}
 
 ## validate
 
-{% hooksApi validate %}
+Validate data using a validation function.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|no|create, update, patch|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/validate.js)|
 
 - **Arguments**
 
@@ -2408,11 +2179,14 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
 > Wrap your validator in Node's `util.promisify` if it uses a callback.
 
-{% hooksApiFootnote validate %}
 
 ## validateSchema
 
-{% hooksApi validateSchema %}
+Validate data using JSON-Schema.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/validate-schema.js)|
 
 - **Arguments**
   - `{Object} schema`
@@ -2505,10 +2279,6 @@ const rec2 = await posts.get(0, paramsForServer({ $ignoreDeletedAt: true }))
 
   You can also consider copying `addNewErrorDflt`, the default error message formatter, modifying it for your needs, and using that as `newFormattedMessages`.
 
-{% hooksApiFootnote validateSchema %}
-
 ## when
 
 An alias for [iff](#iff).
-
-{% hooksApiFootnote when %}

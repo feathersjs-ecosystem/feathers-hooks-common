@@ -6,7 +6,7 @@ title: Utilities
 
 ## callingParams
 
-{% hooksApi callingParams %}
+Build `params` for a service call.
 
 - **Arguments**
 
@@ -61,11 +61,9 @@ title: Utilities
 
   These defaults and others can be changed app-wide by calling the `callingParamsDefaults` utility.
 
-{% hooksApiFootnote callingParams %}
-
 ## callingParamsDefaults
 
-{% hooksApi callingParamsDefaults %}
+Set defaults for building `params` for service calls with callingParams.
 
 - **Arguments**
 
@@ -105,11 +103,9 @@ title: Utilities
 
   These defaults and others can be changed app-wide by calling the `callingParamsDefaults` utility.
 
-{% hooksApiFootnote callingParamsDefaults %}
-
 ## checkContext
 
-{% hooksApi checkContext %}
+Restrict a hook to run for certain methods and method types.
 
 - **Arguments**
   - `{Object} context`
@@ -148,11 +144,13 @@ title: Utilities
 
   Its important to ensure the hook is being used as intended. `checkContext` let's you restrict the hook to a hook type and a set of service methods.
 
-{% hooksApiFootnote checkContext %}
-
 ## combine
 
-{% hooksApi combine %}
+Sequentially execute multiple sync or async hooks.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|n/a|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/combine.js)|
 
 - **Arguments**
   - `{Array< Function >} hookFuncs`
@@ -190,161 +188,10 @@ module.exports = { before: {
 } };
 ```
 
-{% hooksApiFootnote combine %}
-
-## deleteByDot
-
-{% hooksApi deleteByDot %}
-
-- **Arguments**
-  - `{Object} obj`
-  - `{String} path`
-
-| Argument |   Type   | Default | Description                                    |
-| -------- | :------: | ------- | ---------------------------------------------- |
-| `obj`    | `Object` |         | The object.                                    |
-| `path`   | `String` |         | The path to the property, e.g. `address.city`. |
-
-- **Example**
-
-  ```js
-  import { deleteByDot } from 'feathers-hooks-common'
-
-  const discardPasscode = () => context => {
-    deleteByDot(context.data, 'security.passcode')
-  }
-
-  module.exports = {
-    before: {
-      find: discardPasscode()
-    }
-  }
-  ```
-
-- **Details**
-
-  You can use `phones.home.0.main` to handle arrays.
-
-  If you delete an array element, e.g. `phones.home.1`, that element will be removed from the array.
-
-{% hooksApiFootnote deleteByDot %}
-
-## existsByDot
-
-{% hooksApi existsByDot %}
-
-- **Arguments**
-  - `{Object} obj`
-  - `{String} path`
-
-| Argument |   Type   | Default | Description                                    |
-| -------- | :------: | ------- | ---------------------------------------------- |
-| `obj`    | `Object` |         | The object.                                    |
-| `path`   | `String` |         | The path to the property, e.g. `address.city`. |
-
-{% hooksApiReturns getItems "If a property exists at <code>path</code>." %}
-
-- **Example**
-
-  ```js
-  const { discard, existsByDot, iff } = require('feathers-hooks-common')
-
-  const discardBadge = () => context => {
-    iff(
-      !existsByDot(context.data, 'security.passcode'),
-      discard('security.badge')
-    )(context)
-  }
-
-  module.exports = {
-    before: {
-      find: discardBadge()
-    }
-  }
-  ```
-
-- **Details**
-
-  You can use `phones.home.0.main` to handle arrays.  
-  Properties with a value of `undefined` are considered to exist.
-
-{% hooksApiFootnote existsByDot %}
-
-## getByDot
-
-{% hooksApi getByDot %}
-
-- **Arguments**
-  - `{Object} obj`
-  - `{String} path`
-
-| Argument |   Type   | Default | Description                                    |
-| -------- | :------: | ------- | ---------------------------------------------- |
-| `obj`    | `Object` |         | The object.                                    |
-| `path`   | `String` |         | The path to the property, e.g. `address.city`. |
-
-{% hooksApiReturns getItems "The property value." "result" "any" %}
-
-- **Example**
-
-  ```js
-  const { getByDot, setByDot } = require('feathers-hooks-common')
-
-  const setHomeCity = () => context => {
-    const city = getByDot(context.data, 'person.address.city')
-    setByDot(context, 'data.person.home.city', city)
-  }
-
-  module.exports = {
-    before: {
-      create: setHomeCity()
-    }
-  }
-  ```
-
-- **Details**
-
-  `getByDot` does not differentiate between non-existent paths and a value of `undefined`.
-
-{% hooksApiFootnote getByDot %}
-
-## setByDot
-
-{% hooksApi setByDot %}
-
-- **Arguments**
-  - `{Object} obj`
-  - `{String} path`
-  - `{any} value`
-
-| Argument |   Type   | Default | Description                                    |
-| -------- | :------: | ------- | ---------------------------------------------- |
-| `obj`    | `Object` |         | The object.                                    |
-| `path`   | `String` |         | The path to the property, e.g. `address.city`. |
-| `value`  |  `any`   |         | The value to set the property to.              |
-
-- **Example**
-
-  ```js
-  const { getByDot, setByDot } = require('feathers-hooks-common')
-
-  const setHomeCity = () => context => {
-    const city = getByDot(context.data, 'person.address.city')
-    setByDot(context, 'data.person.home.city', city)
-  }
-
-  module.exports = {
-    before: {
-      create: setHomeCity()
-    }
-  }
-  ```
-
-{% hooksApiFootnote setByDot %}
 
 ## getItems
 
-{% hooksApi getItems %}
+Get the records in `context.data` or `context.result`
 
 - **Arguments**
   - `{Object} context`
@@ -353,7 +200,13 @@ module.exports = { before: {
 | --------- | :------: | ------- | ----------------- |
 | `context` | `Object` |         | The hook context. |
 
-{% hooksApiReturns getItems "The records.", 'records', 'Array< Object > | Object | undefined' %}
+**Returns**
+
+  - `{Array< Object > | Object | undefined} records`
+
+|Name|Type|Description|
+|---|---|---|
+records|Array< Object > | Object | undefined|The records.
 
 - **Example**
 
@@ -379,11 +232,10 @@ module.exports = { before: {
 
   `getItems` gets the records from the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
 
-{% hooksApiFootnote getItems %}
 
 ## replaceItems
 
-{% hooksApi replaceItems %}
+Replace the records in context.data or context.result[.data].
 
 - **Arguments**
 
@@ -419,13 +271,12 @@ module.exports = { before: {
 
   `replaceItems` replaces the records in the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
 
-{% hooksApiFootnote replaceItems %}
 
 ## makeCallingParams
 
-{% hooksApi makeCallingParams %}
+Build context.params for service calls.
 
-<p class="tip">You should prefer using the `callingParams` utility to `makeCallingParams`.</p>
+> __Tip:__ You should prefer using the `callingParams` utility to `makeCallingParams`.
 
 - **Arguments**
 
@@ -470,11 +321,10 @@ module.exports = { before: {
 
   The value `context.params._populate: 'skip'` is automatically added to skip any `fastJoin` or `populate` hooks registered on the called service. Set it to `false`, like in the example above, to make those hooks run.
 
-{% hooksApiFootnote makeCallingParams %}
 
 ## paramsForServer
 
-{% hooksApi paramsForServer %}
+Pass an explicit context.params from client to server. Client-side.
 
 - **Arguments**
   - `{Object} params`
@@ -522,11 +372,10 @@ module.exports = { before: {
 
   <p class="tip">The data is transfered using `context.params.query.$client`. If that field already exists, it must be an Object.</p>
 
-{% hooksApiFootnote paramsForServer %}
 
 ## runHook
 
-{% hooksApi runHook %}
+Let's you call a hook right after the service call.
 
 - **Arguments**
   - `{Object} [ hookContext ]`
@@ -615,5 +464,3 @@ module.exports = { before: {
   However things are not always so straightforward. There can be that one call for which we want to join specific records. We could add a conditional hook that runs just for that one call, however we may soon find ourselves with a second and a third special case.
 
   `runHook` is designed for such cases. Instead of having to register a conditioned hook, it allows us to run the hook in a `.then()` right after the service call.
-
-{% hooksApiFootnote runHook %}
