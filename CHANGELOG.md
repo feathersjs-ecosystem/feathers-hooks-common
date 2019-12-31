@@ -3,20 +3,6 @@
 ## [v5.0.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.1) (2019-12-31)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.0...v5.0.1)
 
-**Implemented enhancements:**
-
-- Doument fgraphql [\#466](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/466)
-- Clarify fastJoin API docs. [\#452](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/452)
-- Improvement: review alterItems tests [\#408](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/408)
-
-**Closed issues:**
-
-- TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
-- Write docs for sequelizeConvert [\#497](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/497)
-- Suggestion: Utility to allow hooks to be skippable. [\#417](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/417)
-- Suggestion: possible enhancement: utilities to extract info from `app` [\#416](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/416)
-- Suggestion: Add DB specific hooks [\#347](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/347)
-
 **Merged pull requests:**
 
 - Tweaks for v5 release [\#560](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/560) ([daffl](https://github.com/daffl))
