@@ -150,7 +150,7 @@ Sequentially execute multiple sync or async hooks.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|n/a|[source](https://github.com/feathers-plus/feathers-hooks-common/blob/master/lib/services/combine.js)|
+|yes|yes|all|n/a|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/services/combine.js)|
 
 - **Arguments**
   - `{Array< Function >} hookFuncs`
