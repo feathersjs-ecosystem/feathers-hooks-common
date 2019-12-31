@@ -36,7 +36,7 @@ function users () {
     before: {
       all: [
         context => {
-          if ((context.params.query || {}).$disableStashBefore === true) {
+          if (context.params.disableStashBefore === true) {
             innerCallParams = context.params;
           }
         },
