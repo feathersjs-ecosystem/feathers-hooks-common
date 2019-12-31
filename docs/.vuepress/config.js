@@ -1,7 +1,6 @@
 module.exports = {
   title: 'feathers-hooks-common',
   description: '',
-  theme: 'default-prefers-color-scheme',
   themeConfig: {
     repo: 'feathersjs-ecosystem/feathers-hooks-common',
     docsDir: 'docs',
