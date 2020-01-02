@@ -25,11 +25,11 @@ The following hooks and utilities have been deprecated and replaced with differe
 
 ### Utilities
 
-Several utility methods have been replaced by [Lodash]() methods which are thoroughly tested and performance optimized in many different environments.
+Several utility methods have been replaced by [Lodash](https://lodash.com) methods which are thoroughly tested and performance optimized in many different environments.
 
 - `existsByDot` - Use [_.has()](https://lodash.com/docs/latest#has)
 - `deleteByDot` - Use [_.omit](https://lodash.com/docs/latest#omit)
-- `getByDot` - Use [_.get()](https://lodash.com/docs/latest#omit)
+- `getByDot` - Use [_.get()](https://lodash.com/docs/latest#get)
 - `setByDot` - Use [_.set()](https://lodash.com/docs/latest#set)
 
 ## Safe mutations
