@@ -85,7 +85,7 @@
     "mongodb": "^3.3.5",
     "semistandard": "^14.2.0",
     "shx": "^0.3.2",
-    "sift": "^9.0.0",
+    "sift": "^10.0.0",
     "vuepress": "^1.2.0",
     "vuepress-theme-default-prefers-color-scheme": "^1.0.3"
   },
