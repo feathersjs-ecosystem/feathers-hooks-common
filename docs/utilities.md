@@ -455,7 +455,7 @@ Let's you call a hook right after the service call.
   ]
   ```
 
-- ** Details**
+- **Details**
 
   Hooks are normally registered for a service, e.g. in `project/src/services` `/posts/posts.hooks.js`. This is nice and simple when, for example, all the `find` hooks have to run for every `find` call.
 
