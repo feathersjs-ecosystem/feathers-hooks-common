@@ -1,7 +1,35 @@
 # Change Log
 
+## [v5.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.2) (2020-01-23)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.1...v5.0.2)
+
+**Fixed bugs:**
+
+- setSlug not working in buzzard [\#380](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/380)
+
+**Merged pull requests:**
+
+- Greenkeeper/sift 11.0.9 [\#566](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/566) ([daffl](https://github.com/daffl))
+- Change check for external provider as per daffl in disallow.js by 104c1b1 [\#565](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/565) ([jalbersdorfer](https://github.com/jalbersdorfer))
+- Fix formatting of the Header for the `runHook` documentation [\#563](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/563) ([pdfowler](https://github.com/pdfowler))
+- :pencil2: fix minor typos [\#561](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/561) ([arfanliaqat](https://github.com/arfanliaqat))
+
 ## [v5.0.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.1) (2019-12-31)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.0...v5.0.1)
+
+**Implemented enhancements:**
+
+- Doument fgraphql [\#466](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/466)
+- Clarify fastJoin API docs. [\#452](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/452)
+- Improvement: review alterItems tests [\#408](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/408)
+
+**Closed issues:**
+
+- TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
+- Write docs for sequelizeConvert [\#497](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/497)
+- Suggestion: Utility to allow hooks to be skippable. [\#417](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/417)
+- Suggestion: possible enhancement: utilities to extract info from `app` [\#416](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/416)
+- Suggestion: Add DB specific hooks [\#347](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/347)
 
 **Merged pull requests:**
 
@@ -596,22 +624,11 @@
 ## [v4.3.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.3.0) (2018-01-29)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v3.10.0...v4.3.0)
 
-**Implemented enhancements:**
-
-- makeCallingParams include not working [\#334](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/334)
-- Update makeCallingParams hook to use getByDot/setByDot [\#335](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/335) ([Mattchewone](https://github.com/Mattchewone))
-- close \#308, add disableMultiItemCreate [\#330](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/330) ([beeplin](https://github.com/beeplin))
-
 **Fixed bugs:**
 
 - StashBefore should skip the id check when a query is provided [\#337](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/337)
 - Fixed issue \#337 and included relevant test - ignore missing id when … [\#338](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/338) ([Protoss78](https://github.com/Protoss78))
 - Fixed issue with params being populated at the wrong level [\#336](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/336) ([Mattchewone](https://github.com/Mattchewone))
-
-**Merged pull requests:**
-
-- Improve alterItems hook: can map to a newly created object [\#332](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/332) ([beeplin](https://github.com/beeplin))
-- Minor semver change for disableMultiItemCreate hook. [\#331](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/331) ([eddyystop](https://github.com/eddyystop))
 
 ## [v3.10.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v3.10.0) (2017-10-21)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v3.9.0...v3.10.0)
