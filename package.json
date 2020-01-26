@@ -81,7 +81,7 @@
     "http-shutdown": "^1.2.1",
     "istanbul": "^1.1.0-alpha.1",
     "mkdirp": "^0.5.1",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.1",
     "mongodb": "^3.3.5",
     "semistandard": "^14.2.0",
     "shx": "^0.3.2",
