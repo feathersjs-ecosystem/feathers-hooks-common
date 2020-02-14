@@ -75,7 +75,7 @@
     "chai": "^4.2.0",
     "clone": "^2.1.2",
     "coveralls": "^3.0.9",
-    "dtslint": "^2.0.2",
+    "dtslint": "^3.0.0",
     "feathers-memory": "^4.1.0",
     "feathers-tests-fake-app-users": "^1.0.0",
     "http-shutdown": "^1.2.1",
