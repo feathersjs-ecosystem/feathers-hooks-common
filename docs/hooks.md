@@ -580,6 +580,7 @@ Join related records.
 - **Example using Feathers services**
 
   <p class="tip">The services in all these examples are assumed, for simplicity, to have pagination disabled. You will have to decide when to use `paginate: false` in your code.</p>
+  
   ``` js
   // project/src/services/posts/posts.hooks.js
   const { fastJoin } = require('feathers-hooks-common');
@@ -618,8 +619,6 @@ Join related records.
   author: { id: 101, name: 'John' },
   starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ]
   }]
-
-  ```
 
   ```
 
