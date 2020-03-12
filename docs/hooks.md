@@ -586,26 +586,26 @@ Join related records.
   const { fastJoin } = require('feathers-hooks-common');
 
   const postResolvers = {
-  joins: {
-  author: (...args) => async post => post.author = (await users.find({
-  query: { id: post.userId },
-  paginate: false
-  }))[0],
+    joins: {
+      author: (...args) => async post => post.author = (await users.find({
+        query: { id: post.userId },
+        paginate: false
+      }))[0],
 
-  starers: $select => async post => post.starers = await users.find({
+      starers: $select => async post => post.starers = await users.find({
         query: { id: { $in: post.starIds }, $select: $select || ['name'] },
-  paginate: false
-  }),
-  }
+        paginate: false
+      }),
+    }
   };
 
   const query = {
-  author: true,
-  starers: [['id', 'name']]
+    author: true,
+    starers: [['id', 'name']]
   };
 
   module.exports = { after: {
-  all: [ fastJoin(postResolvers, query) ],
+    all: [ fastJoin(postResolvers, query) ],
   } };
 
   // Original record
@@ -613,11 +613,11 @@ Join related records.
 
   // Result
   [ { id: 1,
-  body: 'John post',
-  userId: 101,
-  starIds: [ 102, 103, 104 ],
-  author: { id: 101, name: 'John' },
-  starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ]
+      body: 'John post',
+      userId: 101,
+      starIds: [ 102, 103, 104 ],
+      author: { id: 101, name: 'John' },
+      starers: [ { name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' } ]
   }]
 
   ```
