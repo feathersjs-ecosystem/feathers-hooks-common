@@ -1325,7 +1325,7 @@ Wrap MongoDB foreign keys in ObjectID.
 - **Example**
 
   ```js
-  const { ObjectID = require('mongodb');
+  const { ObjectID } = require('mongodb');
   const { mongoKeys } = require('feathers-hooks-common');
 
   /* Comment Schema
