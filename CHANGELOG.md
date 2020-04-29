@@ -1,5 +1,35 @@
 # Change Log
 
+## [v5.0.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.3) (2020-04-29)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.2...v5.0.3)
+
+**Implemented enhancements:**
+
+- Hook to support $search in query [\#501](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/501)
+- Pass client info into socket [\#493](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/493)
+
+**Closed issues:**
+
+- An in-range update of @feathersjs/feathers is breaking the build 🚨 [\#583](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/583)
+- Argument of type xxx is not assignable to parameter of type xxx [\#579](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/579)
+- Cache hook returns improper values when using $select or query on methods other than find\(\) [\#575](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/575)
+- Validation hook for passwords [\#471](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/471)
+- Support $search for MongoDB [\#451](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/451)
+- Hook to set HTTP status code [\#443](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/443)
+- find and stash [\#430](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/430)
+- Convert JS dates to/from strings/integers on service calls. [\#429](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/429)
+- suggestion: hook to emit \(fake\) event [\#422](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/422)
+- Highlight use of combine for more complex decision making. [\#401](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/401)
+- Design: More generalized hook structures [\#366](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/366)
+
+**Merged pull requests:**
+
+- Update all dependencies [\#585](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/585) ([daffl](https://github.com/daffl))
+- docs: fix indent [\#577](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/577) ([fratzinger](https://github.com/fratzinger))
+- Bug/cache select [\#576](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/576) ([DaddyWarbucks](https://github.com/DaddyWarbucks))
+- Fix markdown of fastJoin code example [\#573](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/573) ([matiaslopezd](https://github.com/matiaslopezd))
+- Changing Object ID import on mongoKeys hook [\#571](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/571) ([luizfer](https://github.com/luizfer))
+
 ## [v5.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.2) (2020-01-23)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.1...v5.0.2)
 
@@ -29,7 +59,6 @@
 - Write docs for sequelizeConvert [\#497](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/497)
 - Suggestion: Utility to allow hooks to be skippable. [\#417](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/417)
 - Suggestion: possible enhancement: utilities to extract info from `app` [\#416](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/416)
-- Suggestion: Add DB specific hooks [\#347](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/347)
 
 **Merged pull requests:**
 
@@ -395,16 +424,10 @@
 **Implemented enhancements:**
 
 - softDelete with a date instead of boolean [\#385](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/385)
-- Consider some ideas for softDelete [\#339](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/339)
-
-**Fixed bugs:**
-
-- Using softDelete and stashBefore results in infinite loop [\#345](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/345)
 
 **Closed issues:**
 
 - validateSchema with type: array [\#364](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/364)
-- How to use getResultsByKey when querying a field with array of ids [\#358](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/358)
 
 **Merged pull requests:**
 
@@ -543,40 +566,17 @@
 **Implemented enhancements:**
 
 - `mongoKeys` can also used in `before` `update/patch/remove` [\#361](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/361)
-- Consider returning `feathers.SKIP` whenever context.result is set. [\#355](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/355)
-- support for context.dispatch [\#340](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/340)
 - allow mongoKeys running for all methods [\#363](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/363) ([beeplin](https://github.com/beeplin))
 - Allow `mongoKeys` for update/patch/remove [\#362](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/362) ([beeplin](https://github.com/beeplin))
-
-**Closed issues:**
-
-- How to filter fastjoin datas [\#360](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/360)
-- fastjoin strange results, $sort not respected [\#359](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/359)
 
 ## [v4.7.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.7.0) (2018-02-08)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.6...v4.7.0)
 
-**Merged pull requests:**
-
-- Changed license to MIT [\#357](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/357) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.5.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.6) (2018-02-05)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.5...v4.5.6)
 
-**Merged pull requests:**
-
-- Fixed issue with mongoKeys and $sort [\#356](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/356) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.5.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.5) (2018-02-05)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.4...v4.5.5)
-
-**Closed issues:**
-
-- fix replaceItems [\#341](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/341)
-
-**Merged pull requests:**
-
-- Refactored alterItems to remove unneeded code. [\#354](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/354) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.5.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.4) (2018-02-05)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.3...v4.5.4)
@@ -584,51 +584,17 @@
 ## [v4.5.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.3) (2018-02-05)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.2...v4.5.3)
 
-**Fixed bugs:**
-
-- Fixed bug in cache for get, update, patch, remove. [\#352](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/352) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.5.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.2) (2018-02-05)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.1...v4.5.2)
-
-**Fixed bugs:**
-
-- 'required' hook [\#344](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/344)
-
-**Merged pull requests:**
-
-- Fixed . Restricted to create, update, patch [\#351](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/351) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.5.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.1) (2018-02-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.5.0...v4.5.1)
 
-**Fixed bugs:**
-
-- Fixed mongoKeys [\#349](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/349) ([eddyystop](https://github.com/eddyystop))
-
-**Merged pull requests:**
-
-- Fixed mongoKeys. [\#350](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/350) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.5.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.5.0) (2018-02-03)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.3.0...v4.5.0)
 
-**Implemented enhancements:**
-
-- Added mongoKeys hook. [\#348](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/348) ([eddyystop](https://github.com/eddyystop))
-
-**Closed issues:**
-
-- Publish v4 on npm [\#343](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/343)
-
 ## [v4.3.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.3.0) (2018-01-29)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v3.10.0...v4.3.0)
-
-**Fixed bugs:**
-
-- StashBefore should skip the id check when a query is provided [\#337](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/337)
-- Fixed issue \#337 and included relevant test - ignore missing id when … [\#338](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/338) ([Protoss78](https://github.com/Protoss78))
-- Fixed issue with params being populated at the wrong level [\#336](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/336) ([Mattchewone](https://github.com/Mattchewone))
 
 ## [v3.10.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v3.10.0) (2017-10-21)
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v3.9.0...v3.10.0)
