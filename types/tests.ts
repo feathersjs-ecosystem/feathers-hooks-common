@@ -63,7 +63,7 @@ import ajv = require('ajv');
 const context1: HookContext = {
     type: 'before',
     app: feathers(),
-    method: '',
+    method: 'create',
     params: {},
     path: '/',
     service: null
