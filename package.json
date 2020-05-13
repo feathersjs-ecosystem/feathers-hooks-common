@@ -71,7 +71,7 @@
     "@feathersjs/express": "^4.5.4",
     "@feathersjs/socketio": "^4.5.4",
     "@feathersjs/socketio-client": "^4.5.4",
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.1",
     "chai": "^4.2.0",
     "clone": "^2.1.2",
     "coveralls": "^3.1.0",
