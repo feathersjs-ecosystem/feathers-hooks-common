@@ -346,7 +346,7 @@ export interface PopulateSchema {
      * Call the service as the server, not with the client’s transport.
      */
     provider: string;
-    include: Partial<PopulateSchema>;
+    include: Partial<PopulateSchema> | Array<Partial<PopulateSchema>>;
 }
 
 /**
