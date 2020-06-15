@@ -575,7 +575,7 @@ Join related records.
 | `after`     | `context` `=> { }` |      | Processing performed after all other operations are completed.                                                             |
 | `joins`     | `Object`           |      | Resolver functions provide a mapping between a portion of a operation and actual backend code responsible for handling it. |
 
-> Read the [guide](guide.html#fastjoin) for more information on the arguments.
+> Read the [guide](guides.html#fastjoin) for more information on the arguments.
 
 - **Example using Feathers services**
 
@@ -1474,7 +1474,7 @@ Join related records.
 | `provider`         | `undefined`                          |                                            | Call the service as the server, not with the client's transport.                                                                                                                                                                                      |
 | `include`          | `Array<` `Object >` or `Object`      |                                            | Continue recursively join records to these records.                                                                                                                                                                                                   |
 
-> Read the [guide](guide.html#populate) for more information on the arguments.
+> Read the [guide](guides.html#populate) for more information on the arguments.
 
 - **Examples**
 
