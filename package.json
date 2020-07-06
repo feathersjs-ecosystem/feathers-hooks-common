@@ -55,9 +55,9 @@
     "@feathersjs/commons": "^4.5.3",
     "@feathersjs/errors": "^4.5.3",
     "@feathersjs/feathers": "^4.5.3",
-    "ajv": "^6.12.2",
+    "ajv": "^6.12.3",
     "debug": "^4.1.1",
-    "graphql": "^15.1.0",
+    "graphql": "^15.3.0",
     "lodash": "^4.17.15",
     "process": "0.11.10",
     "traverse": "^0.6.6"
