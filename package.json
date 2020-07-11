@@ -88,6 +88,7 @@
     "semistandard": "^14.2.2",
     "shx": "^0.3.2",
     "sift": "^13.1.10",
+    "typescript": "^3.9.6",
     "vuepress": "^1.5.2",
     "vuepress-theme-default-prefers-color-scheme": "^1.0.9"
   },
