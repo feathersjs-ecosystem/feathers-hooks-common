@@ -82,14 +82,14 @@
     "http-shutdown": "^1.2.2",
     "istanbul": "^1.1.0-alpha.1",
     "mkdirp": "^1.0.4",
-    "mocha": "^8.1.0",
+    "mocha": "^8.1.1",
     "mongodb": "^3.6.0",
-    "npm-check-updates": "^7.0.2",
+    "npm-check-updates": "^7.0.3",
     "semistandard": "^14.2.3",
     "shx": "^0.3.2",
     "sift": "^13.2.0",
     "typescript": "^3.9.7",
-    "vuepress": "^1.5.2",
+    "vuepress": "^1.5.3",
     "vuepress-theme-default-prefers-color-scheme": "^1.1.0"
   },
   "engines": {
