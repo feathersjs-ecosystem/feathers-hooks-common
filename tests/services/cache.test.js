@@ -159,6 +159,29 @@ describe('service cache', () => {
       cache(cacheMap, 'id')(hookBeforeSingle);
       assert.deepEqual(cacheMap.get(1), 123);
     });
+
+    it('NOT before multi-record remove', () => {
+      hookBeforeMulti.method = 'remove';
+
+      cacheMap.set(1, 123);
+      cacheMap.set(2, 321);
+
+      cache(cacheMap, 'id')(hookBeforeMulti);
+      assert.deepEqual(cacheMap.get(1), 123);
+      assert.deepEqual(cacheMap.get(2), 321);
+    });
+
+    it('After multi-record remove', () => {
+      hookAfterMulti.method = 'remove';
+
+      cacheMap.set(1, 123);
+      cacheMap.set(2, 321);
+
+      cache(cacheMap, 'id')(hookAfterMulti);
+
+      assert.deepEqual(cacheMap.get(1), undefined, 'id 1');
+      assert.deepEqual(cacheMap.get(2), undefined, 'id 2');
+    });
   });
 
   describe('Loads cache', () => {
