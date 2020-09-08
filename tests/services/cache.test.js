@@ -152,6 +152,16 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), undefined);
     });
 
+    it('Before one-record patch', () => {
+      hookBeforeSingle.method = 'patch';
+
+      cacheMap.set(1, 123);
+
+      cache(cacheMap, 'id')(hookBeforeSingle);
+
+      assert.deepEqual(cacheMap.get(1), undefined);
+    });
+
     it('Before multi-record patch', () => {
       hookBeforeSingle.method = 'patch';
 
