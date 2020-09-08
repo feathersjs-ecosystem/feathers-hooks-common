@@ -190,7 +190,7 @@ Persistent, least-recently-used record cache for services.
 | `options` | Argument   |                      Type                      | Default                                                                                                                                          | Description |
 | --------- | ---------- | :--------------------------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `clone`   | `Function` | `item => JSON.parse(` `JSON.stringify(item) )` | Function to perform a deep clone. See below.                                                                                                     |
-| `clone`   | `Function` |                  `key => key`                  | Function to convert record key to cache key. Use this to convert MongoDB/Mongoose ObjectId/bson keys to a cache key using `item._id.toString()`. |
+| `makeCacheKey`   | `Function` |                  `key => key`                  | Function to convert record key to cache key. Use this to convert MongoDB/Mongoose ObjectId/bson keys to a cache key using `item._id.toString()`. |
 
 - **Example**
 
