@@ -163,7 +163,7 @@ describe('service cache', () => {
     });
 
     it('Before multi-record patch', () => {
-      hookBeforeSingle.method = 'patch';
+      hookBeforeMulti.method = 'patch';
 
       cacheMap.set(1, 123);
       cacheMap.set(2, 789);
