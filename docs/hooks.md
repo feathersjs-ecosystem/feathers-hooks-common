@@ -1359,7 +1359,7 @@ Wrap MongoDB foreign keys in ObjectID.
 
   In MongoDB, foreign keys must be wrapped in ObjectID when used in a query, e.g. `comment.find({ query: { authorId: new ObjectID('111111111111') } })`.
 
-  `mongoKeys` automates this, given the field names of all the foreign keys in the schema. This reduces the boilerplate cluuter and reduces the chance of bugs occurring.
+  `mongoKeys` automates this, given the field names of all the foreign keys in the schema. This reduces the boilerplate clutter and reduces the chance of bugs occurring.
 
 
 ## paramsFromClient
