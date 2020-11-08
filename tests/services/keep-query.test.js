@@ -3,8 +3,8 @@ const { assert } = require('chai');
 
 const hooks = require('../../lib/services');
 
-var hookBefore;
-var hookAfter;
+let hookBefore;
+let hookAfter;
 
 describe('services keepQuery', () => {
   describe('updates query', () => {

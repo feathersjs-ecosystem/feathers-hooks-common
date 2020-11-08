@@ -5,7 +5,7 @@ const {
 
 const hooksCommon = require('../../lib/services');
 
-var hook;
+let hook;
 
 describe('services setSlug', () => {
   beforeEach(() => {

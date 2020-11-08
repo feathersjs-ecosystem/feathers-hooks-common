@@ -7,13 +7,13 @@ const hooks = require('../../lib/services');
 
 const isProvider = hooks.isProvider;
 
-var hookServer;
-var hookSocketio;
+let hookServer;
+let hookSocketio;
 
-var hook;
-var hookBefore;
-var hookAfter;
-var hookFcnSyncCalls;
+let hook;
+let hookBefore;
+let hookAfter;
+let hookFcnSyncCalls;
 
 const hookFcnSync = (hook) => {
   hookFcnSyncCalls = +1;

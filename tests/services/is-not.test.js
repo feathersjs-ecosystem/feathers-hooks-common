@@ -9,13 +9,13 @@ const hooksCommon = require('../../lib');
 const isNot = hooks.isNot;
 const isProvider = hooksCommon.isProvider;
 
-var hookServer;
+let hookServer;
 
-var hook;
-var hookBefore;
-var hookAfter;
-var hookFcnSyncCalls;
-var predicateCalls;
+let hook;
+let hookBefore;
+let hookAfter;
+let hookFcnSyncCalls;
+let predicateCalls;
 
 const predicateSync = (value) => () => {
   predicateCalls = +1;

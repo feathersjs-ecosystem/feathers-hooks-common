@@ -5,18 +5,18 @@ const {
 
 const hooks = require('../../lib/services');
 
-var hook;
-var hookBefore;
-var hookAfter;
-var hookFcnSyncCalls;
-var hookFcnAsyncCalls;
-var hookFcnCalls;
-var predicateParam1, predicateParam2, predicateParam3, predicateParam4;
-var context;
-var predicateTrueContext;
-var hookFcnSyncContext;
-var hookFcnAsyncContext;
-var hookFcnContext;
+let hook;
+let hookBefore;
+let hookAfter;
+let hookFcnSyncCalls;
+let hookFcnAsyncCalls;
+let hookFcnCalls;
+let predicateParam1, predicateParam2, predicateParam3, predicateParam4;
+let context;
+let predicateTrueContext;
+let hookFcnSyncContext;
+let hookFcnAsyncContext;
+let hookFcnContext;
 
 const hookFcnSync = function (hook) {
   hookFcnSyncContext = this;

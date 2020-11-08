@@ -5,15 +5,15 @@ const {
 
 const hooks = require('../../lib/services');
 
-var hook;
-var hookBefore;
-var hookAfter;
-var hookFcnSyncCalls;
-var hookFcnAsyncCalls;
-var hookFcnCbCalls;
-var predicateHook;
-var predicateOptions;
-var predicateValue;
+let hook;
+let hookBefore;
+let hookAfter;
+let hookFcnSyncCalls;
+let hookFcnAsyncCalls;
+let hookFcnCbCalls;
+let predicateHook;
+let predicateOptions;
+let predicateValue;
 
 const predicateSync = (hook) => {
   predicateHook = clone(hook);
