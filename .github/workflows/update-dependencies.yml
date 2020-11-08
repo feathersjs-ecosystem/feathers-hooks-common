@@ -15,6 +15,7 @@ jobs:
             npm run update-dependencies
             npm run clean
             npm install
+            npm test
           COMMIT_MESSAGE: 'chore(dependencies): Update all dependencies'
           COMMIT_NAME: 'GitHub Actions'
           COMMIT_EMAIL: 'daff@neyeon.com'
