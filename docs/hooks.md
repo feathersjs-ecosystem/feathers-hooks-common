@@ -1956,7 +1956,7 @@ Flag records as logically deleted instead of physically removing them. Requires 
 | `deletedQuery` | `Function|Object` | `{ deleted: { $ne: true } }` | An object or async function that takes the query which returns the part of the query to exclude deleted entrie
 | `removeData` | `Function|Object` | `{ deleted: true }` | An object or async function that returns the data used to flag an entry as deleted
 
-By default, `softDelete` queries for a `deleted` property not set to `true` (meaning it can either exist of be anything else).
+By default, `softDelete` queries for a `deleted` property not set to `true` (meaning it can either exist or be anything else).
 
 Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hook.
 
