@@ -4,6 +4,7 @@ import {
     actOnDefault,
     actOnDispatch,
     alterItems,
+    AsyncContextFunction,
     AsyncPredicateFn,
     cache,
     callingParams,
@@ -430,13 +431,7 @@ unless(asyncTrue, hook1, hook2);
 // $ExpectType Hook<any, Service<any>>
 unless(syncTrue, hook1, hook2);
 
-// $ExpectType AsyncContextFunction<boolean>
 some(asyncFalse, asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 every(asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 isNot(asyncTrue);
-// $ExpectType AsyncContextFunction<boolean>
 isNot(syncTrue);
