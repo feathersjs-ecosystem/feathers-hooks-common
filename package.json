@@ -15,7 +15,7 @@
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
-    "changelog": "github_changelog_generator --max-issues 200 && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
+    "changelog": "github_changelog_generator --max-issues 200 -u feathersjs-ecosystem -p feathers-hooks-common && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "semistandard --fix",
     "lint:types": "dtslint types",
     "update-dependencies": "ncu -u",
