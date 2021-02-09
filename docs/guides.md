@@ -111,9 +111,9 @@ const { fastJoin } = require('feathers-hooks-common')
 
 const postResolvers = {
   joins: {
-    author: (...args) => async post => {
+    author: (...args) => async (post, { app }) => {
       post.author = (
-        await users.find({
+        await app.services('users').find({
           query: {
             id: post.userId
           }
@@ -121,8 +121,8 @@ const postResolvers = {
       )[0]
     },
 
-    starers: $select => async post => {
-      post.starers = await users.find({
+    starers: $select => async (post, { app }) => {
+      post.starers = await app.services('users').find({
         query: {
           id: { $in: post.starIds },
           $select: $select || ['name']
