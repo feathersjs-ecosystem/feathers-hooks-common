@@ -78,8 +78,8 @@ const hook4: Hook = async ctx => ctx;
 const syncTrue: SyncPredicateFn = ctx => true;
 const syncFalse: SyncPredicateFn = ctx => false;
 
-const asyncTrue: AsyncContextFunction<boolean> = async ctx => true;
-const asyncFalse: AsyncContextFunction<boolean> = async ctx => false;
+const asyncTrue: AsyncPredicateFn = async ctx => true;
+const asyncFalse: AsyncPredicateFn = async ctx => false;
 
 const service1: Service<any> = null as any;
 
@@ -431,13 +431,7 @@ unless(asyncTrue, hook1, hook2);
 // $ExpectType Hook<any, Service<any>>
 unless(syncTrue, hook1, hook2);
 
-// $ExpectType AsyncContextFunction<boolean>
 some(asyncFalse, asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 every(asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 isNot(asyncTrue);
-// $ExpectType AsyncContextFunction<boolean>
 isNot(syncTrue);
