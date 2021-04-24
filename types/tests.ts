@@ -1,4 +1,4 @@
-import { Hook, HookContext, Service, default as feathers } from '@feathersjs/feathers';
+import { Hook, HookContext, Service, feathers } from '@feathersjs/feathers';
 
 import {
     actOnDefault,
@@ -67,7 +67,9 @@ const context1: HookContext = {
     method: 'create',
     params: {},
     path: '/',
-    service: null
+    service: null,
+    arguments: [],
+    event: null
 };
 
 const hook1: Hook = ctx => ctx;
@@ -85,20 +87,20 @@ const service1: Service<any> = null as any;
 
 // TESTS BEGIN
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 actOnDefault(hook1, hook2, hook3, hook4);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 actOnDispatch(hook1, hook2, hook3, hook4);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 alterItems(rec => {
     delete rec.password;
 });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 alterItems(rec => rec.email = 'somestring'.toLowerCase()); // Like `lowerCase('email')`.
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 cache(new Map(), 'a', { clone: x => x });
 
 // $ExpectType Params
@@ -125,25 +127,25 @@ checkContext(context1, 'before');
 // $ExpectType void
 checkContextIf(context1, 'before', ['update', 'patch'], 'hookName');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 combine(hook1, hook2, hook3);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 debug('label', 'abc.def', 'ghi.jkl');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 dePopulate();
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 disablePagination();
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 disallow('external', 'server');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 discard('abc', 'def');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 discardQuery('abc', 'def');
 
 softDelete({
@@ -192,15 +194,15 @@ const userResolvers: ResolverMap<any> = {
     }
 };
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fastJoin(userResolvers);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fastJoin(postResolvers);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fastJoin(postResolvers, { abc: 'def' });
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fastJoin(ctx => postResolvers);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fastJoin(postResolvers);
 
 // used from https://github.com/feathers-plus/hooks-graphql-example
@@ -224,7 +226,7 @@ const fgraphqlOptions: FGraphQLHookOptions = {
         Query: {}
     })
 };
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fgraphql(fgraphqlOptions);
 
 const fgraphqlOptions2: FGraphQLHookOptions = {
@@ -252,7 +254,7 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
         skipHookWhen: (context) => { context.data; return false; }
     }
 };
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 fgraphql(fgraphqlOptions2);
 
 // $ExpectType any
@@ -261,19 +263,19 @@ getItems(context1);
 // $ExpectType SyncContextFunction<boolean>
 isProvider();
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 keep('abc', 'def');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 keepInArray('array', ['fieldName', 'fieldName']);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 keepQuery('name', 'address.city');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 keepQueryInArray('array', ['fieldName', 'fieldName']);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 lowerCase('email', 'username', 'div.dept');
 
 // $ExpectType Params
@@ -290,9 +292,9 @@ class ObjId {
     constructor(id?: string | number) { }
 }
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 mongoKeys(ObjId, 'abc');
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 mongoKeys(ObjId, ['abc', 'def']);
 
 paramsForServer({
@@ -301,10 +303,10 @@ paramsForServer({
     serialize: 'po-mgr'
 });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 paramsFromClient('populate', 'serialize', 'otherProp');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 populate({
     schema: {
         include: {
@@ -316,13 +318,13 @@ populate({
     }
 });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 preventChanges(true, 'security.badge', 'abc');
 
 // $ExpectType void
 replaceItems(context1, [{}, {}]);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 required('field1', 'field2');
 
 // $ExpectType Promise<any>
@@ -330,12 +332,12 @@ runHook()(keep('abc'))([]);
 // $ExpectType Promise<any>
 runHook(context1)(keep('abc'))([]);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 runParallel(hook1, x => x);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 runParallel(hook1, x => x, 7);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 serialize({
     only: 'updatedAt',
     computed: {
@@ -359,13 +361,13 @@ serialize({
     },
 });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 setNow('createdAt', 'updatedAt');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 setSlug('storeId');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 sequelizeConvert({
     aBool: 'boolean',
     aDate: 'date',
@@ -378,57 +380,57 @@ sequelizeConvert({
         }
     });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 sifter(ctx => item => true);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 stashBefore();
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 stashBefore('abc');
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 });
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 traverse(function(node) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 }, context => context.params.query);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 validate(async (data, context) => {
     return { length: 'expected max 3, got 7' };
 });
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 validateSchema({}, ajv);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 iffElse(syncTrue, [hook1, hook2], [hook3, hook4]);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 iffElse(asyncTrue, [hook1, hook2], [hook3, hook4]);
 
 // $ExpectType IffHook
 iff(syncTrue, hook1, hook2);
 // $ExpectType IffHook
 iff(asyncTrue, hook1, hook2);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 iff(syncTrue, hook1, hook2).else(hook3, hook4);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 iff(asyncTrue, hook1, hook2).else(hook3, hook4);
 
 // $ExpectType IffHook
 when(syncTrue, hook1, hook2);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 when(syncTrue, hook1, hook2).else(hook3, hook4);
 
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 unless(asyncTrue, hook1, hook2);
-// $ExpectType Hook<any, Service<any>>
+// $ExpectType Hook<Application<any, any>, Service<any, any>> || LegacyHookFunction<Application<any, any>, Service<any, any>>
 unless(syncTrue, hook1, hook2);
 
 some(asyncFalse, asyncTrue, syncTrue);
