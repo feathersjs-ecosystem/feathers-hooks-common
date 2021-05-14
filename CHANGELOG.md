@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.6...HEAD)
+
+**Merged pull requests:**
+
+- chore\(dependencies\): Update all dependencies [\#628](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/628) ([daffl](https://github.com/daffl))
+- Fix dependency update action [\#627](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/627) ([daffl](https://github.com/daffl))
+
+## [v5.0.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.6) (2021-05-14)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.5...v5.0.6)
+
+**Closed issues:**
+
+- TypeError: this.hooks is not a function [\#621](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/621)
+- feathers.js - discard hook not working in authentication.js [\#619](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/619)
+
 ## [v5.0.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.5) (2021-02-09)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.4...v5.0.5)
@@ -42,7 +60,6 @@
 - chore\(dependencies\): Update all dependencies [\#595](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/595) ([github-actions[bot]](https://github.com/apps/github-actions))
 - chore\(dependencies\): Update all dependencies [\#592](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/592) ([github-actions[bot]](https://github.com/apps/github-actions))
 - Move to GitHub actions and update all dependencies [\#591](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/591) ([daffl](https://github.com/daffl))
-- Bug/cache select [\#576](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/576) ([DaddyWarbucks](https://github.com/DaddyWarbucks))
 
 ## [v5.0.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.3) (2020-04-29)
 
@@ -64,12 +81,12 @@
 - find and stash [\#430](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/430)
 - Convert JS dates to/from strings/integers on service calls. [\#429](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/429)
 - suggestion: hook to emit \(fake\) event [\#422](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/422)
-- Highlight use of combine for more complex decision making. [\#401](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/401)
 
 **Merged pull requests:**
 
 - Update all dependencies [\#585](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/585) ([daffl](https://github.com/daffl))
 - docs: fix indent [\#577](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/577) ([fratzinger](https://github.com/fratzinger))
+- Bug/cache select [\#576](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/576) ([DaddyWarbucks](https://github.com/DaddyWarbucks))
 - Fix markdown of fastJoin code example [\#573](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/573) ([matiaslopezd](https://github.com/matiaslopezd))
 - Changing Object ID import on mongoKeys hook [\#571](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/571) ([luizfer](https://github.com/luizfer))
 
@@ -264,6 +281,11 @@
 
 - Trying to fix situational test failure soft-delete2-c timeout [\#486](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/486) ([eddyystop](https://github.com/eddyystop))
 - Merge forced by pr\#484 [\#485](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/485) ([eddyystop](https://github.com/eddyystop))
+- add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
+- update names and fix the options property [\#481](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
+- add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
+- Add initial types for fgraphql [\#469](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/469) ([NickBolles](https://github.com/NickBolles))
+- remove dtslint workaround in favor of npx [\#463](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/463) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
@@ -273,14 +295,6 @@
 
 - TS for keepQueryInArray [\#468](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/468)
 - dtslint-build folder in installed package? [\#461](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/461)
-
-**Merged pull requests:**
-
-- add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
-- update names and fix the options property [\#481](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
-- add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
-- Add initial types for fgraphql [\#469](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/469) ([NickBolles](https://github.com/NickBolles))
-- remove dtslint workaround in favor of npx [\#463](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/463) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.19.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.4) (2018-11-29)
 
@@ -411,7 +425,6 @@
 **Merged pull requests:**
 
 - fix: isProvider returns a boolean [\#444](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/444) ([bitflower](https://github.com/bitflower))
-- Update npm installed version [\#434](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/434) ([bravo-kernel](https://github.com/bravo-kernel))
 
 ## [v4.17.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.4) (2018-09-13)
 
@@ -448,6 +461,7 @@
 - Revert "\[WIP\] Typings: Set up CI testing" [\#439](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/439) ([eddyystop](https://github.com/eddyystop))
 - \[WIP\] Typings: Set up CI testing [\#438](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/438) ([j2L4e](https://github.com/j2L4e))
 - add typings file + infrastructure [\#437](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
+- Update npm installed version [\#434](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/434) ([bravo-kernel](https://github.com/bravo-kernel))
 
 ## [v4.16.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
 
@@ -532,14 +546,11 @@
 **Merged pull requests:**
 
 - Added callingParams, callingParamsDefault hooks. Replaced makeCallingParams [\#411](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/411) ([eddyystop](https://github.com/eddyystop))
+- Update soft-delete.js [\#410](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/410) ([bertho-zero](https://github.com/bertho-zero))
 
 ## [v4.13.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.13.0) (2018-06-26)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.12.1...v4.13.0)
-
-**Merged pull requests:**
-
-- Update soft-delete.js [\#410](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/410) ([bertho-zero](https://github.com/bertho-zero))
 
 ## [v4.12.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.12.1) (2018-06-20)
 
@@ -569,17 +580,10 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.11.1...v4.11.2)
 
-**Implemented enhancements:**
-
-- keep transform null result to an empty object. [\#394](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/394)
-
 **Merged pull requests:**
 
 - getByDot no-ops non-obejct records [\#403](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/403) ([eddyystop](https://github.com/eddyystop))
 - keep hook ignores records which are not objects [\#402](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/402) ([eddyystop](https://github.com/eddyystop))
-- closes \#368 [\#400](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/400) ([bertho-zero](https://github.com/bertho-zero))
-- Enable Semistandard and update code style [\#396](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/396) ([daffl](https://github.com/daffl))
-- Update all dependencies and badges [\#395](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/395) ([daffl](https://github.com/daffl))
 
 ## [v4.11.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.11.1) (2018-04-26)
 
