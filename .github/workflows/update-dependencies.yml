@@ -1,23 +1,31 @@
-on:
+name: Update dependencies
+
+on:  
   schedule:
-    - cron: '0 0 * * 1'
-name: Update packages
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
 jobs:
-  release:
-    name: Update npm packages
+  update-dependencies:
     runs-on: ubuntu-latest
     steps:
-      - name: Update npm packages
-        uses: technote-space/create-pr-action@v2.0.3
-        with:
-          EXECUTE_COMMANDS: |
-            npm install
-            npm run update-dependencies
-            npm run clean
-            npm install
-            npm test
-          COMMIT_MESSAGE: 'chore(dependencies): Update all dependencies'
-          COMMIT_NAME: 'GitHub Actions'
-          COMMIT_EMAIL: 'daff@neyeon.com'
-          PR_BRANCH_NAME: 'chore-npm-update-${PR_ID}'
-          PR_TITLE: 'chore(dependencies): Update all dependencies'
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '15.x'
+    - run: npm ci
+    - run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "hello@feathersjs.com"
+        git checkout -b update-dependencies-$GITHUB_RUN_ID
+    - run: |
+        npm run update-dependencies
+        npm install
+    - run: |
+        git commit -am "chore(dependencies): Update dependencies"
+        git push origin update-dependencies-$GITHUB_RUN_ID
+    - run: |
+        gh pr create --title "chore(dependencies): Update all dependencies" --body ""
+      env:
+        GITHUB_TOKEN: ${{secrets.CI_ACCESS_TOKEN}}
+        
