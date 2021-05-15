@@ -55,7 +55,6 @@
     "@feathersjs/commons": "^5.0.0-pre.4",
     "@feathersjs/errors": "^5.0.0-pre.4",
     "@feathersjs/feathers": "^5.0.0-pre.4",
-    "@feathersjs/adapter-commons": "^5.0.0-pre.4",
     "ajv": "^6.12.6",
     "debug": "^4.3.1",
     "graphql": "^15.5.0",
