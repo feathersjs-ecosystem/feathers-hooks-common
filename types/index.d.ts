@@ -1,7 +1,6 @@
 // TypeScript Version: 4.0
 
-import { Hook, HookContext, Params, Query, Application } from '@feathersjs/feathers';
-import { Paginated } from '@feathersjs/adapter-commons';
+import { Hook, HookContext, Params, Query, Paginated, Application } from '@feathersjs/feathers';
 import * as ajv from 'ajv';
 import { GraphQLSchema, parse, GraphQLFieldResolver } from 'graphql';
 
