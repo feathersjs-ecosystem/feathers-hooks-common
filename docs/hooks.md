@@ -83,7 +83,7 @@ Runs a series of hooks which mutate context.dispatch.
 
   A hook can call a series of hooks using `actOnDispatch`. Some of those hooks may call other hooks with `actOnDefault` or `actOnDispatch`. This can "turtle down" to further layers.
 
-  <p class="tip">context.dispatch is a writeable, optional property and contains a "safe" version of the data that should be sent to any client. If context.dispatch has not been set context.result will be sent to the client instead.<br/><br/>Note: context.dispatch only affects the data sent through a Feathers Transport like REST or Socet.io. An internal method call will still get the data set in context.result.</p>
+  <p class="tip">context.dispatch is a writeable, optional property and contains a "safe" version of the data that should be sent to any client. If context.dispatch has not been set context.result will be sent to the client instead.<br/><br/>Note: context.dispatch only affects the data sent through a Feathers Transport like REST or Socket.io. An internal method call will still get the data set in context.result.</p>
 
 
 ## alterItems
@@ -190,7 +190,7 @@ Persistent, least-recently-used record cache for services.
 | `options` | Argument   |                      Type                      | Default                                                                                                                                          | Description |
 | --------- | ---------- | :--------------------------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `clone`   | `Function` | `item => JSON.parse(` `JSON.stringify(item) )` | Function to perform a deep clone. See below.                                                                                                     |
-| `clone`   | `Function` |                  `key => key`                  | Function to convert record key to cache key. Use this to convert MongoDB/Mongoose ObjectId/bson keys to a cache key using `item._id.toString()`. |
+| `makeCacheKey`   | `Function` |                  `key => key`                  | Function to convert record key to cache key. Use this to convert MongoDB/Mongoose ObjectId/bson keys to a cache key using `item._id.toString()`. |
 
 - **Example**
 
@@ -575,7 +575,7 @@ Join related records.
 | `after`     | `context` `=> { }` |      | Processing performed after all other operations are completed.                                                             |
 | `joins`     | `Object`           |      | Resolver functions provide a mapping between a portion of a operation and actual backend code responsible for handling it. |
 
-> Read the [guide](guide.html#fastjoin) for more information on the arguments.
+> Read the [guide](guides.html#fastjoin) for more information on the arguments.
 
 - **Example using Feathers services**
 
@@ -1325,7 +1325,7 @@ Wrap MongoDB foreign keys in ObjectID.
 - **Example**
 
   ```js
-  const { ObjectID = require('mongodb');
+  const { ObjectID } = require('mongodb');
   const { mongoKeys } = require('feathers-hooks-common');
 
   /* Comment Schema
@@ -1359,7 +1359,7 @@ Wrap MongoDB foreign keys in ObjectID.
 
   In MongoDB, foreign keys must be wrapped in ObjectID when used in a query, e.g. `comment.find({ query: { authorId: new ObjectID('111111111111') } })`.
 
-  `mongoKeys` automates this, given the field names of all the foreign keys in the schema. This reduces the boilerplate cluuter and reduces the chance of bugs occurring.
+  `mongoKeys` automates this, given the field names of all the foreign keys in the schema. This reduces the boilerplate clutter and reduces the chance of bugs occurring.
 
 
 ## paramsFromClient
@@ -1474,7 +1474,7 @@ Join related records.
 | `provider`         | `undefined`                          |                                            | Call the service as the server, not with the client's transport.                                                                                                                                                                                      |
 | `include`          | `Array<` `Object >` or `Object`      |                                            | Continue recursively join records to these records.                                                                                                                                                                                                   |
 
-> Read the [guide](guide.html#populate) for more information on the arguments.
+> Read the [guide](guides.html#populate) for more information on the arguments.
 
 - **Examples**
 
@@ -1956,7 +1956,7 @@ Flag records as logically deleted instead of physically removing them. Requires 
 | `deletedQuery` | `Function|Object` | `{ deleted: { $ne: true } }` | An object or async function that takes the query which returns the part of the query to exclude deleted entrie
 | `removeData` | `Function|Object` | `{ deleted: true }` | An object or async function that returns the data used to flag an entry as deleted
 
-By default, `softDelete` queries for a `deleted` property not set to `true` (meaning it can either exist of be anything else).
+By default, `softDelete` queries for a `deleted` property not set to `true` (meaning it can either exist or be anything else).
 
 Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hook.
 

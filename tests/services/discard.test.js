@@ -5,10 +5,10 @@ const {
 
 const hooks = require('../../lib/services');
 
-var hookBefore;
-var hookAfter;
-var hookFindPaginate;
-var hookFind;
+let hookBefore;
+let hookAfter;
+let hookFindPaginate;
+let hookFind;
 
 describe('services discard', () => {
   describe('removes fields', () => {

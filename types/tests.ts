@@ -4,6 +4,7 @@ import {
     actOnDefault,
     actOnDispatch,
     alterItems,
+    AsyncContextFunction,
     AsyncPredicateFn,
     cache,
     callingParams,
@@ -63,7 +64,7 @@ import ajv = require('ajv');
 const context1: HookContext = {
     type: 'before',
     app: feathers(),
-    method: '',
+    method: 'create',
     params: {},
     path: '/',
     service: null
@@ -430,13 +431,7 @@ unless(asyncTrue, hook1, hook2);
 // $ExpectType Hook<any, Service<any>>
 unless(syncTrue, hook1, hook2);
 
-// $ExpectType AsyncContextFunction<boolean>
 some(asyncFalse, asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 every(asyncTrue, syncTrue);
-
-// $ExpectType AsyncContextFunction<boolean>
 isNot(asyncTrue);
-// $ExpectType AsyncContextFunction<boolean>
 isNot(syncTrue);

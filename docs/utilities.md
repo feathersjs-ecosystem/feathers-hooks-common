@@ -11,12 +11,10 @@ Build `params` for a service call.
 - **Arguments**
 
   - `{Object} options`
-  - `{Object} context`
 
 | Argument  |   Type   | Default | Description                                                 |
 | --------- | :------: | ------- | ----------------------------------------------------------- |
 | `options` | `Object` |         | How to construct params for service call.                   |
-| `context` | `Object` |         | The `context` of the hook which will make the service call. |
 
 | `options`        | Argument          | Type | Default                                                                                                                      | Description |
 | ---------------- | ----------------- | :--: | ---------------------------------------------------------------------------------------------------------------------------- | ----------- |
@@ -25,10 +23,21 @@ Build `params` for a service call.
 | `newProps`       | `Object`          | `{}` | Additional props to add to the new params.                                                                                   |
 | `hooksToDisable` | `Array< String >` | `[]` | The names of hooks to disable during the service call. `populate`, `fastJoin`, `softDelete` and `stashBefore` are supported. |
 | `ignoreDefaults` | `Boolean`         |      | Ignore the defaults `propNames` and `newProps`.                                                                              |
-
 - **Returns**
 
-  - `{Object} newParams`
+  - `{Function}`
+  
+  - **Arguments**
+
+  - `{Object} context`
+
+| Argument  |   Type   | Default | Description                                                 |
+| --------- | :------: | ------- | ----------------------------------------------------------- |
+| `context` | `Object` |         | The `context` of the hook which will make the service call.   |
+
+  - **Returns**
+
+    - `{Object} newParams`
 
 | Name        |   Type   | Description                      |
 | ----------- | :------: | -------------------------------- |
@@ -48,7 +57,7 @@ Build `params` for a service call.
       propNames: ['customProp'],
       newProps: { mongoose: ... },
       hooksToDisable: 'populate'
-    }), context);
+    }))(context);
     // ...
   }
   ```
@@ -213,7 +222,7 @@ records|Array< Object > | Object | undefined|The records.
   ```js
   const { getItems, replaceItems } = require('feathers-hooks-common');
 
-  const insertCode = code => context {
+  const insertCode = code => context => {
     const items = getItems(context);
     if (Array.isArray(items)) {
       items.forEach(item => { item.code = code; });

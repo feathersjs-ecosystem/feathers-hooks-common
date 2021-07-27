@@ -5,11 +5,11 @@ const {
 
 const hooks = require('../../lib/services');
 
-var hookBefore;
-var hookBefore2;
-var hookAfter;
-var hookFindPaginate;
-var hookFind;
+let hookBefore;
+let hookBefore2;
+let hookAfter;
+let hookFindPaginate;
+let hookFind;
 
 describe('services setNow', () => {
   describe('updated fields', () => {
