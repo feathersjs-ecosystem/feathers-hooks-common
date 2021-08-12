@@ -69,6 +69,11 @@ describe('services getItems & replaceItems', () => {
       assert.deepEqual(stuff, { first: 'John', last: 'Doe' });
     });
 
+    it('updates hook before::create item with forceArray', () => {
+      const stuff = hooks.getItems(hookBefore, true);
+      assert.deepEqual(stuff, [{ first: 'John', last: 'Doe' }]);
+    });
+
     it('updates hook before::create items', () => {
       const stuff = hooks.getItems(hookBeforeArray);
       assert.deepEqual(stuff, [
@@ -80,6 +85,11 @@ describe('services getItems & replaceItems', () => {
     it('updates hook after::create item', () => {
       const stuff = hooks.getItems(hookAfter);
       assert.deepEqual(stuff, { first: 'Jane2', last: 'Doe2' });
+    });
+
+    it('updates hook after::create item with forceArray', () => {
+      const stuff = hooks.getItems(hookAfter, true);
+      assert.deepEqual(stuff, [{ first: 'Jane2', last: 'Doe2' }]);
     });
 
     it('updates hook after::create items', () => {

@@ -221,7 +221,7 @@ export function fgraphql(options?: FGraphQLHookOptions): Hook;
  * Get the records in context.data or context.result[.data]. (Utility function.)
  * {@link https://hooks-common.feathersjs.com/hooks.html#GetItems}
  */
-export function getItems(context: HookContext): any; // any[] | any | undefined;
+export function getItems(context: HookContext, forceArray?: boolean): any; // any[] | any | undefined;
 
 /**
  * Check which transport provided the service call.

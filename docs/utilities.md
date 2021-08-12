@@ -204,10 +204,12 @@ Get the records in `context.data` or `context.result`
 
 - **Arguments**
   - `{Object} context`
+  - `{Boolean} forceArray`
 
-| Argument  |   Type   | Default | Description       |
-| --------- | :------: | ------- | ----------------- |
-| `context` | `Object` |         | The hook context. |
+| Argument     |   Type   | Default | Description             |
+| ------------ | :------: | ------- | ----------------------- |
+|   `context`  | `Object` |         | The hook context.       |
+| `forceArray` | `Array`  |         | Always return as array. |
 
 **Returns**
 
