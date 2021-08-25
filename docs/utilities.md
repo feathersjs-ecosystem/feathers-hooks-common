@@ -118,16 +118,16 @@ Restrict a hook to run for certain methods and method types.
 
 - **Arguments**
   - `{Object} context`
-  - `{String} [ type ]`
-  - `{Array< String >} [ methods ]`
+  - `{String | Array< String >} [ type ]`
+  - `{String | Array< String >} [ methods ]`
   - `{String} [ label ]`
 
-| Argument  |       Type        | Default       | Description                                                     |
-| --------- | :---------------: | ------------- | --------------------------------------------------------------- |
-| `context` |     `Object`      |               | The hook context.                                               |
-| `type`    |     `String`      | all types     | The service type allowed - before, after.                       |
-| `methods` | `Array< String >` | all methods   | The service methods allowed - find, get, update, patch, remove. |
-| `label`   |     `String`      | `'anonymous'` | Name of hook to use with `throw`.                               |
+| Argument  | Type                       | Default       | Description                                                     |
+| --------- | :------------------------: | ------------- | --------------------------------------------------------------- |
+| `context` |          `Object`          |               | The hook context.                                               |
+| `type`    | `String | Array< String >` | all types     | The service type allowed - before, after, error.                |
+| `methods` | `String | Array< String >` | all methods   | The service methods allowed - find, get, update, patch, remove. |
+| `label`   |         `String`           | `'anonymous'` | Name of hook to use with `throw`.                               |
 
 - **Example**
 
@@ -222,7 +222,7 @@ records|Array< Object > | Object | undefined|The records.
   ```js
   const { getItems, replaceItems } = require('feathers-hooks-common');
 
-  const insertCode = code => context {
+  const insertCode = code => context => {
     const items = getItems(context);
     if (Array.isArray(items)) {
       items.forEach(item => { item.code = code; });

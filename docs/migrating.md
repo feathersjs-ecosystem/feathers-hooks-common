@@ -41,3 +41,5 @@ Most hooks have been updated to safely delete or add properties by replacing the
 ## softDelete
 
 ## setField
+
+Moved to [feathers-authentication-hooks](https://github.com/feathersjs-ecosystem/feathers-authentication-hooks#setfield)
