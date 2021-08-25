@@ -38,6 +38,16 @@ describe('services checkContext', () => {
     assert.equal(checkContext(hook, null), undefined);
   });
 
+  it('handles expected type as array', () => {
+    hook.type = 'before';
+    assert.equal(checkContext(hook, ['before', 'after']), undefined);
+  });
+
+  it('handles unexpected type as array', () => {
+    hook.type = 'error';
+    assert.throws(() => { checkContext(hook, ['before', 'after']); });
+  });
+
   it('handles expected method as string', () => {
     hook.method = 'create';
     assert.equal(checkContext(hook, null, 'create'), undefined);
