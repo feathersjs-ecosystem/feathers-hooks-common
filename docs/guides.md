@@ -113,7 +113,7 @@ const postResolvers = {
   joins: {
     author: (...args) => async (post, { app }) => {
       post.author = (
-        await app.services('users').find({
+        await app.service('users').find({
           query: {
             id: post.userId
           }
@@ -122,7 +122,7 @@ const postResolvers = {
     },
 
     starers: $select => async (post, { app }) => {
-      post.starers = await app.services('users').find({
+      post.starers = await app.service('users').find({
         query: {
           id: { $in: post.starIds },
           $select: $select || ['name']
