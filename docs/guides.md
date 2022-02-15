@@ -111,9 +111,9 @@ const { fastJoin } = require('feathers-hooks-common')
 
 const postResolvers = {
   joins: {
-    author: (...args) => async (post, { app }) => {
+    author: (...args) => async post => {
       post.author = (
-        await app.services('users').find({
+        await users.find({
           query: {
             id: post.userId
           }
@@ -121,8 +121,8 @@ const postResolvers = {
       )[0]
     },
 
-    starers: $select => async (post, { app }) => {
-      post.starers = await app.services('users').find({
+    starers: $select => async post => {
+      post.starers = await users.find({
         query: {
           id: { $in: post.starIds },
           $select: $select || ['name']
@@ -524,7 +524,7 @@ const postResolvers = {
 }
 ```
 
-> The [batch-loader guide](../batch-loader) explains how to create batch-loaders.
+> The [batch-loader guide](https://github.com/feathersjs-ecosystem/batch-loader) explains how to create batch-loaders.
 
 ### Putting It All Together
 
