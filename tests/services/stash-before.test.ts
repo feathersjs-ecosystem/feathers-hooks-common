@@ -1,10 +1,16 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('chai').assert;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'feathers'.
 const feathers = require('@feathersjs/feathers');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'memory'.
 const memory = require('feathers-memory');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'stashBefor... Remove this comment to see the full error message
 const { stashBefore } = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'startId'.
 const startId = 6;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'storeInit'... Remove this comment to see the full error message
 const storeInit = {
   0: { name: 'Jane Doe', key: 'a', id: 0 },
   1: { name: 'Jack Doe', key: 'a', id: 1 },
@@ -13,16 +19,18 @@ const storeInit = {
   4: { name: 'Dick Doe', key: 'b', id: 4 },
   5: { name: 'Dork Doe', key: 'b', id: 5 }
 };
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'store'.
 let store;
-let finalParams;
-let innerCallParams;
+let finalParams: any;
+let innerCallParams: any;
 
-function services () {
+function services(this: any) {
   const app = this;
   app.configure(users);
 }
 
-function users () {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'users'.
+function users(this: any) {
   const app = this;
   store = clone(storeInit);
 
@@ -35,13 +43,13 @@ function users () {
   app.service('users').hooks({
     before: {
       all: [
-        context => {
+        (context: any) => {
           if (context.params.disableStashBefore === true) {
             innerCallParams = context.params;
           }
         },
         stashBefore(),
-        context => {
+        (context: any) => {
           finalParams = context.params;
         }
       ]
@@ -49,10 +57,12 @@ function users () {
   });
 }
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services stash-before', () => {
   let app;
-  let users;
+  let users: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     innerCallParams = finalParams = null;
 
@@ -63,6 +73,7 @@ describe('services stash-before', () => {
   });
 
   ['get', 'update', 'patch', 'remove'].forEach(method => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it(`stashes on ${method}`, () => {
       return users[method](0, {})
         .then(() => {
@@ -71,6 +82,7 @@ describe('services stash-before', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Do not stash when query is used in remove', () => {
     return users.remove(null, { query: {} })
       .then(() => {
@@ -79,7 +91,8 @@ describe('services stash-before', () => {
   });
 
   ['create', 'find'].forEach(method => {
-    it(`throws on ${method}`, done => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it(`throws on ${method}`, (done: any) => {
       users[method]({})
         .then(() => {
           assert(false, 'unexpectedly successful');
@@ -91,6 +104,7 @@ describe('services stash-before', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('stashes on get with original params', () => {
     return users.get(0, { provider: 'socketio', eyecatcher: -1 })
       .then(() => {
@@ -104,6 +118,7 @@ describe('services stash-before', () => {
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('stashes on patch with custom params', () => {
     return users.patch(0, {}, { provider: 'socketio', eyecatcher: -1 })
       .then(() => {
@@ -118,6 +133,6 @@ describe('services stash-before', () => {
   });
 });
 
-function clone (obj) {
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

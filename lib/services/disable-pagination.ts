@@ -1,8 +1,9 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'checkConte... Remove this comment to see the full error message
 const checkContext = require('./check-context');
 
 module.exports = function () {
-  return function (context) {
+  return function (context: any) {
     checkContext(context, 'before', ['find'], 'disablePagination');
     const $limit = (context.params.query || {}).$limit;
 

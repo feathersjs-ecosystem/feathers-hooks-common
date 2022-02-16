@@ -1,5 +1,5 @@
 
-module.exports = function (context, items) {
+module.exports = function (context: any, items: any) {
   if (context.params && context.params._actOn === 'dispatch') {
     context.dispatch = items;
     return;

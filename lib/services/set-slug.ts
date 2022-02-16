@@ -1,8 +1,10 @@
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'setByDot'.
 const setByDot = require('lodash/set');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'errors'.
 const errors = require('@feathersjs/errors');
 
-module.exports = function (slug, field) {
-  return context => {
+module.exports = function (slug: any, field: any) {
+  return (context: any) => {
     if (typeof field !== 'string') {
       field = `query.${slug}`;
     }

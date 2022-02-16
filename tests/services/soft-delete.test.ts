@@ -1,6 +1,10 @@
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assert');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'feathers'.
 const feathers = require('@feathersjs/feathers');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'memory'.
 const memory = require('feathers-memory');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hooks'.
 const hooks = require('../../lib/services');
 
 const initialUsers = [
@@ -12,9 +16,11 @@ const initialUsers = [
   { name: 'Mick Doe', key: 'b', deleted: true }
 ];
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services softDelete', () => {
-  let userService;
+  let userService: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     const app = feathers()
       .use('/users', memory({
@@ -33,6 +39,7 @@ describe('services softDelete', () => {
     userService.create(initialUsers);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('throws error on wrong app version', async () => {
     const app = feathers()
       .use('/users', memory());
@@ -52,7 +59,9 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('find', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('does not return deleted items', async () => {
       const users = await userService.find();
 
@@ -64,6 +73,7 @@ describe('services softDelete', () => {
       ]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('returns everything with params.disableSoftdelete', async () => {
       const users = await userService.find({
         disableSoftDelete: true
@@ -80,7 +90,9 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('get', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('returns an undeleted item', async () => {
       const user = await userService.get(0);
 
@@ -89,6 +101,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('throws on deleted item', async () => {
       assert.rejects(async () => {
         await userService.get(2);
@@ -98,6 +111,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('returns deleted when params.disableSoftDelete is set', async () => {
       const user = await userService.get(2, {
         disableSoftDelete: true
@@ -108,6 +122,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('throws on missing item', async () => {
       await assert.rejects(async () => {
         await userService.get(99);
@@ -118,13 +133,16 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('update, with id', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates an undeleted item', async () => {
       const user = await userService.update(0, { y: 'y' });
 
       assert.deepStrictEqual(user, { y: 'y', id: 0 });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it.skip('throws on deleted item', async () => {
       await assert.rejects(async () => {
         await userService.update(2, { y: 'y' });
@@ -135,7 +153,9 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('patch', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('patches an undeleted item', async () => {
       const user = await userService.patch(0, { y: 'y' });
 
@@ -144,6 +164,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('throws on deleted item', async () => {
       await assert.rejects(() => userService.patch(2, { y: 'y' }), {
         name: 'NotFound',
@@ -151,6 +172,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('multi updates on undeleted items', async () => {
       const patched = await userService.patch(null, { x: 'x' });
 
@@ -163,7 +185,9 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('remove, with id', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('marks item as deleted', async () => {
       const user = await userService.remove(0);
 
@@ -176,6 +200,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('throws if item already deleted', async () => {
       await assert.rejects(() => userService.remove(2), {
         name: 'NotFound'
@@ -183,7 +208,9 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('remove, without id', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('marks filtered items as deleted', async () => {
       const query = { key: 'a' };
       await userService.remove(null, { query });
@@ -193,6 +220,7 @@ describe('services softDelete', () => {
       assert.strictEqual(users.length, 0);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('handles nothing found', async () => {
       const users = await userService.remove(null, { query: { key: 'z' } });
 
@@ -200,9 +228,11 @@ describe('services softDelete', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('with customization: deletedAt', () => {
-    let peopleService;
+    let peopleService: any;
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       const app = feathers()
         .use('/people', memory({
@@ -223,7 +253,7 @@ describe('services softDelete', () => {
             })
           ],
           create: [
-            context => {
+            (context: any) => {
               context.data.deletedAt = null;
             }
           ]
@@ -231,6 +261,7 @@ describe('services softDelete', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with setting deletedAt to date', async () => {
       const user = await peopleService.create({ name: 'Jon Doe' });
       const deletedUser = await peopleService.remove(user.id);

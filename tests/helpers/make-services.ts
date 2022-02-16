@@ -39,9 +39,9 @@ module.exports = {
   users: makeService(usersStore, 'users')
 };
 
-function makeService (store1, name) {
+function makeService (store1: any, name: any) {
   return {
-    get (id) {
+    get (id: any) {
       // console.log(`... ${name} get ${id}`);
       const store = clone(store1);
 
@@ -52,7 +52,7 @@ function makeService (store1, name) {
       throw Error(`post id ${id} not found`);
     },
 
-    find (params) {
+    find (params: any) {
       // console.log(`... ${name} find`, params ? params.query : '');
       const store = clone(store1);
 
@@ -63,30 +63,31 @@ function makeService (store1, name) {
       const $select = params.query.$select;
 
       return asyncReturn(store
-        .filter(post => {
+        .filter((post: any) => {
           return typeof value !== 'object'
             ? post[field] === value
             : value.$in.indexOf(post[field]) !== -1;
         })
-        .map(post => pluck(post, $select))
+        .map((post: any) => pluck(post, $select))
       );
     }
   };
 }
 
-function asyncReturn (value) {
+function asyncReturn (value: any) {
   return new Promise(resolve => {
     setTimeout(() => { resolve(value); }, 10);
   });
 }
 
-function pluck (obj, fields) {
+function pluck (obj: any, fields: any) {
   if (!fields) return obj;
 
   const res = {};
 
-  fields.forEach(name => {
+  fields.forEach((name: any) => {
     if (name in obj) {
+      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       res[name] = obj[name];
     }
   });
@@ -94,6 +95,7 @@ function pluck (obj, fields) {
   return res;
 }
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2393) FIXME: Duplicate function implementation.
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

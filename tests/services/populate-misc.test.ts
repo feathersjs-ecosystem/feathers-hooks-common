@@ -1,7 +1,11 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('chai').assert;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'feathers'.
 const feathers = require('@feathersjs/feathers');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'memory'.
 const memory = require('feathers-memory');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'iff'.
 const { iff, populate } = require('../../lib/services/index');
 
 const userId = 6;
@@ -111,23 +115,23 @@ const result1 = [{
   members: { name: 'Jane Doe', key: 'a', id: 0 }
 }];
 
-let whichSchema;
-let userHookFlag1;
-let teamHookFlag1;
-let fcnOptions;
+let whichSchema: any;
+let userHookFlag1: any;
+let teamHookFlag1: any;
+let fcnOptions: any;
 
-function schemaFcn (hook, options) {
+function schemaFcn (hook: any, options: any) {
   fcnOptions = options;
   return schemaDefault;
 }
 
-function services () {
+function services(this: any) {
   const app = this;
   app.configure(user);
   app.configure(team);
 }
 
-function user () {
+function user(this: any) {
   const app = this;
 
   app.use('/users', memory({
@@ -142,13 +146,13 @@ function user () {
   app.service('users').hooks({
     before: {
       all: [
-        hook => { userHookFlag1 = hook.params.userHookFlag1; }
+        (hook: any) => { userHookFlag1 = hook.params.userHookFlag1; }
       ]
     }
   });
 }
 
-function team () {
+function team(this: any) {
   const app = this;
 
   app.use('/teams', memory({
@@ -159,7 +163,7 @@ function team () {
   app.service('teams').hooks({
     after: {
       all: [
-        hook => { teamHookFlag1 = hook.params.teamHookFlag1; },
+        (hook: any) => { teamHookFlag1 = hook.params.teamHookFlag1; },
         iff(() => whichSchema === 'schemaDefault', populate({ schema: schemaDefault })),
         iff(() => whichSchema === 'schemaFalse', populate({ schema: schemaFalse })),
         iff(() => whichSchema === 'schemaTrue', populate({ schema: schemaTrue })),
@@ -172,10 +176,12 @@ function team () {
   });
 }
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services populate - hook.params passed to includes', () => {
   let app;
-  let teams;
+  let teams: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     app = feathers()
       .configure(services);
@@ -183,71 +189,80 @@ describe('services populate - hook.params passed to includes', () => {
     userHookFlag1 = null;
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('hook.params passed to includes', () => {
     whichSchema = 'schemaDefault';
     return teams.find({ query: { id: 0 }, userHookFlag1: 'userHookFlag1' })
-      .then(result => {
+      .then((result: any) => {
         assert.equal(userHookFlag1, 'userHookFlag1');
         assert.deepEqual(result, resultDefault);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('ignores pagination by default', () => {
     whichSchema = 'schemaDefault';
     return teams.find({ query: { id: 0 } })
-      .then(result => {
+      .then((result: any) => {
         assert.deepEqual(result, resultDefault);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('ignores pagination when paginate:false', () => {
     whichSchema = 'schemaFalse';
     return teams.find({ query: { id: 0 } })
-      .then(result => {
+      .then((result: any) => {
         assert.deepEqual(result, resultDefault);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('uses configuration when paginate:true', () => {
     whichSchema = 'schemaTrue';
     return teams.find({ query: { id: 0 } })
-      .then(result => {
+      .then((result: any) => {
         assert.deepEqual(result, resultTrue);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('can specify number of results to return', () => {
     whichSchema = 'schema1';
     return teams.find({ query: { id: 0 } })
-      .then(result => {
+      .then((result: any) => {
         assert.deepEqual(result, result1);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('passes on correct base service', () => {
     whichSchema = 'schemaDefaultTeams';
     return teams.find({ query: { id: 0 } })
-      .then(result => {
+      .then((result: any) => {
         assert.deepEqual(result, resultDefault);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('throws on incorrect base service', () => {
     whichSchema = 'schemaDefaultXteams';
     return teams.find({ query: { id: 0 } })
       .then(() => {
         assert.fail(true, false, 'unexpected succeeded');
       })
-      .catch(err => {
+      .catch((err: any) => {
         assert.equal(err.className, 'bad-request');
       });
   });
 });
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services populate - schema may be a function', () => {
   let app;
-  let teams;
+  let teams: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     app = feathers()
       .configure(services);
@@ -256,21 +271,23 @@ describe('services populate - schema may be a function', () => {
     fcnOptions = null;
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('calls the function', () => {
     whichSchema = 'schemaDefaultFcn';
     return teams.find({ query: { id: 0 }, userHookFlag1: 'userHookFlag1' })
-      .then(result => {
+      .then((result: any) => {
         assert.equal(userHookFlag1, 'userHookFlag1');
         assert.deepEqual(result, resultDefault);
       });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('function gets hook and options', () => {
     whichSchema = 'schemaDefaultFcn';
     return teams.find(
       { query: { id: 0 }, userHookFlag1: 'userHookFlag1', teamHookFlag1: 'teamHookFlag1' }
     )
-      .then(result => {
+      .then((result: any) => {
         assert.equal(teamHookFlag1, 'teamHookFlag1');
         assert.strictEqual(fcnOptions.schema, schemaFcn);
 
@@ -280,6 +297,7 @@ describe('services populate - schema may be a function', () => {
   });
 });
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'clone'.
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

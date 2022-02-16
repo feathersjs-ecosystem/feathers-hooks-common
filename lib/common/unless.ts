@@ -1,6 +1,6 @@
 
-module.exports = function (_iffElse) {
-  return function (unlessFcn, ...rest) {
+module.exports = function (_iffElse: any) {
+  return function (unlessFcn: any, ...rest: any[]) {
     if (typeof unlessFcn === 'function') {
       return _iffElse(unlessFcn, null, rest);
     }

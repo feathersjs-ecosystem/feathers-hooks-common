@@ -1,10 +1,14 @@
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'existsByDo... Remove this comment to see the full error message
 const existsByDot = require('lodash/has');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'omit'.
 const omit = require('lodash/omit');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'checkConte... Remove this comment to see the full error message
 const checkContext = require('./check-context');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'errors'.
 const errors = require('@feathersjs/errors');
 
-module.exports = function (...fieldNames) {
+module.exports = function (...fieldNames: any[]) {
   const ifThrow = fieldNames[0];
 
   if (typeof ifThrow === 'string') {
@@ -13,7 +17,7 @@ module.exports = function (...fieldNames) {
     fieldNames = fieldNames.slice(1);
   }
 
-  return context => {
+  return (context: any) => {
     checkContext(context, 'before', ['patch'], 'preventChanges');
     const data = context.data;
 

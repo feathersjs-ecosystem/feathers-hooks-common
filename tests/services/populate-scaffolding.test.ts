@@ -1,14 +1,18 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assert').strict;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'configApp'... Remove this comment to see the full error message
 const configApp = require('../helpers/config-app');
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services populate - test scaffolding', () => {
-  it('can reinitialize database', done => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+  it('can reinitialize database', (done: any) => {
     const app = configApp(['users', 'comments', 'posts', 'recommendation']);
     const users = app.service('users');
 
     users.find({ query: {} })
-      .then(data => {
+      .then((data: any) => {
         assert.equal(data.length, 2);
       })
       .then(() => {
@@ -17,7 +21,7 @@ describe('services populate - test scaffolding', () => {
       .then(() => {
         return users.find({ query: {} });
       })
-      .then(data => {
+      .then((data: any) => {
         assert.equal(data.length, 1);
       })
       .then(() => {
@@ -26,7 +30,7 @@ describe('services populate - test scaffolding', () => {
 
         return users1.find({ query: {} });
       })
-      .then(data => {
+      .then((data: any) => {
         assert.equal(data.length, 2);
         done();
       });

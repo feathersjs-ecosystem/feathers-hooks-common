@@ -1,14 +1,20 @@
 
 /* eslint no-console: 0 */
 const runTime = require('@feathers-plus/graphql/lib/run-time');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'BatchLoade... Remove this comment to see the full error message
 const BatchLoader = require('@feathers-plus/batch-loader');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
 const { parse } = require('graphql');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fgraphql'.
 const { fgraphql } = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getResults... Remove this comment to see the full error message
 const { getResultsByKey } = BatchLoader;
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services fgraphql', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('using service resolver', () => {
     /* eslint-disable */
     const beforeJane =  () => ({ type: 'before', data:   {  first: 'Jane',    last: 'Doe' } });
@@ -66,9 +72,12 @@ describe('services fgraphql', () => {
     /* eslint-enable */
 
     decisionTable.forEach(([desc, schema, resolvers, recordType, query, options, context, client, result]) => {
+      // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
       it(desc, async () => {
+        // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
         context.params = context.params || {};
         if (client) {
+          // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
           context.params.provider = 'socketio';
         }
 
@@ -100,16 +109,17 @@ describe('services fgraphql', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('using batchloader', () => {
-    let recordType;
-    let schema;
-    let context;
-    let query;
-    let options;
-    let usersBatchLoader;
-    let usersBatchLoaderCalls;
-    let resolvers;
-    let result;
+    let recordType: any;
+    let schema: any;
+    let context: any;
+    let query: any;
+    let options: any;
+    let usersBatchLoader: any;
+    let usersBatchLoaderCalls: any;
+    let resolvers: any;
+    let result: any;
 
     const usersDb = {
       31: { _id: '31', name: 'user 31' },
@@ -137,6 +147,7 @@ describe('services fgraphql', () => {
       29: { _id: '29', comment: 'comment 26', postId: '13', userId: '37' }
     };
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       usersBatchLoaderCalls = [];
       recordType = 'Post';
@@ -165,6 +176,7 @@ describe('services fgraphql', () => {
       context = {
         type: 'after',
         params: {},
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         result: Object.keys(postsDb).map(key => postsDb[key])
       };
 
@@ -187,22 +199,25 @@ describe('services fgraphql', () => {
       };
 
       usersBatchLoader = new BatchLoader(
-        async (keys) => {
+        async (keys: any) => {
           usersBatchLoaderCalls.push(keys);
-          const result = keys.map(key => usersDb[key]);
-          return getResultsByKey(keys, result, rec => rec._id, '!');
+          // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+          const result = keys.map((key: any) => usersDb[key]);
+          return getResultsByKey(keys, result, (rec: any) => rec._id, '!');
         }
       );
 
       resolvers = () => ({
         Post: {
           // tests returning a Promise
-          author: (parent, args, content, ast) => usersBatchLoader.load(parent.userId),
+          author: (parent: any, args: any, content: any, ast: any) => usersBatchLoader.load(parent.userId),
           // tests returning a value
-          comments: (parent, args, content, ast) => {
-            const x = [];
+          comments: (parent: any, args: any, content: any, ast: any) => {
+            const x: any = [];
             Object.keys(commentsDb).forEach(key => {
+              // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
               if (commentsDb[key].postId === parent._id) {
+                // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
                 x.push(commentsDb[key]);
               }
             });
@@ -210,7 +225,7 @@ describe('services fgraphql', () => {
           }
         },
         Comment: {
-          author: (parent, args, content, ast) => usersBatchLoader.load(parent.userId)
+          author: (parent: any, args: any, content: any, ast: any) => usersBatchLoader.load(parent.userId)
         }
       });
 
@@ -246,6 +261,7 @@ describe('services fgraphql', () => {
       ];
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('batches calls', async () => {
       try {
         const newContext = await fgraphql({
@@ -265,12 +281,12 @@ describe('services fgraphql', () => {
   });
 });
 
-function isObject (obj) {
+function isObject (obj: any) {
   return typeof obj === 'object' && obj !== null;
 }
 
 // schemas
-function s (typ) {
+function s (typ: any) {
   const SDL1 = `
 type User {
   _id: ID
@@ -370,8 +386,8 @@ type User {
 }
 
 // resolvers
-function r (typ) {
-  return function resolvers (app, options) { // eslint-disable-line no-unused-vars
+function r (typ: any) {
+  return function resolvers (app: any, options: any) { // eslint-disable-line no-unused-vars
     const { convertArgsToFeathers, extractAllItems, extractFirstItem } = options; // eslint-disable-line no-unused-vars
     const convertArgs = convertArgsToFeathers([]); // eslint-disable-line no-unused-vars
     //  let comments = app.service('/comments');
@@ -382,7 +398,7 @@ function r (typ) {
           User: {
             // fullName: String!
             fullName:
-              (parent, args, content, ast) => `${parent.first} ${parent.last}` // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => `${parent.first} ${parent.last}` // eslint-disable-line no-unused-vars
           }
         };
       case 'parent':
@@ -390,7 +406,7 @@ function r (typ) {
           User: {
             // fullName: String!
             fullName:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 const returns = `${parent.first} ${parent.last}`;
                 parent.first = 'foo';
                 return returns;
@@ -402,9 +418,13 @@ function r (typ) {
           User: {
             // fullName: String!
             fullName:
-              (parent, args, content, ast) => `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
             params:
-              (parent, args, content, ast) => ({ args, ast })
+              // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'parent' implicitly has an 'any' type.
+              (parent, args, content, ast) => ({
+                args,
+                ast
+              })
           }
         };
       case 'err1':
@@ -425,7 +445,7 @@ function r (typ) {
       case 'array1':
         return {
           User: {
-            fullName: parent => [`${parent.first} ${parent.last}`]
+            fullName: (parent: any) => [`${parent.first} ${parent.last}`]
           }
         };
 
@@ -434,7 +454,7 @@ function r (typ) {
           User: {
             // posts: [Post]
             posts:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return [
                   { _id: '1001', body: 'foo body' },
                   { _id: (args.params || content.foo || {})._id || '1002', body: 'bar body' }
@@ -442,7 +462,7 @@ function r (typ) {
               },
             // comments: [Comment]
             comments:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return [
                   { _id: '2001', comment: 'foo comment' },
                   { _id: '2002', comment: 'bar comment' }
@@ -457,7 +477,7 @@ function r (typ) {
           User: {
             // posts: [Post]
             posts:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return [
                   { _id: '1001', body: 'foo body' },
                   { _id: (args.params || {})._id || '1002', body: 'bar body' }
@@ -465,7 +485,7 @@ function r (typ) {
               },
             // comments: [Comment]
             comments:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return [
                   { _id: '2001', comment: 'foo comment' },
                   { _id: '2002', comment: 'bar comment' }
@@ -475,14 +495,14 @@ function r (typ) {
           Post: {
             // author: User
             author:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return { _id: '3001', first: 'Jane', last: 'Doe' };
               }
           },
           Comment: {
             // author: User
             author:
-              (parent, args, content, ast) => { // eslint-disable-line no-unused-vars
+              (parent: any, args: any, content: any, ast: any) => { // eslint-disable-line no-unused-vars
                 return { _id: '4001', first: 'Jane', last: 'Doe' };
               }
           }
@@ -494,7 +514,7 @@ function r (typ) {
 }
 
 // query
-function q (typ) {
+function q (typ: any) {
   switch (typ) {
     /* eslint-disable */
     case 'obj':
@@ -588,7 +608,7 @@ function q (typ) {
 }
 
 // options
-function o (typ) {
+function o (typ: any) {
   switch (typ) {
     case 'both':
       return {
@@ -625,7 +645,7 @@ function o (typ) {
 }
 
 // results
-function a (typ) {
+function a (typ: any) {
   switch (typ) {
     /* eslint-disable */
     case 'janeNull' :

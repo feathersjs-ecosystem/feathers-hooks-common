@@ -1,9 +1,10 @@
 const { GeneralError } = require('@feathersjs/errors');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'checkConte... Remove this comment to see the full error message
 const checkContext = require('./check-context');
 
 const defaultQuery = { deleted: { $ne: true } };
 const defaultData = { deleted: true };
-const getValue = (value, ...args) => {
+const getValue = (value: any, ...args: any[]) => {
   if (typeof value === 'function') {
     return Promise.resolve(value(...args));
   }
@@ -14,7 +15,7 @@ module.exports = ({
   deletedQuery = defaultQuery,
   removeData = defaultData
 } = {}) => {
-  return async context => {
+  return async (context: any) => {
     const { service, method, params, app } = context;
     const { disableSoftDelete, query = {} } = params;
 

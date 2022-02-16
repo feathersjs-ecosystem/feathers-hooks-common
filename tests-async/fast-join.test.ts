@@ -1,13 +1,20 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'BatchLoade... Remove this comment to see the full error message
 const BatchLoader = require('@feathers-plus/batch-loader');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'fastJoin'.
 const { fastJoin, makeCallingParams } = require('../lib/index');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'posts'.
 const { posts, users, comments } = require('../tests/helpers/make-services');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getResults... Remove this comment to see the full error message
 const { getResultsByKey, getUniqueKeys, loaderFactory } = BatchLoader;
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('service fast-join', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - resolvers', async () => {
     const context = await ex1();
     const result = {
@@ -32,6 +39,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - shaping the result', async () => {
     const context = await ex2();
     const result = {
@@ -55,6 +63,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Customize Resolver Operation', async () => {
     const context = await ex3();
     const result = {
@@ -82,6 +91,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Calculated Fields', async () => {
     const context = await ex4();
     const result = {
@@ -107,6 +117,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Recursive Operations', async () => {
     const context = await ex5();
     const result = {
@@ -151,6 +162,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Keeping Resolvers DRY', async () => {
     const context = await ex6();
     const result = {
@@ -195,6 +207,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Using a Simple Batch-Loader', async () => {
     const context = await ex7();
     const result = {
@@ -222,6 +235,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Using Batch-Loaders', async () => {
     const context = await ex8();
     const result = {
@@ -249,6 +263,7 @@ describe('service fast-join', () => {
     assert.deepEqual(context, result);
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('Guide - Putting It All Together', async () => {
     const context = await ex9();
     const result = {
@@ -356,14 +371,16 @@ describe('service fast-join', () => {
 async function ex1 () {
   const postResolvers = {
     joins: {
-      author: () => async post => {
+      author: () => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.author = (await users.find({
           query: {
             id: post.userId
           }
         }))[0];
       },
-      starers: $select => async post => {
+      starers: ($select: any) => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.starers = await users.find({
           query: {
             id: { $in: post.starIds }, $select: $select || ['name']
@@ -381,14 +398,16 @@ async function ex1 () {
 async function ex2 () {
   const postResolvers = {
     joins: {
-      author: () => async post => {
+      author: () => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.author = (await users.find({
           query: {
             id: post.userId
           }
         }))[0];
       },
-      starers: $select => async post => {
+      starers: ($select: any) => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.starers = await users.find({
           query: {
             id: { $in: post.starIds }, $select: $select || ['name']
@@ -404,20 +423,22 @@ async function ex2 () {
 
   const context = { method: 'find', result: await posts.find({ query: { id: 1 } }), params: {} };
 
-  return fastJoin(postResolvers, context => query)(context);
+  return fastJoin(postResolvers, (context: any) => query)(context);
 }
 
 async function ex3 () {
   const postResolvers = {
     joins: {
-      author: () => async post => {
+      author: () => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.author = (await users.find({
           query: {
             id: post.userId
           }
         }))[0];
       },
-      starers: $select => async post => {
+      starers: ($select: any) => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.starers = await users.find({
           query: {
             id: { $in: post.starIds }, $select: $select || ['name']
@@ -434,27 +455,29 @@ async function ex3 () {
 
   const context = { method: 'find', result: await posts.find({ query: { id: 1 } }), params: {} };
 
-  return fastJoin(context => postResolvers, context => query)(context);
+  return fastJoin((context: any) => postResolvers, (context: any) => query)(context);
 }
 
 async function ex4 () {
   const postResolvers = {
     joins: {
-      author: () => async post => {
+      author: () => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.author = (await users.find({
           query: {
             id: post.userId
           }
         }))[0];
       },
-      starers: $select => async post => {
+      starers: ($select: any) => async (post: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         post.starers = await users.find({
           query: {
             id: { $in: post.starIds }, $select: $select || ['name']
           }
         });
       },
-      starerCount: () => post => { post.starerCount = post.starIds.length; }
+      starerCount: () => (post: any) => { post.starerCount = post.starIds.length; }
     }
   };
 
@@ -467,7 +490,7 @@ async function ex5 () {
   const postResolvers = {
     joins: {
       comments: {
-        resolver: ($select, $limit, $sort) => async post => {
+        resolver: ($select: any, $limit: any, $sort: any) => async (post: any) => {
           post.comments = await comments.find({
             query: {
               postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
@@ -476,7 +499,8 @@ async function ex5 () {
           return post.comments;
         },
         joins: {
-          author: $select => async comment => {
+          author: ($select: any) => async (comment: any) => {
+            // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
             comment.author = (await users.find({
               query: {
                 id: comment.userId, $select: $select
@@ -496,7 +520,8 @@ async function ex5 () {
 async function ex6 () {
   const commentResolvers = {
     joins: {
-      author: $select => async comment => {
+      author: ($select: any) => async (comment: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         comment.author = (await users.find({
           query: {
             id: comment.userId
@@ -509,7 +534,7 @@ async function ex6 () {
   const postResolvers = {
     joins: {
       comments: {
-        resolver: ($select, $limit, $sort) => async post => {
+        resolver: ($select: any, $limit: any, $sort: any) => async (post: any) => {
           post.comments = await comments.find({
             query: {
               postId: post.id, $select: $select, $limit: $limit || 5, [$sort]: { createdAt: -1 }
@@ -529,18 +554,18 @@ async function ex6 () {
 
 async function ex7 () {
   const postResolvers = {
-    before: context => {
+    before: (context: any) => {
       context._loaders = { user: {} };
 
       context._loaders.user.id = loaderFactory(users, 'id', false)(context);
     },
 
     joins: {
-      author: () => async (post, context) => {
+      author: () => async (post: any, context: any) => {
         post.author = await context._loaders.user.id.load(post.userId);
       },
 
-      starers: () => async (post, context) => {
+      starers: () => async (post: any, context: any) => {
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
       }
@@ -554,23 +579,24 @@ async function ex7 () {
 
 async function ex8 () {
   const postResolvers = {
-    before: context => {
+    before: (context: any) => {
       context._loaders = { user: {} };
 
-      context._loaders.user.id = new BatchLoader(async (keys, context) => {
+      context._loaders.user.id = new BatchLoader(async (keys: any, context: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
-        return getResultsByKey(keys, result, user => user.id, '!');
+        return getResultsByKey(keys, result, (user: any) => user.id, '!');
       },
       { context }
       );
     },
 
     joins: {
-      author: () => async (post, context) => {
+      author: () => async (post: any, context: any) => {
         post.author = await context._loaders.user.id.load(post.userId);
       },
 
-      starers: () => async (post, context) => {
+      starers: () => async (post: any, context: any) => {
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
       }
@@ -585,7 +611,7 @@ async function ex8 () {
 async function ex9 () {
   const commentResolvers = {
     joins: {
-      author: () => async (comment, context) => {
+      author: () => async (comment: any, context: any) => {
         if (!comment.userId) return;
         comment.author = await context._loaders.user.id.load(comment.userId);
       }
@@ -593,42 +619,44 @@ async function ex9 () {
   };
 
   const postResolvers = {
-    before: context => {
+    before: (context: any) => {
       context._loaders = { user: {}, comments: {} };
 
-      context._loaders.user.id = new BatchLoader(async (keys, context) => {
+      context._loaders.user.id = new BatchLoader(async (keys: any, context: any) => {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'find' does not exist on type '(this: any... Remove this comment to see the full error message
         const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
-        return getResultsByKey(keys, result, user => user.id, '!');
+        return getResultsByKey(keys, result, (user: any) => user.id, '!');
       },
       { context }
       );
 
-      context._loaders.comments.postId = new BatchLoader(async (keys, context) => {
+      context._loaders.comments.postId = new BatchLoader(async (keys: any, context: any) => {
+        // @ts-expect-error ts-migrate(2554) FIXME: Expected 3-4 arguments, but got 2.
         const result = await comments.find(makeCallingParams(context, { postId: { $in: getUniqueKeys(keys) } }));
-        return getResultsByKey(keys, result, comment => comment.postId, '[!]');
+        return getResultsByKey(keys, result, (comment: any) => comment.postId, '[!]');
       },
       { context }
       );
     },
 
     joins: {
-      author: () => async (post, context) => {
+      author: () => async (post: any, context: any) => {
         post.author = await context._loaders.user.id.load(post.userId);
       },
 
-      starers: () => async (post, context) => {
+      starers: () => async (post: any, context: any) => {
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
       },
 
-      reputation_author: (...args) => async (post, context) => {
+      reputation_author: (...args: any[]) => async (post: any, context: any) => {
         if (!post.reputation) return null;
-        const authors = await context._loaders.user.id.loadMany(post.reputation.map(rep => rep.userId));
-        post.reputation.forEach((rep, i) => { rep.author = authors[i].name; });
+        const authors = await context._loaders.user.id.loadMany(post.reputation.map((rep: any) => rep.userId));
+        post.reputation.forEach((rep: any, i: any) => { rep.author = authors[i].name; });
       },
 
       comments: {
-        resolver: (...args) => async (post, context) => {
+        resolver: (...args: any[]) => async (post: any, context: any) => {
           post.comments = await context._loaders.comments.postId.load(post.id);
           return post.comments;
         },

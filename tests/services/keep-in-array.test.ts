@@ -1,16 +1,26 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hooks'.
 const hooks = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookBefore... Remove this comment to see the full error message
 let hookBefore;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookAfter'... Remove this comment to see the full error message
 let hookAfter;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFindPa... Remove this comment to see the full error message
 let hookFindPaginate;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFind'.
 let hookFind;
-let hookFindNested;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFindNe... Remove this comment to see the full error message
+let hookFindNested: any;
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services keepInArray', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('removes fields', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       hookBefore = {
         type: 'before',
@@ -47,16 +57,19 @@ describe('services keepInArray', () => {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates hook before::create', () => {
       hooks.keepInArray('users', ['last'])(hookBefore);
       assert.deepEqual(hookBefore.data, { users: [{ last: 'Doe' }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('ignores bad or missing field', () => {
       hooks.keepInArray('xx', ['last'])(hookBefore);
       assert.deepEqual(hookBefore.data, { users: [{ first: 'John', last: 'Doe' }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates hook after::find with pagination', () => {
       hooks.keepInArray('users', ['first'])(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [
@@ -65,6 +78,7 @@ describe('services keepInArray', () => {
       ]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates hook after::find with no pagination', () => {
       hooks.keepInArray('users', ['first'])(hookFind);
       assert.deepEqual(hookFind.result, [
@@ -73,17 +87,20 @@ describe('services keepInArray', () => {
       ]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates hook after', () => {
       hooks.keepInArray('users', ['first'])(hookAfter);
       assert.deepEqual(hookAfter.result, { users: [{ first: 'Jane' }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates when called internally on server', () => {
       hookAfter.params.provider = '';
       hooks.keepInArray('users', ['first'])(hookAfter);
       assert.deepEqual(hookAfter.result, { users: [{ first: 'Jane' }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('does not throw if field is missing', () => {
       const hook = {
         type: 'before',
@@ -95,6 +112,7 @@ describe('services keepInArray', () => {
       assert.deepEqual(hook.data, { users: [{ last: 'Doe' }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('keeps undefined values', () => {
       const hook = {
         type: 'before',
@@ -106,6 +124,7 @@ describe('services keepInArray', () => {
       assert.deepEqual(hook.data, { users: [{ first: undefined }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('keeps null values', () => {
       const hook = {
         type: 'before',
@@ -117,6 +136,7 @@ describe('services keepInArray', () => {
       assert.deepEqual(hook.data, { users: [{ first: null }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('keeps false values', () => {
       const hook = {
         type: 'before',
@@ -128,6 +148,7 @@ describe('services keepInArray', () => {
       assert.deepEqual(hook.data, { users: [{ first: false }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('keeps 0 values', () => {
       const hook = {
         type: 'before',
@@ -139,6 +160,7 @@ describe('services keepInArray', () => {
       assert.deepEqual(hook.data, { users: [{ first: 0 }] });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('keeps empty string values', () => {
       const hook = {
         type: 'before',
@@ -151,7 +173,9 @@ describe('services keepInArray', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('handles dot notation', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       hookBefore = {
         type: 'before',
@@ -170,6 +194,7 @@ describe('services keepInArray', () => {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('updates hook after::find with dot notation field ', () => {
       hooks.keepInArray('account.users', ['first'])(hookFindNested);
       assert.deepEqual(hookFindNested.result, [
@@ -178,6 +203,7 @@ describe('services keepInArray', () => {
       ]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('prop with no dots', () => {
       hooks.keepInArray('users', ['empl'])(hookBefore);
       assert.deepEqual(hookBefore.data,
@@ -185,6 +211,7 @@ describe('services keepInArray', () => {
       );
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('prop with 1 dot', () => {
       hooks.keepInArray('users', ['empl.name', 'dept'])(hookBefore);
       assert.deepEqual(hookBefore.data,
@@ -192,6 +219,7 @@ describe('services keepInArray', () => {
       );
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('prop with 2 dots', () => {
       hooks.keepInArray('users', ['empl.name.last', 'empl.status', 'dept'])(hookBefore);
       assert.deepEqual(hookBefore.data,
@@ -199,6 +227,7 @@ describe('services keepInArray', () => {
       );
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('ignores bad or missing paths', () => {
       hooks.keepInArray('users', ['empl.name.first', 'empl.name.surname'])(hookBefore);
       assert.deepEqual(hookBefore.data,
@@ -206,13 +235,16 @@ describe('services keepInArray', () => {
       );
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('ignores bad or missing no dot path', () => {
       hooks.keepInArray('users', ['xx'])(hookBefore);
       assert.deepEqual(hookBefore.data, { users: [{}] });
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('ignore non-object records', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       hookBefore = {
         type: 'before',
@@ -228,6 +260,7 @@ describe('services keepInArray', () => {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('before', () => {
       hooks.keepInArray('users', ['empl'])(hookBefore);
       assert.deepEqual(hookBefore.data,
@@ -235,6 +268,7 @@ describe('services keepInArray', () => {
       );
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('after', () => {
       hooks.keepInArray('users', ['first'])(hookAfter);
       assert.deepEqual(hookAfter.result,

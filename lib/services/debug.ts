@@ -1,6 +1,6 @@
 
-module.exports = function (msg, ...fieldNames) {
-  return context => {
+module.exports = function (msg: any, ...fieldNames: any[]) {
+  return (context: any) => {
     console.log(`* ${msg || ''}\ntype:${context.type}, method: ${context.method}`);
     if (context.data) { console.log('data:', context.data); }
     if (context.params && context.params.query) { console.log('query:', context.params.query); }

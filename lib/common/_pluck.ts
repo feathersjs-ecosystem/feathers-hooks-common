@@ -1,6 +1,6 @@
 const pick = require('lodash/pick');
 
-module.exports = function (items, fieldNames) {
+module.exports = function (items: any, fieldNames: any) {
   if (!Array.isArray(items)) {
     return pick(items, fieldNames);
   }

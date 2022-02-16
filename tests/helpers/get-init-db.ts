@@ -1,5 +1,5 @@
 
-module.exports = function (name) {
+module.exports = function (name: any) {
   const users = {
     0: { id: 'as61389dadhga62343hads6712', name: 'Author 1', email: 'author1@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 55 },
     1: { id: '167asdf3689348sdad7312131s', name: 'Author 2', email: 'author2@posties.com', password: '2347wjkadhad8y7t2eeiudhd98eu2rygr', age: 16 }
@@ -94,6 +94,7 @@ module.exports = function (name) {
 
   // console.log(`returning db for ${name}`);
   return {
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     store: dbs[name],
     idField: '_id'
   };

@@ -1,8 +1,9 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'errors'.
 const errors = require('@feathersjs/errors');
 
-module.exports = function (...providers) {
-  return context => {
+module.exports = function (...providers: any[]) {
+  return (context: any) => {
     const hookProvider = (context.params || {}).provider;
 
     const anyProvider = providers.length === 0;

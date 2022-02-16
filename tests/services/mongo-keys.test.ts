@@ -1,6 +1,8 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
 const { ObjectID } = require('mongodb');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'mongoKeys'... Remove this comment to see the full error message
 const { mongoKeys } = require('../../lib/services');
 
 const s0 = '000000000000';
@@ -9,7 +11,9 @@ const s2 = '222222222222';
 const s5 = '555555555555';
 const s8 = '888888888888';
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services mongoKeys', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ a: s1, c: s0 }', () => {
     const newQuery = wrapper(
       ['a'],
@@ -20,6 +24,7 @@ describe('services mongoKeys', () => {
     assert.isString(newQuery.c, '"c" not a string');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ a: { b: s0 }, c: s0 }', () => {
     const newQuery = wrapper(
       ['a'],
@@ -30,6 +35,7 @@ describe('services mongoKeys', () => {
     assert.isString(newQuery.c, '"c" not a string');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ a: { $in: [s1, s2] }, c: s0 }', () => {
     const newQuery = wrapper(
       ['a'],
@@ -41,6 +47,7 @@ describe('services mongoKeys', () => {
     assert.isString(newQuery.c, '"c" not a string');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ a: s1, b: \'111111111111\', c: s0 }', () => {
     const newQuery = wrapper(
       ['a', 'b'],
@@ -52,6 +59,7 @@ describe('services mongoKeys', () => {
     assert.isString(newQuery.c, '"c" not a string');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ a: { x: s8 } }', () => {
     const newQuery = wrapper(
       ['a.x'],
@@ -61,6 +69,7 @@ describe('services mongoKeys', () => {
     assert.instanceOf(newQuery.a.x, ObjectID, '"a.x" not ObjectID');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ $or: [{ a: { x: s8 } }, { b: s5 }, { c: s0 }], d: s0 }', () => {
     const newQuery = wrapper(
       ['a.x', 'b'],
@@ -73,6 +82,7 @@ describe('services mongoKeys', () => {
     assert.isString(newQuery.d, '"d" not a string');
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('{ $or: [{ a: { x: s8 } }, { a: s5 }] } - questionable', () => {
     const newQuery = wrapper(
       ['a', 'a.x'],
@@ -84,7 +94,7 @@ describe('services mongoKeys', () => {
   });
 });
 
-function wrapper (keys, query) {
+function wrapper (keys: any, query: any) {
   const newContext = mongoKeys(ObjectID, keys)({ params: { query }, type: 'before', method: 'find' });
   return newContext.params.query;
 }

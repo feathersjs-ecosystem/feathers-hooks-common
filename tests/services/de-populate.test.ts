@@ -1,12 +1,16 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assert').strict;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'dePopulate... Remove this comment to see the full error message
 const { dePopulate } = require('../../lib/services/index');
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services dePopulate - not dot notation', () => {
-  let hookAfter;
-  let hookBeforeArray;
-  let hookBefore;
+  let hookAfter: any;
+  let hookBeforeArray: any;
+  let hookBefore: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     hookAfter = {
       type: 'after',
@@ -94,6 +98,7 @@ describe('services dePopulate - not dot notation', () => {
     };
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('one item, after hook, missing props', () => {
     const hook = clone(hookAfter);
     const deHook = dePopulate()(hook);
@@ -104,6 +109,7 @@ describe('services dePopulate - not dot notation', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('one item, before hook, not populated', () => {
     const hook = clone(hookBefore);
     const deHook = dePopulate()(hook);
@@ -114,6 +120,7 @@ describe('services dePopulate - not dot notation', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('item array, before hook', () => {
     const hook = clone(hookBeforeArray);
     const deHook = dePopulate()(hook);
@@ -139,11 +146,13 @@ describe('services dePopulate - not dot notation', () => {
   });
 });
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services dePopulate - dot notation', () => {
-  let hookAfter;
-  let hookBeforeArray;
-  let hookBefore;
+  let hookAfter: any;
+  let hookBeforeArray: any;
+  let hookBefore: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     hookAfter = {
       type: 'after',
@@ -240,6 +249,7 @@ describe('services dePopulate - dot notation', () => {
     };
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('one item, after hook, missing props', () => {
     const hook = clone(hookAfter);
     const deHook = dePopulate()(hook);
@@ -251,6 +261,7 @@ describe('services dePopulate - dot notation', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('one item, before hook, not populated', () => {
     const hook = clone(hookBefore);
     const deHook = dePopulate()(hook);
@@ -261,6 +272,7 @@ describe('services dePopulate - dot notation', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('item array, before hook', () => {
     const hook = clone(hookBeforeArray);
     const deHook = dePopulate()(hook);
@@ -288,6 +300,7 @@ describe('services dePopulate - dot notation', () => {
   });
 });
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'clone'.
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

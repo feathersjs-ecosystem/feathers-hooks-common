@@ -1,5 +1,7 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('chai').assert;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'sequelizeC... Remove this comment to see the full error message
 const sequelizeConvert = require('../../lib/services/sequelize-convert');
 
 const converts = {
@@ -13,15 +15,18 @@ const converts = {
 };
 
 const convertDatetime = {
-  sql: dateNow => new Date(dateNow).toISOString(),
-  js: sqlDate => new Date(sqlDate).valueOf()
+  sql: (dateNow: any) => new Date(dateNow).toISOString(),
+  js: (sqlDate: any) => new Date(sqlDate).valueOf()
 };
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('conversion-sql.test.js', function () {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('as before hook', () => {
-    let context;
-    let contextArray;
+    let context: any;
+    let contextArray: any;
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       context = {
         type: 'before',
@@ -77,6 +82,7 @@ describe('conversion-sql.test.js', function () {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('converts single object', () => {
       const newContext = sequelizeConvert(converts)(context);
 
@@ -96,6 +102,7 @@ describe('conversion-sql.test.js', function () {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('converts array of objects', () => {
       const newContext = sequelizeConvert(converts)(contextArray);
 
@@ -128,6 +135,7 @@ describe('conversion-sql.test.js', function () {
       }]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('uses datetime converter', () => {
       const newContext = sequelizeConvert(converts, null, { date: convertDatetime })(context);
 
@@ -147,6 +155,7 @@ describe('conversion-sql.test.js', function () {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('respects fields to ignore', () => {
       const newContext = sequelizeConvert(converts, ['isInvitation', 'isVerified', 'verifyChanges'])(context);
 
@@ -167,12 +176,14 @@ describe('conversion-sql.test.js', function () {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('as after hook', () => {
-    let context;
-    let contextISO;
-    let contextArray;
-    let contextPaginated;
+    let context: any;
+    let contextISO: any;
+    let contextArray: any;
+    let contextPaginated: any;
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       context = {
         type: 'after',
@@ -282,6 +293,7 @@ describe('conversion-sql.test.js', function () {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('converts single object', () => {
       const newContext = sequelizeConvert(converts)(context);
 
@@ -301,6 +313,7 @@ describe('conversion-sql.test.js', function () {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('uses datetime converter', () => {
       const newContext = sequelizeConvert(converts, null, { date: convertDatetime })(contextISO);
 
@@ -320,6 +333,7 @@ describe('conversion-sql.test.js', function () {
       });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('converts array of objects, not paginated', () => {
       const newContext = sequelizeConvert(converts)(contextArray);
 
@@ -352,6 +366,7 @@ describe('conversion-sql.test.js', function () {
       }]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('converts array of objects, paginated', () => {
       const newContext = sequelizeConvert(converts)(contextPaginated);
 
@@ -384,6 +399,7 @@ describe('conversion-sql.test.js', function () {
       }]);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('respects fields to ignore', () => {
       const newContext = sequelizeConvert(converts, ['isInvitation', 'isVerified', 'verifyChanges'])(context);
 

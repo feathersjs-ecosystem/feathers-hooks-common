@@ -1,12 +1,15 @@
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'omit'.
 const omit = require('lodash/omit');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getItems'.
 const getItems = require('./get-items');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'replaceIte... Remove this comment to see the full error message
 const replaceItems = require('./replace-items');
 
-module.exports = function (func) {
-  return context => {
+module.exports = function (func: any) {
+  return (context: any) => {
     const items = getItems(context);
-    const converter = item => {
+    const converter = (item: any) => {
       if (typeof func === 'function') {
         func(item);
       }

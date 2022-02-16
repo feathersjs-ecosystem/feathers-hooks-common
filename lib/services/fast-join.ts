@@ -1,6 +1,6 @@
 
-module.exports = function fastJoin (joins1, query1) {
-  return context => {
+module.exports = function fastJoin (joins1: any, query1: any) {
+  return (context: any) => {
     const { method, data, result, params } = context;
 
     if (params._populate || params._graphql) return; // our service called within another populate
@@ -26,10 +26,13 @@ module.exports = function fastJoin (joins1, query1) {
   };
 };
 
-function joinsForQuery ({ joins } = {}, query = undefined, context = {}) {
-  const runtime = [];
+function joinsForQuery ({
+  joins
+}: any = {}, query = undefined, context = {}) {
+  const runtime: any = [];
 
   Object.keys(joins).forEach(outerLabel => {
+    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     if (query && !query[outerLabel]) return;
 
     let join = joins[outerLabel];
@@ -42,6 +45,7 @@ function joinsForQuery ({ joins } = {}, query = undefined, context = {}) {
       innerJoins = innerJoins.joins;
     }
 
+    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     let args = query ? query[outerLabel] : [];
     if (!Array.isArray(args)) {
       args = typeof args === 'object' && args !== null ? args.args : [];
@@ -50,6 +54,7 @@ function joinsForQuery ({ joins } = {}, query = undefined, context = {}) {
     runtime.push({
       args,
       resolver: resolver,
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       joins: innerJoins ? joinsForQuery({ joins: innerJoins }, query ? query[outerLabel] : null, context) : null
     });
   });
@@ -57,10 +62,14 @@ function joinsForQuery ({ joins } = {}, query = undefined, context = {}) {
   return runtime;
 }
 
-function recursive (joins, results, context) {
+function recursive (joins: any, results: any, context: any) {
   return Promise.all((Array.isArray(results) ? results : [results]).map(
     result => Promise.all(joins.map(
-      ({ args = [], resolver, joins }) => {
+      ({
+        args = [],
+        resolver,
+        joins
+      }: any) => {
         return Promise.resolve(resolver(...args)(result, context))
           .then(addedResults => {
             if (!addedResults || !joins) return;

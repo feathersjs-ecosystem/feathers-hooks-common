@@ -1,5 +1,7 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hooks'.
 const hooks = require('../../lib/index');
 
 const hookNames = [
@@ -56,14 +58,18 @@ const hookNames = [
   'isNot'
 ].sort();
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services exposed hooks', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('expected hooks are exposed', () => {
 
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('no unexpected hooks', () => {
     assert.deepEqual(
       Object.keys(hooks).sort(),
+      // @ts-expect-error ts-migrate(2769) FIXME: No overload matches this call.
       [].concat(hookNames, 'default').sort()
     );
   });

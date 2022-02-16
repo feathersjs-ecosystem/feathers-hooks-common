@@ -1,5 +1,5 @@
 
-module.exports = function (context) {
+module.exports = function (context: any) {
   if (context.params && context.params._actOn === 'dispatch') return context.dispatch;
 
   const items = context.type === 'before' ? context.data : context.result;

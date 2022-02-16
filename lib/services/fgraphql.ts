@@ -1,25 +1,31 @@
 
 const makeDebug = require('debug');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getItems'.
 const getItems = require('./get-items');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'replaceIte... Remove this comment to see the full error message
 const replaceItems = require('./replace-items');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'debug'.
 const debug = makeDebug('fgraphql');
 const graphqlActions = ['Query', 'Mutation', 'Subscription'];
 
 module.exports = function fgraphql (options1 = {}) {
   debug('init call');
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'parse' does not exist on type '{}'.
   const { parse, recordType, resolvers, runTime } = options1;
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'schema' does not exist on type '{}'.
   let { schema, query: query1 } = options1;
 
-  let ourResolvers; // will be initialized when hook is first called
+  let ourResolvers: any; // will be initialized when hook is first called
 
   const options = Object.assign({}, {
-    skipHookWhen: context => !!(context.params || {}).graphql,
+    skipHookWhen: (context: any) => !!(context.params || {}).graphql,
     inclAllFieldsServer: true,
     inclAllFieldsClient: true,
     inclAllFields: null, // Will be initialized each hook call.
     inclJoinedNames: true,
     extraAuthProps: []
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'options' does not exist on type '{}'.
   }, options1.options || {});
 
   schema = isFunction(schema) ? schema() : schema;
@@ -44,7 +50,7 @@ module.exports = function fgraphql (options1 = {}) {
   debug('schema now in internal form');
 
   // Return the hook.
-  return context => {
+  return (context: any) => {
     const contextParams = context.params;
     const optSkipHookWhen = options.skipHookWhen;
     const skipHookWhen = isFunction(optSkipHookWhen) ? optSkipHookWhen(context) : optSkipHookWhen;
@@ -83,8 +89,9 @@ module.exports = function fgraphql (options1 = {}) {
       cache: {}
     };
 
-    (options.extraAuthProps || []).forEach(name => {
+    (options.extraAuthProps || []).forEach((name: any) => {
       if (name in contextParams && !(name in resolverContent)) {
+        // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         resolverContent[name] = contextParams[name];
       }
     });
@@ -100,6 +107,7 @@ module.exports = function fgraphql (options1 = {}) {
     // Populate data.
     const recs = getItems(context);
 
+    // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
     return processRecords(store, query, recs, recordType)
       .then(() => {
         replaceItems(context, recs);
@@ -109,7 +117,7 @@ module.exports = function fgraphql (options1 = {}) {
 };
 
 // Process records recursively.
-function processRecords (store, query, recs, type, depth = 0) {
+function processRecords (store: any, query: any, recs: any, type: any, depth = 0) {
   if (!recs) return; // Catch no data to populate.
 
   recs = isArray(recs) ? recs : [recs];
@@ -126,7 +134,7 @@ function processRecords (store, query, recs, type, depth = 0) {
   }
 
   return Promise.all(
-    recs.map((rec, j) => processRecord(store, query, depth, rec, type, j))
+    recs.map((rec: any, j: any) => processRecord(store, query, depth, rec, type, j))
   )
     .then(() => {
       debug(`^^^^^^^^^^ exit ${depth}\n`);
@@ -134,13 +142,13 @@ function processRecords (store, query, recs, type, depth = 0) {
 }
 
 // Process the a record.
-function processRecord (store, query, depth, rec, type, j) {
+function processRecord (store: any, query: any, depth: any, rec: any, type: any, j: any) {
   debug(`processRecord rec# ${j} typeof ${typeof rec} Type ${type}`);
   if (!rec) return; // Catch any null values from resolvers.
 
   const queryPropNames = Object.keys(query);
-  const recFieldNamesInQuery = [];
-  const joinedNamesInQuery = [];
+  const recFieldNamesInQuery: any = [];
+  const joinedNamesInQuery: any = [];
 
   // Process every query item.
   return Promise.all(
@@ -169,8 +177,8 @@ function processRecord (store, query, depth, rec, type, j) {
 
 // Process one query field for a record.
 function processRecordQuery (
-  store, query, depth, rec, fieldName, type,
-  recFieldNamesInQuery, joinedNamesInQuery, j, i
+  store: any, query: any, depth: any, rec: any, fieldName: any, type: any,
+  recFieldNamesInQuery: any, joinedNamesInQuery: any, j: any, i: any
 ) {
   debug(`\nprocessRecordQuery rec# ${j} Type ${type} field# ${i} name ${fieldName}`);
 
@@ -188,7 +196,7 @@ function processRecordQuery (
 }
 
 // Process a resolver call.
-function processRecordFieldResolver (store, query, depth, rec, fieldName, type) {
+function processRecordFieldResolver (store: any, query: any, depth: any, rec: any, fieldName: any, type: any) {
   debug('is resolver call');
   const ourQuery = store.feathersSdl[type][fieldName];
   const ourResolver = store.ourResolvers[type][fieldName];
@@ -226,7 +234,7 @@ function processRecordFieldResolver (store, query, depth, rec, fieldName, type) 
 }
 
 // Convert result of resolver function to match query field requirements.
-function convertResolverResult (result, ourQuery, fieldName, type) {
+function convertResolverResult (result: any, ourQuery: any, fieldName: any, type: any) {
   if (result === null || result === undefined) {
     return ourQuery.listType ? [] : null;
   }
@@ -244,22 +252,23 @@ function convertResolverResult (result, ourQuery, fieldName, type) {
   return result;
 }
 
-function convertSdlToFeathersSchemaObject (schemaDefinitionLanguage, parse) {
+function convertSdlToFeathersSchemaObject (schemaDefinitionLanguage: any, parse: any) {
   const graphQLSchemaObj = parse(schemaDefinitionLanguage);
   return convertDocument(graphQLSchemaObj);
 }
 
-function convertDocument (ast) {
+function convertDocument (ast: any) {
   const result = {};
 
   if (ast.kind !== 'Document' || !isArray(ast.definitions)) {
     throw new Error('Not a valid GraphQL Document.');
   }
 
-  ast.definitions.forEach((definition, definitionIndex) => {
+  ast.definitions.forEach((definition: any, definitionIndex: any) => {
     const [objectName, converted] = convertObjectTypeDefinition(definition, definitionIndex);
 
     if (objectName) {
+      // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       result[objectName] = converted;
     }
   });
@@ -267,7 +276,7 @@ function convertDocument (ast) {
   return result;
 }
 
-function convertObjectTypeDefinition (definition, definitionIndex) {
+function convertObjectTypeDefinition (definition: any, definitionIndex: any) {
   const converted = {};
 
   if (definition.kind !== 'ObjectTypeDefinition' || !isArray(definition.fields)) {
@@ -277,15 +286,16 @@ function convertObjectTypeDefinition (definition, definitionIndex) {
   const objectTypeName = convertName(definition.name, `Type# ${definitionIndex}`);
   if (graphqlActions.includes(objectTypeName)) return [null, null];
 
-  definition.fields.forEach(field => {
+  definition.fields.forEach((field: any) => {
     const [fieldName, fieldDefinition] = convertFieldDefinition(field, `Type ${objectTypeName}`);
+    // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     converted[fieldName] = fieldDefinition;
   });
 
   return [objectTypeName, converted];
 }
 
-function convertName (nameObj, errDesc) {
+function convertName (nameObj: any, errDesc: any) {
   if (!isObject(nameObj) || !isString(nameObj.value)) {
     throw new Error(`${errDesc} does not have a valid name prop.`);
   }
@@ -293,19 +303,21 @@ function convertName (nameObj, errDesc) {
   return nameObj.value;
 }
 
-function convertFieldDefinition (field, errDesc) {
+function convertFieldDefinition (field: any, errDesc: any) {
   if (field.kind !== 'FieldDefinition' || !isObject(field.type)) {
     throw new Error(`${errDesc} is not a valid ObjectTypeDefinition`);
   }
 
   const fieldName = convertName(field.name, errDesc);
+  // @ts-expect-error ts-migrate(2554) FIXME: Expected 3 arguments, but got 2.
   const converted = convertFieldDefinitionType(field.type, errDesc);
   converted.inputValues = field.arguments && field.arguments.length !== 0;
 
   return [fieldName, converted];
 }
 
-function convertFieldDefinitionType (fieldDefinitionType, errDesc, converted) {
+// @ts-expect-error ts-migrate(7023) FIXME: 'convertFieldDefinitionType' implicitly has return... Remove this comment to see the full error message
+function convertFieldDefinitionType (fieldDefinitionType: any, errDesc: any, converted: any) {
   converted = converted || { nonNullTypeList: false, listType: false, nonNullTypeField: false, typeof: null };
 
   if (!isObject(fieldDefinitionType)) {
@@ -314,6 +326,7 @@ function convertFieldDefinitionType (fieldDefinitionType, errDesc, converted) {
 
   switch (fieldDefinitionType.kind) {
     case 'NamedType':
+      // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
       converted.typeof = convertName(fieldDefinitionType.name);
       return converted;
     case 'NonNullType':
@@ -330,24 +343,26 @@ function convertFieldDefinitionType (fieldDefinitionType, errDesc, converted) {
   }
 }
 
-function throwError (msg, code) {
+function throwError (msg: any, code: any) {
   const err = new Error(msg);
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'code' does not exist on type 'Error'.
   err.code = code;
   throw err;
 }
 
-function isObject (obj) {
+// @ts-expect-error ts-migrate(2393) FIXME: Duplicate function implementation.
+function isObject (obj: any) {
   return typeof obj === 'object' && obj !== null;
 }
 
-function isString (str) {
+function isString (str: any) {
   return typeof str === 'string';
 }
 
-function isFunction (func) {
+function isFunction (func: any) {
   return typeof func === 'function';
 }
 
-function isArray (array) {
+function isArray (array: any) {
   return Array.isArray(array);
 }

@@ -1,11 +1,15 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assert').strict;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'serialize'... Remove this comment to see the full error message
 const { serialize } = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services serialize', () => {
-  let hookAfter;
-  let schema;
+  let hookAfter: any;
+  let schema: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     hookAfter = {
       type: 'after',
@@ -18,14 +22,14 @@ describe('services serialize', () => {
     schema = {
       only: ['updatedAt'],
       computed: {
-        commentsCount: (recommendation, hook) => recommendation.post.commentsInfo.length
+        commentsCount: (recommendation: any, hook: any) => recommendation.post.commentsInfo.length
       },
       post: {
         exclude: ['id', 'createdAt', 'author', 'readers', '_id'],
         authorInfo: {
           exclude: ['id', 'password', '_id', 'age'],
           computed: {
-            isUnder18: (authorInfo, hook) => authorInfo.age < 18
+            isUnder18: (authorInfo: any, hook: any) => authorInfo.age < 18
           }
         },
         readersInfo: {
@@ -39,6 +43,7 @@ describe('services serialize', () => {
     };
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('for one item', () => {
     const hook = clone(hookAfter);
     hook.result = {
@@ -143,8 +148,9 @@ describe('services serialize', () => {
     );
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
   it('schema param is not changed', () => {
-    const schema1 = hook => {
+    const schema1 = (hook: any) => {
       return {};
     };
 
@@ -219,6 +225,6 @@ describe('services serialize', () => {
 
 // Helpers
 
-function clone (obj) {
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

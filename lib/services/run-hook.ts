@@ -1,8 +1,8 @@
 
-module.exports = function runHook (extraContent1) {
+module.exports = function runHook (extraContent1: any) {
   const extraContent = extraContent1; // cannot access extraContent1 below. why not?
 
-  return hookFunc => result => {
+  return (hookFunc: any) => (result: any) => {
     const context = Object.assign({}, { type: 'after', params: {}, result }, extraContent);
 
     if (typeof result === 'object' && result !== null && result.total && result.data) {

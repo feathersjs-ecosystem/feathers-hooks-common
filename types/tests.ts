@@ -57,6 +57,7 @@ import {
     validate,
     validateSchema,
     when,
+// @ts-expect-error ts-migrate(7016) FIXME: Could not find a declaration file for module 'feat... Remove this comment to see the full error message
 } from 'feathers-hooks-common';
 import { parse } from 'graphql';
 import ajv = require('ajv');
@@ -67,6 +68,7 @@ const context1: HookContext = {
     method: 'create',
     params: {},
     path: '/',
+    // @ts-expect-error ts-migrate(2322) FIXME: Type 'null' is not assignable to type 'Service<any... Remove this comment to see the full error message
     service: null
 };
 
@@ -75,11 +77,11 @@ const hook2: Hook = ctx => ctx;
 const hook3: Hook = async ctx => ctx;
 const hook4: Hook = async ctx => ctx;
 
-const syncTrue: SyncPredicateFn = ctx => true;
-const syncFalse: SyncPredicateFn = ctx => false;
+const syncTrue: SyncPredicateFn = (ctx: any) => true;
+const syncFalse: SyncPredicateFn = (ctx: any) => false;
 
-const asyncTrue: AsyncPredicateFn = async ctx => true;
-const asyncFalse: AsyncPredicateFn = async ctx => false;
+const asyncTrue: AsyncPredicateFn = async (ctx: any) => true;
+const asyncFalse: AsyncPredicateFn = async (ctx: any) => false;
 
 const service1: Service<any> = null as any;
 
@@ -91,15 +93,15 @@ actOnDefault(hook1, hook2, hook3, hook4);
 actOnDispatch(hook1, hook2, hook3, hook4);
 
 // $ExpectType Hook<any, Service<any>>
-alterItems(rec => {
+alterItems((rec: any) => {
     delete rec.password;
 });
 
 // $ExpectType Hook<any, Service<any>>
-alterItems(rec => rec.email = 'somestring'.toLowerCase()); // Like `lowerCase('email')`.
+alterItems((rec: any) => rec.email = 'somestring'.toLowerCase()); // Like `lowerCase('email')`.
 
 // $ExpectType Hook<any, Service<any>>
-cache(new Map(), 'a', { clone: x => x });
+cache(new Map(), 'a', { clone: (x: any) => x });
 
 // $ExpectType Params
 callingParams({
@@ -152,7 +154,7 @@ softDelete({
 
 const commentResolvers: ResolverMap<any> = {
     joins: {
-        author: $select => async comment => {
+        author: ($select: any) => async (comment: any) => {
             const authors = await service1.find({
                 query: { id: comment.userId, $select: $select || ['name'] },
                 paginate: false
@@ -165,7 +167,7 @@ const commentResolvers: ResolverMap<any> = {
 const postResolvers: ResolverMap<any> = {
     joins: {
         comments: {
-            resolver: ($select, $limit, $sort) => async post => {
+            resolver: ($select: any, $limit: any, $sort: any) => async (post: any) => {
                 post.comments = await service1.find({
                     query: { postId: post.id, $select, $limit: $limit || 5, [$sort]: { createdAt: -1 } },
                     paginate: false
@@ -180,7 +182,7 @@ const postResolvers: ResolverMap<any> = {
 
 const userResolvers: ResolverMap<any> = {
     joins: {
-        memberships: () => async (user, context) => {
+        memberships: () => async (user: any, context: any) => {
             const memberships = await context.app.service('memberships').find({
                 query: {
                     user: user._id,
@@ -199,7 +201,7 @@ fastJoin(postResolvers);
 // $ExpectType Hook<any, Service<any>>
 fastJoin(postResolvers, { abc: 'def' });
 // $ExpectType Hook<any, Service<any>>
-fastJoin(ctx => postResolvers);
+fastJoin((ctx: any) => postResolvers);
 // $ExpectType Hook<any, Service<any>>
 fastJoin(postResolvers);
 
@@ -249,7 +251,7 @@ const fgraphqlOptions2: FGraphQLHookOptions = {
         inclJoinedNames: false,
         inclAllFieldsClient: true,
         inclAllFieldsServer: true,
-        skipHookWhen: (context) => { context.data; return false; }
+        skipHookWhen: (context: any) => { context.data; return false; }
     }
 };
 // $ExpectType Hook<any, Service<any>>
@@ -331,22 +333,22 @@ runHook()(keep('abc'))([]);
 runHook(context1)(keep('abc'))([]);
 
 // $ExpectType Hook<any, Service<any>>
-runParallel(hook1, x => x);
+runParallel(hook1, (x: any) => x);
 // $ExpectType Hook<any, Service<any>>
-runParallel(hook1, x => x, 7);
+runParallel(hook1, (x: any) => x, 7);
 
 // $ExpectType Hook<any, Service<any>>
 serialize({
     only: 'updatedAt',
     computed: {
-        commentsCount: (recommendation, hook) => recommendation.post.commentsInfo.length,
+        commentsCount: (recommendation: any, hook: any) => recommendation.post.commentsInfo.length,
     },
     post: {
         exclude: ['id', 'createdAt', 'author', 'readers'],
         authorItem: {
             exclude: ['id', 'password', 'age'],
             computed: {
-                isUnder18: (authorItem, hook) => authorItem.age < 18,
+                isUnder18: (authorItem: any, hook: any) => authorItem.age < 18,
             },
         },
         readersInfo: {
@@ -379,7 +381,7 @@ sequelizeConvert({
     });
 
 // $ExpectType Hook<any, Service<any>>
-sifter(ctx => item => true);
+sifter((ctx: any) => (item: any) => true);
 
 // $ExpectType Hook<any, Service<any>>
 stashBefore();
@@ -387,20 +389,20 @@ stashBefore();
 stashBefore('abc');
 
 // $ExpectType Hook<any, Service<any>>
-traverse(function(node) {
+traverse(function(this: any, node: any) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
 });
 // $ExpectType Hook<any, Service<any>>
-traverse(function(node) {
+traverse(function(this: any, node: any) {
     if (typeof node === 'string') {
         this.update(node.trim());
     }
-}, context => context.params.query);
+}, (context: any) => context.params.query);
 
 // $ExpectType Hook<any, Service<any>>
-validate(async (data, context) => {
+validate(async (data: any, context: any) => {
     return { length: 'expected max 3, got 7' };
 });
 

@@ -1,12 +1,12 @@
 
-module.exports = function (_iffElse) {
-  return function (predicate, ...trueHooks) {
+module.exports = function (_iffElse: any) {
+  return function(this: any, predicate: any, ...trueHooks: any[]) {
     const that = this;
 
-    function iffWithoutElse (context) {
+    function iffWithoutElse (context: any) {
       return _iffElse(predicate, [].concat(...trueHooks), null).call(that, context);
     }
-    iffWithoutElse.else = (...falseHooks) => _iffElse(predicate, [].concat(...trueHooks), [].concat(...falseHooks));
+    iffWithoutElse.else = (...falseHooks: any[]) => _iffElse(predicate, [].concat(...trueHooks), [].concat(...falseHooks));
 
     return iffWithoutElse;
   };

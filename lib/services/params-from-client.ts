@@ -1,6 +1,6 @@
 
-module.exports = function (...whitelist) {
-  return context => {
+module.exports = function (...whitelist: any[]) {
+  return (context: any) => {
     const params = context.params;
 
     if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {

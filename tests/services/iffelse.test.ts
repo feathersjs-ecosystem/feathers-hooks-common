@@ -1,24 +1,34 @@
 
 const {
+  // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
   assert
 } = require('chai');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hooks'.
 const hooks = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hook'.
 let hook;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookBefore... Remove this comment to see the full error message
 let hookBefore;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookAfter'... Remove this comment to see the full error message
 let hookAfter;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcnSyn... Remove this comment to see the full error message
 let hookFcnSyncCalls;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcnAsy... Remove this comment to see the full error message
 let hookFcnAsyncCalls;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcnCal... Remove this comment to see the full error message
 let hookFcnCalls;
-let predicateParam1, predicateParam2, predicateParam3, predicateParam4;
+let predicateParam1: any, predicateParam2: any, predicateParam3: any, predicateParam4: any;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'context'.
 let context;
-let predicateTrueContext;
-let hookFcnSyncContext;
-let hookFcnAsyncContext;
-let hookFcnContext;
+let predicateTrueContext: any;
+let hookFcnSyncContext: any;
+let hookFcnAsyncContext: any;
+let hookFcnContext: any;
 
-const hookFcnSync = function (hook) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcnSyn... Remove this comment to see the full error message
+const hookFcnSync = function(this: any, hook: any) {
   hookFcnSyncContext = this;
 
   hookFcnSyncCalls = +1;
@@ -27,7 +37,8 @@ const hookFcnSync = function (hook) {
   return hook;
 };
 
-const hookFcnAsync = function (hook) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcnAsy... Remove this comment to see the full error message
+const hookFcnAsync = function(this: any, hook: any) {
   hookFcnAsyncContext = this;
 
   return new Promise(resolve => {
@@ -38,7 +49,8 @@ const hookFcnAsync = function (hook) {
   });
 };
 
-const hookFcn = function (hook, cb) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hookFcn'.
+const hookFcn = function(this: any, hook: any, cb: any) {
   hookFcnContext = this;
 
   hookFcnCalls = +1;
@@ -46,7 +58,7 @@ const hookFcn = function (hook, cb) {
   return hook;
 };
 
-const predicateTrue = function (hook, more2, more3, more4) {
+const predicateTrue = function(this: any, hook: any, more2: any, more3: any, more4: any) {
   predicateTrueContext = this;
 
   predicateParam1 = hook;
@@ -57,7 +69,9 @@ const predicateTrue = function (hook, more2, more3, more4) {
   return true;
 };
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services iffElse', () => {
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     hookAfter = { type: 'before', method: 'create', data: { first: 'john', last: 'Doe' } };
@@ -66,10 +80,12 @@ describe('services iffElse', () => {
     hookFcnAsyncCalls = 0;
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('runs single hook', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('when true', () => {
       return hooks.iffElse(true, hookFcnSync, hookFcnAsync)(hook)
-        .then(hook => {
+        .then((hook: any) => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 0);
@@ -77,9 +93,10 @@ describe('services iffElse', () => {
         });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('when false', () => {
       return hooks.iffElse(false, hookFcnSync, hookFcnAsync)(hook)
-        .then(hook => {
+        .then((hook: any) => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 0);
           assert.equal(hookFcnAsyncCalls, 1);
@@ -88,10 +105,12 @@ describe('services iffElse', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('runs multiple hooks', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('when true', () => {
       return hooks.iffElse(true, [hookFcnSync, hookFcnAsync, hookFcn], null)(hook)
-        .then(hook => {
+        .then((hook: any) => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
@@ -100,9 +119,10 @@ describe('services iffElse', () => {
         });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('when false', () => {
       return hooks.iffElse(false, null, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
-        .then(hook => {
+        .then((hook: any) => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
@@ -112,7 +132,9 @@ describe('services iffElse', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('predicate gets right params', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('when true', () => {
       return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcn], null)(hook)
         .then(() => {
@@ -123,6 +145,7 @@ describe('services iffElse', () => {
         });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('every passes on correct params', () => {
       return hooks.iffElse(
         hooks.every(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcn], null
@@ -135,6 +158,7 @@ describe('services iffElse', () => {
         });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('some passes on correct params', () => {
       return hooks.iffElse(
         hooks.some(predicateTrue), [hookFcnSync, hookFcnAsync, hookFcn], null
@@ -148,7 +172,9 @@ describe('services iffElse', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('predicate and hooks get right context', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       context = { service: 'abc' };
       predicateTrueContext = undefined;
@@ -157,9 +183,10 @@ describe('services iffElse', () => {
       hookFcnContext = undefined;
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('services', () => {
       return hooks.iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcn], null).call(context, hook)
-        .then(hook => {
+        .then((hook: any) => {
           assert.deepEqual(hook, hookAfter);
           assert.equal(hookFcnSyncCalls, 1);
           assert.equal(hookFcnAsyncCalls, 1);
@@ -177,6 +204,7 @@ describe('services iffElse', () => {
 
 // Helpers
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'clone'.
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

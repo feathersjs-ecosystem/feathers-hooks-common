@@ -1,8 +1,12 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'discard'.
 const { discard } = require('../../lib/services');
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('common hook discard', () => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('removes fields', () => {
     /* eslint-disable */
     const beforeJohn  = () => ({ type: 'before', data:   {  first: 'John',    last: 'Doe' } });
@@ -26,19 +30,26 @@ describe('common hook discard', () => {
     /* eslint-enable */
 
     decisionTable.forEach(([desc, context, method, provider, args, result]) => {
+      // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
       it(desc, () => {
+        // @ts-expect-error ts-migrate(2533) FIXME: Object is possibly 'null' or 'undefined'.
         context.method = method;
         if (provider !== null) {
+          // @ts-expect-error ts-migrate(2533) FIXME: Object is possibly 'null' or 'undefined'.
           context.params = context.params || {};
+          // @ts-expect-error ts-migrate(2533) FIXME: Object is possibly 'null' or 'undefined'.
           context.params.provider = provider;
         }
 
+        // @ts-expect-error ts-migrate(2461) FIXME: Type 'string | { type: string; data: { first: stri... Remove this comment to see the full error message
         discard(...args)(context);
+        // @ts-expect-error ts-migrate(2533) FIXME: Object is possibly 'null' or 'undefined'.
         assert.deepEqual(context.data ? context.data : context.result.data || context.result, result);
       });
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('handles dot notation', () => {
     /* eslint-disable */
     const ctx  = () => ({ type: 'before', method: 'create', data:   { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' } });
@@ -57,8 +68,11 @@ describe('common hook discard', () => {
     /* eslint-enable */
 
     decisionTable.forEach(([desc, context, args, result]) => {
+      // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
       it(desc, () => {
+        // @ts-expect-error ts-migrate(2461) FIXME: Type 'string | string[] | { type: string; method: ... Remove this comment to see the full error message
         discard(...args)(context);
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'data' does not exist on type 'string | s... Remove this comment to see the full error message
         assert.deepEqual(context.data ? context.data : context.result.data || context.result, result);
       });
     });

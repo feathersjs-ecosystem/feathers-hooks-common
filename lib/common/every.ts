@@ -1,6 +1,6 @@
 
-module.exports = function (...rest) {
-  return function (...fnArgs) {
+module.exports = function (...rest: any[]) {
+  return function(this: any, ...fnArgs: any[]) {
     const promises = rest.map(fn => fn.apply(this, fnArgs));
 
     return Promise.all(promises).then(results => {

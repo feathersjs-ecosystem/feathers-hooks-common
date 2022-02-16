@@ -1,18 +1,24 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const assert = require('assert').strict;
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'configApp'... Remove this comment to see the full error message
 const configApp = require('../helpers/config-app');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getInitDb'... Remove this comment to see the full error message
 const getInitDb = require('../helpers/get-init-db');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'populate'.
 const { populate } = require('../../lib/services/index');
 
 ['array', 'obj'].forEach(type => {
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe(`services populate - 1:1 & 1:m & m:1 - ${type}`, () => {
-    let hookAfter;
-    let hookAfterArray;
-    let schema;
+    let hookAfter: any;
+    let hookAfterArray: any;
+    let schema: any;
 
-    let app;
+    let app: any;
     let recommendation;
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       app = configApp(['recommendation', 'posts', 'users', 'comments']);
       recommendation = clone(getInitDb('recommendation').store);
@@ -53,7 +59,10 @@ const { populate } = require('../../lib/services/index');
               nameAs: 'commentsInfo',
               parentField: 'id',
               childField: 'postId',
-              select: (hook, parent) => ({ $limit: 6 }),
+              // @ts-expect-error ts-migrate(7006) FIXME: Parameter 'hook' implicitly has an 'any' type.
+              select: (hook, parent) => ({
+                $limit: 6
+              }),
               asArray: true,
               query: {
                 $limit: 5,
@@ -73,12 +82,13 @@ const { populate } = require('../../lib/services/index');
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('for one item', () => {
       const hook = clone(hookAfter);
       hook.app = app; // app is a func and wouldn't be cloned
 
       return populate({ schema, checkPermissions: () => true, profile: 'test' })(hook)
-        .then(hook1 => {
+        .then((hook1: any) => {
           assert.deepEqual(hook1.result,
             {
               userId: 'as61389dadhga62343hads6712',
@@ -136,12 +146,13 @@ const { populate } = require('../../lib/services/index');
         });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('for an item array', () => {
       const hook = clone(hookAfterArray);
       hook.app = app; // app is a func and wouldn't be cloned
 
       return populate({ schema, checkPermissions: () => true, profile: 'test' })(hook)
-        .then(hook1 => {
+        .then((hook1: any) => {
           assert.deepEqual(hook1.result,
             [{
               userId: 'as61389dadhga62343hads6712',
@@ -302,10 +313,11 @@ const { populate } = require('../../lib/services/index');
 
 // Helpers
 
-function makeInclude (type, obj) {
+function makeInclude (type: any, obj: any) {
   return type === 'obj' ? obj : [obj];
 }
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'clone'.
+function clone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

@@ -1,13 +1,16 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getItems'.
 const getItems = require('./get-items');
 
-const defaultMakeCacheKey = key => key;
+const defaultMakeCacheKey = (key: any) => key;
 
-module.exports = function (cacheMap, keyFieldName, options = {}) {
+module.exports = function (cacheMap: any, keyFieldName: any, options = {}) {
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'clone' does not exist on type '{}'.
   const clone = options.clone || defaultClone;
+  // @ts-expect-error ts-migrate(2339) FIXME: Property 'makeCacheKey' does not exist on type '{}... Remove this comment to see the full error message
   const makeCacheKey = options.makeCacheKey || defaultMakeCacheKey;
 
-  return context => {
+  return (context: any) => {
     keyFieldName = keyFieldName || (context.service || {}).id; // Will be undefined on client
 
     let items = getItems(context);
@@ -17,7 +20,7 @@ module.exports = function (cacheMap, keyFieldName, options = {}) {
 
     if (context.type === 'after') {
       if (context.method === 'remove') {
-        items.forEach(item => {
+        items.forEach((item: any) => {
           const idName = getIdName(keyFieldName, item);
           const key = makeCacheKey(item[idName]);
           cacheMap.delete(key);
@@ -27,7 +30,7 @@ module.exports = function (cacheMap, keyFieldName, options = {}) {
 
       if (query.$select) return;
 
-      items.forEach(item => {
+      items.forEach((item: any) => {
         const idName = getIdName(keyFieldName, item);
         const key = makeCacheKey(item[idName]);
         cacheMap.set(key, clone(item));
@@ -54,7 +57,7 @@ module.exports = function (cacheMap, keyFieldName, options = {}) {
           return;
         }
 
-        items.forEach(item => {
+        items.forEach((item: any) => {
           const idName = getIdName(keyFieldName, item);
           const key = makeCacheKey(item[idName]);
           cacheMap.delete(key);
@@ -63,11 +66,11 @@ module.exports = function (cacheMap, keyFieldName, options = {}) {
   };
 };
 
-function getIdName (keyFieldName, item) {
+function getIdName (keyFieldName: any, item: any) {
   if (keyFieldName) return keyFieldName;
   return ('_id' in item) ? '_id' : 'id';
 }
 
-function defaultClone (obj) {
+function defaultClone (obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

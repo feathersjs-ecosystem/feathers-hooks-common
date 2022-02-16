@@ -1,11 +1,16 @@
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getByDot'.
 const getByDot = require('lodash/get');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'setByDot'.
 const setByDot = require('lodash/set');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'errors'.
 const errors = require('@feathersjs/errors');
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'getItems'.
 const getItems = require('./get-items');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'replaceIte... Remove this comment to see the full error message
 const replaceItems = require('./replace-items');
 
-module.exports = function (options, ...rest) {
+module.exports = function (options: any, ...rest: any[]) {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
   options = options || {};
 
@@ -14,7 +19,7 @@ module.exports = function (options, ...rest) {
     throw new Error('Options.schema is not an object. (populate)');
   }
 
-  return function (context) {
+  return function (context: any) {
     const optionsDefault = {
       schema: {},
       checkPermissions: () => true,
@@ -72,7 +77,8 @@ module.exports = function (options, ...rest) {
   };
 };
 
-function populateItemArray (options, context, items, includeSchema, depth) {
+// @ts-expect-error ts-migrate(7023) FIXME: 'populateItemArray' implicitly has return type 'an... Remove this comment to see the full error message
+function populateItemArray (options: any, context: any, items: any, includeSchema: any, depth: any) {
   // 'items' is an item or an array of items
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
@@ -89,7 +95,8 @@ function populateItemArray (options, context, items, includeSchema, depth) {
   );
 }
 
-function populateItem (options, context, item, includeSchema, depth) {
+// @ts-expect-error ts-migrate(7023) FIXME: 'populateItem' implicitly has return type 'any' be... Remove this comment to see the full error message
+function populateItem (options: any, context: any, item: any, includeSchema: any, depth: any) {
   // 'item' is one item
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
@@ -110,8 +117,10 @@ function populateItem (options, context, item, includeSchema, depth) {
 
       const startAtThisInclude = process.hrtime();
       return populateAddChild(options, context, item, childSchema, depth)
-        .then(result => {
+        .then((result: any) => {
+          // @ts-expect-error ts-migrate(2339) FIXME: Property 'nameAs' does not exist on type 'never'.
           const nameAs = childSchema.nameAs || childSchema.service;
+          // @ts-expect-error ts-migrate(7053) FIXME: Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           elapsed[nameAs] = getElapsed(options, startAtThisInclude, depth);
 
           return result;
@@ -122,6 +131,7 @@ function populateItem (options, context, item, includeSchema, depth) {
       // 'children' is like
       //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
       if (options.profile !== false) {
+        // @ts-expect-error ts-migrate(2339) FIXME: Property 'total' does not exist on type '{}'.
         elapsed.total = getElapsed(options, startAtAllIncludes, depth);
         item._elapsed = elapsed;
       }
@@ -136,7 +146,8 @@ function populateItem (options, context, item, includeSchema, depth) {
     });
 }
 
-function populateAddChild (options, context, parentItem, childSchema, depth) {
+// @ts-expect-error ts-migrate(7023) FIXME: 'populateAddChild' implicitly has return type 'any... Remove this comment to see the full error message
+function populateAddChild (options: any, context: any, parentItem: any, childSchema: any, depth: any) {
   /*
   @params
     'parentItem' is the item we are adding children to
@@ -202,8 +213,10 @@ function populateAddChild (options, context, parentItem, childSchema, depth) {
 
       let paginateObj = { paginate: false };
       const paginateOption = paginate;
+      // @ts-expect-error ts-migrate(2322) FIXME: Type 'null' is not assignable to type '{ paginate:... Remove this comment to see the full error message
       if (paginateOption === true) { paginateObj = null; }
       if (typeof paginateOption === 'number') {
+        // @ts-expect-error ts-migrate(2322) FIXME: Type '{ default: number; }' is not assignable to t... Remove this comment to see the full error message
         paginateObj = { paginate: { default: paginateOption } };
       }
 
@@ -247,7 +260,7 @@ function populateAddChild (options, context, parentItem, childSchema, depth) {
 
 // Helpers
 
-function getElapsed (options, startHrtime, depth) {
+function getElapsed (options: any, startHrtime: any, depth: any) {
   if (options.profile === true) {
     const elapsed = process.hrtime(startHrtime);
     return (elapsed[0] * 1e9) + elapsed[1];

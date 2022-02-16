@@ -1,9 +1,11 @@
 
 const {
+  // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
   assert
 } = require('chai');
 
 const {
+  // @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'validateSc... Remove this comment to see the full error message
   validateSchema
 } = require('../../lib/services');
 
@@ -20,15 +22,17 @@ ajv.addSchema({
   required: ['first', 'last']
 });
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('services validateSchema', () => {
-  let hookBefore;
-  let hookBeforeArray;
-  let hookBeforeArrayForAjvInstance;
-  let schema;
-  let schemaForAjvInstance;
-  let asyncSchema;
-  let ajvAsync;
+  let hookBefore: any;
+  let hookBeforeArray: any;
+  let hookBeforeArrayForAjvInstance: any;
+  let schema: any;
+  let schemaForAjvInstance: any;
+  let asyncSchema: any;
+  let ajvAsync: any;
 
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     hookBefore = {
       type: 'before',
@@ -72,7 +76,9 @@ describe('services validateSchema', () => {
     };
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Sync validation', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       schema = {
         properties: {
@@ -83,30 +89,37 @@ describe('services validateSchema', () => {
       };
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with valid single item', () => {
       validateSchema(schema, Ajv)(hookBefore);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with array of valid items', () => {
       validateSchema(schema, Ajv)(hookBeforeArray);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with valid single item when ajv instance is passed', () => {
       validateSchema(schemaForAjvInstance, ajv)(hookBefore);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with array of valid items when ajv instance is passed', () => {
       validateSchema(schemaForAjvInstance, ajv)(hookBeforeArrayForAjvInstance);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with valid single item with existing schema in ajv instance', () => {
       validateSchema('syncSchema', ajv)(hookBefore);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('works with array of valid items with existing schema in ajv instance', () => {
       validateSchema('syncSchema', ajv)(hookBeforeArrayForAjvInstance);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('fails with in valid single item', () => {
       hookBefore.data = { first: 1 };
 
@@ -121,6 +134,7 @@ describe('services validateSchema', () => {
       }
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('fails with array of invalid items', () => {
       hookBeforeArray.data[0] = { first: 1 };
       delete hookBeforeArray.data[2].last;
@@ -136,6 +150,7 @@ describe('services validateSchema', () => {
         ]);
       }
     });
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('fails with invalid single item when ajv instance is passed', () => {
       hookBefore.data = { first: 'Jane' };
 
@@ -150,6 +165,7 @@ describe('services validateSchema', () => {
       }
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('fails with array of invalid items when ajv instance is passed', () => {
       hookBeforeArray.data[0] = { first: 'Jane' };
       delete hookBeforeArray.data[2].last;
@@ -168,14 +184,16 @@ describe('services validateSchema', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Async validation', () => {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'before'.
     before(() => {
       ajvAsync = new Ajv({ allErrors: true });
 
       ajvAsync.addKeyword('equalsDoe', {
         async: true,
         schema: false,
-        validate: (item) => new Promise((resolve, reject) => {
+        validate: (item: any) => new Promise((resolve, reject) => {
           setTimeout(() => {
             item === 'Doe'
               ? resolve(true)
@@ -186,7 +204,7 @@ describe('services validateSchema', () => {
 
       ajvAsync.addFormat('3or4chars', {
         async: true,
-        validate: (item) => new Promise((resolve, reject) => {
+        validate: (item: any) => new Promise((resolve, reject) => {
           setTimeout(() => {
             (item.length === 3 || item.length === 4)
               ? resolve(true)
@@ -212,6 +230,7 @@ describe('services validateSchema', () => {
       });
     });
 
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
     beforeEach(() => {
       asyncSchema = {
         $async: true,
@@ -229,29 +248,32 @@ describe('services validateSchema', () => {
       };
     });
 
-    it('works with string schema id', (next) => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('works with string schema id', (next: any) => {
       validateSchema('asyncSchema', ajvAsync)(hookBefore)
         .then(() => {
           next();
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
           assert.fail(true, false, 'test fails unexpectedly');
         });
     });
 
-    it('works with valid single item', (next) => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('works with valid single item', (next: any) => {
       validateSchema(asyncSchema, ajvAsync)(hookBefore)
         .then(() => {
           next();
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
           assert.fail(true, false, 'test fails unexpectedly');
         });
     });
 
-    it('works with array of valid items', (next) => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('works with array of valid items', (next: any) => {
       validateSchema(asyncSchema, ajvAsync)(hookBeforeArray)
         .then(() => {
           next();
@@ -261,14 +283,15 @@ describe('services validateSchema', () => {
         });
     });
 
-    it('fails with in valid single item', (next) => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('fails with in valid single item', (next: any) => {
       hookBefore.data = { first: '1' };
 
       validateSchema(asyncSchema, ajvAsync)(hookBefore)
         .then(() => {
           assert.fail(true, false, 'test succeeds unexpectedly');
         })
-        .catch((err) => {
+        .catch((err: any) => {
           assert.deepEqual(err.errors, [
             '\'first\' should match format "3or4chars"',
             'should have required property \'last\''
@@ -277,7 +300,8 @@ describe('services validateSchema', () => {
         });
     });
 
-    it('fails with array of invalid items', (next) => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('fails with array of invalid items', (next: any) => {
       hookBeforeArray.data[0].last = 'not Doe';
       delete hookBeforeArray.data[2].last;
 
@@ -285,7 +309,7 @@ describe('services validateSchema', () => {
         .then(() => {
           assert.fail(true, false, 'test succeeds unexpectedly');
         })
-        .catch((err) => {
+        .catch((err: any) => {
           assert.deepEqual(err.errors, [
             'in row 3 of 3, should have required property \'last\'',
             '\'in row 1 of 3, last\' should be Doe'

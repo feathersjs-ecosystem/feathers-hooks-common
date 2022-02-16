@@ -1,25 +1,30 @@
 
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'assert'.
 const { assert } = require('chai');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'cache'.
 const { cache } = require('../../lib/services');
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CacheMap'.
 const CacheMap = require('@feathers-plus/cache');
 
-let cacheMap;
-let hookBeforeSingle;
-let hookBeforeMulti;
-let hookAfterSingle;
-let hookAfterSingleNormalize;
-let hookAfterMulti;
-let hookAfterPaginated;
-let hookBeforeUuid;
-let hookAfterUuid;
-let hookBeforeMultiMixed;
-let hookAfterMultiMixed;
-let map;
-let cloneCount;
+let cacheMap: any;
+let hookBeforeSingle: any;
+let hookBeforeMulti: any;
+let hookAfterSingle: any;
+let hookAfterSingleNormalize: any;
+let hookAfterMulti: any;
+let hookAfterPaginated: any;
+let hookBeforeUuid: any;
+let hookAfterUuid: any;
+let hookBeforeMultiMixed: any;
+let hookAfterMultiMixed: any;
+let map: any;
+let cloneCount: any;
 
-const makeCacheKey = key => -key;
+const makeCacheKey = (key: any) => -key;
 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('service cache', () => {
+  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
   beforeEach(() => {
     cacheMap = CacheMap({ max: 3 });
     map = new Map();
@@ -116,7 +121,9 @@ describe('service cache', () => {
     };
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Can build a cache', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Can build a cache', () => {
       cacheMap.set('a', 'aa');
       assert.equal(cacheMap.get('a'), 'aa', 'bad get after set');
@@ -130,7 +137,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Clears cache', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before one-record update', () => {
       hookBeforeSingle.method = 'update';
 
@@ -140,6 +149,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), undefined);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before multi-record update', () => {
       hookBeforeMulti.method = 'update';
 
@@ -152,6 +162,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), undefined);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before one-record patch', () => {
       hookBeforeSingle.method = 'patch';
 
@@ -162,6 +173,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), undefined);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before multi-record patch', () => {
       hookBeforeMulti.method = 'patch';
 
@@ -173,6 +185,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), undefined, 'id 2');
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('NOT before one-record create', () => {
       hookBeforeSingle.method = 'create';
 
@@ -182,6 +195,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), 123);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('NOT before multi-record remove', () => {
       hookBeforeMulti.method = 'remove';
 
@@ -193,6 +207,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), 321);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('After multi-record remove', () => {
       hookAfterMulti.method = 'remove';
 
@@ -206,7 +221,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Loads cache', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('After one-record create', () => {
       hookAfterSingle.method = 'create';
 
@@ -214,6 +231,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), { id: 1, first: 'Jane', last: 'Doe' });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('After multi-record patch', () => {
       hookAfterMulti.method = 'patch';
 
@@ -223,6 +241,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), { id: 2, first: 'Jane', last: 'Doe' }, 'id 2');
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('After paginated find', () => {
       cache(cacheMap, 'id')(hookAfterPaginated);
 
@@ -230,6 +249,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), { id: 2, first: 'Jane', last: 'Doe' }, 'id 2');
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('NOT after remove', () => {
       hookAfterMulti.method = 'remove';
 
@@ -239,6 +259,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), undefined, 'id 2');
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Normalizes record', () => {
       hookAfterSingleNormalize.method = 'create';
 
@@ -247,7 +268,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Gets from cache', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before one-record get', () => {
       hookBeforeSingle.method = 'get';
       hookBeforeSingle.id = 1;
@@ -260,6 +283,7 @@ describe('service cache', () => {
       assert.deepEqual(hookBeforeSingle.result, { foo: 'bar' });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Normalizes record', () => {
       hookBeforeSingle.method = 'get';
       hookBeforeSingle.id = -1;
@@ -273,7 +297,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Uses context.service.id', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Clears cache before one-record update', () => {
       hookBeforeUuid.method = 'update';
 
@@ -283,6 +309,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), undefined);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Loads cache after one-record create', () => {
       hookAfterUuid.method = 'create';
 
@@ -290,6 +317,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(1), { uuid: 1, first: 'Jane', last: 'Doe' });
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Before one-record get', () => {
       hookBeforeUuid.method = 'get';
       hookBeforeUuid.id = 1;
@@ -303,7 +331,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Uses item._id || item.id', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Clears cache before multi-record patch', () => {
       hookBeforeMultiMixed.method = 'patch';
 
@@ -315,6 +345,7 @@ describe('service cache', () => {
       assert.deepEqual(cacheMap.get(2), undefined, 'id 2');
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Loads cache after multi-record patch', () => {
       hookAfterMultiMixed.method = 'patch';
 
@@ -325,7 +356,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Works with an ES6 Map', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Clears cache before one-record update', () => {
       hookBeforeUuid.method = 'update';
 
@@ -335,6 +368,7 @@ describe('service cache', () => {
       assert.deepEqual(map.get(1), undefined);
     });
 
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Loads cache after one-record create', () => {
       hookAfterUuid.method = 'create';
 
@@ -343,7 +377,9 @@ describe('service cache', () => {
     });
   });
 
+  // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
   describe('Misc', () => {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
     it('Uses option.clone', () => {
       hookAfterUuid.method = 'create';
 
@@ -354,7 +390,8 @@ describe('service cache', () => {
   });
 });
 
-function clone (obj) {
+// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'clone'.
+function clone (obj: any) {
   cloneCount += 1;
   return Object.assign({}, obj);
 }
