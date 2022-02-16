@@ -21,7 +21,8 @@
     "update-dependencies": "ncu -u -x ajv,mongodb",
     "mocha": "mocha --recursive tests/",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --recursive tests/",
-    "test": "npm run lint && npm run lint:types && npm run coverage"
+    "test": "npm run lint && npm run lint:types && npm run coverage",
+    "ts-migrate": "ts-migrate"
   },
   "semistandard": {
     "env": [
@@ -87,6 +88,7 @@
     "semistandard": "^16.0.1",
     "shx": "^0.3.3",
     "sift": "^15.0.0",
+    "ts-migrate": "^0.1.28",
     "typescript": "^4.4.3",
     "vuepress": "^1.8.2",
     "vuepress-theme-default-prefers-color-scheme": "^2.0.0"
