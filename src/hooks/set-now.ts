@@ -1,6 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
 import { Hook } from '@feathersjs/feathers';
-import { setFields as _setFields } from '../common/set-fields';
+import { setFields as _setFields } from '../common';
 import {getItems} from '../utils/get-items';
 
 /**

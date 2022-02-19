@@ -1,5 +1,5 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import { isPromise } from '../helpers';
+import { isPromise } from '../common';
 import { PredicateFn } from '../types';
 
 /**

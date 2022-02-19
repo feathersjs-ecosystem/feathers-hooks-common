@@ -1,7 +1,7 @@
 
 import { assert } from 'chai';
 import { iff, isNot, isProvider } from '../../src';
-import { isPromise } from '../../src/helpers';
+import { isPromise } from '../../src/common';
 
 let hookServer: any;
 let hook: any;

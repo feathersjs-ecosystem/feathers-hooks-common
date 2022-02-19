@@ -1,6 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
 import { Hook } from '@feathersjs/feathers';
-import { isPromise } from '../helpers';
+import { isPromise } from '../common';
 import { ValidatorFn } from '../types';
 import {checkContext} from '../utils/check-context';
 import {getItems} from '../utils/get-items';

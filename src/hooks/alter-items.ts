@@ -1,6 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
 import { Hook, HookContext } from '@feathersjs/feathers';
-import { isPromise } from '../helpers';
+import { isPromise } from '../common';
 import {getItems} from '../utils/get-items';
 import {replaceItems} from '../utils/replace-items';
 

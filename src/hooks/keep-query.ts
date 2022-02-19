@@ -1,5 +1,5 @@
 import { Hook } from '@feathersjs/feathers';
-import { pluck } from '../common/pluck';
+import { pluck } from '../common';
 import {checkContext} from '../utils/check-context';
 
 /**

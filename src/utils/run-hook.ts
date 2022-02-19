@@ -14,7 +14,7 @@ export function runHook (
 
     if (typeof result === 'object' && result !== null && result.total && result.data) {
       // @ts-expect-error method is readonly
-      ctx.method = 'find'; // needed by feathers-hooks-common/lib/service/get-items.js
+      ctx.method = 'find';
     }
 
     return Promise.resolve()

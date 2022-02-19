@@ -1,5 +1,5 @@
 import { Hook } from '@feathersjs/feathers';
-import { traverse as _traverse } from '../common/traverse';
+import { traverse as _traverse } from '../common';
 import { SyncContextFunction } from '../types';
 import {getItems} from '../utils/get-items';
 

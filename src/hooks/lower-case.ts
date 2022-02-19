@@ -1,7 +1,7 @@
 import setByDot from 'lodash/set';
 import { BadRequest } from '@feathersjs/errors';
 
-import { transformItems } from '../common/transform-items';
+import { transformItems } from '../common';
 import {checkContextIf} from './check-context-if';
 import {getItems} from '../utils/get-items';
 import { Hook } from '@feathersjs/feathers';

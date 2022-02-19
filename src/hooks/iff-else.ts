@@ -1,5 +1,5 @@
 import { Hook, HookContext } from '@feathersjs/feathers';
-import { isPromise } from '../helpers';
+import { isPromise } from '../common';
 import { combine } from '../utils/combine';
 import { PredicateFn } from '../types';
 
