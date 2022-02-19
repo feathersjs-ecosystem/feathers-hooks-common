@@ -1,6 +1,6 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import { pluck } from '../common';
-import {checkContext} from '../utils/check-context';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Keep certain fields in the query object, deleting the rest.

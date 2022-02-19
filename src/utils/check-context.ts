@@ -1,5 +1,5 @@
-import { HookContext } from '@feathersjs/feathers';
-import { HookType, MethodName } from '../types';
+import type { HookContext } from '@feathersjs/feathers';
+import type { HookType, MethodName } from '../types';
 
 const stndMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'];
 

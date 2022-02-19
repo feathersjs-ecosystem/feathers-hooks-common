@@ -1,4 +1,4 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 import { hooks } from '@feathersjs/commons';
 const { processHooks } = hooks

@@ -1,5 +1,5 @@
-import { Hook } from '@feathersjs/feathers';
-import {combine} from '../utils/combine';
+import type { Hook } from '@feathersjs/feathers';
+import { combine } from '../utils/combine';
 
 /**
  * Runs a series of hooks which mutate context.data or context.result (the Feathers default).

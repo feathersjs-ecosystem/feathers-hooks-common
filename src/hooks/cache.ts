@@ -1,6 +1,6 @@
-import { Hook } from '@feathersjs/feathers';
-import { CacheMap, CacheOptions } from '../types';
-import {getItems} from '../utils/get-items';
+import type { Hook } from '@feathersjs/feathers';
+import type { CacheMap, CacheOptions } from '../types';
+import { getItems } from '../utils/get-items';
 
 const defaultMakeCacheKey = (key: any) => key;
 

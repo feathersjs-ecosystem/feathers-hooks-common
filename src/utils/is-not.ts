@@ -1,6 +1,6 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
 import { isPromise } from '../common';
-import { PredicateFn } from '../types';
+import type { PredicateFn } from '../types';
 
 /**
  * Negate a sync or async predicate function.

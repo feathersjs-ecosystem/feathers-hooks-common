@@ -1,6 +1,6 @@
-import { HookContext } from '@feathersjs/feathers';
-import { MethodName, HookType } from '../types';
-import {checkContext} from '../utils/check-context';
+import type { HookContext } from '@feathersjs/feathers';
+import type { MethodName, HookType } from '../types';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Like checkContext, but only if the given type matches the hook's type.

@@ -1,6 +1,6 @@
-import { Hook, HookContext } from '@feathersjs/feathers';
+import type { Hook, HookContext } from '@feathersjs/feathers';
 import { iffElse } from './iff-else';
-import { IffHook, PredicateFn } from '../types';
+import type { IffHook, PredicateFn } from '../types';
 
 /**
  * Execute one or another series of hooks depending on a sync or async predicate.

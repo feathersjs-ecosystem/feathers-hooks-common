@@ -1,4 +1,4 @@
-import { AsyncPredicateFn, PredicateFn } from '../types';
+import type { AsyncPredicateFn, PredicateFn } from '../types';
 
 /**
  * Return the and of a series of sync or async predicate functions.

@@ -1,5 +1,5 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Run a hook in parallel to the other hooks and the service call.

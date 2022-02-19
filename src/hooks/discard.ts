@@ -1,8 +1,8 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import omit from 'lodash/omit';
-import {checkContextIf} from './check-context-if';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import { checkContextIf } from './check-context-if';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 /**
  * Delete certain fields from the record(s).

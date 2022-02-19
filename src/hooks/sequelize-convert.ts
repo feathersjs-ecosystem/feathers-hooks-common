@@ -1,7 +1,7 @@
-import { Hook } from '@feathersjs/feathers';
-import { SequelizeConversion, SequelizeConverts } from '../types';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import type { Hook } from '@feathersjs/feathers';
+import type { SequelizeConversion, SequelizeConverts } from '../types';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 const methodsWithBeforeData = ['create', 'update', 'patch'];
 const defaultConversions = {
@@ -22,7 +22,7 @@ const defaultConversions = {
 /**
  * {@link https://hooks-common.feathersjs.com/hooks.html#SequelizeConvert}
  */
-export function sequelizeConvert <C extends {[name: string]: SequelizeConversion}> (
+export function sequelizeConvert <C extends { [name: string]: SequelizeConversion }> (
   converts: SequelizeConverts<C> | null | undefined | false,
   ignores?: string[] | null | undefined | false,
   conversions?: C

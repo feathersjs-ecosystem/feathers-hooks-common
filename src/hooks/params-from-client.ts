@@ -1,4 +1,4 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Pass context.params from client to server. Server hook.

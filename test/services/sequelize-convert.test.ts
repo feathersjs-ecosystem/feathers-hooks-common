@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import {sequelizeConvert} from '../../src';
+import { sequelizeConvert } from '../../src';
 
 const converts: any = {
   isInvitation: 'boolean',

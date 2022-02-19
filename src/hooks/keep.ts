@@ -2,10 +2,10 @@ import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
 import existsByDot from 'lodash/has';
 
-import {checkContextIf} from './check-context-if';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
-import { Hook } from '@feathersjs/feathers';
+import { checkContextIf } from './check-context-if';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in the record(s), deleting the rest.

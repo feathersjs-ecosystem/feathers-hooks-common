@@ -1,4 +1,4 @@
-import { Hook, HookContext, Paginated } from '@feathersjs/feathers';
+import type { Hook, HookContext, Paginated } from '@feathersjs/feathers';
 
 /**
  * Let's you call a hook right after the service call. (Utility function.)

@@ -2,10 +2,10 @@ import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
 import { BadRequest } from '@feathersjs/errors';
 
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
-import { PopulateOptions } from '../types';
-import { Hook, HookContext } from '@feathersjs/feathers';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
+import type { PopulateOptions } from '../types';
+import type { Hook, HookContext } from '@feathersjs/feathers';
 
 export function populate (options: PopulateOptions): Hook {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }

@@ -1,5 +1,5 @@
-import { Hook } from '@feathersjs/feathers';
-import {checkContext} from '../utils/check-context';
+import type { Hook } from '@feathersjs/feathers';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Disables pagination when query.$limit is -1 or '-1'.

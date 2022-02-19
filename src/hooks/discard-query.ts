@@ -1,6 +1,6 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import omit from 'lodash/omit';
-import {checkContext} from '../utils/check-context';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Delete certain fields from the query object.

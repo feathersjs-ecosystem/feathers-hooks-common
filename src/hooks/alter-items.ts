@@ -1,8 +1,8 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook, HookContext } from '@feathersjs/feathers';
+import type { Hook, HookContext } from '@feathersjs/feathers';
 import { isPromise } from '../common';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 /**
  * Make changes to data or result items. Very flexible.

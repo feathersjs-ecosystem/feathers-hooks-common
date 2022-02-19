@@ -1,4 +1,4 @@
-import { HookContext } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Get the records in context.data or context.result[.data]. (Utility function.)

@@ -1,5 +1,5 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import { SyncContextFunction, TransportName } from '../types';
+import type { SyncContextFunction, TransportName } from '../types';
 
 /**
  * Check which transport provided the service call.

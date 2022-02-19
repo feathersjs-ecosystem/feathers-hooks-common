@@ -1,8 +1,8 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import makeDebug from 'debug';
-import { FGraphQLHookOptions } from '../types';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import type { FGraphQLHookOptions } from '../types';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 const debug = makeDebug('fgraphql');
 const graphqlActions = ['Query', 'Mutation', 'Subscription'];

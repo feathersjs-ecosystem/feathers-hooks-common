@@ -1,6 +1,6 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import traverse from 'traverse';
-import {checkContext} from '../utils/check-context';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Wrap MongoDB foreign keys in ObjectId.

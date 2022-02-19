@@ -1,7 +1,7 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import { setFields as _setFields } from '../common';
-import {getItems} from '../utils/get-items';
+import { getItems } from '../utils/get-items';
 
 /**
  * Create/update certain fields to the current date-time.

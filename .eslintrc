@@ -81,6 +81,8 @@
       }
     ],
     "@typescript-eslint/unified-signatures": "error",
+    "@typescript-eslint/consistent-type-imports": ["warn", { "prefer": "type-imports" }],
+    "@typescript-eslint/object-curly-spacing": ["warn", "always"],
     "arrow-parens": [
       "off",
       "always"

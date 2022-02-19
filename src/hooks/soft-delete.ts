@@ -1,6 +1,6 @@
 import { GeneralError } from '@feathersjs/errors';
-import { SoftDeleteOptions } from '../types';
-import {checkContext} from '../utils/check-context';
+import type { SoftDeleteOptions } from '../types';
+import { checkContext } from '../utils/check-context';
 
 const defaultQuery = { deleted: { $ne: true } };
 const defaultData = { deleted: true };

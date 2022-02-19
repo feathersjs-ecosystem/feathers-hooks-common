@@ -3,7 +3,7 @@ import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
 import existsByDot from 'lodash/has';
 import { getItems } from '../utils/get-items';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the record(s), deleting the rest.

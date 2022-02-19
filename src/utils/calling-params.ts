@@ -1,7 +1,7 @@
-import { HookContext, Params } from '@feathersjs/feathers';
+import type { HookContext, Params } from '@feathersjs/feathers';
 import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
-import { CallingParamsOptions, SyncContextFunction } from '../types';
+import type { CallingParamsOptions, SyncContextFunction } from '../types';
 
 const stndAuthProps = ['provider', 'authenticated', 'user']; // feathers-authentication
 // App wide defaults

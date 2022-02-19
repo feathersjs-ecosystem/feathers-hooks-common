@@ -1,7 +1,7 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import { traverse as _traverse } from '../common';
-import { SyncContextFunction } from '../types';
-import {getItems} from '../utils/get-items';
+import type { SyncContextFunction } from '../types';
+import { getItems } from '../utils/get-items';
 
 /**
  * Transform fields & objects in place in the record(s) using a recursive walk. Powerful.

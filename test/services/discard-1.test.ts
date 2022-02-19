@@ -17,8 +17,8 @@ describe('common hook discard', () => {
       ['before::create',            beforeJohn(),  'create', null,      ['first'],       { last: 'Doe' }                        ],
       ['after::find with paginate', afterPage(),   'find',   null,      ['last'],        [{ first: 'John' }, { first: 'Jane' }] ],
       ['after::find no paginate',   afterBoth(),   'find',   null,      ['last'],        [{ first: 'John' }, { first: 'Jane' }] ],
-      ['after',                     afterJane(),   'create', null,      ['last'],        { first: 'Jane'}                       ],
-      ['call internally on server', afterJane(),   'create', undefined, ['last'],        { first: 'Jane'}                       ],
+      ['after',                     afterJane(),   'create', null,      ['last'],        { first: 'Jane' }                       ],
+      ['call internally on server', afterJane(),   'create', undefined, ['last'],        { first: 'Jane' }                       ],
       ['not throw field missing',   beforeJohn(),  'create', 'rest',    ['first', 'xx'], { last: 'Doe' }                        ],
       ['not throw field undefined', beforeUndef(), 'create', 'rest',    ['first'],       { last: 'Doe' }      ],
       ['not throw field null',      beforeNull(),  'create', 'rest',    ['first'],       { last: 'Doe' }                        ]

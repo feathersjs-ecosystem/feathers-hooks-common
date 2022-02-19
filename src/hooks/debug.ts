@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Display the current hook context for debugging.

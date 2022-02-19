@@ -1,6 +1,6 @@
 import setByDot from 'lodash/set';
 import { GeneralError } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Fix slugs in URL, e.g. /stores/:storeId.

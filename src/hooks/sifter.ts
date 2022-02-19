@@ -1,9 +1,9 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
-import { SyncContextFunction } from '../types';
-import {checkContext} from '../utils/check-context';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import type { Hook } from '@feathersjs/feathers';
+import type { SyncContextFunction } from '../types';
+import { checkContext } from '../utils/check-context';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 export function sifter (
   siftFunc: SyncContextFunction<(item: any) => boolean>

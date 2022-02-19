@@ -1,7 +1,7 @@
-import { Hook, HookContext } from '@feathersjs/feathers';
+import type { Hook, HookContext } from '@feathersjs/feathers';
 import { isPromise } from '../common';
 import { combine } from '../utils/combine';
-import { PredicateFn } from '../types';
+import type { PredicateFn } from '../types';
 
 /**
  * Execute one array of hooks or another based on a sync or async predicate.

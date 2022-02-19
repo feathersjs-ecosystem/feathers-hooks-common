@@ -1,5 +1,5 @@
 
-import { HookContext } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { assert } from 'chai';
 import { iffElse, some, every } from '../../src';
 

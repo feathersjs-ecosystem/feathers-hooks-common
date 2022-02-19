@@ -1,4 +1,4 @@
-import { HookContext } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { assert } from 'chai';
 import { when } from '../../src';
 import { isPromise } from '../../src/common';

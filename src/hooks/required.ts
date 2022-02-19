@@ -1,10 +1,10 @@
 import getByDot from 'lodash/get';
-import errors from '@feathersjs/errors';
+import { BadRequest } from '@feathersjs/errors';
 import existsByDot from 'lodash/has';
 
-import {checkContext} from '../utils/check-context';
-import {getItems} from '../utils/get-items';
-import { Hook } from '@feathersjs/feathers';
+import { checkContext } from '../utils/check-context';
+import { getItems } from '../utils/get-items';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
@@ -17,9 +17,9 @@ export function required (...fieldNames: string[]): Hook {
 
     (Array.isArray(items) ? items : [items]).forEach(item => {
       fieldNames.forEach(name => {
-        if (!existsByDot(item, name)) throw new errors.BadRequest(`Field ${name} does not exist. (required)`);
+        if (!existsByDot(item, name)) throw new BadRequest(`Field ${name} does not exist. (required)`);
         const value = getByDot(item, name);
-        if (!value && value !== 0 && value !== false) throw new errors.BadRequest(`Field ${name} is null. (required)`);
+        if (!value && value !== 0 && value !== false) throw new BadRequest(`Field ${name} is null. (required)`);
       });
     });
   };

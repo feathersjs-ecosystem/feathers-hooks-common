@@ -1,10 +1,10 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
-import { TransportName } from '../types';
+import type { Hook } from '@feathersjs/feathers';
+import type { TransportName } from '../types';
 
 /**
  * Prevents access to a service method completely or for specific transports.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Disallow}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#disallow}
  */
 export function disallow (...transports: TransportName[]): Hook {
   return (context: any) => {

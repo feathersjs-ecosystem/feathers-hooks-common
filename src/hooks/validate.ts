@@ -1,10 +1,10 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import { isPromise } from '../common';
-import { ValidatorFn } from '../types';
-import {checkContext} from '../utils/check-context';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import type { ValidatorFn } from '../types';
+import { checkContext } from '../utils/check-context';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 /**
  * Validate data using a validation function.

@@ -1,6 +1,6 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import { iffElse } from '..';
-import { PredicateFn } from '../types';
+import type { PredicateFn } from '../types';
 
 /**
  * Execute a series of hooks if a sync or async predicate is falsey.

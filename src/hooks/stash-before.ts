@@ -1,6 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
-import {checkContext} from '../utils/check-context';
+import type { Hook } from '@feathersjs/feathers';
+import { checkContext } from '../utils/check-context';
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.

@@ -2,10 +2,10 @@ import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
 import omit from 'lodash/omit';
 
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
-import { SerializeSchema, SyncContextFunction } from '../types';
-import { Hook } from '@feathersjs/feathers';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
+import type { SerializeSchema, SyncContextFunction } from '../types';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Prune values from related records. Calculate new values.

@@ -1,5 +1,5 @@
-import { HookContext } from '@feathersjs/feathers';
-import { AsyncPredicateFn, PredicateFn } from '../types';
+import type { HookContext } from '@feathersjs/feathers';
+import type { AsyncPredicateFn, PredicateFn } from '../types';
 
 /**
  * Return the or of a series of sync or async predicate functions.

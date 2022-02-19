@@ -1,7 +1,7 @@
-import errors from '@feathersjs/errors';
-import { Hook } from '@feathersjs/feathers';
-import { AjvOrNewable, ValidateSchemaOptions } from '../types';
-import {getItems} from '../utils/get-items';
+import { BadRequest } from '@feathersjs/errors';
+import type { Hook } from '@feathersjs/feathers';
+import type { AjvOrNewable, ValidateSchemaOptions } from '../types';
+import { getItems } from '../utils/get-items';
 
 /**
  * Validate data using JSON-Schema.
@@ -46,7 +46,7 @@ export function validateSchema (
           });
       })).then(() => {
         if (invalid) {
-          throw new errors.BadRequest('Data does not match schema', { errors: errorMessages });
+          throw new BadRequest('Data does not match schema', { errors: errorMessages });
         }
       });
     }
@@ -60,7 +60,7 @@ export function validateSchema (
     });
 
     if (invalid) {
-      throw new errors.BadRequest('Data does not match schema', { errors: errorMessages });
+      throw new BadRequest('Data does not match schema', { errors: errorMessages });
     }
 
     function addErrors (errors: any, index: any) {

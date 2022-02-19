@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import {keepQuery} from '../../src';
+import { keepQuery } from '../../src';
 
 let hookBefore: any;
 let hookAfter: any;

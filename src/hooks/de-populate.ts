@@ -1,7 +1,7 @@
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 import omit from 'lodash/omit';
-import {getItems} from '../utils/get-items';
-import {replaceItems} from '../utils/replace-items';
+import { getItems } from '../utils/get-items';
+import { replaceItems } from '../utils/replace-items';
 
 /**
  * Remove records and properties created by the populate hook.

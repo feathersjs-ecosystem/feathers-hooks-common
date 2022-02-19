@@ -1,4 +1,4 @@
-import { Params } from '@feathersjs/feathers';
+import type { Params } from '@feathersjs/feathers';
 
 /**
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)

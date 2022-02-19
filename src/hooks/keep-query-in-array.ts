@@ -1,9 +1,9 @@
-import {checkContext} from '../utils/check-context';
+import { checkContext } from '../utils/check-context';
 import { BadRequest } from '@feathersjs/errors';
 import getByDot from 'lodash/get';
 import setByDot from 'lodash/set';
 import existsByDot from 'lodash/has';
-import { Hook } from '@feathersjs/feathers';
+import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the query object, deleting the rest.
