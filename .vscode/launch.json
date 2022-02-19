@@ -2,25 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "type": "pwa-node",
+      "resolveSourceMapLocations": [
+          "${workspaceFolder}/**",
+          "!**/node_modules/**"
+      ],
       "request": "launch",
       "name": "Mocha Tests",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/mocha",
       "args": [
-        "-u",
-        "bdd",
+        "--require",
+        "ts-node/register",
         "--timeout",
-        "999999",
+        "10000",
         "--colors",
-        "--opts",
-        "mocha.opts",
-        "--exit",
-        "${workspaceRoot}/{tests,src}/**/*.test.js"
+        "--recursive"
       ],
       "internalConsoleOptions": "openOnSessionStart",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    }
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
   ]
 }

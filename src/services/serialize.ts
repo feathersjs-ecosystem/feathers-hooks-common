@@ -1,0 +1,69 @@
+import getByDot from 'lodash/get';
+import setByDot from 'lodash/set';
+import omit from 'lodash/omit';
+
+import {getItems} from './get-items';
+import {replaceItems} from './replace-items';
+import { SerializeSchema, SyncContextFunction } from '../types';
+import { Hook } from '@feathersjs/feathers';
+
+/**
+ * Prune values from related records. Calculate new values.
+ * {@link https://hooks-common.feathersjs.com/hooks.html#Serialize}
+ */
+export function serialize (
+  schema1: SerializeSchema | SyncContextFunction<SerializeSchema>
+): Hook {
+  return (context: any) => {
+    const schema = typeof schema1 === 'function' ? schema1(context) : schema1;
+    const schemaDirectives = ['computed', 'exclude', 'only'];
+
+    replaceItems(context, serializeItems(getItems(context), schema));
+    return context;
+
+    function serializeItems (items: any, schema: any) {
+      if (!Array.isArray(items)) {
+        return serializeItem(items, schema);
+      }
+
+      return items.map(item => serializeItem(item, schema));
+    }
+
+    function serializeItem (item: any, schema: any) {
+      const computed: Record<string, any> = {};
+      Object.keys(schema.computed || {}).forEach(name => {
+        computed[name] = schema.computed[name](item, context); // needs closure
+      });
+
+      let only = schema.only;
+      only = typeof only === 'string' ? [only] : only;
+      if (only) {
+        const newItem = {};
+        only.concat('_include', '_elapsed', item._include || []).forEach((key: any) => {
+          const value = getByDot(item, key);
+          if (value !== undefined) {
+            setByDot(newItem, key, value);
+          }
+        });
+        item = newItem;
+      }
+
+      let exclude = schema.exclude;
+      exclude = typeof exclude === 'string' ? [exclude] : exclude;
+      if (exclude) {
+        item = omit(item, exclude);
+      }
+
+      const _computed = Object.keys(computed);
+      item = Object.assign({}, item, computed, _computed.length ? { _computed } : {});
+
+      Object.keys(schema).forEach(key => {
+        if (!schemaDirectives.includes(key) && typeof item[key] === 'object') { // needs closure
+          item[key] = serializeItems(item[key], schema[key]);
+        }
+      });
+
+      return item;
+    }
+  };
+}
