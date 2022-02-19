@@ -198,6 +198,46 @@ module.exports = { before: {
 ```
 
 
+## every
+
+Return the and of a series of sync or async predicate functions.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/every.js)|
+  
+- **Arguments**
+  - `{Array< Function >} predicates`
+
+| Argument     |        Type         | Default | Description                                                                   |
+| ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
+| `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
+
+
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The logical and of predicates
+
+
+- **Example**
+
+  ```js
+  const { iff, every } = require('feathers-hooks-common');
+
+  module.exports = { before: {
+      create: iff(every(hook1, hook2, ...), hookA, hookB, ...)
+  } };
+  ```
+
+- **Details**
+
+  `every` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if every predicate returns a truthy value.
+
+
 ## getItems
 
 Get the records in `context.data` or `context.result`
@@ -241,44 +281,94 @@ records|Array< Object > | Object | undefined|The records.
 
   `getItems` gets the records from the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
 
+## isNot
 
-## replaceItems
+Negate a sync or async predicate function.
 
-Replace the records in context.data or context.result[.data].
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/is-not.js)|
 
 - **Arguments**
 
-  - `{Object} context`
-  - `{Array< Object > | Object} records`
+  - `{Function | Boolean} predicate`
 
-| Argument  |            Type            | Default | Description       |
-| --------- | :------------------------: | ------- | ----------------- |
-| `context` |          `Object`          |         | The hook context. |
-| `records` | `Array< Object >` `Object` |         | The new records.  |
+| Argument    |         Type         | Default | Description                                                                                   |
+| ----------- | :------------------: | ------- | --------------------------------------------------------------------------------------------- |
+| `predicate` | `Function` `Boolean` |         | A sync or async function which take the current hook as a param and returns a boolean result. |
+
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The not of predicate
 
 - **Example**
 
   ```js
-  const { getItems, replaceItems } = require('feathers-hooks-common');
+  const { iff, isNot, isProvider, discard } = require('feathers-hooks-common');
+  const isRequestor = () => context => new Promise(resolve, reject) => ... );
 
-  const insertCode = code => context {
-    const items = getItems(context);
-    if (Array.isArray(items)) {
-      items.forEach(item => { item.code = code; });
-    } else {
-      items.code = code;
-    }
-    replaceItems(context, items);
-  };
-
-  module.exports = { before: {
-    create: insertCode('a')
+  module.exports = { after: {
+      create: iff(isNot(isRequestor()), discard('password'))
   } };
   ```
 
 - **Details**
 
-  `replaceItems` replaces the records in the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
+  `isNot` is a predicate function for use in conditional hooks.
+
+
+## isProvider
+
+Check which transport provided the service call.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/services/is-provider.js)|
+  
+- **Arguments**
+  - `{Array< String >} transports`
+
+| Name         |       Type        | Default | Description                       |
+| ------------ | :---------------: | ------- | --------------------------------- |
+| `transports` | `Array< String >` |         | The transports you want to allow. |
+
+| `transports` |                Value                | Description |
+| ------------ | :---------------------------------: | ----------- |
+| `socketio`   | Allow calls by Socket.IO transport. |
+| `primus`     |  Allow calls by Primus transport.   |
+| `rest`       |   Allow calls by REST transport.    |
+| `external`   | Allow calls other than from server. |
+| `server`     |      Allow calls from server.       |
+
+
+**Returns**
+
+- `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|If the call was made by one of the transports.
+
+
+- **Example**
+
+  ```js
+  const { iff, isProvider, discard } = require('feathers-hooks-common')
+
+  module.exports = {
+    after: {
+      create: iff(isProvider('external'), discard('password'))
+    }
+  }
+  ```
+
+- **Details**
+
+  `isProvider` is a predicate function for use in conditional hooks. Its determines which transport provided the service call by checking `context.params.provider`.
 
 
 ## makeCallingParams
@@ -382,6 +472,46 @@ Pass an explicit context.params from client to server. Client-side.
   <p class="tip">The data is transfered using `context.params.query.$client`. If that field already exists, it must be an Object.</p>
 
 
+## replaceItems
+
+Replace the records in context.data or context.result[.data].
+
+- **Arguments**
+
+  - `{Object} context`
+  - `{Array< Object > | Object} records`
+
+| Argument  |            Type            | Default | Description       |
+| --------- | :------------------------: | ------- | ----------------- |
+| `context` |          `Object`          |         | The hook context. |
+| `records` | `Array< Object >` `Object` |         | The new records.  |
+
+- **Example**
+
+  ```js
+  const { getItems, replaceItems } = require('feathers-hooks-common');
+
+  const insertCode = code => context {
+    const items = getItems(context);
+    if (Array.isArray(items)) {
+      items.forEach(item => { item.code = code; });
+    } else {
+      items.code = code;
+    }
+    replaceItems(context, items);
+  };
+
+  module.exports = { before: {
+    create: insertCode('a')
+  } };
+  ```
+
+- **Details**
+
+  `replaceItems` replaces the records in the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
+
+
+
 ## runHook
 
 Let's you call a hook right after the service call.
@@ -473,3 +603,43 @@ Let's you call a hook right after the service call.
   However things are not always so straightforward. There can be that one call for which we want to join specific records. We could add a conditional hook that runs just for that one call, however we may soon find ourselves with a second and a third special case.
 
   `runHook` is designed for such cases. Instead of having to register a conditioned hook, it allows us to run the hook in a `.then()` right after the service call.
+
+
+## some
+
+Return the or of a series of sync or async predicate functions.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/some.js)|
+
+- **Arguments**
+
+  - `{Array< Function >} predicates`
+
+| Argument     |        Type         | Default | Description                                                                   |
+| ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
+| `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
+
+**Returns**
+
+  - `{Boolean} result`
+
+|Name|Type|Description|
+|---|---|---|
+result|Boolean|The logical or of predicates
+
+- **Example**
+
+  ```js
+  const { iff, some } = require('feathers-hooks-common');
+
+  module.exports = { before: {
+      create: iff(some(hook1, hook2, ...), hookA, hookB, ...)
+  } };
+  ```
+
+- **Details**
+
+  `some` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if any predicate returns a truthy value.
+

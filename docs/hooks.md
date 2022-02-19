@@ -504,46 +504,6 @@ Delete certain fields from the query object.
   Delete the fields from `context.params.query`.
 
 
-## every
-
-Return the and of a series of sync or async predicate functions.
-
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/every.js)|
-  
-- **Arguments**
-  - `{Array< Function >} predicates`
-
-| Argument     |        Type         | Default | Description                                                                   |
-| ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
-| `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
-
-
-**Returns**
-
-- `{Boolean} result`
-
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The logical and of predicates
-
-
-- **Example**
-
-  ```js
-  const { iff, every } = require('feathers-hooks-common');
-
-  module.exports = { before: {
-      create: iff(every(hook1, hook2, ...), hookA, hookB, ...)
-  } };
-  ```
-
-- **Details**
-
-  `every` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if every predicate returns a truthy value.
-
-
 ## fastJoin
 
 Join related records.
@@ -1026,96 +986,6 @@ Execute one array of hooks or another based on a sync or async predicate.
   Resolve the predicate, then run one set of hooks sequentially.
 
   The predicate and hook functions will not be called with `this` set to the service, as is normal for hook functions. Use `hook.service` instead.
-
-
-## isNot
-
-Negate a sync or async predicate function.
-
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/is-not.js)|
-
-- **Arguments**
-
-  - `{Function | Boolean} predicate`
-
-| Argument    |         Type         | Default | Description                                                                                   |
-| ----------- | :------------------: | ------- | --------------------------------------------------------------------------------------------- |
-| `predicate` | `Function` `Boolean` |         | A sync or async function which take the current hook as a param and returns a boolean result. |
-
-**Returns**
-
-- `{Boolean} result`
-
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The not of predicate
-
-- **Example**
-
-  ```js
-  const { iff, isNot, isProvider, discard } = require('feathers-hooks-common');
-  const isRequestor = () => context => new Promise(resolve, reject) => ... );
-
-  module.exports = { after: {
-      create: iff(isNot(isRequestor()), discard('password'))
-  } };
-  ```
-
-- **Details**
-
-  `isNot` is a predicate function for use in conditional hooks.
-
-
-## isProvider
-
-Check which transport provided the service call.
-
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/services/is-provider.js)|
-  
-- **Arguments**
-  - `{Array< String >} transports`
-
-| Name         |       Type        | Default | Description                       |
-| ------------ | :---------------: | ------- | --------------------------------- |
-| `transports` | `Array< String >` |         | The transports you want to allow. |
-
-| `transports` |                Value                | Description |
-| ------------ | :---------------------------------: | ----------- |
-| `socketio`   | Allow calls by Socket.IO transport. |
-| `primus`     |  Allow calls by Primus transport.   |
-| `rest`       |   Allow calls by REST transport.    |
-| `external`   | Allow calls other than from server. |
-| `server`     |      Allow calls from server.       |
-
-
-**Returns**
-
-- `{Boolean} result`
-
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|If the call was made by one of the transports.
-
-
-- **Example**
-
-  ```js
-  const { iff, isProvider, discard } = require('feathers-hooks-common')
-
-  module.exports = {
-    after: {
-      create: iff(isProvider('external'), discard('password'))
-    }
-  }
-  ```
-
-- **Details**
-
-  `isProvider` is a predicate function for use in conditional hooks. Its determines which transport provided the service call by checking `context.params.provider`.
 
 
 ## keep
@@ -2009,45 +1879,6 @@ Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hoo
     }
   });
   ```
-
-
-## some
-
-Return the or of a series of sync or async predicate functions.
-
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/some.js)|
-
-- **Arguments**
-
-  - `{Array< Function >} predicates`
-
-| Argument     |        Type         | Default | Description                                                                   |
-| ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
-| `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
-
-**Returns**
-
-  - `{Boolean} result`
-
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The logical or of predicates
-
-- **Example**
-
-  ```js
-  const { iff, some } = require('feathers-hooks-common');
-
-  module.exports = { before: {
-      create: iff(some(hook1, hook2, ...), hookA, hookB, ...)
-  } };
-  ```
-
-- **Details**
-
-  `some` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if any predicate returns a truthy value.
 
 
 ## stashBefore

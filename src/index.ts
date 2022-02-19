@@ -1,58 +1,49 @@
-export { combine } from './services/combine'
-export { actOnDefault, actOnDispatch } from './services/act-on-dispatch';
-export { alterItems } from './services/alter-items';
-export { cache } from './services/cache';
-export { callingParamsDefaults, callingParams, makeCallingParams } from './services/calling-params';
-export { checkContext } from './services/check-context';
-export { checkContextIf } from './services/check-context-if';
-export { debug } from './services/debug';
-export { dePopulate } from './services/de-populate';
-export { disablePagination } from './services/disable-pagination';
-export { discard } from './services/discard';
-export { disallow } from './services/disallow';
-export { discardQuery } from './services/discard-query';
-export { fastJoin } from './services/fast-join';
-export { fgraphql } from './services/fgraphql';
-export { getItems } from './services/get-items';
-export { isProvider } from './services/is-provider';
-export { keep } from './services/keep';
-export { keepInArray } from './services/keep-in-array';
-export { keepQuery } from './services/keep-query';
-export { keepQueryInArray } from './services/keep-query-in-array';
-export { lowerCase } from './services/lower-case';
-export { mongoKeys } from './services/mongo-keys';
-export { paramsForServer } from './services/params-for-server';
-export { paramsFromClient } from './services/params-from-client';
-export { populate } from './services/populate';
-export { preventChanges } from './services/prevent-changes';
-export { replaceItems } from './services/replace-items';
-export { required } from './services/required';
-export { runHook } from './services/run-hook';
-export { runParallel } from './services/run-parallel';
-export { sequelizeConvert } from './services/sequelize-convert';
-export { serialize } from './services/serialize';
-export { setNow } from './services/set-now';
-export { setSlug } from './services/set-slug';
-export { sifter } from './services/sifter';
-export { softDelete } from './services/soft-delete';
-export { stashBefore } from './services/stash-before';
-export { traverse } from './services/traverse';
-export { validate } from './services/validate';
-export { validateSchema } from './services/validate-schema';
+export { actOnDefault, actOnDispatch } from './hooks/act-on-dispatch';
+export { alterItems } from './hooks/alter-items';
+export { cache } from './hooks/cache';
+export { checkContextIf } from './hooks/check-context-if';
+export { debug } from './hooks/debug';
+export { dePopulate } from './hooks/de-populate';
+export { disablePagination } from './hooks/disable-pagination';
+export { disallow } from './hooks/disallow';
+export { discard } from './hooks/discard';
+export { discardQuery } from './hooks/discard-query';
+export { fastJoin } from './hooks/fast-join';
+export { fgraphql } from './hooks/fgraphql';
+export { iff } from './hooks/iff';
+export { iff as when } from './hooks/iff';
+export { iffElse } from './hooks/iff-else'
+export { isProvider } from './hooks/is-provider';
+export { keep } from './hooks/keep';
+export { keepInArray } from './hooks/keep-in-array';
+export { keepQuery } from './hooks/keep-query';
+export { keepQueryInArray } from './hooks/keep-query-in-array';
+export { lowerCase } from './hooks/lower-case';
+export { mongoKeys } from './hooks/mongo-keys';
+export { paramsFromClient } from './hooks/params-from-client';
+export { populate } from './hooks/populate';
+export { preventChanges } from './hooks/prevent-changes';
+export { required } from './hooks/required';
+export { runHook } from './utils/run-hook';
+export { runParallel } from './hooks/run-parallel';
+export { sequelizeConvert } from './hooks/sequelize-convert';
+export { serialize } from './hooks/serialize';
+export { setNow } from './hooks/set-now';
+export { setSlug } from './hooks/set-slug';
+export { sifter } from './hooks/sifter';
+export { softDelete } from './hooks/soft-delete';
+export { stashBefore } from './hooks/stash-before';
+export { traverse } from './hooks/traverse';
+export { unless } from './hooks/unless'
+export { validate } from './hooks/validate';
+export { validateSchema } from './hooks/validate-schema';
 
-import { iff } from './common/iff';
-export { iffElse } from './common/iff-else'
-export { every } from './common/every';
-export { isNot } from './common/is-not'
-export { some } from './common/some'
-export { unless } from './common/unless'
-
-export {
-  iff
-}
-
-/**
- * Alias for iff
- * Execute one or another series of hooks depending on a sync or async predicate.
- */
-export const when = iff
+export { callingParamsDefaults, callingParams, makeCallingParams } from './utils/calling-params';
+export { checkContext } from './utils/check-context';
+export { combine } from './utils/combine'
+export { every } from './utils/every';
+export { getItems } from './utils/get-items';
+export { isNot } from './utils/is-not';
+export { paramsForServer } from './utils/params-for-server';
+export { replaceItems } from './utils/replace-items';
+export { some } from './utils/some';
