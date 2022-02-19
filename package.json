@@ -105,6 +105,6 @@
     "vuepress-theme-default-prefers-color-scheme": "^2.0.0"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 12"
   }
 }
