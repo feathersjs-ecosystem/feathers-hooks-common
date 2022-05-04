@@ -274,7 +274,7 @@ export function mongoKeys(objectId: new (id?: string | number) => any, keyFields
 
 /**
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#paramsforserver}
+ * {@link https://hooks-common.feathersjs.com/utilities.html#paramsforserver}
  */
 export function paramsForServer(params: Params, ...whitelist: string[]): Params;
 
