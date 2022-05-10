@@ -1,9 +1,6 @@
-
 import { assert } from 'chai';
 
-import {
-  validateSchema
-} from '../../src';
+import { validateSchema } from '../../src/hooks/validate-schema';
 
 import Ajv from 'ajv';
 
