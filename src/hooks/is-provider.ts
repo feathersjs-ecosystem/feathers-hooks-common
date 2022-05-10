@@ -3,7 +3,7 @@ import type { SyncContextFunction, TransportName } from '../types';
 
 /**
  * Check which transport provided the service call.
- * {@link https://hooks-common.feathersjs.com/hooks.html#IsProvider}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#isprovider}
  */
 export function isProvider (
   ...providers: TransportName[]

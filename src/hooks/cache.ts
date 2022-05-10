@@ -6,7 +6,7 @@ const defaultMakeCacheKey = (key: any) => key;
 
 /**
  * Persistent, most-recently-used record cache for services.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Cache}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#cache}
  */
 export function cache <T, K extends keyof T> (
   cacheMap: CacheMap<T>,

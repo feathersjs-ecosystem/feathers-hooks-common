@@ -4,7 +4,7 @@ import { checkContext } from '../utils/check-context';
 
 /**
  * Wrap MongoDB foreign keys in ObjectId.
- * {@link https://hooks-common.feathersjs.com/hooks.html#MongoKeys}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#mongokeys}
  */
 export function mongoKeys (
   ObjectId: new (id?: string | number) => any,

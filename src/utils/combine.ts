@@ -5,7 +5,7 @@ const { processHooks } = hooks
 
 /**
  * Sequentially execute multiple sync or async hooks.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Combine}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#combine}
  */
 export function combine (...serviceHooks: Hook[]): Hook {
   return function (this: any, context: any) {

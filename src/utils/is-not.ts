@@ -4,7 +4,7 @@ import type { PredicateFn } from '../types';
 
 /**
  * Negate a sync or async predicate function.
- * {@link https://hooks-common.feathersjs.com/hooks.html#IsNot}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#isnot}
  */
 export function isNot (
   predicate: boolean | PredicateFn

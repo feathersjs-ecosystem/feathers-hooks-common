@@ -5,7 +5,7 @@ import { getItems } from '../utils/get-items';
 
 /**
  * Create/update certain fields to the current date-time.
- * {@link https://hooks-common.feathersjs.com/hooks.html#SetNow}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#setnow}
  */
 export function setNow (...fieldNames: string[]): Hook {
   if (!fieldNames.length) {

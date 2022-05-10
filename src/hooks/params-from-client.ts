@@ -2,7 +2,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Pass context.params from client to server. Server hook.
- * {@link https://hooks-common.feathersjs.com/hooks.html#ParamsFromClient}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#paramsfromclient}
  */
 export function paramsFromClient (...whitelist: string[]): Hook {
   return (context: any) => {

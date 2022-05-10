@@ -3,7 +3,7 @@ import { checkContext } from '../utils/check-context';
 
 /**
  * Disables pagination when query.$limit is -1 or '-1'.
- * {@link https://hooks-common.feathersjs.com/hooks.html#DisablePagination}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#disablepagination}
  */
 export function disablePagination (): Hook {
   return function (context: any) {

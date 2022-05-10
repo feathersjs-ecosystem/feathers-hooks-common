@@ -5,7 +5,7 @@ import type { PredicateFn } from '../types';
 
 /**
  * Execute one array of hooks or another based on a sync or async predicate.
- * {@link https://hooks-common.feathersjs.com/hooks.html#IffElse}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#iffelse}
  */
 export function iffElse (
   predicate: boolean | PredicateFn,

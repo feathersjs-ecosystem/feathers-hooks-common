@@ -7,7 +7,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the record(s), deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#KeepInArray}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#keepinarray}
  */
 export function keepInArray (
   arrayName: string,

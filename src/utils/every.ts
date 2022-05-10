@@ -2,7 +2,7 @@ import type { AsyncPredicateFn, PredicateFn } from '../types';
 
 /**
  * Return the and of a series of sync or async predicate functions.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Every}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#every}
  */
 export function every (
   ...predicates: PredicateFn[]

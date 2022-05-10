@@ -4,7 +4,7 @@ import type { IffHook, PredicateFn } from '../types';
 
 /**
  * Execute one or another series of hooks depending on a sync or async predicate.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Iff}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#iff}
  */
 export function iff (
   predicate: boolean | PredicateFn,

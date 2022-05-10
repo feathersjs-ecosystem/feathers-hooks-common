@@ -3,7 +3,7 @@ import type { AsyncPredicateFn, PredicateFn } from '../types';
 
 /**
  * Return the or of a series of sync or async predicate functions.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Some}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#some}
  */
 export function some (
   ...predicates: PredicateFn[]

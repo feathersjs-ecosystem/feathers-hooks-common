@@ -7,7 +7,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the query object, deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#KeepQueryInArray}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#keepqueryinarray}
  */
 export function keepQueryInArray (
   arrayName: string,

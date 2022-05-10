@@ -6,7 +6,7 @@ import { replaceItems } from '../utils/replace-items';
 
 /**
  * Make changes to data or result items. Very flexible.
- * {@link https://hooks-common.feathersjs.com/hooks.html#AlterItems}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#alteritems}
  */
 export function alterItems <T = any> (
   cb: (record: T, context: HookContext<T>) => any

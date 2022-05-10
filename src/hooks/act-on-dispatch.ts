@@ -3,13 +3,13 @@ import { combine } from '../utils/combine';
 
 /**
  * Runs a series of hooks which mutate context.data or context.result (the Feathers default).
- * {@link https://hooks-common.feathersjs.com/hooks.html#ActOnDefault}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#actondefault}
  */
 export const actOnDefault = (...hooks: Hook[]) => actOn(undefined, ...hooks);
 
 /**
  * Runs a series of hooks which mutate context.dispatch.
- * {@link https://hooks-common.feathersjs.com/hooks.html#ActOnDispatch}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#actondispatch}
  */
 export const actOnDispatch = (...hooks: Hook[]) => actOn('dispatch', ...hooks)
 

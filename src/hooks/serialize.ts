@@ -9,7 +9,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Prune values from related records. Calculate new values.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Serialize}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#serialize}
  */
 export function serialize (
   schema1: SerializeSchema | SyncContextFunction<SerializeSchema>

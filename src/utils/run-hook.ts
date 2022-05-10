@@ -2,7 +2,7 @@ import type { Hook, HookContext, Paginated } from '@feathersjs/feathers';
 
 /**
  * Let's you call a hook right after the service call. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#RunHook}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#runhook}
  */
 export function runHook (
   context?: HookContext

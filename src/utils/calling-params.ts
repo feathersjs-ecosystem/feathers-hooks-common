@@ -12,7 +12,7 @@ const defaults = {
 
 /**
  * Set defaults for building params for service calls with callingParams. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#CallingParamsDefaults}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#callingparamsdefaults}
  */
 export function callingParamsDefaults (
   propNames: string[],
@@ -29,7 +29,7 @@ export function callingParamsDefaults (
 
 /**
  * Build params for a service call. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#CallingParams}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#callingparams}
  */
 export function callingParams ({
   query,
@@ -86,7 +86,7 @@ export function callingParams ({
 /**
  * You should prefer using the callingParams utility to makeCallingParams.
  * Build context.params for service calls. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#MakeCallingParams}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#makecallingparams}
  */
 export function makeCallingParams (
   context: HookContext,

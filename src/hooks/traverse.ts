@@ -6,7 +6,7 @@ import { getItems } from '../utils/get-items';
 /**
  * Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
  * Check docs at https://github.com/substack/js-traverse for info on transformContext!
- * {@link https://hooks-common.feathersjs.com/hooks.html#Traverse}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#traverse}
  */
 export function traverse (
   transformer: (this: any, transformContext: any) => any,

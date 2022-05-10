@@ -6,7 +6,7 @@ import { replaceItems } from '../utils/replace-items';
 
 /**
  * Delete certain fields from the record(s).
- * {@link https://hooks-common.feathersjs.com/hooks.html#Discard}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#discard}
  */
 export function discard (...fieldNames: string[]): Hook {
   return (context: any) => {

@@ -5,7 +5,7 @@ import { getItems } from '../utils/get-items';
 
 /**
  * Validate data using JSON-Schema.
- * {@link https://hooks-common.feathersjs.com/hooks.html#ValidateSchema}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#validateschema}
  */
 export function validateSchema (
   schema: object | string,

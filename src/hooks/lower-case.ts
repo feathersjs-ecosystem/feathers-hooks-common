@@ -8,7 +8,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Convert certain field values to lower case.
- * {@link https://hooks-common.feathersjs.com/hooks.html#LowerCase}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#lowercase}
  */
 export function lowerCase (...fieldNames: string[]): Hook {
   return (context: any) => {

@@ -15,7 +15,7 @@ import type { ResolverMap, SyncContextFunction } from '../types';
  * fastJoin(postResolvers, query)
  * fastJoin(context => postResolvers)
  * fastJoin(postResolvers, context => query) // supports queries from client
- * {@link https://hooks-common.feathersjs.com/hooks.html#FastJoin}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#fastjoin}
  */
 export function fastJoin (
   resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>,

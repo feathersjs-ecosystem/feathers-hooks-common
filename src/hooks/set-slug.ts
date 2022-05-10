@@ -4,7 +4,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Fix slugs in URL, e.g. /stores/:storeId.
- * {@link https://hooks-common.feathersjs.com/hooks.html#SetSlug}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#setslug}
  */
 export function setSlug (slug: string, fieldName?: string): Hook {
   return (context: any) => {

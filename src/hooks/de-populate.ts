@@ -5,7 +5,7 @@ import { replaceItems } from '../utils/replace-items';
 
 /**
  * Remove records and properties created by the populate hook.
- * {@link https://hooks-common.feathersjs.com/hooks.html#DePopulate}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#depopulate}
  */
 export function dePopulate (func?: any): Hook {
   return (context: any) => {

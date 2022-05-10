@@ -7,7 +7,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Prevent patch service calls from changing certain fields.
- * {@link https://hooks-common.feathersjs.com/hooks.html#PreventChanges}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#preventchanges}
  */
 export function preventChanges (
   ifThrow: boolean,

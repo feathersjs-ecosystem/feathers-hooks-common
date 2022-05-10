@@ -8,7 +8,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Required}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#required}
  */
 export function required (...fieldNames: string[]): Hook {
   return (context: any) => {

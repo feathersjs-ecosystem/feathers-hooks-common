@@ -3,7 +3,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Display the current hook context for debugging.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Debug}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#debug}
  */
 export function debug (msg: string, ...fieldNames: string[]): Hook {
   return (context: any) => {

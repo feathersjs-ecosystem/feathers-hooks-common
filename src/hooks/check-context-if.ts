@@ -5,7 +5,7 @@ import { checkContext } from '../utils/check-context';
 /**
  * Like checkContext, but only if the given type matches the hook's type.
  * Restrict a hook to run for certain methods and method types. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#CheckContextIf}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#checkcontextif}
  */
 export function checkContextIf (
   context: HookContext,

@@ -20,7 +20,7 @@ const defaultConversions = {
 };
 
 /**
- * {@link https://hooks-common.feathersjs.com/hooks.html#SequelizeConvert}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#sequelizeconvert}
  */
 export function sequelizeConvert <C extends { [name: string]: SequelizeConversion }> (
   converts: SequelizeConverts<C> | null | undefined | false,

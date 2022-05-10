@@ -4,7 +4,7 @@ import { checkContext } from '../utils/check-context';
 
 /**
  * Delete certain fields from the query object.
- * {@link https://hooks-common.feathersjs.com/hooks.html#DiscardQuery}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#discardquery}
  */
 export function discardQuery (...fieldNames: string[]): Hook {
   return (context: any) => {

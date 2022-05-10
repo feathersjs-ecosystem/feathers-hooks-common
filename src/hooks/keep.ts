@@ -9,7 +9,7 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Keep}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#keep}
  */
 export function keep (
   ...fieldNames: string[]

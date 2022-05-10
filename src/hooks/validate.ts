@@ -8,7 +8,7 @@ import { replaceItems } from '../utils/replace-items';
 
 /**
  * Validate data using a validation function.
- * {@link https://hooks-common.feathersjs.com/hooks.html#Validate}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#validate}
  */
 export function validate (
   validator: ValidatorFn

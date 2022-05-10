@@ -5,7 +5,7 @@ const stndMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'];
 
 /**
  * Restrict a hook to run for certain methods and method types. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#CheckContext}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#checkcontext}
  */
 export function checkContext (
   context: HookContext,

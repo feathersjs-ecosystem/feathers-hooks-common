@@ -4,7 +4,7 @@ import { checkContext } from '../utils/check-context';
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
- * {@link https://hooks-common.feathersjs.com/hooks.html#StashBefore}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#stashbefore}
  */
 export function stashBefore (fieldName?: string): Hook {
   const beforeField = fieldName || 'before';
