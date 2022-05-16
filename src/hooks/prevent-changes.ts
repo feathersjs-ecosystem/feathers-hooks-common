@@ -21,7 +21,7 @@ export function preventChanges (
 
   return (context: any) => {
     checkContext(context, 'before', ['patch'], 'preventChanges');
-    const data = context.data;
+    const { data } = context;
 
     fieldNames.forEach(name => {
       if (existsByDot(data, name)) {
@@ -30,11 +30,6 @@ export function preventChanges (
         }
         // Delete data.contactPerson.name
         context.data = omit(data, name);
-      }
-      // Delete data['contactPerson.name']
-      if (data[name]) {
-        if (ifThrow) throw new BadRequest(`Field ${name} may not be patched. (preventChanges)`);
-        delete data[name];
       }
     });
 
