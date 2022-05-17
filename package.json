@@ -16,6 +16,7 @@
     "compile": "shx rm -rf dist/ && tsup src/index.ts --format cjs,esm --dts",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "prepublish": "npm run compile",
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:prerelease": "npm version prerelease && npm publish --tag pre",
     "release:patch": "npm version patch && npm publish",
