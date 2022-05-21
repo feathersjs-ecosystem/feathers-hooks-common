@@ -2,12 +2,27 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.6...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-0...HEAD)
 
 **Merged pull requests:**
 
-- chore\(dependencies\): Update all dependencies [\#628](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/628) ([daffl](https://github.com/daffl))
-- Fix dependency update action [\#627](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/627) ([daffl](https://github.com/daffl))
+- chore\(dependencies\): Update all dependencies [\#643](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/643) ([daffl](https://github.com/daffl))
+- fix\(checkContext\): type as array [\#636](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/636) ([fratzinger](https://github.com/fratzinger))
+- Update migrating.md [\#635](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/635) ([indatawetrust](https://github.com/indatawetrust))
+- chore\(dependencies\): Update all dependencies [\#633](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/633) ([daffl](https://github.com/daffl))
+- \[FIX\] Missing arrow function syntax [\#632](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/632) ([luan0ap](https://github.com/luan0ap))
+
+## [v6.0.0-0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0-0) (2022-05-21)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.6...v6.0.0-0)
+
+**Closed issues:**
+
+- Usage of feathers common hook in custom hook [\#642](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/642)
+- keep doesn't work as an after hook for get [\#640](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/640)
+- Feathers js - cannot throw error in map function [\#637](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/637)
+- For MongoDB hook to convert context.params.user.\_id to an ObjectID [\#456](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/456)
+- Authorization hook [\#433](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/433)
 
 ## [v5.0.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.6) (2021-05-14)
 
@@ -17,6 +32,11 @@
 
 - TypeError: this.hooks is not a function [\#621](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/621)
 - feathers.js - discard hook not working in authentication.js [\#619](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/619)
+
+**Merged pull requests:**
+
+- chore\(dependencies\): Update all dependencies [\#628](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/628) ([daffl](https://github.com/daffl))
+- Fix dependency update action [\#627](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/627) ([daffl](https://github.com/daffl))
 
 ## [v5.0.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.5) (2021-02-09)
 
@@ -109,14 +129,11 @@
 
 - Doument fgraphql [\#466](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/466)
 - Clarify fastJoin API docs. [\#452](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/452)
-- Improvement: review alterItems tests [\#408](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/408)
 
 **Closed issues:**
 
 - TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
 - Write docs for sequelizeConvert [\#497](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/497)
-- Suggestion: Utility to allow hooks to be skippable. [\#417](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/417)
-- Suggestion: possible enhancement: utilities to extract info from `app` [\#416](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/416)
 
 **Merged pull requests:**
 
@@ -179,7 +196,7 @@
 - Update dependencies to enable Greenkeeper 🌴 [\#534](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/534) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update README.md [\#525](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/525) ([bartduisters](https://github.com/bartduisters))
 - Upgrade ajv dependency and fix failing tests. [\#518](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/518) ([rybaczewa](https://github.com/rybaczewa))
-- Annoying typo fixed [\#516](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/516) ([james2mid](https://github.com/james2mid))
+- Annoying typo fixed [\#516](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/516) ([midzdotdev](https://github.com/midzdotdev))
 - Ensure `existsByDot` and `getByDot` honour properties with dots in keys [\#515](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/515) ([anthonygood](https://github.com/anthonygood))
 - Updated typings. [\#513](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/513) ([deskoh](https://github.com/deskoh))
 - Fix promise-to-callback hook preventing other hook import. [\#506](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/506) ([rybaczewa](https://github.com/rybaczewa))
@@ -505,7 +522,6 @@
 - Added prep for skipRemaingHooksOnFlag [\#423](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/423) ([eddyystop](https://github.com/eddyystop))
 - Delete's not a thing [\#421](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/421) ([rayfoss](https://github.com/rayfoss))
 - Added `keepInArray` hook to keep fields from a nested array [\#420](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/420) ([dekelev](https://github.com/dekelev))
-- remove hook removal explained [\#405](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/405) ([rayfoss](https://github.com/rayfoss))
 
 ## [v4.15.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.15.0) (2018-07-24)
 
@@ -523,30 +539,13 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.14.1...v4.14.2)
 
-**Closed issues:**
-
-- How to stop requests from 'external'? [\#415](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/415)
-
-**Merged pull requests:**
-
-- Fix prevent changes and discard hooks [\#406](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/406) ([SteffenLanger](https://github.com/SteffenLanger))
-
 ## [v4.14.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.14.1) (2018-07-03)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.14.0...v4.14.1)
 
-**Merged pull requests:**
-
-- \[security issue\] fix populate injecting provider into source schema argument [\#414](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/414) ([antarasi](https://github.com/antarasi))
-
 ## [v4.14.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.14.0) (2018-06-26)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.13.0...v4.14.0)
-
-**Merged pull requests:**
-
-- Added callingParams, callingParamsDefault hooks. Replaced makeCallingParams [\#411](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/411) ([eddyystop](https://github.com/eddyystop))
-- Update soft-delete.js [\#410](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/410) ([bertho-zero](https://github.com/bertho-zero))
 
 ## [v4.13.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.13.0) (2018-06-26)
 
@@ -556,21 +555,9 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.12.0...v4.12.1)
 
-**Closed issues:**
-
-- \[Question\] Modify Another Resources using An Services [\#407](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/407)
-
-**Merged pull requests:**
-
-- restore alterItems for works with sync methods [\#409](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/409) ([bertho-zero](https://github.com/bertho-zero))
-
 ## [v4.12.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.12.0) (2018-06-05)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.11.3...v4.12.0)
-
-**Merged pull requests:**
-
-- Correct linting. [\#404](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/404) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.11.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.11.3) (2018-06-05)
 
@@ -579,11 +566,6 @@
 ## [v4.11.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.11.2) (2018-06-05)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.11.1...v4.11.2)
-
-**Merged pull requests:**
-
-- getByDot no-ops non-obejct records [\#403](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/403) ([eddyystop](https://github.com/eddyystop))
-- keep hook ignores records which are not objects [\#402](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/402) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.11.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.11.1) (2018-04-26)
 
