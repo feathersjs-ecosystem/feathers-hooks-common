@@ -26,7 +26,7 @@
     "lint": "eslint src/**/*.ts test/**/*.ts --fix",
     "update-dependencies": "ncu -u -x ajv,mongodb",
     "mocha": "mocha --require ts-node/register",
-    "coverage": "nyc npm run mocha",
+    "coverage": "c8 npm run mocha",
     "test": "npm run lint && npm run coverage"
   },
   "repository": {
@@ -90,6 +90,7 @@
     "@types/traverse": "^0.6.32",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
+    "c8": "^7.11.3",
     "chai": "^4.3.6",
     "clone": "^2.1.2",
     "coveralls": "^3.1.1",
@@ -102,7 +103,6 @@
     "mocha": "^10.0.0",
     "mongodb": "^4.6.0",
     "npm-check-updates": "^13.0.1",
-    "nyc": "^15.1.0",
     "shx": "^0.3.4",
     "sift": "^16.0.0",
     "ts-node": "^10.7.0",
