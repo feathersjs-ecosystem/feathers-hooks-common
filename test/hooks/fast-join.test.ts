@@ -1,9 +1,9 @@
 
 import { assert } from 'chai';
 import BatchLoader from '@feathers-plus/batch-loader';
-import { fastJoin, makeCallingParams } from '../src/index';
+import { fastJoin, makeCallingParams } from '../../src';
 
-import { posts, users, comments } from './helpers/make-services';
+import { posts, users, comments } from '../helpers/make-services';
 
 const { getResultsByKey, getUniqueKeys, loaderFactory } = BatchLoader;
 

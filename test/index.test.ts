@@ -1,8 +1,8 @@
 
 import { assert } from 'chai';
-import * as hooks from '../../src';
+import * as allExported from '../src';
 
-const hookNames = [
+const members = [
   'actOnDefault',
   'actOnDispatch',
   'alterItems',
@@ -63,8 +63,8 @@ describe('services exposed hooks', () => {
 
   it('no unexpected hooks', () => {
     assert.deepEqual(
-      Object.keys(hooks).sort(),
-      [].concat(hookNames).sort()
+      Object.keys(allExported).sort(),
+      [].concat(members).sort()
     );
   });
 });

@@ -5,7 +5,7 @@ import BatchLoader from '@feathers-plus/batch-loader';
 // @ts-ignore
 import CacheMap from '@feathers-plus/cache';
 import { Service } from 'feathers-memory';
-import { cache, fastJoin, iff, makeCallingParams } from '../src';
+import { cache, fastJoin, iff, makeCallingParams } from '../../src';
 
 const { getResultsByKey, getUniqueKeys } = BatchLoader;
 
@@ -118,20 +118,20 @@ describe('services fastJoin & cache', () => {
     userBatchLoaderCount = 0;
   });
 
-    describe('check services work', () => {
-      it('find posts', async () => {
+  describe('check services work', () => {
+    it('find posts', async () => {
       const data = await posts.find();
       assert.deepEqual(data, postsStoreInit);
     });
 
-      it('find users', async () => {
+    it('find users', async () => {
       const data = await users.find();
       assert.deepEqual(data, usersStoreInit);
     });
   });
 
-    describe('test fastJoin', () => {
-      it('no cacheMap, no cache hook', async () => {
+  describe('test fastJoin', () => {
+    it('no cacheMap, no cache hook', async () => {
       const context = await ex8();
 
       const result: any = {
@@ -155,7 +155,7 @@ describe('services fastJoin & cache', () => {
       assert.deepEqual(context, result);
     });
 
-      it('with cacheMap, no cache hook', async () => {
+    it('with cacheMap, no cache hook', async () => {
       const context = await ex8a();
 
       const result: any = {
@@ -180,13 +180,13 @@ describe('services fastJoin & cache', () => {
     });
   });
 
-    describe('test fastJoin with cacheMap & cache', () => {
-      beforeEach(() => {
+  describe('test fastJoin with cacheMap & cache', () => {
+    beforeEach(() => {
       enableCache = true;
       cacheMapUsers.reset();
     });
 
-      it('works for 1 call', async () => {
+    it('works for 1 call', async () => {
       const context = await ex8b();
 
       const result: any = {
@@ -212,7 +212,7 @@ describe('services fastJoin & cache', () => {
       assert.equal(joinStarersCount, 1, 'joinStarersCount');
     });
 
-      it('uses persistent cache for 2 calls', async () => {
+    it('uses persistent cache for 2 calls', async () => {
       assert.equal(cacheMapUsers.itemCount, 0, '0 cache');
 
       const result: any = {
