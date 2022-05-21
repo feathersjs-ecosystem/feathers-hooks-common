@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-1...HEAD)
 
 **Merged pull requests:**
 
@@ -11,6 +11,10 @@
 - Update migrating.md [\#635](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/635) ([indatawetrust](https://github.com/indatawetrust))
 - chore\(dependencies\): Update all dependencies [\#633](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/633) ([daffl](https://github.com/daffl))
 - \[FIX\] Missing arrow function syntax [\#632](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/632) ([luan0ap](https://github.com/luan0ap))
+
+## [v6.0.0-1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0-1) (2022-05-21)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-0...v6.0.0-1)
 
 ## [v6.0.0-0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0-0) (2022-05-21)
 
