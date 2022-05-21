@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feathersjs/feathers-hooks-common.git"
+    "url": "git+https://github.com/feathersjs-ecosystem/feathers-hooks-common.git"
   },
   "keywords": [
     "feathers",
@@ -43,14 +43,15 @@
     "permission"
   ],
   "author": {
-    "name": "John J. Szwaronek",
-    "email": "johnsz9999@gmail.com"
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
+    "url": "https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues"
   },
-  "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
+  "homepage": "https://hooks-common.feathersjs.com/",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
