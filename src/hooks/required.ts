@@ -1,6 +1,6 @@
-import getByDot from 'lodash/get';
+import _get from 'lodash/get';
 import { BadRequest } from '@feathersjs/errors';
-import existsByDot from 'lodash/has';
+import _has from 'lodash/has';
 
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
@@ -17,8 +17,8 @@ export function required (...fieldNames: string[]): Hook {
 
     (Array.isArray(items) ? items : [items]).forEach(item => {
       fieldNames.forEach(name => {
-        if (!existsByDot(item, name)) throw new BadRequest(`Field ${name} does not exist. (required)`);
-        const value = getByDot(item, name);
+        if (!_has(item, name)) throw new BadRequest(`Field ${name} does not exist. (required)`);
+        const value = _get(item, name);
         if (!value && value !== 0 && value !== false) throw new BadRequest(`Field ${name} is null. (required)`);
       });
     });

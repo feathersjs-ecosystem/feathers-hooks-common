@@ -1,4 +1,4 @@
-import getByDot from 'lodash/get';
+import _get from 'lodash/get';
 
 export function transformItems <T extends Record<string, any>> (
   items: T | T[],
@@ -7,7 +7,7 @@ export function transformItems <T extends Record<string, any>> (
 ): void {
   (Array.isArray(items) ? items : [items]).forEach(item => {
     fieldNames.forEach((fieldName: any) => {
-      transformer(item, fieldName, getByDot(item, fieldName));
+      transformer(item, fieldName, _get(item, fieldName));
     });
   });
 }

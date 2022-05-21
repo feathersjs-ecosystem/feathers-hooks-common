@@ -1,6 +1,6 @@
-import getByDot from 'lodash/get';
-import setByDot from 'lodash/set';
-import existsByDot from 'lodash/has';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
+import _has from 'lodash/has';
 
 import { checkContextIf } from './check-context-if';
 import { getItems } from '../utils/get-items';
@@ -33,10 +33,10 @@ function replaceItem (item: any, fields: any) {
 
   const newItem = {};
   fields.forEach((field: any) => {
-    if (!existsByDot(item, field)) return;
+    if (!_has(item, field)) return;
 
-    const value = getByDot(item, field);
-    setByDot(newItem, field, value);
+    const value = _get(item, field);
+    _set(newItem, field, value);
   });
   item = newItem;
   return item;

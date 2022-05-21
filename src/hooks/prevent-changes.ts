@@ -1,5 +1,5 @@
-import existsByDot from 'lodash/has';
-import omit from 'lodash/omit';
+import _has from 'lodash/has';
+import _omit from 'lodash/omit';
 
 import { checkContext } from '../utils/check-context';
 import { BadRequest } from '@feathersjs/errors';
@@ -24,12 +24,12 @@ export function preventChanges (
     const { data } = context;
 
     fieldNames.forEach(name => {
-      if (existsByDot(data, name)) {
+      if (_has(data, name)) {
         if (ifThrow) {
           throw new BadRequest(`Field ${name} may not be patched. (preventChanges)`);
         }
         // Delete data.contactPerson.name
-        context.data = omit(data, name);
+        context.data = _omit(data, name);
       }
     });
 

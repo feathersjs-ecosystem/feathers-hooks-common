@@ -1,6 +1,6 @@
-import getByDot from 'lodash/get';
-import setByDot from 'lodash/set';
-import omit from 'lodash/omit';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
+import _omit from 'lodash/omit';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
@@ -40,9 +40,9 @@ export function serialize (
       if (only) {
         const newItem = {};
         only.concat('_include', '_elapsed', item._include || []).forEach((key: any) => {
-          const value = getByDot(item, key);
+          const value = _get(item, key);
           if (value !== undefined) {
-            setByDot(newItem, key, value);
+            _set(newItem, key, value);
           }
         });
         item = newItem;
@@ -51,7 +51,7 @@ export function serialize (
       let exclude = schema.exclude;
       exclude = typeof exclude === 'string' ? [exclude] : exclude;
       if (exclude) {
-        item = omit(item, exclude);
+        item = _omit(item, exclude);
       }
 
       const _computed = Object.keys(computed);

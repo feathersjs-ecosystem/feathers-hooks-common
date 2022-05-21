@@ -1,5 +1,5 @@
 import type { Hook } from '@feathersjs/feathers';
-import omit from 'lodash/omit';
+import _omit from 'lodash/omit';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
@@ -18,7 +18,7 @@ export function dePopulate (func?: any): Hook {
       const keys = ['_elapsed', '_computed', '_include'];
       const { _computed = [], _include = [] } = item;
 
-      return omit(item, keys.concat(_computed).concat(_include));
+      return _omit(item, keys.concat(_computed).concat(_include));
     };
     const converted = Array.isArray(items) ? items.map(converter) : converter(items);
 

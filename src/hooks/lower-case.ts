@@ -1,4 +1,4 @@
-import setByDot from 'lodash/set';
+import _set from 'lodash/set';
 import { BadRequest } from '@feathersjs/errors';
 
 import { transformItems } from '../common';
@@ -20,7 +20,7 @@ export function lowerCase (...fieldNames: string[]): Hook {
           throw new BadRequest(`Expected string data. (lowercase ${fieldName})`);
         }
 
-        setByDot(item, fieldName, value ? value.toLowerCase() : value);
+        _set(item, fieldName, value ? value.toLowerCase() : value);
       }
     });
 

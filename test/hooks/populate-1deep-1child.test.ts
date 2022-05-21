@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import setByDot from 'lodash/set';
+import _set from 'lodash/set';
 
 import configApp from '../helpers/config-app';
 import getInitDb from '../helpers/get-init-db';
@@ -607,7 +607,7 @@ function recommendationPosts (nameAs: any, asArray?: any, recommendation?: any, 
   expected._include = [nameAs];
 
   // expected[nameAs] = asArray ? [clone(posts)] : clone(posts);
-  setByDot(expected, nameAs, asArray ? [clone(posts)] : clone(posts));
+  _set(expected, nameAs, asArray ? [clone(posts)] : clone(posts));
 
   return expected;
 }

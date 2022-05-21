@@ -1,5 +1,5 @@
-import getByDot from 'lodash/get';
-import setByDot from 'lodash/set';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
 import { BadRequest } from '@feathersjs/errors';
 
 import { getItems } from '../utils/get-items';
@@ -121,7 +121,7 @@ function populateItem (
 
       // A related column join is required if neither the query nor select options are provided.
       // That requires item[parentField] exist. (The DB handles child[childField] existence.)
-      if (!query && !select && (!parentField || getByDot(item, parentField) === undefined)) {
+      if (!query && !select && (!parentField || _get(item, parentField) === undefined)) {
         return undefined;
       }
 
@@ -145,7 +145,7 @@ function populateItem (
 
       children.forEach(child => {
         if (child) {
-          setByDot(item, child.nameAs, child.items);
+          _set(item, child.nameAs, child.items);
         }
       });
 
@@ -207,7 +207,7 @@ function populateAddChild (
       let sqlQuery = {};
 
       if (parentField) {
-        const parentVal = getByDot(parentItem, parentField); // will not be undefined
+        const parentVal = _get(parentItem, parentField); // will not be undefined
         sqlQuery = { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal };
       }
 

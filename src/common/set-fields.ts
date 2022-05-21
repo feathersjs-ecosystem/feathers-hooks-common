@@ -1,4 +1,4 @@
-import setByDot from 'lodash/set';
+import _set from 'lodash/set';
 
 export function setFields <T extends Record<string, any>> (
   items: T | T[],
@@ -12,7 +12,7 @@ export function setFields <T extends Record<string, any>> (
 
   (Array.isArray(items) ? items : [items]).forEach(item => {
     fieldNames.forEach((fieldName: any) => {
-      setByDot(item, fieldName, value);
+      _set(item, fieldName, value);
     });
   });
 }

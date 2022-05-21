@@ -1,7 +1,7 @@
 import { BadRequest } from '@feathersjs/errors';
-import getByDot from 'lodash/get';
-import setByDot from 'lodash/set';
-import existsByDot from 'lodash/has';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
+import _has from 'lodash/has';
 import { getItems } from '../utils/get-items';
 import type { Hook } from '@feathersjs/feathers';
 
@@ -27,11 +27,11 @@ export function keepInArray (
 }
 
 function replaceIn (item: any, field: any, fieldNames: any) {
-  const target = getByDot(item, field);
+  const target = _get(item, field);
   if (target) {
     if (!Array.isArray(target)) throw new BadRequest(`The 'field' param must lead to array. found type '${typeof target}' instead`);
 
-    setByDot(item, field, target.map(item => replaceItem(item, fieldNames)));
+    _set(item, field, target.map(item => replaceItem(item, fieldNames)));
   }
 }
 
@@ -40,10 +40,10 @@ function replaceItem (item: any, fields: any) {
 
   const newItem = {};
   fields.forEach((field: any) => {
-    if (!existsByDot(item, field)) return;
+    if (!_has(item, field)) return;
 
-    const value = getByDot(item, field);
-    setByDot(newItem, field, value);
+    const value = _get(item, field);
+    _set(newItem, field, value);
   });
   item = newItem;
   return item;

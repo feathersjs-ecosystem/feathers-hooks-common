@@ -1,4 +1,4 @@
-import setByDot from 'lodash/set';
+import _set from 'lodash/set';
 import { GeneralError } from '@feathersjs/errors';
 import type { Hook } from '@feathersjs/feathers';
 
@@ -19,7 +19,7 @@ export function setSlug (slug: string, fieldName?: string): Hook {
     if (context.params && context.params.provider === 'rest') {
       const value = context.params.route[slug];
       if (typeof value === 'string' && value[0] !== ':') {
-        setByDot(context.params, fieldName, value);
+        _set(context.params, fieldName, value);
       }
     }
   };

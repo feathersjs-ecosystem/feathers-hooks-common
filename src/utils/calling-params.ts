@@ -1,6 +1,6 @@
 import type { HookContext, Params } from '@feathersjs/feathers';
-import getByDot from 'lodash/get';
-import setByDot from 'lodash/set';
+import _get from 'lodash/get';
+import _set from 'lodash/set';
 import type { CallingParamsOptions, SyncContextFunction } from '../types';
 
 const stndAuthProps = ['provider', 'authenticated', 'user']; // feathers-authentication
@@ -47,10 +47,10 @@ export function callingParams ({
 
     allPropNames.forEach(name => {
       if (name) { // for makeCallingParams compatibility
-        const value = getByDot(context.params, name);
+        const value = _get(context.params, name);
 
         if (value !== undefined) {
-          setByDot(newParams, name, value);
+          _set(newParams, name, value);
         }
       }
     });

@@ -1,5 +1,5 @@
 import type { Hook } from '@feathersjs/feathers';
-import omit from 'lodash/omit';
+import _omit from 'lodash/omit';
 import { checkContext } from '../utils/check-context';
 
 /**
@@ -12,7 +12,7 @@ export function discardQuery (...fieldNames: string[]): Hook {
 
     const query = (context.params || {}).query || {};
 
-    context.params.query = omit(query, fieldNames);
+    context.params.query = _omit(query, fieldNames);
 
     return context;
   };
