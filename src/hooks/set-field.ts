@@ -9,6 +9,10 @@ import type { SetFieldOptions } from '../types';
 
 const debug = _debug('feathers-hooks-common/setField');
 
+/**
+ * The `setField` hook allows to set a field on the hook context based on the value of another field on the hook context.
+ * {@link https://hooks-common.feathersjs.com/hooks.html#setfield}
+ */
 export function setField (
   { as, from, allowUndefined = false }: SetFieldOptions
 ): Hook {
