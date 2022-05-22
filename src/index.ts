@@ -13,7 +13,7 @@ export { fgraphql } from './hooks/fgraphql';
 export { iff } from './hooks/iff';
 export { iff as when } from './hooks/iff';
 export { iffElse } from './hooks/iff-else'
-export { isProvider } from './hooks/is-provider';
+export { isProvider } from './utils/is-provider';
 export { keep } from './hooks/keep';
 export { keepInArray } from './hooks/keep-in-array';
 export { keepQuery } from './hooks/keep-query';
