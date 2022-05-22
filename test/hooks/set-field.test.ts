@@ -1,4 +1,4 @@
-import assert from 'assert/strict';
+import assert from 'assert';
 import feathers from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { setField } from '../../src';
