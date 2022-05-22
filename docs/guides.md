@@ -821,7 +821,7 @@ You may want to read about the Feathers service adapter [@feathers-plus/graphql]
 
 ## Populate
 
-### `populate(options: Object): HookFunc` [source](https://github.com/feathersjs/feathers-hooks-common/blob/master/src/services/populate.js)
+### `populate(options: Object): HookFunc` [source](https://github.com/feathersjs/feathers-hooks-common/blob/master/src/hooks/populate.ts)
 
 Populates items _recursively_ to any depth. Supports 1:1, 1:n and n:1 relationships.
 

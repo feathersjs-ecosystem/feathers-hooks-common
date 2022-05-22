@@ -159,7 +159,7 @@ Sequentially execute multiple sync or async hooks.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|n/a|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/services/combine.js)|
+|yes|yes|all|n/a|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/combine.ts)|
 
 - **Arguments**
   - `{Array< Function >} hookFuncs`
@@ -204,7 +204,7 @@ Return the and of a series of sync or async predicate functions.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/every.js)|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/every.ts)|
   
 - **Arguments**
   - `{Array< Function >} predicates`
@@ -287,7 +287,7 @@ Negate a sync or async predicate function.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/is-not.js)|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-not.ts)|
 
 - **Arguments**
 
@@ -327,7 +327,7 @@ Check which transport provided the service call.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/services/is-provider.js)|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-provider.ts)|
   
 - **Arguments**
   - `{Array< String >} transports`
@@ -611,7 +611,7 @@ Return the or of a series of sync or async predicate functions.
 
 |before|after|methods|multi|details|
 |---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/lib/common/some.js)|
+|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/some.ts)|
 
 - **Arguments**
 
