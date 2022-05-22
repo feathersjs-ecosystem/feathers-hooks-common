@@ -2,7 +2,7 @@
 import { assert } from 'chai';
 import { getItems, replaceItems } from '../../src';
 
-// Tests when context.params._actOn === 'dispatch' are in act-on.test.js
+// Tests when context.params._actOn === 'dispatch' are in act-on.test.ts
 
 describe('services getItems & replaceItems', () => {
   let hookBefore: any;

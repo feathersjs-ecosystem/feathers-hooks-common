@@ -17,7 +17,7 @@ const convertDatetime = {
   js: (sqlDate: any) => new Date(sqlDate).valueOf()
 };
 
-describe('conversion-sql.test.js', function () {
+describe('sequelize-convert.test.ts', function () {
   describe('as before hook', () => {
     let context: any;
     let contextArray: any;
