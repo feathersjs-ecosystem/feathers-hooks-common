@@ -891,7 +891,7 @@ The `cache` hook also makes `get` service calls more efficient.
 
   Relationships such as `1:1`, `1:m`, `n:1`, and `n:m` relationships can be handled.
 
-  `fastJoin` uses a GraphQL-like imperative API, and it is not restricted to using data from Feathers services. Resources for which there are no Feathers adapters can [be used.](../batch-loader/common-patterns.html#Using-non-Feathers-services)
+  `fastJoin` uses a GraphQL-like imperative API, and it is not restricted to using data from Feathers services. Resources for which there are no Feathers adapters can [be used.](https://github.com/feathersjs-ecosystem/batch-loader)
 
   The companion `@feathers-plus/cache` implements a least recently-used cache which discards the least recently used items first. When used in conjunction with the `cache` hook, it can be used to implement persistent caches for BatchLoaders. BatchLoaders configured this way would retain their cache between requests, eliminating the need to _prime_ the cache at the start of each request.
 

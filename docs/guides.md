@@ -64,8 +64,6 @@ module.exports = {
 
 We often want to combine rows from two or more tables based on a relationship between them. The `fastJoin` hook will select records that have matching values in both tables. It can batch service calls and cache records, thereby needing roughly an order of magnitude fewer database calls than the `populate` hook, i.e. _2_ calls instead of _20_. It uses a [GraphQL](http://graphql.org/)-like imperative API.
 
-`fastJoin` is not restricted to using data from Feathers services. Resources for which there are no Feathers adapters can [also be used](/v1/batch-loader/common-patterns.html#Using-non-Feathers-services).
-
 ### Usage
 
 ```js
@@ -260,7 +258,7 @@ const postResolvers = {
 };
 ```
 
-A resolver function can make any sort of modification to the passed record; it is not limited to making service calls. Resolvers can use resources for which there is [no Feathers adapter](/v1/batch-loader/common-patterns.html#Using-non-Feathers-services).
+A resolver function can make any sort of modification to the passed record; it is not limited to making service calls.
 
 Here, the starerCount resolver adds the field `starerCount` containing a count of the `starIds`.
 
@@ -421,7 +419,7 @@ We have been looking till now into the structure and flexibility of `fastJoin`. 
 
 We will use batch-loaders to dramatically reduce the number of database calls needed. Its not uncommon for operations that would have required _20_ database calls to make only _2_ using batch-loaders.
 
-You need to understand batch-loaders before we proceed, so [read about them now.](../batch-loader/guide.html)
+You need to understand batch-loaders before we proceed, so [read about them now.](https://github.com/feathersjs-ecosystem/batch-loader)
 
 ### Using a Simple Batch-Loader
 
@@ -524,7 +522,7 @@ const postResolvers = {
 }
 ```
 
-> The [batch-loader guide](../batch-loader) explains how to create batch-loaders.
+> The [batch-loader guide](https://github.com/feathersjs-ecosystem/batch-loader) explains how to create batch-loaders.
 
 ### Putting It All Together
 
