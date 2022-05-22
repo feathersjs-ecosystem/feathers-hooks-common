@@ -8,3 +8,9 @@ This documentation has several parts:
 - [Utilities API](./utilities.md) - The API for the available utility methods
 - [Migrating](./migrating.md) - Information on how to migrate to the latest version of `feathers-hooks-common`
 - [Guides](./guides.md) - More in-depth guides for some of the available hooks
+
+## Notable Changes
+
+### 6.1.0
+
+- **new hook `setField`**: The `setField` hook allows to set a field on the hook context based on the value of another field on the hook context. [see docs](./hooks.md#setfield)
