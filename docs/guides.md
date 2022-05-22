@@ -113,7 +113,7 @@ const postResolvers = {
   joins: {
     author: (...args) => async (post, { app }) => {
       post.author = (
-        await app.services('users').find({
+        await app.service('users').find({
           query: {
             id: post.userId
           }
@@ -122,7 +122,7 @@ const postResolvers = {
     },
 
     starers: $select => async (post, { app }) => {
-      post.starers = await app.services('users').find({
+      post.starers = await app.service('users').find({
         query: {
           id: { $in: post.starIds },
           $select: $select || ['name']
@@ -821,7 +821,7 @@ You may want to read about the Feathers service adapter [@feathers-plus/graphql]
 
 ## Populate
 
-### `populate(options: Object): HookFunc` [source](https://github.com/feathersjs/feathers-hooks-common/blob/master/src/services/populate.js)
+### `populate(options: Object): HookFunc` [source](https://github.com/feathersjs/feathers-hooks-common/blob/master/src/hooks/populate.ts)
 
 Populates items _recursively_ to any depth. Supports 1:1, 1:n and n:1 relationships.
 

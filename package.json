@@ -1,36 +1,37 @@
 {
   "name": "feathers-hooks-common",
-  "version": "5.0.6",
+  "version": "6.0.0-2",
   "description": "Useful hooks for use with Feathersjs services.",
-  "main": "lib/",
-  "types": "types/",
-  "directories": {
-    "lib": "lib"
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "scripts": {
+    "compile": "shx rm -rf dist/ && tsup src/index.ts --format cjs,esm --dts",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "prepublishOnly": "npm run compile",
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:prerelease": "npm version prerelease && npm publish --tag pre",
     "release:patch": "npm version patch && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator --max-issues 200 -u feathersjs-ecosystem -p feathers-hooks-common && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
-    "lint": "semistandard --fix",
-    "lint:types": "dtslint types",
+    "lint": "eslint src/**/*.ts test/**/*.ts --fix",
     "update-dependencies": "ncu -u -x ajv,mongodb",
-    "mocha": "mocha --recursive tests/",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --recursive tests/",
-    "test": "npm run lint && npm run lint:types && npm run coverage"
-  },
-  "semistandard": {
-    "env": [
-      "mocha"
-    ]
+    "mocha": "mocha --require ts-node/register",
+    "coverage": "c8 npm run mocha",
+    "test": "npm run lint && npm run coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feathersjs/feathers-hooks-common.git"
+    "url": "git+https://github.com/feathersjs-ecosystem/feathers-hooks-common.git"
   },
   "keywords": [
     "feathers",
@@ -42,56 +43,72 @@
     "permission"
   ],
   "author": {
-    "name": "John J. Szwaronek",
-    "email": "johnsz9999@gmail.com"
+    "name": "Feathers contributors",
+    "email": "hello@feathersjs.com",
+    "url": "https://feathersjs.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/feathersjs/feathers-hooks-common/issues"
+    "url": "https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues"
   },
-  "homepage": "https://github.com/feathersjs/feathers-hooks-common#readme",
+  "homepage": "https://hooks-common.feathersjs.com/",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "src/**",
+    "lib/**",
+    "dist/**"
+  ],
   "dependencies": {
     "@feathers-plus/batch-loader": "^0.3.6",
-    "@feathersjs/commons": "^4.5.11",
-    "@feathersjs/errors": "^4.5.11",
-    "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/commons": "^4.5.15",
+    "@feathersjs/errors": "^4.5.15",
+    "@feathersjs/feathers": "^4.5.15",
     "ajv": "^6.12.6",
-    "debug": "^4.3.2",
-    "graphql": "^15.6.0",
+    "debug": "^4.3.4",
+    "graphql": "^16.5.0",
     "lodash": "^4.17.21",
-    "process": "0.11.10",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
     "@feathers-plus/cache": "^1.4.0",
     "@feathers-plus/graphql": "^1.10.0",
-    "@feathersjs/authentication": "^4.5.11",
+    "@feathersjs/authentication": "^4.5.15",
     "@feathersjs/authentication-jwt": "^2.0.10",
-    "@feathersjs/authentication-local": "^4.5.11",
-    "@feathersjs/client": "^4.5.11",
-    "@feathersjs/express": "^4.5.11",
-    "@feathersjs/socketio": "^4.5.11",
-    "@feathersjs/socketio-client": "^4.5.11",
-    "@types/node": "^16.10.2",
-    "chai": "^4.3.4",
+    "@feathersjs/authentication-local": "^4.5.15",
+    "@feathersjs/client": "^4.5.15",
+    "@feathersjs/express": "^4.5.15",
+    "@feathersjs/socketio": "^4.5.15",
+    "@feathersjs/socketio-client": "^4.5.15",
+    "@types/chai": "^4.3.1",
+    "@types/clone": "^2.1.1",
+    "@types/debug": "^4.1.7",
+    "@types/lodash": "^4.14.182",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^17.0.35",
+    "@types/traverse": "^0.6.32",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "c8": "^7.11.3",
+    "chai": "^4.3.6",
     "clone": "^2.1.2",
-    "coveralls": "^3.1.1",
-    "dtslint": "^4.1.6",
+    "eslint": "^8.16.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
     "feathers-memory": "^4.1.0",
-    "http-shutdown": "^1.2.2",
-    "istanbul": "^1.1.0-alpha.1",
-    "mkdirp": "^1.0.4",
-    "mocha": "^9.1.2",
-    "mongodb": "^3.6.6",
-    "npm-check-updates": "^11.8.5",
-    "semistandard": "^16.0.1",
-    "shx": "^0.3.3",
-    "sift": "^15.0.0",
-    "typescript": "^4.4.3",
-    "vuepress": "^1.8.2",
+    "mocha": "^10.0.0",
+    "mongodb": "^4.6.0",
+    "npm-check-updates": "^13.0.3",
+    "shx": "^0.3.4",
+    "sift": "^16.0.0",
+    "ts-node": "^10.8.0",
+    "tsup": "^5.12.8",
+    "typescript": "^4.6.4",
+    "vuepress": "^1.9.7",
     "vuepress-theme-default-prefers-color-scheme": "^2.0.0"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">= 12"
   }
 }
