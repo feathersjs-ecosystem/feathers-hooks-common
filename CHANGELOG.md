@@ -2,15 +2,24 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0...HEAD)
 
 **Merged pull requests:**
 
+- port to ts [\#663](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/663) ([fratzinger](https://github.com/fratzinger))
 - chore\(dependencies\): Update all dependencies [\#643](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/643) ([daffl](https://github.com/daffl))
 - fix\(checkContext\): type as array [\#636](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/636) ([fratzinger](https://github.com/fratzinger))
 - Update migrating.md [\#635](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/635) ([indatawetrust](https://github.com/indatawetrust))
 - chore\(dependencies\): Update all dependencies [\#633](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/633) ([daffl](https://github.com/daffl))
 - \[FIX\] Missing arrow function syntax [\#632](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/632) ([luan0ap](https://github.com/luan0ap))
+
+## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0) (2022-05-22)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-2...v6.0.0)
+
+**Closed issues:**
+
+- IDE \(VSCode\) confused? [\#656](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/656)
 
 ## [v6.0.0-2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0-2) (2022-05-21)
 
@@ -53,7 +62,6 @@
 **Closed issues:**
 
 - SoftDelete hook: No record found for id [\#584](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/584)
-- Suggestion: coercion hook [\#418](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/418)
 
 **Merged pull requests:**
 
@@ -107,8 +115,6 @@
 - Support $search for MongoDB [\#451](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/451)
 - Hook to set HTTP status code [\#443](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/443)
 - find and stash [\#430](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/430)
-- Convert JS dates to/from strings/integers on service calls. [\#429](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/429)
-- suggestion: hook to emit \(fake\) event [\#422](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/422)
 
 **Merged pull requests:**
 
@@ -182,7 +188,6 @@
 - Remove fgraphql-async as its not used [\#482](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/482)
 - Proposal: Don't mutate objects in common hooks [\#480](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/480)
 - Support dot notation in params.query [\#441](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/441)
-- keep doesn't keep false values [\#425](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/425)
 
 **Merged pull requests:**
 
@@ -492,10 +497,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.16.2...v4.16.3)
 
-**Implemented enhancements:**
-
-- Cache with mongoose ObjectId will fail to find the keyFieldName in cache [\#424](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/424)
-
 **Closed issues:**
 
 - Create TypeScript typings for this package [\#432](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/432)
@@ -503,41 +504,22 @@
 **Merged pull requests:**
 
 - Added `keepQuery` support for keeping props with dot in their name [\#431](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/431) ([dekelev](https://github.com/dekelev))
-- Update alter-items.js [\#428](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/428) ([bertho-zero](https://github.com/bertho-zero))
 
 ## [v4.16.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.2) (2018-08-14)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.16.1...v4.16.2)
 
-**Merged pull requests:**
-
-- Enhanced cache with MongoDB/Mongoose support [\#427](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/427) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.16.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.1) (2018-08-14)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.16.0...v4.16.1)
-
-**Merged pull requests:**
-
-- Allows custom methods in checkContext [\#426](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/426) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.16.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.0) (2018-08-04)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.15.0...v4.16.0)
 
-**Merged pull requests:**
-
-- Added prep for skipRemaingHooksOnFlag [\#423](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/423) ([eddyystop](https://github.com/eddyystop))
-- Delete's not a thing [\#421](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/421) ([rayfoss](https://github.com/rayfoss))
-- Added `keepInArray` hook to keep fields from a nested array [\#420](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/420) ([dekelev](https://github.com/dekelev))
-
 ## [v4.15.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.15.0) (2018-07-24)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.14.3...v4.15.0)
-
-**Merged pull requests:**
-
-- Final changes and tests for softDelete2 [\#419](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/419) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.14.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.14.3) (2018-07-09)
 
