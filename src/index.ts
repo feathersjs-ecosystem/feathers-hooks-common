@@ -28,6 +28,7 @@ export { runHook } from './utils/run-hook';
 export { runParallel } from './hooks/run-parallel';
 export { sequelizeConvert } from './hooks/sequelize-convert';
 export { serialize } from './hooks/serialize';
+export { setField } from './hooks/set-field';
 export { setNow } from './hooks/set-now';
 export { setSlug } from './hooks/set-slug';
 export { sifter } from './hooks/sifter';
@@ -48,4 +49,4 @@ export { paramsForServer } from './utils/params-for-server';
 export { replaceItems } from './utils/replace-items';
 export { some } from './utils/some';
 
-export * from "./types";
+export * from './types';

@@ -202,3 +202,9 @@ export interface ValidateSchemaOptions extends AjvOptions {
 export interface IffHook extends Hook {
   else(...hooks: Hook[]): Hook;
 }
+
+export interface SetFieldOptions {
+  as: string
+  from: string
+  allowUndefined?: boolean
+}

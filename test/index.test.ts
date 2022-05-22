@@ -39,6 +39,7 @@ const members = [
   'runParallel',
   'sequelizeConvert',
   'serialize',
+  'setField',
   'setNow',
   'setSlug',
   'sifter',
