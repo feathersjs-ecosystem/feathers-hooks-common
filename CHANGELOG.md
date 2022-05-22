@@ -2,7 +2,29 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.0...HEAD)
+
+**Merged pull requests:**
+
+- ts: Add setField hook from feathers-authentication-hooks [\#664](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/664) ([fratzinger](https://github.com/fratzinger))
+
+## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.0) (2022-05-22)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0...v6.1.0)
+
+**Closed issues:**
+
+- Link in docs for batch loaders explanation is broken [\#657](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/657)
+- batch-loader guide link is broken on the website: https://hooks-common.feathersjs.com [\#648](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/648)
+- feathers js - cannot access correct config file [\#620](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/620)
+
+## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0) (2022-05-22)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-2...v6.0.0)
+
+**Closed issues:**
+
+- IDE \(VSCode\) confused? [\#656](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/656)
 
 **Merged pull requests:**
 
@@ -12,14 +34,6 @@
 - Update migrating.md [\#635](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/635) ([indatawetrust](https://github.com/indatawetrust))
 - chore\(dependencies\): Update all dependencies [\#633](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/633) ([daffl](https://github.com/daffl))
 - \[FIX\] Missing arrow function syntax [\#632](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/632) ([luan0ap](https://github.com/luan0ap))
-
-## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0) (2022-05-22)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.0.0-2...v6.0.0)
-
-**Closed issues:**
-
-- IDE \(VSCode\) confused? [\#656](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/656)
 
 ## [v6.0.0-2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0-2) (2022-05-21)
 
@@ -39,7 +53,6 @@
 - keep doesn't work as an after hook for get [\#640](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/640)
 - Feathers js - cannot throw error in map function [\#637](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/637)
 - For MongoDB hook to convert context.params.user.\_id to an ObjectID [\#456](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/456)
-- Authorization hook [\#433](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/433)
 
 ## [v5.0.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.6) (2021-05-14)
 
@@ -114,7 +127,6 @@
 - Validation hook for passwords [\#471](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/471)
 - Support $search for MongoDB [\#451](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/451)
 - Hook to set HTTP status code [\#443](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/443)
-- find and stash [\#430](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/430)
 
 **Merged pull requests:**
 
@@ -483,7 +495,6 @@
 **Closed issues:**
 
 - Which hook to use? [\#436](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/436)
-- discard not working [\#435](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/435)
 
 **Merged pull requests:**
 
@@ -491,19 +502,10 @@
 - Revert "\[WIP\] Typings: Set up CI testing" [\#439](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/439) ([eddyystop](https://github.com/eddyystop))
 - \[WIP\] Typings: Set up CI testing [\#438](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/438) ([j2L4e](https://github.com/j2L4e))
 - add typings file + infrastructure [\#437](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
-- Update npm installed version [\#434](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/434) ([bravo-kernel](https://github.com/bravo-kernel))
 
 ## [v4.16.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.16.2...v4.16.3)
-
-**Closed issues:**
-
-- Create TypeScript typings for this package [\#432](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/432)
-
-**Merged pull requests:**
-
-- Added `keepQuery` support for keeping props with dot in their name [\#431](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/431) ([dekelev](https://github.com/dekelev))
 
 ## [v4.16.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.2) (2018-08-14)
 
