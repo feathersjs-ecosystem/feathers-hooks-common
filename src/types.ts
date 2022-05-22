@@ -95,8 +95,8 @@ export interface FGraphQLHookOptions {
 }
 
 export interface PopulateOptions {
-  schema: Partial<PopulateSchema>;
-  checkPermissions?: boolean;
+  schema: Partial<PopulateSchema> | ((context: HookContext, options: PopulateOptions) => Partial<PopulateSchema>);
+  checkPermissions?: (context: HookContext, path: string, permissions: any, depth: number) => boolean;
   profile?: boolean;
 }
 

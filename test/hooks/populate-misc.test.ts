@@ -166,7 +166,6 @@ function team (this: any) {
         iff(() => whichSchema === 'schema1', populate({ schema: schema1 })),
         iff(() => whichSchema === 'schemaDefaultTeams', populate({ schema: schemaDefaultTeams })),
         iff(() => whichSchema === 'schemaDefaultXteams', populate({ schema: schemaDefaultXteams })),
-        // @ts-expect-error
         iff(() => whichSchema === 'schemaDefaultFcn', populate({ schema: schemaFcn }))
       ]
     }

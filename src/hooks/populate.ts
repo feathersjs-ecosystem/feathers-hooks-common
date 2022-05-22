@@ -2,6 +2,8 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import { BadRequest } from '@feathersjs/errors';
 
+import { hrtime } from 'process';
+
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 import type { PopulateOptions } from '../types';
@@ -9,8 +11,6 @@ import type { Hook, HookContext } from '@feathersjs/feathers';
 
 export function populate (options: PopulateOptions): Hook {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
-  // @ts-expect-error
-  options = options || {};
 
   const typeofSchema = typeof options.schema;
   if ((typeofSchema !== 'object' || options.schema === null) && typeofSchema !== 'function') {
@@ -18,7 +18,7 @@ export function populate (options: PopulateOptions): Hook {
   }
 
   return function (context: any) {
-    const optionsDefault = {
+    const optionsDefault: PopulateOptions = {
       schema: {},
       checkPermissions: () => true,
       profile: false
@@ -35,7 +35,7 @@ export function populate (options: PopulateOptions): Hook {
         const items = getItems(context);
         const options1 = Object.assign({}, optionsDefault, options);
         const { schema, checkPermissions } = options1;
-        // @ts-ignore
+
         const schema1 = typeof schema === 'function' ? schema(context, options1) : schema;
         const permissions = schema1.permissions || null;
         const baseService = schema1.service;
@@ -49,7 +49,6 @@ export function populate (options: PopulateOptions): Hook {
           throw new BadRequest(`Schema is for ${baseService} not ${context.path}. (populate)`);
         }
 
-        // @ts-ignore
         if (permissions && !checkPermissions(context, context.path, permissions, 0)) {
           throw new BadRequest('Permissions do not allow this populate. (populate)');
         }
@@ -111,7 +110,7 @@ function populateItem (
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
   const elapsed: any = {};
-  const startAtAllIncludes = process.hrtime();
+  const startAtAllIncludes = hrtime();
   const include = [].concat(includeSchema || []);
   if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
@@ -125,7 +124,7 @@ function populateItem (
         return undefined;
       }
 
-      const startAtThisInclude = process.hrtime();
+      const startAtThisInclude = hrtime();
       return populateAddChild(options, context, item, childSchema, depth)
         .then((result: any) => {
           const nameAs = childSchema.nameAs || childSchema.service;
@@ -270,11 +269,15 @@ function populateAddChild (
 
 // Helpers
 
-function getElapsed (options: any, startHrtime: any, depth: any) {
+function getElapsed (
+  options: PopulateOptions,
+  startHrtime: [number, number],
+  depth: number
+) {
   if (options.profile === true) {
     const elapsed = process.hrtime(startHrtime);
     return (elapsed[0] * 1e9) + elapsed[1];
-  } else if (options.profile !== false) {
-    return depth; // for testing _elapsed
   }
+
+  return depth; // for testing _elapsed
 }
