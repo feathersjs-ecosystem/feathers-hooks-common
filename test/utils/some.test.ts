@@ -4,7 +4,7 @@ import feathers from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { iff, some, isNot } from '../../src';
 
-describe('services some', () => {
+describe('util some', () => {
   let app: any;
 
   beforeEach(() => {

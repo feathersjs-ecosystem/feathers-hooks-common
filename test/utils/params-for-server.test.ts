@@ -5,7 +5,7 @@ import {
   paramsForServer
 } from '../../src';
 
-describe('services paramsToServer', () => {
+describe('util paramsToServer', () => {
   it('handles empty params', () => {
     const res = paramsForServer();
     assert.deepEqual(res, { query: { $client: {} } });

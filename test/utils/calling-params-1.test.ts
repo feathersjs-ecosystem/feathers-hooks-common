@@ -4,7 +4,7 @@ import { callingParamsDefaults, callingParams } from '../../src';
 
 let context1: any; let context2: any; let context3: any; let context4: any;
 
-describe('service calling-params-1.test.js', () => {
+describe('util calling-params-1.test.js', () => {
   describe('has defaults', () => {
     beforeEach(() => {
       context1 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };

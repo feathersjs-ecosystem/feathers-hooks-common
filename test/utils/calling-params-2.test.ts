@@ -4,7 +4,7 @@ import { makeCallingParams } from '../../src';
 
 let context: any;
 
-describe('service calling-params-2.test.js', () => {
+describe('util calling-params-2.test.js', () => {
   beforeEach(() => {
     context = { query: { aaa: 'bbb' }, params: { foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
   });

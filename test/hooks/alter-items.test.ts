@@ -4,6 +4,7 @@ import { alterItems } from '../../src';
 let hookBefore: any;
 let hookAfter: any;
 let hookFindPaginate: any;
+let hookCreateMulti: any;
 let hookFind: any;
 
 describe('services alterItems', () => {
@@ -41,6 +42,15 @@ describe('services alterItems', () => {
         { first: 'Jane', last: 'Doe' }
       ]
     };
+    hookCreateMulti = {
+      type: 'before',
+      method: 'create',
+      params: { provider: 'rest' },
+      data: [
+        { first: 'John', last: 'Doe' },
+        { first: 'Jane', last: 'Doe' }
+      ]
+    };
   });
 
   it('default func is a no-op', () => {
@@ -70,6 +80,14 @@ describe('services alterItems', () => {
   it('updates hook before::create', () => {
     alterItems((rec: any) => { rec.state = 'UT'; })(hookBefore);
     assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
+  });
+
+  it('updates hook before::create::multi', () => {
+    alterItems((rec: any) => { rec.state = 'UT'; })(hookCreateMulti);
+    assert.deepEqual(hookCreateMulti.data, [
+      { first: 'John', last: 'Doe', state: 'UT' },
+      { first: 'Jane', last: 'Doe', state: 'UT' }
+    ]);
   });
 
   it('updates hook after::find with pagination', () => {

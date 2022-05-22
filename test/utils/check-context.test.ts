@@ -5,7 +5,7 @@ import {
   checkContext
 } from '../../src';
 
-describe('services checkContext', () => {
+describe('util checkContext', () => {
   var hook: any; // eslint-disable-line no-var
 
   beforeEach(() => {

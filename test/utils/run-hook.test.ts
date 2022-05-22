@@ -16,7 +16,7 @@ const testHook = (hook1: any) => {
   return hook1;
 };
 
-describe('services runHooks', () => {
+describe('util runHooks', () => {
   beforeEach(() => {
     runHooks1 = runHook({ app, params, service } as any);
     runHooks2 = runHook();

@@ -98,7 +98,7 @@ function user (this: any) {
   });
 }
 
-describe('services combine', () => {
+describe('util combine', () => {
   let app;
   let user: any;
 
