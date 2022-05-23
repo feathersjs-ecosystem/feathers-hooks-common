@@ -7,7 +7,7 @@ import { getItems } from '../utils/get-items';
 import type { Hook } from '@feathersjs/feathers';
 
 /**
- * Convert certain field values to lower case.
+ * Removes leading and trailing whitespace or specified characters from string.
  * {@link https://hooks-common.feathersjs.com/hooks.html#trim}
  */
 export function trim (...fieldNames: string[]): Hook {
