@@ -277,6 +277,38 @@ Persistent, least-recently-used record cache for services.
 | `item`       | `Object` |         | The record.        |
 | `clonedItem` | `Object` |         | A clone of `item`. |
 
+## capitalize
+
+Converts the first character of string to upper case and the remaining to lower case.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/capitalize.ts)|
+||yes|all|||
+  
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The fields in the record(s) whose values are converted to lower case.|
+
+- **Example**
+
+  ```js
+  const { capitalize } = require('feathers-hooks-common')
+
+  module.exports = {
+    before: {
+      create: capitalize('email', 'username', 'div.dept')
+    }
+  }
+  ```
+
+- **Details**
+
+  Update either `context.data` (before hook) or `context.result[.data]` (after hook).
 
 
 ## debug
@@ -2065,6 +2097,38 @@ Transform fields & objects in place in the record(s) using a recursive walk. Pow
 
   > [substack/js-traverse](https://github.com/substack/js-traverse) documents the extensive methods and context available to the transformer function.
 
+## trim
+
+Removes leading and trailing whitespace or specified characters from string.
+
+|before|after|methods|multi|details|
+|---|---|---|---|---|
+|yes||create, update, patch|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/trim.ts)|
+||yes|all|||
+  
+
+- Arguments
+  -  `{Array < String >} fieldNames`
+
+|Name|Type|Description|
+|---|---|---|
+|fieldNames|dot notation|The fields in the record(s) whose values are converted to lower case.|
+
+- **Example**
+
+  ```js
+  const { trim } = require('feathers-hooks-common')
+
+  module.exports = {
+    before: {
+      create: trim('email', 'username', 'div.dept')
+    }
+  }
+  ```
+
+- **Details**
+
+  Update either `context.data` (before hook) or `context.result[.data]` (after hook).
 
 ## unless
 
