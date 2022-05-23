@@ -8,18 +8,18 @@ import type { Hook } from '@feathersjs/feathers';
 
 /**
  * Convert certain field values to lower case.
- * {@link https://hooks-common.feathersjs.com/hooks.html#lowercase}
+ * {@link https://hooks-common.feathersjs.com/hooks.html#trim}
  */
-export function lowerCase (...fieldNames: string[]): Hook {
+export function trim (...fieldNames: string[]): Hook {
   return (context: any) => {
-    checkContextIf(context, 'before', ['create', 'update', 'patch'], 'lowercase');
+    checkContextIf(context, 'before', ['create', 'update', 'patch'], 'trim');
 
     transformItems(getItems(context), fieldNames, (item: any, fieldName: any, value: any) => {
       if (typeof value !== 'string' && value !== null) {
         throw new BadRequest(`Expected string data. (lowercase ${fieldName})`);
       }
 
-      _set(item, fieldName, value ? value.toLowerCase() : value);
+      _set(item, fieldName, value ? value.trim() : value);
     });
 
     return context;

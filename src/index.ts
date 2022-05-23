@@ -1,6 +1,7 @@
 export { actOnDefault, actOnDispatch } from './hooks/act-on-dispatch';
 export { alterItems } from './hooks/alter-items';
 export { cache } from './hooks/cache';
+export { capitalize } from './hooks/capitalize';
 export { checkContextIf } from './hooks/check-context-if';
 export { debug } from './hooks/debug';
 export { dePopulate } from './hooks/de-populate';
@@ -35,6 +36,7 @@ export { sifter } from './hooks/sifter';
 export { softDelete } from './hooks/soft-delete';
 export { stashBefore } from './hooks/stash-before';
 export { traverse } from './hooks/traverse';
+export { trim } from './hooks/trim';
 export { unless } from './hooks/unless'
 export { validate } from './hooks/validate';
 export { validateSchema } from './hooks/validate-schema';
