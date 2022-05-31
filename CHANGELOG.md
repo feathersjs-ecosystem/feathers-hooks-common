@@ -2,11 +2,22 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.1...HEAD)
 
 **Merged pull requests:**
 
-- ts: Add setField hook from feathers-authentication-hooks [\#664](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/664) ([fratzinger](https://github.com/fratzinger))
+- iff.else working [\#668](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/668) ([fratzinger](https://github.com/fratzinger))
+
+## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.1) (2022-05-31)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.0...v6.1.1)
+
+**Closed issues:**
+
+- alterItems requires returning item when multi is true [\#649](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/649)
+- Gets bad request when i pass any value with paramsForServer [\#590](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/590)
+- Concrete fastJoin example needed - populate id in array [\#535](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/535)
+- PreventChanges opposite [\#503](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/503)
 
 ## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.0) (2022-05-22)
 
@@ -17,6 +28,10 @@
 - Link in docs for batch loaders explanation is broken [\#657](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/657)
 - batch-loader guide link is broken on the website: https://hooks-common.feathersjs.com [\#648](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/648)
 - feathers js - cannot access correct config file [\#620](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/620)
+
+**Merged pull requests:**
+
+- ts: Add setField hook from feathers-authentication-hooks [\#664](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/664) ([fratzinger](https://github.com/fratzinger))
 
 ## [v6.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.0.0) (2022-05-22)
 
@@ -199,7 +214,6 @@
 - Many-to-many fastJoin [\#505](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/505)
 - Remove fgraphql-async as its not used [\#482](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/482)
 - Proposal: Don't mutate objects in common hooks [\#480](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/480)
-- Support dot notation in params.query [\#441](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/441)
 
 **Merged pull requests:**
 
@@ -491,17 +505,6 @@
 ## [v4.17.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.0) (2018-09-10)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.16.3...v4.17.0)
-
-**Closed issues:**
-
-- Which hook to use? [\#436](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/436)
-
-**Merged pull requests:**
-
-- typings CI testing [\#440](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/440) ([j2L4e](https://github.com/j2L4e))
-- Revert "\[WIP\] Typings: Set up CI testing" [\#439](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/439) ([eddyystop](https://github.com/eddyystop))
-- \[WIP\] Typings: Set up CI testing [\#438](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/438) ([j2L4e](https://github.com/j2L4e))
-- add typings file + infrastructure [\#437](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/437) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.16.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.16.3) (2018-08-25)
 
