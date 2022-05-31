@@ -11,9 +11,10 @@ export function iff (
   ...hooks: Hook[]
 ): IffHook {
   const iffWithoutElse = function (context: HookContext) {
-    return iffElse(predicate, hooks.slice(), undefined)(context);
+    return iffElse(predicate, hooks.slice())(context);
   }
-  iffWithoutElse.else = (...falseHooks: any[]) => iffElse(true, falseHooks.slice(), []);
+
+  iffWithoutElse.else = (...falseHooks: any[]) => (context: HookContext) => iffElse(predicate, hooks.slice(), falseHooks.slice())(context);
 
   return iffWithoutElse;
 }

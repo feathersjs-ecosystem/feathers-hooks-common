@@ -10,7 +10,7 @@ import type { PredicateFn } from '../types';
 export function iffElse (
   predicate: boolean | PredicateFn,
   trueHooks: Hook | Hook[] | undefined,
-  falseHooks: Hook | Hook[] | undefined
+  falseHooks?: Hook | Hook[] | undefined
 ): Hook {
   // fnArgs is [context] for service & permission hooks, [data, connection, context] for event filters
   return function (this: any, ctx: HookContext) {
