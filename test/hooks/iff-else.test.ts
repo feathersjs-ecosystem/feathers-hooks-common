@@ -347,6 +347,25 @@ describe('services iff - runs .else()', () => {
       });
   });
 
+  it('using iff(true, ...).else(...)', () => {
+    return iff(true,
+      hookFcnSync,
+      hookFcnSync,
+      hookFcnSync
+    )
+      .else(
+        hookFcnSync
+      )(hook)
+      // @ts-ignore
+      .then((hook: any) => {
+        assert.equal(hookFcnSyncCalls, 3);
+        assert.equal(hookFcnAsyncCalls, 0);
+        assert.equal(hookFcnCalls, 0);
+
+        assert.deepEqual(hook, hookAfter);
+      });
+  });
+
   it('using if(false).else(...)', () => {
     return iff(false,
       hookFcnSync
