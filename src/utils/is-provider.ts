@@ -1,4 +1,5 @@
-import { MethodNotAllowed } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { MethodNotAllowed } = errors;
 import type { SyncContextFunction, TransportName } from '../types';
 
 /**

@@ -1,5 +1,6 @@
 import _set from 'lodash/set';
-import { GeneralError } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { GeneralError } = errors;
 import type { Hook } from '@feathersjs/feathers';
 
 /**

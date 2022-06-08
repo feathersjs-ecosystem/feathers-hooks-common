@@ -1,4 +1,5 @@
-import { BadRequest } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { BadRequest } = errors;
 import type { Hook } from '@feathersjs/feathers';
 import { checkContext } from '../utils/check-context';
 
