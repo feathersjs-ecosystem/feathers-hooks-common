@@ -1,4 +1,5 @@
-import { MethodNotAllowed } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { MethodNotAllowed } = errors;
 import type { Hook } from '@feathersjs/feathers';
 import type { TransportName } from '../types';
 

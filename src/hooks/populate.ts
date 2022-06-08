@@ -1,6 +1,7 @@
 import _get from 'lodash/get';
 import _set from 'lodash/set';
-import { BadRequest } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { BadRequest } = errors;
 
 import { hrtime } from 'process';
 

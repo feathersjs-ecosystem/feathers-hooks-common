@@ -1,4 +1,5 @@
-import { MethodNotAllowed } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { MethodNotAllowed } = errors;
 import { isPromise } from '../common';
 import type { PredicateFn } from '../types';
 

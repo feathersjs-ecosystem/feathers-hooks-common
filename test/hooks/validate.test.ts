@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { validate } from '../../src';
-import { BadRequest } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { BadRequest } = errors;
 
 let fcnSync: any;
 let fcnPromise: any;

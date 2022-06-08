@@ -1,5 +1,6 @@
 import _get from 'lodash/get';
-import { BadRequest } from '@feathersjs/errors';
+import errors from '@feathersjs/errors';
+const { BadRequest } = errors;
 import _has from 'lodash/has';
 
 import { checkContext } from '../utils/check-context';
