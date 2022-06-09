@@ -2,11 +2,21 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.1...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.2...HEAD)
 
 **Merged pull requests:**
 
-- iff.else working [\#668](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/668) ([fratzinger](https://github.com/fratzinger))
+- fix\(esm\): import errors from @feathersjs/errors [\#675](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/675) ([fratzinger](https://github.com/fratzinger))
+
+## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.2) (2022-06-09)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.1...v6.1.2)
+
+**Closed issues:**
+
+- Modules import [\#672](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/672)
+- import pkg from '@feathersjs/errors'; const { BadRequest } = pkg; [\#671](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/671)
+- iff\(\) hooks are skipped when there's a .else\(\) [\#666](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/666)
 
 ## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.1) (2022-05-31)
 
@@ -18,6 +28,10 @@
 - Gets bad request when i pass any value with paramsForServer [\#590](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/590)
 - Concrete fastJoin example needed - populate id in array [\#535](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/535)
 - PreventChanges opposite [\#503](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/503)
+
+**Merged pull requests:**
+
+- iff.else working [\#668](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/668) ([fratzinger](https://github.com/fratzinger))
 
 ## [v6.1.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.0) (2022-05-22)
 
@@ -141,7 +155,6 @@
 - Cache hook returns improper values when using $select or query on methods other than find\(\) [\#575](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/575)
 - Validation hook for passwords [\#471](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/471)
 - Support $search for MongoDB [\#451](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/451)
-- Hook to set HTTP status code [\#443](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/443)
 
 **Merged pull requests:**
 
@@ -462,10 +475,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.6...v4.17.7)
 
-**Closed issues:**
-
-- fastJoin applied but not sent to client when called from server [\#446](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/446)
-
 **Merged pull requests:**
 
 - Typings: Add context to resolver callback arguments. [\#448](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/448) ([j2L4e](https://github.com/j2L4e))
@@ -478,10 +487,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.4...v4.17.5)
 
-**Merged pull requests:**
-
-- fix: isProvider returns a boolean [\#444](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/444) ([bitflower](https://github.com/bitflower))
-
 ## [v4.17.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.4) (2018-09-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.3...v4.17.4)
@@ -489,10 +494,6 @@
 ## [v4.17.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.3) (2018-09-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.2...v4.17.3)
-
-**Merged pull requests:**
-
-- Add documentation links to typings [\#442](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/442) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.17.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.2) (2018-09-10)
 
