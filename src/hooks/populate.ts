@@ -109,7 +109,7 @@ function populateItem (
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
   const elapsed: any = {};
-  const startAtAllIncludes = performance.now();
+  const startAtAllIncludes = new Date().getTime();
   const include = [].concat(includeSchema || []);
   if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
@@ -123,7 +123,7 @@ function populateItem (
         return undefined;
       }
 
-      const startAtThisInclude = performance.now();
+      const startAtThisInclude = new Date().getTime();
       return populateAddChild(options, context, item, childSchema, depth)
         .then((result: any) => {
           const nameAs = childSchema.nameAs || childSchema.service;
@@ -279,8 +279,7 @@ function getElapsed (
   depth: number
 ) {
   if (options.profile === true) {
-    performance.now();
-    return milliToNano(performance.now() - startTime);
+    return milliToNano(new Date().getTime() - startTime + 0.001);
   }
 
   return depth; // for testing _elapsed
