@@ -3,8 +3,6 @@ import _set from 'lodash/set';
 import errors from '@feathersjs/errors';
 const { BadRequest } = errors;
 
-import { hrtime } from 'process';
-
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 import type { PopulateOptions } from '../types';
@@ -111,7 +109,7 @@ function populateItem (
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
   const elapsed: any = {};
-  const startAtAllIncludes = hrtime();
+  const startAtAllIncludes = performance.now();
   const include = [].concat(includeSchema || []);
   if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
@@ -125,7 +123,7 @@ function populateItem (
         return undefined;
       }
 
-      const startAtThisInclude = hrtime();
+      const startAtThisInclude = performance.now();
       return populateAddChild(options, context, item, childSchema, depth)
         .then((result: any) => {
           const nameAs = childSchema.nameAs || childSchema.service;
@@ -270,14 +268,19 @@ function populateAddChild (
 
 // Helpers
 
+// used process.hrTime before
+function milliToNano (num: number) {
+  return num * 1000000;
+}
+
 function getElapsed (
   options: PopulateOptions,
-  startHrtime: [number, number],
+  startTime: number,
   depth: number
 ) {
   if (options.profile === true) {
-    const elapsed = process.hrtime(startHrtime);
-    return (elapsed[0] * 1e9) + elapsed[1];
+    performance.now();
+    return milliToNano(performance.now() - startTime);
   }
 
   return depth; // for testing _elapsed
