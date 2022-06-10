@@ -448,7 +448,7 @@ let provider: any;
           .then((hook1: any) => {
             const elapsed = hook1.result._elapsed;
             assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 1000);
+            assert.isAbove(elapsed.total, 999);
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
@@ -470,7 +470,7 @@ let provider: any;
           .then((hook1: any) => {
             const elapsed = hook1.result._elapsed;
             assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 1000);
+            assert.isAbove(elapsed.total, 999);
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
@@ -494,7 +494,7 @@ let provider: any;
           .then((hook1: any) => {
             const elapsed = hook1.result._elapsed;
             assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 1000);
+            assert.isAbove(elapsed.total, 999);
             assert.isAtLeast(elapsed.total, elapsed.post);
           });
       });
