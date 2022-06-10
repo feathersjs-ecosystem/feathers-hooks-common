@@ -2,11 +2,15 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.3...HEAD)
 
 **Merged pull requests:**
 
-- fix\(esm\): import errors from @feathersjs/errors [\#675](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/675) ([fratzinger](https://github.com/fratzinger))
+- refactor: remove hrtime and do Date.now [\#677](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/677) ([fratzinger](https://github.com/fratzinger))
+
+## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.3) (2022-06-10)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.2...v6.1.3)
 
 ## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.2) (2022-06-09)
 
@@ -17,6 +21,10 @@
 - Modules import [\#672](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/672)
 - import pkg from '@feathersjs/errors'; const { BadRequest } = pkg; [\#671](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/671)
 - iff\(\) hooks are skipped when there's a .else\(\) [\#666](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/666)
+
+**Merged pull requests:**
+
+- fix\(esm\): import errors from @feathersjs/errors [\#675](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/675) ([fratzinger](https://github.com/fratzinger))
 
 ## [v6.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.1) (2022-05-31)
 
@@ -458,10 +466,6 @@
 ## [v4.17.9](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.9) (2018-09-26)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.8...v4.17.9)
-
-**Closed issues:**
-
-- How to pass query parameters from the client to fastJoin [\#447](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/447)
 
 **Merged pull requests:**
 
