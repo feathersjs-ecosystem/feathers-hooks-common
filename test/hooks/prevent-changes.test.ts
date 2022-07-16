@@ -130,6 +130,16 @@ describe('services preventChanges', () => {
       assert.deepEqual(context.data,
         { first: 'John', last: 'Doe', a: { b: 'john', c: { d: {} } } },
         '5');
+
+      context = preventChanges(false, 'first', 'last')(clone(hookBefore));
+      assert.deepEqual(context.data,
+        { a: { b: 'john', c: { d: { e: 1 } } } }
+      );
+
+      context = preventChanges(false, 'first', 'a.b', 'a.c.d.e')(clone(hookBefore));
+      assert.deepEqual(context.data,
+        { last: 'Doe', a: { c: { d: { } } } }
+      );
     });
   });
 });
