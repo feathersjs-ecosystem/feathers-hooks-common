@@ -2,15 +2,30 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.3...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.4...HEAD)
 
 **Merged pull requests:**
 
-- refactor: remove hrtime and do Date.now [\#677](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/677) ([fratzinger](https://github.com/fratzinger))
+- Fixing issue \#2692 [\#680](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/680) ([zaheraldefai](https://github.com/zaheraldefai))
+
+## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.4) (2022-07-24)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.3...v6.1.4)
+
+**Closed issues:**
+
+- \[Bug\] PreventChanges hook prevents only last defined field [\#679](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/679)
+- isProvider\(\) not working as expected [\#678](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/678)
+- Export Error "hrtime" in typescript Vite Application [\#676](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/676)
+- Update in imports errors [\#673](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/673)
 
 ## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.3) (2022-06-10)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.2...v6.1.3)
+
+**Merged pull requests:**
+
+- refactor: remove hrtime and do Date.now [\#677](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/677) ([fratzinger](https://github.com/fratzinger))
 
 ## [v6.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.2) (2022-06-09)
 
@@ -162,7 +177,6 @@
 - Argument of type xxx is not assignable to parameter of type xxx [\#579](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/579)
 - Cache hook returns improper values when using $select or query on methods other than find\(\) [\#575](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/575)
 - Validation hook for passwords [\#471](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/471)
-- Support $search for MongoDB [\#451](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/451)
 
 **Merged pull requests:**
 
@@ -190,7 +204,6 @@
 **Implemented enhancements:**
 
 - Doument fgraphql [\#466](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/466)
-- Clarify fastJoin API docs. [\#452](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/452)
 
 **Closed issues:**
 
@@ -467,10 +480,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.8...v4.17.9)
 
-**Merged pull requests:**
-
-- Add missing 'create' method in MethodName type [\#449](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/449) ([murbanowicz](https://github.com/murbanowicz))
-
 ## [v4.17.8](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.8) (2018-09-24)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.7...v4.17.8)
@@ -478,10 +487,6 @@
 ## [v4.17.7](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.7) (2018-09-24)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.6...v4.17.7)
-
-**Merged pull requests:**
-
-- Typings: Add context to resolver callback arguments. [\#448](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/448) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.17.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.6) (2018-09-19)
 
