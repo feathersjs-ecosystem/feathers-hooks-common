@@ -22,7 +22,7 @@ export function preventChanges (
 
   return (context: any) => {
     checkContext(context, 'before', ['patch'], 'preventChanges');
-    const { data } = context;
+    let data = { ...context.data };
 
     fieldNames.forEach(name => {
       if (_has(data, name)) {
@@ -30,10 +30,10 @@ export function preventChanges (
           throw new BadRequest(`Field ${name} may not be patched. (preventChanges)`);
         }
         // Delete data.contactPerson.name
-        context.data = _omit(data, name);
+        data = _omit(data, name);
       }
     });
 
-    return context;
+    return { ...context, data };
   };
 }
