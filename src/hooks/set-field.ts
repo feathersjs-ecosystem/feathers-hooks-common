@@ -22,7 +22,7 @@ export function setField (
   }
 
   return context => {
-    const { params, app } = context;
+    const { data, params, app } = context;
 
     if (app.version < '4.0.0') {
       throw new Error('The \'setField\' hook only works with Feathers 4 and the latest database adapters');
@@ -39,6 +39,22 @@ export function setField (
       }
 
       throw new Forbidden(`Expected field ${as} not available`);
+    }
+
+    debug(`If ${as} startsWith data, setting value '${value}' from '${from}' to each array of data`);
+
+    if(typeof data !== 'undefined' && Array.isArray(data) && as.startsWith('data')) {
+      for (const [index] of data.entries()) {
+        if (Array.isArray(as)) {
+          data[index][as[as.length - 1]] = value;
+        } else {
+          const asDot = as.split('.');
+          if (asDot.length > 0) {
+            data[index][asDot[asDot.length - 1]] = value;
+          }
+        }
+      }
+      return _setWith(context, data, value, _clone);
     }
 
     debug(`Setting value '${value}' from '${from}' as '${as}'`);
