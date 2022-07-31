@@ -1,4 +1,4 @@
-import _pick from 'lodash/pick';
+import _pick from 'lodash/pick.js';
 
 export function pluck <T extends Record<string, any>> (
   items: T,

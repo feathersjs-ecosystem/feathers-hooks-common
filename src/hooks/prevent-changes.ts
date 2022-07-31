@@ -1,5 +1,5 @@
-import _has from 'lodash/has';
-import _omit from 'lodash/omit';
+import _has from 'lodash/has.js';
+import _omit from 'lodash/omit.js';
 
 import { checkContext } from '../utils/check-context';
 import errors from '@feathersjs/errors';

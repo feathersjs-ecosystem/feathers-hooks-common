@@ -1,6 +1,6 @@
-import _get from 'lodash/get';
-import _setWith from 'lodash/setWith';
-import _clone from 'lodash/clone';
+import _get from 'lodash/get.js';
+import _setWith from 'lodash/setWith.js';
+import _clone from 'lodash/clone.js';
 import _debug from 'debug';
 import { checkContext } from '../utils/check-context';
 import errors from '@feathersjs/errors';
