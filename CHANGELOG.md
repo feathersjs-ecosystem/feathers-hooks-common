@@ -2,11 +2,20 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.4...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.5...HEAD)
 
 **Merged pull requests:**
 
-- Fixing issue \#2692 [\#680](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/680) ([zaheraldefai](https://github.com/zaheraldefai))
+- fix: add js extension to lodash imports [\#684](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/684) ([fratzinger](https://github.com/fratzinger))
+- Update hooks documentation - setField [\#683](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/683) ([arnoldtkl](https://github.com/arnoldtkl))
+
+## [v6.1.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.5) (2022-07-31)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.4...v6.1.5)
+
+**Closed issues:**
+
+- Wrong lodash imports [\#674](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/674)
 
 ## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.4) (2022-07-24)
 
@@ -18,6 +27,10 @@
 - isProvider\(\) not working as expected [\#678](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/678)
 - Export Error "hrtime" in typescript Vite Application [\#676](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/676)
 - Update in imports errors [\#673](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/673)
+
+**Merged pull requests:**
+
+- Fixing issue \#2692 [\#680](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/680) ([zaheraldefai](https://github.com/zaheraldefai))
 
 ## [v6.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.3) (2022-06-10)
 
@@ -104,7 +117,6 @@
 - Usage of feathers common hook in custom hook [\#642](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/642)
 - keep doesn't work as an after hook for get [\#640](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/640)
 - Feathers js - cannot throw error in map function [\#637](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/637)
-- For MongoDB hook to convert context.params.user.\_id to an ObjectID [\#456](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/456)
 
 ## [v5.0.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.6) (2021-05-14)
 
@@ -217,10 +229,6 @@
 ## [v5.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v5.0.0) (2019-12-31)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.20.7...v5.0.0)
-
-**Fixed bugs:**
-
-- Clarification on softDelete2 [\#455](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/455)
 
 **Closed issues:**
 
@@ -436,10 +444,6 @@
 - Difference between serialize and alterItems [\#464](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/464)
 - softDelete2 returns error on delete [\#462](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/462)
 
-**Merged pull requests:**
-
-- Added `keepQueryInArray` hook to keep query fields from a nested array [\#454](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/454) ([dekelev](https://github.com/dekelev))
-
 ## [v4.17.14](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.14) (2018-11-01)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.13...v4.17.14)
@@ -463,10 +467,6 @@
 ## [v4.17.11](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.11) (2018-10-26)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.10...v4.17.11)
-
-**Closed issues:**
-
-- fastJoin loop [\#453](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/453)
 
 **Merged pull requests:**
 
