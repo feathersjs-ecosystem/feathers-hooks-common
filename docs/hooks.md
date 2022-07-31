@@ -50,7 +50,7 @@ Runs a series of hooks which mutate context.dispatch.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/act-on-dispatch.ts)|
-  
+
 
 - **Arguments**
 
@@ -540,7 +540,7 @@ Join related records.
 - **Example using Feathers services**
 
   <p class="tip">The services in all these examples are assumed, for simplicity, to have pagination disabled. You will have to decide when to use `paginate: false` in your code.</p>
-  
+
   ``` js
   // project/src/services/posts/posts.hooks.js
   const { fastJoin } = require('feathers-hooks-common');
@@ -956,7 +956,7 @@ Execute one array of hooks or another based on a sync or async predicate.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/iff-else.ts)|
-  
+
 - **Arguments**
   - `{Function} predicate`
   - `{Array< Functions >} hookFuncsTrue`
@@ -1069,7 +1069,7 @@ Keep certain fields in the query object, deleting the rest.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query.ts)|
- 
+
 > __Note:__ The keepQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQuery(...))`.
 
 - Arguments
@@ -1103,7 +1103,7 @@ Keep certain fields in a nested array inside the query object, deleting the rest
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query-in-array.ts)|
- 
+
 > __Note:__ The keepQueryInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQueryInArray(...))`.
 
 - Arguments
@@ -1148,7 +1148,7 @@ Convert certain field values to lower case.
 |---|---|---|---|---|
 |yes||create, update, patch|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/lower-case.ts)|
 ||yes|all|||
-  
+
 
 - Arguments
   -  `{Array < String >} fieldNames`
@@ -1181,7 +1181,7 @@ Wrap MongoDB foreign keys in ObjectID.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|no|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/mongo-keys.ts)|
- 
+
 - **Arguments**
 
   - `{Function} ObjectID`
@@ -1239,7 +1239,7 @@ Pass `context.params` from client to server. Server hook.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/params-from-client.ts)|
- 
+
 - **Arguments**
 
   - `{Array< String > | String} whitelist`
@@ -1291,7 +1291,7 @@ Join related records.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/populate.ts)|
- 
+
 > `fastJoin` is preferred over using `populate`.
 
 - **Arguments**
@@ -1511,7 +1511,7 @@ Prevent patch service calls from changing certain fields.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|no|patch|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/prevent-changes.ts)|
- 
+
  - **Arguments**
 
   - `{Boolean} ifThrow`
@@ -1546,7 +1546,7 @@ Check selected fields exist and are not falsey. Numeric 0 is acceptable.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|no|create, update, patch|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/required.ts)|
-  
+
 - Arguments
   -  `{Array < String >} fieldNames`
 
@@ -1697,6 +1697,8 @@ The `setField` hook allows to set a field on the hook context based on the value
 
 > __Important:__ This hook should be used after the [authenticate hook](https://docs.feathersjs.com/api/authentication/hook.html#authenticate-options) when accessing user fields (from `params.user`).
 
+__Note:__  When the service enable `multi:true` and `data` is an array data type, this hook may working to an unexpected result
+
 ### Examples
 
 Limit all external access of the `users` service to the authenticated user:
@@ -1814,7 +1816,7 @@ Set slugs in URL, e.g. /stores/:storeId.
 |before|after|methods|multi|details|
 |---|---|---|---|---|
 |yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-slug.ts)|
- 
+
 - **Arguments**
   - `{String} slug`
   - `{String} [ fieldName ]`
