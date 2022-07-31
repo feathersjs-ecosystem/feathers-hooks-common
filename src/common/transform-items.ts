@@ -1,4 +1,4 @@
-import _get from 'lodash/get';
+import _get from 'lodash/get.js';
 
 export function transformItems <T extends Record<string, any>> (
   items: T | T[],

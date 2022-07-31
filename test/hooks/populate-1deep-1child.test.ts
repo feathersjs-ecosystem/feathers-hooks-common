@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import _set from 'lodash/set';
+import _set from 'lodash/set.js';
 
 import configApp from '../helpers/config-app';
 import getInitDb from '../helpers/get-init-db';

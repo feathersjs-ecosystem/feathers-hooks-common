@@ -1,5 +1,5 @@
 import type { Hook } from '@feathersjs/feathers';
-import _omit from 'lodash/omit';
+import _omit from 'lodash/omit.js';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 

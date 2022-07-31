@@ -1,6 +1,6 @@
 import type { HookContext, Params } from '@feathersjs/feathers';
-import _get from 'lodash/get';
-import _set from 'lodash/set';
+import _get from 'lodash/get.js';
+import _set from 'lodash/set.js';
 import type { CallingParamsOptions, SyncContextFunction } from '../types';
 
 const stndAuthProps = ['provider', 'authenticated', 'user']; // feathers-authentication

@@ -1,5 +1,5 @@
 import type { Hook } from '@feathersjs/feathers';
-import _omit from 'lodash/omit';
+import _omit from 'lodash/omit.js';
 import { checkContext } from '../utils/check-context';
 
 /**

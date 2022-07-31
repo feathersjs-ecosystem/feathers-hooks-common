@@ -1,6 +1,6 @@
-import _get from 'lodash/get';
-import _set from 'lodash/set';
-import _omit from 'lodash/omit';
+import _get from 'lodash/get.js';
+import _set from 'lodash/set.js';
+import _omit from 'lodash/omit.js';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
