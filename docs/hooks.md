@@ -102,7 +102,9 @@ Make changes to data or result items. Very flexible.
 | -------- | :--------: | --------------------------- | --------------------------------------------- |
 | `func`   | `Function` | `(item,` `context) =>` `{}` | Function modifies `item` in place. See below. |
 
-{% hooksApiReturns alterItems "The mutated <code>item</code>. Returning <code>undefined</code> means the <code>item</code> in the parameters was mutated in place." result "undefined || item" %}
+  - **returns**
+
+The mutated `item`. Returning `undefined` means the `item` in the parameters was mutated in place. returns result `undefined || item`
 
 - **Example**
 

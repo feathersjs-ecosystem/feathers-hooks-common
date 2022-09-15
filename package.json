@@ -14,8 +14,8 @@
   },
   "scripts": {
     "compile": "shx rm -rf dist/ && tsup src/index.ts --format cjs,esm --dts --treeshake",
-    "docs": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "prepublishOnly": "npm run compile",
     "publish": "git push origin --tags && npm run changelog && git push origin",
     "release:prerelease": "npm version prerelease && npm publish --tag pre",
@@ -105,8 +105,7 @@
     "ts-node": "^10.9.1",
     "tsup": "^6.2.1",
     "typescript": "^4.7.4",
-    "vuepress": "^1.9.7",
-    "vuepress-theme-default-prefers-color-scheme": "^2.0.0"
+    "vitepress": "1.0.0-alpha.14"
   },
   "engines": {
     "node": ">= 12"
