@@ -820,16 +820,6 @@ The number of service calls needed to run the `query` above **the second time**:
 
 The `cache` hook also makes `get` service calls more efficient.
 
-### The GraphQL Feathers Adapter
-
-By now you have an understanding of the foundations of Facebook's [GraphQL](http://graphql.org/). GraphQL however is more powerful and flexible.
-
-You may want to read about the Feathers service adapter [@feathers-plus/graphql](../graphql). **It supports SQL and non-SQL databases,** and automatically generates the resolver functions.
-
-<!--=============================================================================================-->
-<!--=============================================================================================-->
-<!--=============================================================================================-->
-
 ## Populate
 
 ### `populate(options: Object): HookFunc` [source](https://github.com/feathersjs/feathers-hooks-common/blob/master/src/hooks/populate.ts)

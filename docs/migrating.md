@@ -16,7 +16,7 @@ The following hooks and utilities have been deprecated and replaced with differe
 - `pluck` - Use `iff(isProvider('external'), keep(...fieldNames))` instead
 - `pluckQuery` - Use [keepQuery](hooks#keepquery) instead
 - promiseToCallback - No longer necessary since callbacks have been deprecated in Feathers v3 and later
-- `removeQuery` - Use [discardQuery](../hooks#discardquery) instead
+- `removeQuery` - Use [discardQuery](hooks#discardquery) instead
 - `setCreatedAt` - Use [setNow](hooks#setnow) instead
 - `setUpdatedAt` - Use [setNow](hooks#setnow) instead 
 - `skipRemainingHooks` - Use conditional hook chains with [iff](hooks#iff) instead
