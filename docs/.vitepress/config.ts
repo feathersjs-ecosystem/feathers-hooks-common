@@ -14,6 +14,14 @@ export default defineConfig({
     lastUpdatedText: "Last Updated",
     socialLinks: [
       {
+        icon: "twitter",
+        link: "https://twitter.com/feathersjs",
+      },
+      {
+        icon: "discord",
+        link: "https://discord.gg/qa8kez8QBx",
+      },
+      {
         icon: "github",
         link: "https://github.com/feathersjs-ecosystem/feathers-hooks-common",
       },
