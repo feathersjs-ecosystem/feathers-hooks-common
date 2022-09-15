@@ -1,10 +1,22 @@
 import { defineConfig } from "vitepress";
+import { name, description, ogUrl, ogImage } from "./meta";
 
 export default defineConfig({
   title: "feathers-hooks-common",
   lastUpdated: true,
   description: "",
-  head: [["link", { rel: "icon", href: "/feathers-hooks-common-logo.png" }]],
+  head: [
+    ["meta", { name: "theme-color", content: "#ae0bb1" }],
+    ["link", { rel: "icon", href: "/feathers-hooks-common-logo.png" }],
+    ["meta", { property: "og:title", content: name }],
+    ["meta", { property: "og:description", content: description }],
+    ["meta", { property: "og:url", content: ogUrl }],
+    ["meta", { property: "og:image", content: ogImage }],
+    ["meta", { name: "twitter:title", content: name }],
+    ["meta", { name: "twitter:description", content: description }],
+    ["meta", { name: "twitter:image", content: ogImage }],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
+  ],
   themeConfig: {
     siteTitle: "feathers-hooks-common",
     editLink: {
