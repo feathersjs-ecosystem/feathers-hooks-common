@@ -1,7 +1,6 @@
 import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
-import errors from '@feathersjs/errors';
-const { BadRequest } = errors;
+import { BadRequest } from '@feathersjs/errors';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';

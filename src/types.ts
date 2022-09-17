@@ -1,4 +1,4 @@
-import type { Hook, HookContext, Query, Application } from '@feathersjs/feathers';
+import type { Hook, HookContext, Query, Application, Service } from '@feathersjs/feathers';
 import type { Ajv, ErrorObject as ajvErrorObject, Options as AjvOptions } from 'ajv';
 import type { parse, GraphQLFieldResolver } from 'graphql';
 
@@ -7,13 +7,13 @@ export type MethodName = 'find' | 'create' | 'get' | 'update' | 'patch' | 'remov
 export type TransportName = 'socketio' | 'primus' | 'rest' | 'external' | 'server';
 export type Disablable = 'populate' | 'fastJoin' | 'ignoreDeletedAt' | 'softDelete' | 'softDelete2' | 'stashBefore';
 
-export type SyncContextFunction<T> = (context: HookContext) => T;
-export type AsyncContextFunction<T> = (context: HookContext) => Promise<T>;
-export type ContextFunction<T> = (context: HookContext) => T | Promise<T>;
+export type SyncContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => T;
+export type AsyncContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => Promise<T>;
+export type ContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => T | Promise<T>;
 
-export type SyncPredicateFn = SyncContextFunction<boolean>;
-export type AsyncPredicateFn = AsyncContextFunction<boolean>;
-export type PredicateFn = ContextFunction<boolean>;
+export type SyncPredicateFn<A = Application, S = Service> = SyncContextFunction<boolean, A, S>;
+export type AsyncPredicateFn<A = Application, S = Service> = AsyncContextFunction<boolean, A, S>;
+export type PredicateFn<A = Application, S = Service> = ContextFunction<boolean, A, S>;
 
 export type CacheMap<T> = Map<string, T>;
 
@@ -199,8 +199,8 @@ export interface ValidateSchemaOptions extends AjvOptions {
   addNewError: (currentFormattedMessages: any, ajvErrorObject: ajvErrorObject, itemsLen: number, itemIndex: number) => any;
 }
 
-export interface IffHook extends Hook {
-  else(...hooks: Hook[]): Hook;
+export interface IffHook<A = Application, S = Service> extends Hook<A, S> {
+  else(...hooks: Hook<A, S>[]): Hook<A, S>;
 }
 
 export interface SetFieldOptions {

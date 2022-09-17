@@ -25,7 +25,7 @@ export function checkContext (
 
   const myMethods = Array.isArray(methods) ? methods : [methods]; // safe enough for allowed values
 
-  if (myMethods.length > 0 && myMethods.indexOf(context.method) === -1) {
+  if (myMethods.length > 0 && myMethods.indexOf(context.method as any) === -1) {
     const msg = JSON.stringify(myMethods);
     throw new Error(`The '${label}' hook can only be used on the '${msg}' service method(s).`);
   }

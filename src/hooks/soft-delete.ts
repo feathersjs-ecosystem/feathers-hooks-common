@@ -1,5 +1,4 @@
-import errors from '@feathersjs/errors';
-const { GeneralError } = errors;
+import { GeneralError } from '@feathersjs/errors';
 import type { SoftDeleteOptions } from '../types';
 import { checkContext } from '../utils/check-context';
 

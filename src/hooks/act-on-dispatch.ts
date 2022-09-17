@@ -1,4 +1,4 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 import { combine } from '../utils/combine';
 
 /**
@@ -13,7 +13,7 @@ export const actOnDefault = (...hooks: Hook[]) => actOn(undefined, ...hooks);
  */
 export const actOnDispatch = (...hooks: Hook[]) => actOn('dispatch', ...hooks)
 
-function actOn (what: any, ...hooks: any[]): Hook {
+function actOn <A = Application, S = Service> (what: any, ...hooks: any[]): Hook<A, S> {
   return (context: any) => {
     const currActOn = context.params._actOn;
     context.params._actOn = what;

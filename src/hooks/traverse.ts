@@ -1,4 +1,4 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { Application, HookContext, Service } from '@feathersjs/feathers';
 import { traverse as _traverse } from '../common';
 import type { SyncContextFunction } from '../types';
 import { getItems } from '../utils/get-items';
@@ -8,11 +8,11 @@ import { getItems } from '../utils/get-items';
  * Check docs at https://github.com/substack/js-traverse for info on transformContext!
  * {@link https://hooks-common.feathersjs.com/hooks.html#traverse}
  */
-export function traverse (
-  transformer: (this: any, transformContext: any) => any,
-  getObject?: SyncContextFunction<any>
-): Hook {
-  return (context: any) => {
+export function traverse <A = Application, S = Service> (
+  transformer: (transformContext: any) => any,
+  getObject?: (SyncContextFunction<any, A, S>)
+): (context: HookContext<A, S>) => HookContext<A, S> {
+  return (context: HookContext<A, S>) => {
     const items = typeof getObject === 'function' ? getObject(context) : getObject || getItems(context);
 
     _traverse(items, transformer);

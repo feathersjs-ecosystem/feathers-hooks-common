@@ -1,6 +1,5 @@
 import _set from 'lodash/set.js';
-import errors from '@feathersjs/errors';
-const { BadRequest } = errors;
+import { BadRequest } from '@feathersjs/errors';
 
 import { transformItems } from '../common';
 import { checkContextIf } from './check-context-if';

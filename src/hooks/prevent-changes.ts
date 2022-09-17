@@ -2,8 +2,7 @@ import _has from 'lodash/has.js';
 import _omit from 'lodash/omit.js';
 
 import { checkContext } from '../utils/check-context';
-import errors from '@feathersjs/errors';
-const { BadRequest } = errors;
+import { BadRequest } from '@feathersjs/errors';
 import type { Hook } from '@feathersjs/feathers';
 
 /**

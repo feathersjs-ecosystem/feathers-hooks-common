@@ -1,5 +1,4 @@
-import errors from '@feathersjs/errors';
-const { BadRequest } = errors;
+import { BadRequest } from '@feathersjs/errors';
 import type { Hook } from '@feathersjs/feathers';
 
 /**

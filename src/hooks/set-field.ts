@@ -3,8 +3,7 @@ import _setWith from 'lodash/setWith.js';
 import _clone from 'lodash/clone.js';
 import _debug from 'debug';
 import { checkContext } from '../utils/check-context';
-import errors from '@feathersjs/errors';
-const { Forbidden } = errors;
+import { Forbidden } from '@feathersjs/errors';
 import type { Hook } from '@feathersjs/feathers';
 import type { SetFieldOptions } from '../types';
 
