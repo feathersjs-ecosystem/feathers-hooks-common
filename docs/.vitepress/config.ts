@@ -55,5 +55,10 @@ export default defineConfig({
       message: "Released under the MIT License.",
       copyright: "Copyright © 2016-present Feathers contributors",
     },
+    algolia: {
+      appId: '4GNLWKU0RF',
+      apiKey: '8114a3bec3c82b65c26a4ed113659bce',
+      indexName: 'feathers-hooks'
+    }
   },
 });
