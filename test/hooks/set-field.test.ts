@@ -1,5 +1,5 @@
 import assert from 'assert';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { setField } from '../../src';
 
@@ -69,6 +69,7 @@ describe('setField', () => {
 
   it('find queries with user information, does not modify original objects', async () => {
     const query = {};
+    // @ts-ignore
     const results = await app.service('messages').find({ query, user });
 
     assert.equal(results.length, 1);
@@ -77,12 +78,14 @@ describe('setField', () => {
 
   it('adds user information to get, throws NotFound event if record exists', async () => {
     await assert.rejects(async () => {
+      // @ts-ignore
       await app.service('messages').get(2, { user });
     }, {
       name: 'NotFound',
       message: 'No record found for id \'2\''
     });
 
+    // @ts-ignore
     const result = await app.service('messages').get(1, { user });
 
     assert.deepEqual(result, {

@@ -1,6 +1,5 @@
-import type { Hook } from '@feathersjs/feathers';
 import { iffElse } from '..';
-import type { PredicateFn } from '../types';
+import type { HookFunction, PredicateFn } from '../types';
 
 /**
  * Execute a series of hooks if a sync or async predicate is falsey.
@@ -8,7 +7,7 @@ import type { PredicateFn } from '../types';
  */
 export function unless (
   predicate: boolean | PredicateFn,
-  ...hooks: Hook[]
-): Hook {
+  ...hooks: HookFunction[]
+): HookFunction {
   return iffElse(predicate, undefined, hooks.slice())
 }

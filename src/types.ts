@@ -1,4 +1,4 @@
-import type { Hook, HookContext, Query, Application, Service } from '@feathersjs/feathers';
+import type { HookContext, Query, Application, Service } from '@feathersjs/feathers';
 import type { Ajv, ErrorObject as ajvErrorObject, Options as AjvOptions } from 'ajv';
 import type { parse, GraphQLFieldResolver } from 'graphql';
 
@@ -10,6 +10,8 @@ export type Disablable = 'populate' | 'fastJoin' | 'ignoreDeletedAt' | 'softDele
 export type SyncContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => T;
 export type AsyncContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => Promise<T>;
 export type ContextFunction<T, A = Application, S = Service> = (context: HookContext<A, S>) => T | Promise<T>;
+
+export declare type HookFunction<A = Application, S = Service> = (context: HookContext<A, S>) => Promise<HookContext<A, S> | void> | HookContext<A, S> | void;
 
 export type SyncPredicateFn<A = Application, S = Service> = SyncContextFunction<boolean, A, S>;
 export type AsyncPredicateFn<A = Application, S = Service> = AsyncContextFunction<boolean, A, S>;
@@ -199,8 +201,8 @@ export interface ValidateSchemaOptions extends AjvOptions {
   addNewError: (currentFormattedMessages: any, ajvErrorObject: ajvErrorObject, itemsLen: number, itemIndex: number) => any;
 }
 
-export interface IffHook<A = Application, S = Service> extends Hook<A, S> {
-  else(...hooks: Hook<A, S>[]): Hook<A, S>;
+export interface IffHook<A = Application, S = Service> extends HookFunction<A, S> {
+  else(...hooks: HookFunction<A, S>[]): HookFunction<A, S>;
 }
 
 export interface SetFieldOptions {

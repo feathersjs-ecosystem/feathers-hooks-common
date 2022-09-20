@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { stashBefore } from '../../src';
 

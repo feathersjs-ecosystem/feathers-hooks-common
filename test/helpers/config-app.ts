@@ -1,4 +1,4 @@
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import getInitDb from './get-init-db';
 

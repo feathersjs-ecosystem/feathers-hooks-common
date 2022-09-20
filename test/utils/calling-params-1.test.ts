@@ -15,16 +15,19 @@ describe('util calling-params-1.test.js', () => {
 
     it('standard defaults', () => {
       const res = callingParams()(context1);
+      // @ts-ignore
       assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
     });
 
     it('ignores missing', () => {
       const res = callingParams()(context2);
+      // @ts-ignore
       assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true });
     });
 
     it('ignores undefined', () => {
       const res = callingParams()(context3);
+      // @ts-ignore
       assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true });
     });
 
@@ -44,12 +47,14 @@ describe('util calling-params-1.test.js', () => {
 
     it('check reset to standard defaults', () => {
       const res = callingParams()(context1);
+      // @ts-ignore
       assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
     });
 
     it('change default propNames', () => {
       callingParamsDefaults(['foo', 'user.name', 'query.aaa']);
       const res = callingParams()(context1);
+      // @ts-ignore
       assert.deepEqual(res, { foo: 'bar', user: { name: 'Matt' }, query: { aaa: 'bbb' } });
     });
 
@@ -57,12 +62,14 @@ describe('util calling-params-1.test.js', () => {
       // @ts-ignore
       callingParamsDefaults(null, { bar: 'foo' });
       const res = callingParams()(context1);
+      // @ts-ignore
       assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true, provider: 'socketio', bar: 'foo' });
     });
 
     it('change both defaults', () => {
       callingParamsDefaults(['foo', 'user.name', 'query.aaa'], { bar: 'foo', qqq: 'rrr' });
       const res = callingParams()(context1);
+      // @ts-ignore
       assert.deepEqual(res, { foo: 'bar', user: { name: 'Matt' }, query: { aaa: 'bbb' }, bar: 'foo', qqq: 'rrr' });
     });
   });
@@ -79,6 +86,7 @@ describe('util calling-params-1.test.js', () => {
     it('default call made by common hooks', () => {
       const res = callingParams()(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         authenticated: true, provider: 'socketio', user: { name: 'Matt' }
       });
     });
@@ -88,6 +96,7 @@ describe('util calling-params-1.test.js', () => {
         query: { id: 1 }
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         authenticated: true, provider: 'socketio', user: { name: 'Matt' }, query: { id: 1 }
       });
     });
@@ -97,6 +106,7 @@ describe('util calling-params-1.test.js', () => {
         propNames: ['foo', 'baz', 'query.aa', 'query.cc']
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         authenticated: true, provider: 'socketio', user: { name: 'Matt' }, foo: 'bar', baz: 'faz', query: { aa: 'a1' }
       });
     });
@@ -106,6 +116,7 @@ describe('util calling-params-1.test.js', () => {
         hooksToDisable: ['populate']
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         authenticated: true, provider: 'socketio', user: { name: 'Matt' }, _populate: 'skip'
       });
     });
@@ -115,6 +126,7 @@ describe('util calling-params-1.test.js', () => {
         hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore']
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         authenticated: true,
         provider: 'socketio',
         user: { name: 'Matt' },
@@ -135,6 +147,7 @@ describe('util calling-params-1.test.js', () => {
         ignoreDefaults: true
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         foo: 'bar', baz: 'faz', query: { aa: 'a1' }
       });
     });
@@ -146,6 +159,7 @@ describe('util calling-params-1.test.js', () => {
         hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore']
       })(context1);
       assert.deepEqual(res, {
+        // @ts-ignore
         disableStashBefore: true,
         query: { id: 1, aa: 'a1', $disableSoftDelete: true },
         foo: 'bar',

@@ -1,6 +1,5 @@
-
 import { assert } from 'chai';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { combine } from '../../src';
 
@@ -108,21 +107,16 @@ describe('util combine', () => {
     user = app.service('users');
   });
 
-  it('runs successful hooks', (done: any) => {
-    user.find({ query: { key: 'a' } })
-      .then((_data: any) => {
-        done();
-      });
+  it('runs successful hooks', async () => {
+    await user.find({ query: { key: 'a' } });
   });
 
-  it('throws on unsuccessful hook', (done: any) => {
-    user.find({ query: { key: 'b' } })
-      .catch(() => {
-        done();
-      })
+  it('throws on unsuccessful hook', async () => {
+    await user.find({ query: { key: 'b' } })
       .then((_data: any) => {
         assert.fail(true, false);
-      });
+      })
+      .catch(() => {});
   });
 });
 

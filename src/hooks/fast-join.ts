@@ -1,5 +1,5 @@
-import type { Hook, Query } from '@feathersjs/feathers';
-import type { ResolverMap, SyncContextFunction } from '../types';
+import type { Query } from '@feathersjs/feathers';
+import type { HookFunction, ResolverMap, SyncContextFunction } from '../types';
 
 /**
  * We often want to combine rows from two or more tables based on a relationship between them. The fastJoin hook
@@ -20,7 +20,7 @@ import type { ResolverMap, SyncContextFunction } from '../types';
 export function fastJoin (
   resolvers: ResolverMap<any> | SyncContextFunction<ResolverMap<any>>,
   query?: Query | SyncContextFunction<Query>
-): Hook {
+): HookFunction {
   return (context: any) => {
     const { method, data, result, params } = context;
 

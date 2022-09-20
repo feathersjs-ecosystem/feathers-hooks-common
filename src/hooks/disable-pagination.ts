@@ -1,11 +1,11 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 import { checkContext } from '../utils/check-context';
 
 /**
  * Disables pagination when query.$limit is -1 or '-1'.
  * {@link https://hooks-common.feathersjs.com/hooks.html#disablepagination}
  */
-export function disablePagination (): Hook {
+export function disablePagination (): HookFunction {
   return function (context: any) {
     checkContext(context, 'before', ['find'], 'disablePagination');
     const $limit = (context.params.query || {}).$limit;

@@ -5,7 +5,7 @@ import _has from 'lodash/has.js';
 import { checkContextIf } from './check-context-if';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
@@ -13,7 +13,7 @@ import type { Hook } from '@feathersjs/feathers';
  */
 export function keep (
   ...fieldNames: string[]
-): Hook {
+): HookFunction {
   return (context: any) => {
     checkContextIf(context, 'before', ['create', 'update', 'patch'], 'keep');
     const items = getItems(context);

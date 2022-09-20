@@ -1,6 +1,5 @@
-import type { Hook } from '@feathersjs/feathers';
 import makeDebug from 'debug';
-import type { FGraphQLHookOptions } from '../types';
+import type { FGraphQLHookOptions, HookFunction } from '../types';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
@@ -13,7 +12,7 @@ const graphqlActions = ['Query', 'Mutation', 'Subscription'];
  */
 export function fgraphql (
   options1: FGraphQLHookOptions
-): Hook {
+): HookFunction {
   debug('init call');
   const { parse, recordType, resolvers, runTime, query } = options1;
   let { schema } = options1;

@@ -1,10 +1,10 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Pass context.params from client to server. Server hook.
  * {@link https://hooks-common.feathersjs.com/hooks.html#paramsfromclient}
  */
-export function paramsFromClient (...whitelist: string[]): Hook {
+export function paramsFromClient (...whitelist: string[]): HookFunction {
   return (context: any) => {
     const params = context.params;
 

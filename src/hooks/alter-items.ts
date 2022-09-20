@@ -1,7 +1,8 @@
 import { BadRequest } from '@feathersjs/errors';
 
-import type { Hook, HookContext } from '@feathersjs/feathers';
+import type { Application, HookContext, Service } from '@feathersjs/feathers';
 import { isPromise } from '../common';
+import type { HookFunction } from '../types';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
@@ -9,9 +10,9 @@ import { replaceItems } from '../utils/replace-items';
  * Make changes to data or result items. Very flexible.
  * {@link https://hooks-common.feathersjs.com/hooks.html#alteritems}
  */
-export function alterItems <T = any> (
-  cb: (record: T, context: HookContext<T>) => any
-): Hook {
+export function alterItems <T = any, A extends Application = Application, S extends Service = Service> (
+  cb: (record: T, context: HookContext<A, S>) => any
+): HookFunction<A, S> {
   if (!cb) {
     cb = () => {};
   }

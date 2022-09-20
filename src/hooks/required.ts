@@ -4,13 +4,13 @@ import _has from 'lodash/has.js';
 
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
  * {@link https://hooks-common.feathersjs.com/hooks.html#required}
  */
-export function required (...fieldNames: string[]): Hook {
+export function required (...fieldNames: string[]): HookFunction {
   return (context: any) => {
     checkContext(context, 'before', ['create', 'update', 'patch'], 'required');
     const items = getItems(context);

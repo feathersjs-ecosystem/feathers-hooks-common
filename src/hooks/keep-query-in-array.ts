@@ -3,7 +3,7 @@ import { BadRequest } from '@feathersjs/errors';
 import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
 import _has from 'lodash/has.js';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Keep certain fields in a nested array inside the query object, deleting the rest.
@@ -12,7 +12,7 @@ import type { Hook } from '@feathersjs/feathers';
 export function keepQueryInArray (
   arrayName: string,
   fieldNames: string[]
-): Hook {
+): HookFunction {
   return (context: any) => {
     checkContext(context, 'before', null, 'keepQueryInArray');
 

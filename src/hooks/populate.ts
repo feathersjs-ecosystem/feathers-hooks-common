@@ -4,10 +4,10 @@ import { BadRequest } from '@feathersjs/errors';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { PopulateOptions } from '../types';
-import type { Hook, HookContext } from '@feathersjs/feathers';
+import type { HookFunction, PopulateOptions } from '../types';
+import type { HookContext } from '@feathersjs/feathers';
 
-export function populate (options: PopulateOptions): Hook {
+export function populate (options: PopulateOptions): HookFunction {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
 
   const typeofSchema = typeof options.schema;

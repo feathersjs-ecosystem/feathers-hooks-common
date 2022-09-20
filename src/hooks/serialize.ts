@@ -4,8 +4,7 @@ import _omit from 'lodash/omit.js';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { SerializeSchema, SyncContextFunction } from '../types';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction, SerializeSchema, SyncContextFunction } from '../types';
 
 /**
  * Prune values from related records. Calculate new values.
@@ -13,7 +12,7 @@ import type { Hook } from '@feathersjs/feathers';
  */
 export function serialize (
   schema1: SerializeSchema | SyncContextFunction<SerializeSchema>
-): Hook {
+): HookFunction {
   return (context: any) => {
     const schema = typeof schema1 === 'function' ? schema1(context) : schema1;
     const schemaDirectives = ['computed', 'exclude', 'only'];

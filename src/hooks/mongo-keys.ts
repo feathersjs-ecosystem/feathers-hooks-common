@@ -1,5 +1,5 @@
-import type { Hook } from '@feathersjs/feathers';
 import traverse from 'traverse';
+import type { HookFunction } from '../types';
 import { checkContext } from '../utils/check-context';
 
 /**
@@ -9,7 +9,7 @@ import { checkContext } from '../utils/check-context';
 export function mongoKeys (
   ObjectId: new (id?: string | number) => any,
   keyFields: string | string[]
-): Hook {
+): HookFunction {
   keyFields = Array.isArray(keyFields) ? keyFields : [keyFields];
   const keyLeaves: any = [];
 

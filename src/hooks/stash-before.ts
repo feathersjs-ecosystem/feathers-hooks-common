@@ -1,12 +1,12 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 import { checkContext } from '../utils/check-context';
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
  * {@link https://hooks-common.feathersjs.com/hooks.html#stashbefore}
  */
-export function stashBefore (fieldName?: string): Hook {
+export function stashBefore (fieldName?: string): HookFunction {
   const beforeField = fieldName || 'before';
 
   return (context: any) => {

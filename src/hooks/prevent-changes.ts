@@ -3,7 +3,7 @@ import _omit from 'lodash/omit.js';
 
 import { checkContext } from '../utils/check-context';
 import { BadRequest } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Prevent patch service calls from changing certain fields.
@@ -12,7 +12,7 @@ import type { Hook } from '@feathersjs/feathers';
 export function preventChanges (
   ifThrow: boolean,
   ...fieldNames: string[]
-): Hook {
+): HookFunction {
   if (typeof ifThrow === 'string') {
     // eslint-disable-next-line no-console
     console.warn('**Deprecated** Use the preventChanges(true, ...fieldNames) syntax instead.');

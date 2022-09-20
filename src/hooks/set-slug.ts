@@ -1,12 +1,12 @@
 import _set from 'lodash/set.js';
 import { GeneralError } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Fix slugs in URL, e.g. /stores/:storeId.
  * {@link https://hooks-common.feathersjs.com/hooks.html#setslug}
  */
-export function setSlug (slug: string, fieldName?: string): Hook {
+export function setSlug (slug: string, fieldName?: string): HookFunction {
   return (context: any) => {
     if (typeof fieldName !== 'string') {
       fieldName = `query.${slug}`;

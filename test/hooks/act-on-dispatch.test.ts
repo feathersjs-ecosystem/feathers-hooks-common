@@ -1,6 +1,11 @@
-
 import { assert } from 'chai';
-import { actOnDefault, actOnDispatch, combine, getItems, replaceItems } from '../../src';
+import {
+  actOnDefault,
+  actOnDispatch,
+  combine,
+  getItems,
+  replaceItems
+} from '../../src';
 
 let hookBefore: any;
 
@@ -19,12 +24,18 @@ function testHook (what: any, code: any) {
 describe('services actOn', () => {
   describe('Call hooks which do not call other hooks', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'get', params: { _actOnCodes: [] } };
+      hookBefore = {
+        type: 'before',
+        method: 'get',
+        params: { _actOnCodes: [] }
+      };
     });
 
     it('actOnDefault', async () => {
       const result: any = await actOnDefault(
-        testHook(undefined, 1), testHook(undefined, 2), testHook(undefined, 3)
+        testHook(undefined, 1),
+        testHook(undefined, 2),
+        testHook(undefined, 3)
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [1, 2, 3]);
@@ -32,7 +43,9 @@ describe('services actOn', () => {
 
     it('actOnDispatch', async () => {
       const result: any = await actOnDispatch(
-        testHook('dispatch', 10), testHook('dispatch', 20), testHook('dispatch', 30)
+        testHook('dispatch', 10),
+        testHook('dispatch', 20),
+        testHook('dispatch', 30)
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [10, 20, 30]);
@@ -41,7 +54,11 @@ describe('services actOn', () => {
 
   describe('Call hooks calling others same actOn', () => {
     beforeEach(() => {
-      hookBefore = { type: 'before', method: 'get', params: { _actOnCodes: [] } };
+      hookBefore = {
+        type: 'before',
+        method: 'get',
+        params: { _actOnCodes: [] }
+      };
     });
 
     it('actOnDefault calling actOnDefault', async () => {
@@ -55,7 +72,9 @@ describe('services actOn', () => {
 
     it('actOnDefault calling actOnDispatch', async () => {
       const result: any = await actOnDefault(
-        actOnDispatch(combine(testHook('dispatch', 11), testHook('dispatch', 12))),
+        actOnDispatch(
+          combine(testHook('dispatch', 11), testHook('dispatch', 12))
+        ),
         combine(testHook(undefined, 21), testHook(undefined, 22))
       )(hookBefore);
 

@@ -1,5 +1,4 @@
-import type { Hook } from '@feathersjs/feathers';
-import type { CacheMap, CacheOptions } from '../types';
+import type { CacheMap, CacheOptions, HookFunction } from '../types';
 import { getItems } from '../utils/get-items';
 
 const defaultMakeCacheKey = (key: any) => key;
@@ -12,7 +11,7 @@ export function cache <T, K extends keyof T> (
   cacheMap: CacheMap<T>,
   keyField?: K,
   options?: CacheOptions<T, K>
-): Hook {
+): HookFunction {
   const clone = options?.clone || defaultClone;
   const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey;
 

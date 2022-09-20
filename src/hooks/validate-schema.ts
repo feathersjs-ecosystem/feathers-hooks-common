@@ -1,6 +1,5 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
-import type { AjvOrNewable, ValidateSchemaOptions } from '../types';
+import type { AjvOrNewable, HookFunction, ValidateSchemaOptions } from '../types';
 import { getItems } from '../utils/get-items';
 
 /**
@@ -12,7 +11,7 @@ export function validateSchema (
   ajvOrAjv: AjvOrNewable,
   // @ts-ignore
   options: ValidateSchemaOptions = { allErrors: true }
-): Hook {
+): HookFunction {
   const addNewError = options?.addNewError || addNewErrorDflt;
   // delete options.addNewError;
   // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?

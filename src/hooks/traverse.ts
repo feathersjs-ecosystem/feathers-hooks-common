@@ -1,6 +1,6 @@
 import type { Application, HookContext, Service } from '@feathersjs/feathers';
 import { traverse as _traverse } from '../common';
-import type { SyncContextFunction } from '../types';
+import type { HookFunction, SyncContextFunction } from '../types';
 import { getItems } from '../utils/get-items';
 
 /**
@@ -11,7 +11,7 @@ import { getItems } from '../utils/get-items';
 export function traverse <A = Application, S = Service> (
   transformer: (transformContext: any) => any,
   getObject?: (SyncContextFunction<any, A, S>)
-): (context: HookContext<A, S>) => HookContext<A, S> {
+): HookFunction<A, S> {
   return (context: HookContext<A, S>) => {
     const items = typeof getObject === 'function' ? getObject(context) : getObject || getItems(context);
 

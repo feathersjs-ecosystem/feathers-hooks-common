@@ -1,6 +1,6 @@
 
 import { assert } from 'chai';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import BatchLoader from '@feathers-plus/batch-loader';
 // @ts-ignore
 import CacheMap from '@feathers-plus/cache';

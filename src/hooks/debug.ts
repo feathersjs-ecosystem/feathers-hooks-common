@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Display the current hook context for debugging.
  * {@link https://hooks-common.feathersjs.com/hooks.html#debug}
  */
-export function debug (msg: string, ...fieldNames: string[]): Hook {
+export function debug (msg: string, ...fieldNames: string[]): HookFunction {
   return (context: any) => {
     console.log(`* ${msg || ''}\ntype:${context.type}, method: ${context.method}`);
     if (context.data) { console.log('data:', context.data); }

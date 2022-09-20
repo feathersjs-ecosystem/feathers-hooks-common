@@ -1,5 +1,4 @@
-import type { Hook } from '@feathersjs/feathers';
-import type { SequelizeConversion, SequelizeConverts } from '../types';
+import type { HookFunction, SequelizeConversion, SequelizeConverts } from '../types';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
@@ -26,7 +25,7 @@ export function sequelizeConvert <C extends { [name: string]: SequelizeConversio
   converts: SequelizeConverts<C> | null | undefined | false,
   ignores?: string[] | null | undefined | false,
   conversions?: C
-): Hook {
+): HookFunction {
   const converter = sequelizeConversion(converts, ignores, conversions);
 
   return (context: any) => {

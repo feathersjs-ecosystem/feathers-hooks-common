@@ -61,6 +61,7 @@ export function callingParams ({
       switch (name) {
       case 'populate': // fall through
       case 'fastJoin':
+        // @ts-ignore
         newParams._populate = 'skip';
         break;
       case 'softDelete':
@@ -68,12 +69,15 @@ export function callingParams ({
         newParams.query.$disableSoftDelete = true;
         break;
       case 'softDelete2':
+        // @ts-ignore
         newParams.$disableSoftDelete2 = true;
         break;
       case 'ignoreDeletedAt':
+        // @ts-ignore
         newParams.$ignoreDeletedAt = true;
         break;
       case 'stashBefore':
+        // @ts-ignore
         newParams.disableStashBefore = true;
         break;
       }

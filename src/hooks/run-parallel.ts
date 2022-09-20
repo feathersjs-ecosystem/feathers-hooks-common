@@ -1,15 +1,15 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Run a hook in parallel to the other hooks and the service call.
  * {@link https://hooks-common.feathersjs.com/hooks.html#runparallel}
  */
 export function runParallel <T = any> (
-  hook: Hook,
+  hook: HookFunction,
   clone: (item: T) => T,
   cloneDepth = 6
-): Hook {
+): HookFunction {
   if (typeof hook !== 'function') {
     throw new BadRequest('Function not provided. (runParallel)');
   }

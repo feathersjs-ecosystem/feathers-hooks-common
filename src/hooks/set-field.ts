@@ -4,8 +4,7 @@ import _clone from 'lodash/clone.js';
 import _debug from 'debug';
 import { checkContext } from '../utils/check-context';
 import { Forbidden } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
-import type { SetFieldOptions } from '../types';
+import type { HookFunction, SetFieldOptions } from '../types';
 
 const debug = _debug('feathers-hooks-common/setField');
 
@@ -15,7 +14,7 @@ const debug = _debug('feathers-hooks-common/setField');
  */
 export function setField (
   { as, from, allowUndefined = false }: SetFieldOptions
-): Hook {
+): HookFunction {
   if (!as || !from) {
     throw new Error('\'as\' and \'from\' options have to be set');
   }

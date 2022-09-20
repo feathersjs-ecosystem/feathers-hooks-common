@@ -137,14 +137,18 @@ describe('services alterItems', () => {
     assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
 
-  it('returns a promise that contains context', () => {
-    return alterItems((rec: any) => {
+  it('returns a promise that contains context', async () => {
+    const promise = alterItems((rec: any) => {
       rec.state = 'UT';
       return Promise.resolve();
-      // @ts-ignore
-    })(hookBefore).then((context: any) => {
-      assert.deepEqual(context, hookBefore);
-    });
+
+    })(hookBefore);
+
+    assert.ok(promise instanceof Promise);
+
+    const result = await promise;
+
+    assert.deepEqual(result, hookBefore);
   });
 
   it('updates hook before::create with new item returned', () => {

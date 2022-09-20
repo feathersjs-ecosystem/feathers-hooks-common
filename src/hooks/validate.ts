@@ -1,7 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Hook } from '@feathersjs/feathers';
 import { isPromise } from '../common';
-import type { ValidatorFn } from '../types';
+import type { HookFunction, ValidatorFn } from '../types';
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
@@ -12,7 +11,7 @@ import { replaceItems } from '../utils/replace-items';
  */
 export function validate (
   validator: ValidatorFn
-): Hook {
+): HookFunction {
   return (context: any) => {
     checkContext(context, 'before', ['create', 'update', 'patch'], 'validate');
 
