@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 import { name, description, ogUrl, ogImage } from "./meta";
+import { version } from '../../package.json'
 
 export default defineConfig({
   title: "feathers-hooks-common",
@@ -50,6 +51,21 @@ export default defineConfig({
           { text: "Guides", link: "/guides" },
         ],
       },
+    ],
+    nav: [
+      {
+        text: `v${version}`,
+        items: [
+          {
+            text: 'Changelog',
+            link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/CHANGELOG.md'
+          },
+          {
+            text: 'Contributing',
+            link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/.github/contributing.md'
+          }
+        ]
+      }
     ],
     footer: {
       message: "Released under the MIT License.",
