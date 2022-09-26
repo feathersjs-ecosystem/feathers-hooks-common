@@ -1,17 +1,20 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { HookFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 import { checkContext } from '../utils/check-context';
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
- * {@link https://hooks-common.feathersjs.com/hooks.html#stashbefore}
+ * @see https://hooks-common.feathersjs.com/hooks.html#stashbefore
  */
-export function stashBefore (fieldName?: string): HookFunction {
+export function stashBefore<A extends Application = Application, S extends Service = Service>(
+  fieldName?: string
+): Hook<A, S> {
   const beforeField = fieldName || 'before';
 
-  return (context: any) => {
+  return context => {
     checkContext(context, 'before', ['get', 'update', 'patch', 'remove'], 'stashBefore');
 
+    // @ts-ignore
     if (context.params.disableStashBefore) {
       return context;
     }
@@ -20,20 +23,27 @@ export function stashBefore (fieldName?: string): HookFunction {
       throw new BadRequest('Id is required. (stashBefore)');
     }
 
-    const params = context.method === 'get'
-      ? context.params
-      : {
-        provider: context.params.provider,
-        authenticated: context.params.authenticated,
-        user: context.params.user
-      };
+    const params =
+      context.method === 'get'
+        ? context.params
+        : {
+            provider: context.params.provider,
+            // @ts-ignore
+            authenticated: context.params.authenticated,
+            // @ts-ignore
+            user: context.params.user,
+          };
 
-    return context.service.get(context.id, {
-      ...params,
-      query: params.query || {},
-      disableStashBefore: true
-    })
+    return context.service
+      .get(context.id, {
+        ...params,
+        // @ts-ignore
+        query: params.query || {},
+        // @ts-ignore
+        disableStashBefore: true,
+      })
       .then((data: any) => {
+        // @ts-ignore
         context.params[beforeField] = JSON.parse(JSON.stringify(data));
         return context;
       })

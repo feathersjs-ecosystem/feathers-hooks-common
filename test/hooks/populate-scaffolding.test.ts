@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import configApp from '../helpers/config-app';
 
@@ -7,7 +6,8 @@ describe('services populate - test scaffolding', () => {
     const app = configApp(['users', 'comments', 'posts', 'recommendation']);
     const users = app.service('users');
 
-    users.find({ query: {} })
+    users
+      .find({ query: {} })
       .then((data: any) => {
         assert.equal(data.length, 2);
       })

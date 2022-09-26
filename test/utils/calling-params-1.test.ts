@@ -1,16 +1,53 @@
-
 import { assert } from 'chai';
 import { callingParamsDefaults, callingParams } from '../../src';
 
-let context1: any; let context2: any; let context3: any; let context4: any;
+let context1: any;
+let context2: any;
+let context3: any;
+let context4: any;
 
 describe('util calling-params-1.test.js', () => {
   describe('has defaults', () => {
     beforeEach(() => {
-      context1 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
-      context2 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true } };
-      context3 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: undefined } };
-      context4 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: null } };
+      context1 = {
+        params: {
+          query: { aaa: 'bbb' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+          provider: 'socketio',
+        },
+      };
+      context2 = {
+        params: {
+          query: { aaa: 'bbb' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+        },
+      };
+      context3 = {
+        params: {
+          query: { aaa: 'bbb' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+          provider: undefined,
+        },
+      };
+      context4 = {
+        params: {
+          query: { aaa: 'bbb' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+          provider: null,
+        },
+      };
     });
 
     it('standard defaults', () => {
@@ -40,7 +77,16 @@ describe('util calling-params-1.test.js', () => {
 
   describe('can reset defaults', () => {
     beforeEach(() => {
-      context1 = { params: { query: { aaa: 'bbb' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
+      context1 = {
+        params: {
+          query: { aaa: 'bbb' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+          provider: 'socketio',
+        },
+      };
 
       callingParamsDefaults(['provider', 'authenticated', 'user'], {});
     });
@@ -63,21 +109,39 @@ describe('util calling-params-1.test.js', () => {
       callingParamsDefaults(null, { bar: 'foo' });
       const res = callingParams()(context1);
       // @ts-ignore
-      assert.deepEqual(res, { user: { name: 'Matt' }, authenticated: true, provider: 'socketio', bar: 'foo' });
+      assert.deepEqual(res, {
+        user: { name: 'Matt' },
+        authenticated: true,
+        provider: 'socketio',
+        bar: 'foo',
+      });
     });
 
     it('change both defaults', () => {
       callingParamsDefaults(['foo', 'user.name', 'query.aaa'], { bar: 'foo', qqq: 'rrr' });
       const res = callingParams()(context1);
       // @ts-ignore
-      assert.deepEqual(res, { foo: 'bar', user: { name: 'Matt' }, query: { aaa: 'bbb' }, bar: 'foo', qqq: 'rrr' });
+      assert.deepEqual(res, {
+        foo: 'bar',
+        user: { name: 'Matt' },
+        query: { aaa: 'bbb' },
+        bar: 'foo',
+        qqq: 'rrr',
+      });
     });
   });
 
   describe('can call', () => {
     beforeEach(() => {
       context1 = {
-        params: { query: { aa: 'a1', bb: 'b1' }, foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' }
+        params: {
+          query: { aa: 'a1', bb: 'b1' },
+          foo: 'bar',
+          baz: 'faz',
+          user: { name: 'Matt' },
+          authenticated: true,
+          provider: 'socketio',
+        },
       };
 
       callingParamsDefaults(['provider', 'authenticated', 'user'], {});
@@ -87,43 +151,56 @@ describe('util calling-params-1.test.js', () => {
       const res = callingParams()(context1);
       assert.deepEqual(res, {
         // @ts-ignore
-        authenticated: true, provider: 'socketio', user: { name: 'Matt' }
+        authenticated: true,
+        provider: 'socketio',
+        user: { name: 'Matt' },
       });
     });
 
     it('with query', () => {
       const res = callingParams({
-        query: { id: 1 }
+        query: { id: 1 },
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
-        authenticated: true, provider: 'socketio', user: { name: 'Matt' }, query: { id: 1 }
+        authenticated: true,
+        provider: 'socketio',
+        user: { name: 'Matt' },
+        query: { id: 1 },
       });
     });
 
     it('with propNames', () => {
       const res = callingParams({
-        propNames: ['foo', 'baz', 'query.aa', 'query.cc']
+        propNames: ['foo', 'baz', 'query.aa', 'query.cc'],
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
-        authenticated: true, provider: 'socketio', user: { name: 'Matt' }, foo: 'bar', baz: 'faz', query: { aa: 'a1' }
+        authenticated: true,
+        provider: 'socketio',
+        user: { name: 'Matt' },
+        foo: 'bar',
+        baz: 'faz',
+        query: { aa: 'a1' },
       });
     });
 
     it('disable 1 hook', () => {
       const res = callingParams({
-        hooksToDisable: ['populate']
+        hooksToDisable: ['populate'],
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
-        authenticated: true, provider: 'socketio', user: { name: 'Matt' }, _populate: 'skip'
+        authenticated: true,
+        provider: 'socketio',
+        user: { name: 'Matt' },
+        _populate: 'skip',
       });
     });
 
     it('disable multiple hooks', () => {
       const res = callingParams({
-        hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore']
+        hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore'],
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
@@ -132,23 +209,25 @@ describe('util calling-params-1.test.js', () => {
         user: { name: 'Matt' },
         _populate: 'skip',
         disableStashBefore: true,
-        query: { $disableSoftDelete: true }
+        query: { $disableSoftDelete: true },
       });
     });
 
     it('ignore defaults', () => {
       let res = callingParams({
-        ignoreDefaults: true
+        ignoreDefaults: true,
       })(context1);
       assert.deepEqual(res, {});
 
       res = callingParams({
         propNames: ['foo', 'baz', 'query.aa', 'query.cc'],
-        ignoreDefaults: true
+        ignoreDefaults: true,
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
-        foo: 'bar', baz: 'faz', query: { aa: 'a1' }
+        foo: 'bar',
+        baz: 'faz',
+        query: { aa: 'a1' },
       });
     });
 
@@ -156,7 +235,7 @@ describe('util calling-params-1.test.js', () => {
       const res = callingParams({
         query: { id: 1 },
         propNames: ['foo', 'baz', 'query.aa', 'query.cc'],
-        hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore']
+        hooksToDisable: ['populate', 'fastJoin', 'softDelete', 'stashBefore'],
       })(context1);
       assert.deepEqual(res, {
         // @ts-ignore
@@ -167,7 +246,7 @@ describe('util calling-params-1.test.js', () => {
         _populate: 'skip',
         user: { name: 'Matt' },
         authenticated: true,
-        provider: 'socketio'
+        provider: 'socketio',
       });
     });
   });

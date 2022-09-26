@@ -6,13 +6,13 @@ This code will **not work** as hoped, as `disallowWhat` is evaluated when the mo
 
 ```js
 function disallowWhat() {
-  return someVariableCircumstance() ? "rest" : "external";
+  return someVariableCircumstance() ? 'rest' : 'external';
 }
 // ...
 module.exports = {
   before: {
-    all: disallow(disallowWhat()),
-  },
+    all: disallow(disallowWhat())
+  }
 };
 ```
 
@@ -20,13 +20,13 @@ This code will also **not do**, as most parameters do not permit functions, and 
 
 ```js
 function disallowWhat() {
-  return someVariableCircumstance() ? "rest" : "external";
+  return someVariableCircumstance() ? 'rest' : 'external';
 }
 // ...
 module.exports = {
   before: {
-    all: disallow(disallowWhat),
-  },
+    all: disallow(disallowWhat)
+  }
 };
 ```
 
@@ -34,13 +34,13 @@ You are able to call `disallowWhat` for each service call as follows.
 
 ```js
 function disallowWhat() {
-  return someVariableCircumstance() ? "rest" : "external";
+  return someVariableCircumstance() ? 'rest' : 'external';
 }
 // ...
 module.exports = {
   before: {
-    all: (context) => disallow(disallowWhat())(context),
-  },
+    all: context => disallow(disallowWhat())(context)
+  }
 };
 ```
 
@@ -51,8 +51,8 @@ Let's look at another example. The `user` record identifies information the user
 ```js
 module.exports = {
   after: {
-    get: (context) => keep(...context.params.user.public)(context),
-  },
+    get: context => keep(...context.params.user.public)(context)
+  }
 };
 ```
 
@@ -101,7 +101,7 @@ It also takes an optional query with which you can customise the current operati
 
 ```js
 // project/src/services/posts/posts.hooks.js
-const { fastJoin } = require("feathers-hooks-common");
+const { fastJoin } = require('feathers-hooks-common');
 
 const postResolvers = {
   joins: {
@@ -109,31 +109,31 @@ const postResolvers = {
       (...args) =>
       async (post, { app }) => {
         post.author = (
-          await app.service("users").find({
+          await app.service('users').find({
             query: {
-              id: post.userId,
-            },
+              id: post.userId
+            }
           })
         )[0];
       },
 
     starers:
-      ($select) =>
+      $select =>
       async (post, { app }) => {
-        post.starers = await app.service("users").find({
+        post.starers = await app.service('users').find({
           query: {
             id: { $in: post.starIds },
-            $select: $select || ["name"],
-          },
+            $select: $select || ['name']
+          }
         });
-      },
-  },
+      }
+  }
 };
 
 module.exports = {
   after: {
-    all: [fastJoin(postResolvers)],
-  },
+    all: [fastJoin(postResolvers)]
+  }
 };
 ```
 
@@ -153,15 +153,15 @@ The result would look like:
 
 ```js
 // Original record
-[{ id: 1, body: "John post", userId: 101, starIds: [102, 103, 104] }][
+[{ id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] }][
   // Result
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
-    author: { id: 101, name: "John" },
-    starers: [{ name: "Marshall" }, { name: "Barbara" }, { name: "Aubree" }],
+    author: { id: 101, name: 'John' },
+    starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }]
   }
 ];
 ```
@@ -170,13 +170,13 @@ The result would look like:
 
 ```js
 const query = {
-  author: true,
+  author: true
 };
 
 module.exports = {
   after: {
-    all: [fastJoin(postResolvers, query)],
-  },
+    all: [fastJoin(postResolvers, query)]
+  }
 };
 ```
 
@@ -189,11 +189,11 @@ The above query requests the author resolver be run, but not the starers resolve
 [
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
-    author: { id: 101, name: "John" },
-  },
+    author: { id: 101, name: 'John' }
+  }
 ];
 ```
 
@@ -234,16 +234,16 @@ The `paginate:false` suppress pagination for this call, ensuring all the matchin
 [
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
-    author: { id: 101, name: "John" },
+    author: { id: 101, name: 'John' },
     starers: [
-      { id: 102, name: "Marshall" },
-      { id: 103, name: "Barbara" },
-      { id: 104, name: "Aubree" },
-    ],
-  },
+      { id: 102, name: 'Marshall' },
+      { id: 103, name: 'Barbara' },
+      { id: 104, name: 'Aubree' }
+    ]
+  }
 ];
 ```
 
@@ -267,13 +267,13 @@ Here, the starerCount resolver adds the field `starerCount` containing a count o
 [
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
     starerCount: 3,
-    author: { id: 101, name: "John" },
-    starers: [{ name: "Marshall" }, { name: "Barbara" }, { name: "Aubree" }],
-  },
+    author: { id: 101, name: 'John' },
+    starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }]
+  }
 ];
 ```
 
@@ -335,36 +335,36 @@ const query = {
 
 ```js
 // Original record
-[{ id: 1, body: "John post", userId: 101, starIds: [102, 103, 104] }][
+[{ id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] }][
   // Result
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
     comments: [
       {
         id: 11,
-        text: "John post Marshall comment 11",
+        text: 'John post Marshall comment 11',
         postId: 1,
         userId: 102,
-        author: { id: 102, name: "Marshall" },
+        author: { id: 102, name: 'Marshall' }
       },
       {
         id: 12,
-        text: "John post Marshall comment 12",
+        text: 'John post Marshall comment 12',
         postId: 1,
         userId: 102,
-        author: { id: 102, name: "Marshall" },
+        author: { id: 102, name: 'Marshall' }
       },
       {
         id: 13,
-        text: "John post Marshall comment 13",
+        text: 'John post Marshall comment 13',
         postId: 1,
         userId: 102,
-        author: { id: 102, name: "Marshall" },
-      },
-    ],
+        author: { id: 102, name: 'Marshall' }
+      }
+    ]
   }
 ];
 ```
@@ -378,36 +378,36 @@ We don't want to have to include the resolver for the user record every time we 
 ```js
 const commentResolvers = {
   joins: {
-    author: ($select) => async (comment) => {
+    author: $select => async comment => {
       comment.author = (
         await users.find({
-          query: { id: comment.userId, $select: $select || ["name"] },
-          paginate: false,
+          query: { id: comment.userId, $select: $select || ['name'] },
+          paginate: false
         })
       )[0];
-    },
-  },
+    }
+  }
 };
 
 const postResolvers = {
   joins: {
     comments: {
-      resolver: ($select, $limit, $sort) => async (post) => {
+      resolver: ($select, $limit, $sort) => async post => {
         post.comments = await comments.find({
           query: {
             postId: post.id,
             $select: $select,
             $limit: $limit || 5,
-            [$sort]: { createdAt: -1 },
+            [$sort]: { createdAt: -1 }
           },
-          paginate: false,
+          paginate: false
         });
         return post.comments;
       },
 
-      joins: commentResolvers,
-    },
-  },
+      joins: commentResolvers
+    }
+  }
 };
 ```
 
@@ -424,15 +424,15 @@ You need to understand batch-loaders before we proceed, so [read about them now.
 ### Using a Simple Batch-Loader
 
 ```js
-const { fastJoin } = require("feathers-hooks-common");
-const BatchLoader = require("@feathers-plus/batch-loader");
+const { fastJoin } = require('feathers-hooks-common');
+const BatchLoader = require('@feathers-plus/batch-loader');
 const { loaderFactory } = BatchLoader;
 
 const postResolvers = {
-  before: (context) => {
+  before: context => {
     context._loaders = { user: {} };
-    context._loaders.user.id = loaderFactory(users, "id", false, {
-      paginate: false,
+    context._loaders.user.id = loaderFactory(users, 'id', false, {
+      paginate: false
     })(context);
   },
 
@@ -441,12 +441,8 @@ const postResolvers = {
       (post.author = await context._loaders.user.id.load(post.userId)),
 
     starers: () => async (post, context) =>
-      !post.starIds
-        ? null
-        : (post.starers = await context._loaders.user.id.loadMany(
-            post.starIds
-          )),
-  },
+      !post.starIds ? null : (post.starers = await context._loaders.user.id.loadMany(post.starIds))
+  }
 };
 ```
 
@@ -464,19 +460,19 @@ Let's look at the code in this example:
 
 ```js
 // Original record
-[{ id: 1, body: "John post", userId: 101, starIds: [102, 103, 104] }][
+[{ id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] }][
   // Result
   {
     id: 1,
-    body: "John post",
+    body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
-    author: { id: 101, name: "John" },
+    author: { id: 101, name: 'John' },
     starers: [
-      { id: 102, name: "Marshall" },
-      { id: 103, name: "Barbara" },
-      { id: 104, name: "Aubree" },
-    ],
+      { id: 102, name: 'Marshall' },
+      { id: 103, name: 'Barbara' },
+      { id: 104, name: 'Aubree' }
+    ]
   }
 ];
 ```
@@ -488,25 +484,22 @@ Let's look at the code in this example:
 The `loaderFactory(users, 'id', false)` above is just a convenience wrapper for building a BatchLoader. We can create our batch loaders directly should we need them to do more.
 
 ```js
-const { fastJoin, makeCallingParams } = require("feathers-hooks-common");
-const BatchLoader = require("@feathers-plus/batch-loader");
+const { fastJoin, makeCallingParams } = require('feathers-hooks-common');
+const BatchLoader = require('@feathers-plus/batch-loader');
 const { getResultsByKey, getUniqueKeys } = BatchLoader;
 
 const postResolvers = {
-  before: (context) => {
+  before: context => {
     context._loaders = { user: {} };
 
     context._loaders.user.id = new BatchLoader(
       async (keys, context) => {
         const result = await users.find(
-          makeCallingParams(
-            context,
-            { id: { $in: getUniqueKeys(keys) } },
-            undefined,
-            { paginate: false }
-          )
+          makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }, undefined, {
+            paginate: false
+          })
         );
-        return getResultsByKey(keys, result, (user) => user.id, "!");
+        return getResultsByKey(keys, result, user => user.id, '!');
       },
       { context }
     );
@@ -517,12 +510,8 @@ const postResolvers = {
       (post.author = await context._loaders.user.id.load(post.userId)),
 
     starers: () => async (post, context) =>
-      !post.starIds
-        ? null
-        : (post.starers = await context._loaders.user.id.loadMany(
-            post.starIds
-          )),
-  },
+      !post.starIds ? null : (post.starers = await context._loaders.user.id.loadMany(post.starIds))
+  }
 };
 ```
 
@@ -536,8 +525,8 @@ Let's also add a `reputation` array of objects to `posts`. This will show the in
 
 ```js
 // project/src/services/posts/posts.hooks.js
-const { fastJoin, makeCallingParams } = require("feathers-hooks-common");
-const BatchLoader = require("@feathers-plus/batch-loader");
+const { fastJoin, makeCallingParams } = require('feathers-hooks-common');
+const BatchLoader = require('@feathers-plus/batch-loader');
 const { getResultsByKey, getUniqueKeys } = BatchLoader;
 
 const commentResolvers = {
@@ -545,27 +534,22 @@ const commentResolvers = {
     author: () => async (comment, context) =>
       !comment.userId
         ? null
-        : (comment.userRecord = await context._loaders.user.id.load(
-            comment.userId
-          )),
-  },
+        : (comment.userRecord = await context._loaders.user.id.load(comment.userId))
+  }
 };
 
 const postResolvers = {
-  before: (context) => {
+  before: context => {
     context._loaders = { user: {}, comments: {} };
 
     context._loaders.user.id = new BatchLoader(
       async (keys, context) => {
         const result = await users.find(
-          makeCallingParams(
-            context,
-            { id: { $in: getUniqueKeys(keys) } },
-            undefined,
-            { paginate: false }
-          )
+          makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }, undefined, {
+            paginate: false
+          })
         );
-        return getResultsByKey(keys, result, (user) => user.id, "!");
+        return getResultsByKey(keys, result, user => user.id, '!');
       },
       { context }
     );
@@ -573,19 +557,11 @@ const postResolvers = {
     context._loaders.comments.postId = new BatchLoader(
       async (keys, context) => {
         const result = await comments.find(
-          makeCallingParams(
-            context,
-            { postId: { $in: getUniqueKeys(keys) } },
-            undefined,
-            { paginate: false }
-          )
+          makeCallingParams(context, { postId: { $in: getUniqueKeys(keys) } }, undefined, {
+            paginate: false
+          })
         );
-        return getResultsByKey(
-          keys,
-          result,
-          (comment) => comment.postId,
-          "[!]"
-        );
+        return getResultsByKey(keys, result, comment => comment.postId, '[!]');
       },
       { context }
     );
@@ -598,14 +574,12 @@ const postResolvers = {
     starers: () => async (post, context) =>
       !post.starIds
         ? null
-        : (post.starIdsRecords = await context._loaders.user.id.loadMany(
-            post.starIds
-          )),
+        : (post.starIdsRecords = await context._loaders.user.id.loadMany(post.starIds)),
 
     reputation_author: () => async (post, context) => {
       if (!post.reputation) return null;
       const authors = await context._loaders.user.id.loadMany(
-        post.reputation.map((rep) => rep.userId)
+        post.reputation.map(rep => rep.userId)
       );
       post.reputation.forEach((rep, i) => {
         rep.author = authors[i].name;
@@ -616,27 +590,25 @@ const postResolvers = {
       resolver:
         (...args) =>
         async (post, context) =>
-          (post.commentRecords = await context._loaders.comments.postId.load(
-            post.id
-          )),
-      joins: commentResolvers,
-    },
-  },
+          (post.commentRecords = await context._loaders.comments.postId.load(post.id)),
+      joins: commentResolvers
+    }
+  }
 };
 
 const query = {
   author: true,
-  starers: [["id", "name"]],
+  starers: [['id', 'name']],
   comments: {
     args: null,
-    author: [["id", "name"]],
-  },
+    author: [['id', 'name']]
+  }
 };
 
 module.exports = {
   after: {
-    all: [fastJoin(postResolvers, (context) => query)],
-  },
+    all: [fastJoin(postResolvers, context => query)]
+  }
 };
 ```
 
@@ -749,9 +721,9 @@ We can improve the situation by using persistent caches with the BatchLoaders. A
 Let's see how we can use the [cache hook](./index.html#cache) as it maintains a persistent cache for the service its registered on.
 
 ```js
-const { cache, fastJoin, makeCallingParams } = require("feathers-hooks-common");
-const BatchLoader = require("@feathers-plus/batch-loader");
-const CacheMap = require("@feathers-plus/cache");
+const { cache, fastJoin, makeCallingParams } = require('feathers-hooks-common');
+const BatchLoader = require('@feathers-plus/batch-loader');
+const CacheMap = require('@feathers-plus/cache');
 const { getResultsByKey, getUniqueKeys } = BatchLoader;
 
 // Create a cache for a maximum of 100 users
@@ -759,19 +731,19 @@ const cacheMapUsers = CacheMap({ max: 100 });
 
 // Create a batchLoader using the persistent cache
 const userBatchLoader = new BatchLoader(
-  async (keys) => {
+  async keys => {
     const result = await users.find(
       makeCallingParams({}, { id: { $in: getUniqueKeys(keys) } }, undefined, {
-        paginate: false,
+        paginate: false
       })
     );
-    return getResultsByKey(keys, result, (user) => user.id, "!");
+    return getResultsByKey(keys, result, user => user.id, '!');
   },
   { cacheMap: cacheMapUsers }
 );
 
 const postResolvers = {
-  before: (context) => {
+  before: context => {
     context._loaders = { user: {} };
     context._loaders.user.id = userBatchLoader;
   },
@@ -781,30 +753,26 @@ const postResolvers = {
       (post.author = await context._loaders.user.id.load(post.userId)),
 
     starers: () => async (post, context) =>
-      !post.starIds
-        ? null
-        : (post.starers = await context._loaders.user.id.loadMany(
-            post.starIds
-          )),
-  },
+      !post.starIds ? null : (post.starers = await context._loaders.user.id.loadMany(post.starIds))
+  }
 };
 
 const query = {
   author: true,
-  starers: [["id", "name"]],
+  starers: [['id', 'name']],
   comments: {
     args: null,
-    author: [["id", "name"]],
-  },
+    author: [['id', 'name']]
+  }
 };
 
 module.exports = {
   before: {
-    all: cache(cacheMapUsers),
+    all: cache(cacheMapUsers)
   },
   after: {
-    all: [cache(cacheMapUsers), fastJoin(postResolvers, () => query)],
-  },
+    all: [cache(cacheMapUsers), fastJoin(postResolvers, () => query)]
+  }
 };
 ```
 
@@ -839,21 +807,21 @@ Populates items _recursively_ to any depth. Supports 1:1, 1:n and n:1 relationsh
 ```javascript
 // users like { _id: '111', name: 'John', roleId: '555' }
 // roles like { _id: '555', permissions: ['foo', bar'] }
-import { populate } from "feathers-hooks-common";
+import { populate } from 'feathers-hooks-common';
 
 const userRoleSchema = {
   include: {
-    service: "roles",
-    nameAs: "role",
-    parentField: "roleId",
-    childField: "_id",
-  },
+    service: 'roles',
+    nameAs: 'role',
+    parentField: 'roleId',
+    childField: '_id'
+  }
 };
 
-app.service("users").hooks({
+app.service('users').hooks({
   after: {
-    all: populate({ schema: userRoleSchema }),
-  },
+    all: populate({ schema: userRoleSchema })
+  }
 });
 
 // result like
@@ -868,17 +836,17 @@ app.service("users").hooks({
 // roles like { _id: '555', permissions: ['foo', 'bar'] }
 const userRolesSchema = {
   include: {
-    service: "roles",
-    nameAs: "roles",
-    parentField: "roleIds",
-    childField: "_id",
-  },
+    service: 'roles',
+    nameAs: 'roles',
+    parentField: 'roleIds',
+    childField: '_id'
+  }
 };
 
 usersService.hooks({
   after: {
-    all: populate({ schema: userRolesSchema }),
-  },
+    all: populate({ schema: userRolesSchema })
+  }
 });
 
 // result like
@@ -895,17 +863,17 @@ usersService.hooks({
 // comments like { _id: '555', text: '...', postId: '111' }
 const postCommentsSchema = {
   include: {
-    service: "comments",
-    nameAs: "comments",
-    parentField: "_id",
-    childField: "postId",
-  },
+    service: 'comments',
+    nameAs: 'comments',
+    parentField: '_id',
+    childField: 'postId'
+  }
 };
 
 postService.hooks({
   after: {
-    all: populate({ schema: postCommentsSchema }),
-  },
+    all: populate({ schema: postCommentsSchema })
+  }
 });
 
 // result like
@@ -964,16 +932,16 @@ module.exports.after = {
 // comments like { _id: '555', text: '...', postId: '111' }
 const postCommentsSchema = {
   include: {
-    service: "comments",
-    nameAs: "comments",
-    select: (hook, parentItem) => ({ postId: parentItem._id }),
-  },
+    service: 'comments',
+    nameAs: 'comments',
+    select: (hook, parentItem) => ({ postId: parentItem._id })
+  }
 };
 
 postService.hooks({
   after: {
-    all: populate({ schema: postCommentsSchema }),
-  },
+    all: populate({ schema: postCommentsSchema })
+  }
 });
 
 // result like
@@ -1141,10 +1109,10 @@ The following example shows how the client can ask for the type of schema it nee
 
 ```javascript
 // on client
-import { paramsForServer } from "feathers-hooks-common";
-purchaseOrders.get(id, paramsForServer({ schema: "po-acct" })); // pass schema name to server
+import { paramsForServer } from 'feathers-hooks-common';
+purchaseOrders.get(id, paramsForServer({ schema: 'po-acct' })); // pass schema name to server
 // or
-purchaseOrders.get(id, paramsForServer({ schema: "po-rec" }));
+purchaseOrders.get(id, paramsForServer({ schema: 'po-rec' }));
 ```
 
 ```javascript
@@ -1212,17 +1180,13 @@ A full featured example of such a process appears below. It validates and saniti
 
 ```javascript
 // file /server/services/users/users.hooks.js
-const auth = require("feathers-authentication").hooks;
-const {
-  callbackToPromise,
-  remove,
-  validate,
-} = require("feathers-hooks-common");
-const validateSchema = require("feathers-hooks-validate-joi");
+const auth = require('feathers-authentication').hooks;
+const { callbackToPromise, remove, validate } = require('feathers-hooks-common');
+const validateSchema = require('feathers-hooks-validate-joi');
 
-const clientValidations = require("/common/usersClientValidations");
-const serverValidations = require("/server/validations/usersServerValidations");
-const schemas = require("/server/validations/schemas");
+const clientValidations = require('/common/usersClientValidations');
+const serverValidations = require('/server/validations/usersServerValidations');
+const schemas = require('/server/validations/schemas');
 
 const serverValidationsSignup = callbackToPromise(serverValidations.signup, 1);
 
@@ -1230,13 +1194,11 @@ exports.before = {
   create: [
     validateSchema.form(schemas.signup, schemas.options), // schema validation
     validate(clientValidations.signup), // re-run form sync validation
-    validate((values) =>
-      clientValidations.signupAsync(values, "someMoreParams")
-    ), // re-run form async
+    validate(values => clientValidations.signupAsync(values, 'someMoreParams')), // re-run form async
     validate(serverValidationsSignup), // run server validation
-    remove("confirmPassword"),
-    auth.hashPassword(),
-  ],
+    remove('confirmPassword'),
+    auth.hashPassword()
+  ]
 };
 ```
 
@@ -1250,7 +1212,7 @@ Validations used on front-end. They are re-run by the server.
 const clientValidations = {};
 
 // sync validation of signup form on form submit
-clientValidations.signup = (values) => {
+clientValidations.signup = values => {
   const errors = {};
 
   checkName(values.name, errors);
@@ -1263,24 +1225,24 @@ clientValidations.signup = (values) => {
 };
 
 // async validation on exit from some fields on form
-clientValidations.signupAsync = (values) =>
+clientValidations.signupAsync = values =>
   new Promise((resolve, reject) => {
     const errs = {};
 
     // set a dummy error
-    errs.email = "Already taken.";
+    errs.email = 'Already taken.';
 
     if (!Object.keys(errs).length) {
       resolve(null); // 'null' as we did not sanitize 'values'
     }
-    reject(new errors.BadRequest("Values already taken.", { errors: errs }));
+    reject(new errors.BadRequest('Values already taken.', { errors: errs }));
   });
 
 module.exports = clientValidations;
 
-function checkName(name, errors, fieldName = "name") {
-  if (!/^[\\sa-zA-Z]{8,30}$/.test((name || "").trim())) {
-    errors[fieldName] = "Name must be 8 or more letters or spaces.";
+function checkName(name, errors, fieldName = 'name') {
+  if (!/^[\\sa-zA-Z]{8,30}$/.test((name || '').trim())) {
+    errors[fieldName] = 'Name must be 8 or more letters or spaces.';
   }
 }
 ```
@@ -1289,12 +1251,12 @@ Schema definitions used by the server.
 
 ```javascript
 // file /server/validations/schemas
-const Joi = require("joi");
+const Joi = require('joi');
 
 const username = Joi.string().trim().alphanum().min(5).max(30).required();
 const password = Joi.string()
   .trim()
-  .regex(/^[\sa-zA-Z0-9]+$/, "letters, numbers, spaces")
+  .regex(/^[\sa-zA-Z0-9]+$/, 'letters, numbers, spaces')
   .min(8)
   .max(30)
   .required();
@@ -1305,15 +1267,15 @@ module.exports = {
     abortEarly: false,
     convert: true,
     allowUnknown: false,
-    stripUnknown: true,
+    stripUnknown: true
   },
   signup: Joi.object().keys({
     name: Joi.string().trim().min(8).max(30).required(),
     username,
     password,
-    confirmPassword: password.label("Confirm password"),
-    email,
-  }),
+    confirmPassword: password.label('Confirm password'),
+    email
+  })
 };
 ```
 
@@ -1327,12 +1289,12 @@ module.exports = {
     const formErrors = {};
     const sanitized = {};
 
-    Object.keys(data).forEach((key) => {
-      sanitized[key] = (data[key] || "").trim();
+    Object.keys(data).forEach(key => {
+      sanitized[key] = (data[key] || '').trim();
     });
 
     cb(Object.keys(formErrors).length > 0 ? formErrors : null, sanitized);
-  },
+  }
 };
 ```
 

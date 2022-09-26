@@ -1,18 +1,19 @@
 import { BadRequest } from '@feathersjs/errors';
 
-import type { Application, HookContext, Service } from '@feathersjs/feathers';
+import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
 import { isPromise } from '../common';
-import type { HookFunction } from '../types';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
 /**
  * Make changes to data or result items. Very flexible.
- * {@link https://hooks-common.feathersjs.com/hooks.html#alteritems}
+ * @see https://hooks-common.feathersjs.com/hooks.html#alteritems
  */
-export function alterItems <T = any, A extends Application = Application, S extends Service = Service> (
-  cb: (record: T, context: HookContext<A, S>) => any
-): HookFunction<A, S> {
+export function alterItems<
+  T = any,
+  A extends Application = Application,
+  S extends Service = Service
+>(cb: (record: T, context: HookContext<A, S>) => any): Hook<A, S> {
   if (!cb) {
     cb = () => {};
   }
@@ -21,7 +22,7 @@ export function alterItems <T = any, A extends Application = Application, S exte
     throw new BadRequest('Function required. (alter)');
   }
 
-  return (context: any) => {
+  return context => {
     let items = getItems(context);
     const isArray = Array.isArray(items);
 
@@ -40,13 +41,12 @@ export function alterItems <T = any, A extends Application = Application, S exte
     };
 
     if (hasPromises) {
-      return Promise.all(results)
-        .then(values => {
-          values.forEach(setItem);
+      return Promise.all(results).then(values => {
+        values.forEach(setItem);
 
-          replaceItems(context, items);
-          return context;
-        });
+        replaceItems(context, items);
+        return context;
+      });
     } else {
       results.forEach(setItem);
 

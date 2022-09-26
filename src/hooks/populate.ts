@@ -4,10 +4,82 @@ import { BadRequest } from '@feathersjs/errors';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { HookFunction, PopulateOptions } from '../types';
-import type { HookContext } from '@feathersjs/feathers';
+import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
 
-export function populate (options: PopulateOptions): HookFunction {
+export interface PopulateOptions<A extends Application = Application, S extends Service = Service> {
+  schema:
+    | Partial<PopulateSchema>
+    | ((context: HookContext<A, S>, options: PopulateOptions<A, S>) => Partial<PopulateSchema>);
+  checkPermissions?: (
+    context: HookContext<A, S>,
+    path: string,
+    permissions: any,
+    depth: number
+  ) => boolean;
+  profile?: boolean;
+}
+
+export interface PopulateSchema {
+  /**
+   * The name of the service providing the items, actually its path.
+   */
+  service: string;
+  /**
+   * Where to place the items from the join
+   * dot notation
+   */
+  nameAs: string;
+  /**
+   * The name of the field in the parent item for the relation.
+   * dot notation
+   */
+  parentField: string;
+  /**
+   * The name of the field in the child item for the relation.
+   * Dot notation is allowed and will result in a query like { 'name.first': 'John' } which is not suitable for all DBs.
+   * You may use query or select to create a query suitable for your DB.
+   */
+  childField: string;
+
+  /**
+   * Who is allowed to perform this join. See checkPermissions above.
+   */
+  permissions: any;
+
+  /**
+   * An object to inject into context.params.query.
+   */
+  query: any;
+
+  /**
+   * A function whose result is injected into the query.
+   */
+  select: (context: HookContext, parentItem: any, depth: number) => any;
+
+  /**
+   * Force a single joined item to be stored as an array.
+   */
+  asArray: boolean;
+
+  /**
+   * Controls pagination for this service.
+   */
+  paginate: boolean | number;
+
+  /**
+   * Perform any populate or fastJoin registered on this service.
+   */
+  useInnerPopulate: boolean;
+  /**
+   * Call the service as the server, not with the client’s transport.
+   */
+  provider: string;
+  include: Partial<PopulateSchema> | Partial<PopulateSchema>[];
+}
+
+export function populate<A extends Application = Application, S extends Service = Service>(
+  options: PopulateOptions
+): Hook<A, S> {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
 
   const typeofSchema = typeof options.schema;
@@ -15,14 +87,16 @@ export function populate (options: PopulateOptions): HookFunction {
     throw new Error('Options.schema is not an object. (populate)');
   }
 
-  return function (context: any) {
+  return function (context) {
     const optionsDefault: PopulateOptions = {
       schema: {},
       checkPermissions: () => true,
-      profile: false
+      profile: false,
     };
 
-    if (context.params._populate === 'skip') { // this service call made from another populate
+    // @ts-ignore
+    if (context.params._populate === 'skip') {
+      // this service call made from another populate
       return context;
     }
 
@@ -37,7 +111,7 @@ export function populate (options: PopulateOptions): HookFunction {
         const schema1 = typeof schema === 'function' ? schema(context, options1) : schema;
         const permissions = schema1.permissions || null;
         const baseService = schema1.service;
-        const provider = ('provider' in schema1) ? schema1.provider : context.params.provider;
+        const provider = 'provider' in schema1 ? schema1.provider : context.params.provider;
 
         if (typeof checkPermissions !== 'function') {
           throw new BadRequest('Permissions param is not a function. (populate)');
@@ -55,15 +129,13 @@ export function populate (options: PopulateOptions): HookFunction {
           throw new BadRequest('Schema does not resolve to an object. (populate)');
         }
 
-        const include = []
-          .concat(schema1.include || [])
-          .map(schema => {
-            if ('provider' in schema) {
-              return schema;
-            } else {
-              return Object.assign({}, schema, { provider });
-            }
-          });
+        const include = [].concat(schema1.include || []).map(schema => {
+          if ('provider' in schema) {
+            return schema;
+          } else {
+            return Object.assign({}, schema, { provider });
+          }
+        });
 
         return !include.length ? items : populateItemArray(options1, context, items, include, 0);
       })
@@ -74,7 +146,7 @@ export function populate (options: PopulateOptions): HookFunction {
   };
 }
 
-function populateItemArray (
+function populateItemArray(
   options: any,
   context: HookContext,
   items: any,
@@ -97,7 +169,7 @@ function populateItemArray (
   );
 }
 
-function populateItem (
+function populateItem(
   options: any,
   context: HookContext,
   item: any,
@@ -123,34 +195,32 @@ function populateItem (
       }
 
       const startAtThisInclude = new Date().getTime();
-      return populateAddChild(options, context, item, childSchema, depth)
-        .then((result: any) => {
-          const nameAs = childSchema.nameAs || childSchema.service;
-          elapsed[nameAs] = getElapsed(options, startAtThisInclude, depth);
+      return populateAddChild(options, context, item, childSchema, depth).then((result: any) => {
+        const nameAs = childSchema.nameAs || childSchema.service;
+        elapsed[nameAs] = getElapsed(options, startAtThisInclude, depth);
 
-          return result;
-        });
-    })
-  )
-    .then(children => {
-      // 'children' is like
-      //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
-      if (options.profile !== false) {
-        elapsed.total = getElapsed(options, startAtAllIncludes, depth);
-        item._elapsed = elapsed;
-      }
-
-      children.forEach(child => {
-        if (child) {
-          _set(item, child.nameAs, child.items);
-        }
+        return result;
       });
+    })
+  ).then(children => {
+    // 'children' is like
+    //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
+    if (options.profile !== false) {
+      elapsed.total = getElapsed(options, startAtAllIncludes, depth);
+      item._elapsed = elapsed;
+    }
 
-      return item;
+    children.forEach(child => {
+      if (child) {
+        _set(item, child.nameAs, child.items);
+      }
     });
+
+    return item;
+  });
 }
 
-function populateAddChild (
+function populateAddChild(
   options: any,
   context: HookContext,
   parentItem: any,
@@ -177,7 +247,15 @@ function populateAddChild (
   */
 
   const {
-    childField, paginate, parentField, permissions, query, select, service, useInnerPopulate, provider
+    childField,
+    paginate,
+    parentField,
+    permissions,
+    query,
+    select,
+    service,
+    useInnerPopulate,
+    provider,
   } = childSchema;
 
   if (!service) {
@@ -190,9 +268,7 @@ function populateAddChild (
   }
 
   if (permissions && !options.checkPermissions(context, service, permissions, depth)) {
-    throw new BadRequest(
-      `Permissions for ${service} do not allow include. (populate)`
-    );
+    throw new BadRequest(`Permissions for ${service} do not allow include. (populate)`);
   }
 
   const nameAs = childSchema.nameAs || service;
@@ -208,7 +284,8 @@ function populateAddChild (
         sqlQuery = { [childField]: Array.isArray(parentVal) ? { $in: parentVal } : parentVal };
       }
 
-      const queryObj = Object.assign({},
+      const queryObj = Object.assign(
+        {},
         query,
         sqlQuery,
         selectQuery // dynamic options override static ones
@@ -222,17 +299,20 @@ function populateAddChild (
 
       let paginateObj: any = { paginate: false };
       const paginateOption = paginate;
-      if (paginateOption === true) { paginateObj = null; }
+      if (paginateOption === true) {
+        paginateObj = null;
+      }
       if (typeof paginateOption === 'number') {
         paginateObj = { paginate: { default: paginateOption } };
       }
 
-      const params = Object.assign({},
+      const params = Object.assign(
+        {},
         context.params,
         paginateObj,
         { query: queryObj },
         useInnerPopulate ? {} : { _populate: 'skip' },
-        ('provider' in childSchema) ? { provider: childSchema.provider } : {}
+        'provider' in childSchema ? { provider: childSchema.provider } : {}
       );
 
       return serviceHandle.find(params);
@@ -248,17 +328,15 @@ function populateAddChild (
         result = result[0];
       }
 
-      const include = []
-        .concat(childSchema.include || [])
-        .map(schema => {
-          if ('provider' in schema) {
-            return schema;
-          } else {
-            return Object.assign({}, schema, { provider });
-          }
-        });
+      const include = [].concat(childSchema.include || []).map(schema => {
+        if ('provider' in schema) {
+          return schema;
+        } else {
+          return Object.assign({}, schema, { provider });
+        }
+      });
 
-      return (childSchema.include && result)
+      return childSchema.include && result
         ? populateItemArray(options, context, result, include, depth)
         : result;
     })
@@ -268,15 +346,11 @@ function populateAddChild (
 // Helpers
 
 // used process.hrTime before
-function milliToNano (num: number) {
+function milliToNano(num: number) {
   return num * 1000000;
 }
 
-function getElapsed (
-  options: PopulateOptions,
-  startTime: number,
-  depth: number
-) {
+function getElapsed(options: PopulateOptions, startTime: number, depth: number) {
   if (options.profile === true) {
     return milliToNano(new Date().getTime() - startTime + 0.001);
   }

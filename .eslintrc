@@ -7,7 +7,8 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,10 +18,11 @@
   "plugins": [
     "eslint-plugin-import",
     "eslint-plugin-prefer-arrow",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "prettier"
   ],
   "rules": {
-    "indent": ["warn", 2],
+    // "indent": ["warn", 2],
     "prefer-rest-params": "off",
     "prefer-spread": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
@@ -52,7 +54,7 @@
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
       {
-          "accessibility": "no-public"
+        "accessibility": "no-public"
       }
     ],
     "@typescript-eslint/naming-convention": "off",
@@ -68,10 +70,6 @@
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-function-type": "error",
     "@typescript-eslint/prefer-namespace-keyword": "error",
-    "@typescript-eslint/quotes": [
-      "error",
-      "single"
-    ],
     "@typescript-eslint/triple-slash-reference": [
       "error",
       {
@@ -82,28 +80,16 @@
     ],
     "@typescript-eslint/unified-signatures": "error",
     "@typescript-eslint/consistent-type-imports": ["warn", { "prefer": "type-imports" }],
-    "@typescript-eslint/object-curly-spacing": ["warn", "always"],
-    "arrow-parens": [
-      "off",
-      "always"
-    ],
-    "comma-dangle": "error",
+    "arrow-parens": ["off", "always"],
     "complexity": "off",
     "constructor-super": "error",
-    "eqeqeq": [
-      "error",
-      "smart"
-    ],
+    "eqeqeq": ["error", "smart"],
     "guard-for-in": "error",
     "id-blacklist": "off",
     "id-match": "off",
     "import/order": "off",
-    // "jsdoc/check-alignment": "error",
-    // "jsdoc/check-indentation": "error",
-    // "jsdoc/newline-after-description": "error",
     "max-classes-per-file": "off",
     "max-len": "off",
-    "new-parens": "error",
     "no-bitwise": "error",
     "no-caller": "error",
     "no-cond-assign": "error",
@@ -121,28 +107,21 @@
       }
     ],
     "no-throw-literal": "error",
-    "no-trailing-spaces": "error",
     "no-undef-init": "error",
     "no-underscore-dangle": "off",
     "no-unsafe-finally": "error",
     "no-unused-labels": "error",
     "no-var": "error",
     "object-shorthand": "error",
-    "one-var": [
-      "error",
-      "never"
-    ],
+    "one-var": ["error", "never"],
     "prefer-arrow/prefer-arrow-functions": "off",
     "prefer-const": "error",
     "radix": "error",
-    "space-before-function-paren": "error",
     "spaced-comment": [
       "error",
       "always",
       {
-        "markers": [
-          "/"
-        ]
+        "markers": ["/"]
       }
     ],
     "use-isnan": "error",

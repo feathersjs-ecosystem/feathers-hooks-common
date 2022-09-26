@@ -8,7 +8,7 @@ describe('services disablePagination', () => {
     hookBefore = {
       type: 'before',
       method: 'find',
-      params: { query: { id: 1, $limit: -1 } }
+      params: { query: { id: 1, $limit: -1 } },
     };
   });
 
@@ -29,12 +29,16 @@ describe('services disablePagination', () => {
   it('throws if after hook', () => {
     hookBefore.type = 'after';
 
-    assert.throws(() => { disablePagination()(hookBefore); });
+    assert.throws(() => {
+      disablePagination()(hookBefore);
+    });
   });
 
   it('throws if not find', () => {
     hookBefore.method = 'get';
 
-    assert.throws(() => { disablePagination()(hookBefore); });
+    assert.throws(() => {
+      disablePagination()(hookBefore);
+    });
   });
 });

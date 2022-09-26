@@ -2,24 +2,27 @@ import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
 import _has from 'lodash/has.js';
 
-import { checkContextIf } from './check-context-if';
+import { checkContextIf } from '../utils/check-context-if';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { HookFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#keep}
+ * @see https://hooks-common.feathersjs.com/hooks.html#keep
  */
-export function keep (
+export function keep<A extends Application = Application, S extends Service = Service>(
   ...fieldNames: string[]
-): HookFunction {
-  return (context: any) => {
+): Hook<A, S> {
+  return context => {
     checkContextIf(context, 'before', ['create', 'update', 'patch'], 'keep');
     const items = getItems(context);
 
     if (Array.isArray(items)) {
-      replaceItems(context, items.map(item => replaceItem(item, fieldNames)));
+      replaceItems(
+        context,
+        items.map(item => replaceItem(item, fieldNames))
+      );
     } else {
       replaceItems(context, replaceItem(items, fieldNames));
     }
@@ -28,7 +31,7 @@ export function keep (
   };
 }
 
-function replaceItem (item: any, fields: any) {
+function replaceItem(item: any, fields: any) {
   if (typeof item !== 'object' || item === null) return item;
 
   const newItem = {};

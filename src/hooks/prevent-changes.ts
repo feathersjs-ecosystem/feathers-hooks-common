@@ -3,23 +3,23 @@ import _omit from 'lodash/omit.js';
 
 import { checkContext } from '../utils/check-context';
 import { BadRequest } from '@feathersjs/errors';
-import type { HookFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 
 /**
  * Prevent patch service calls from changing certain fields.
- * {@link https://hooks-common.feathersjs.com/hooks.html#preventchanges}
+ * @see https://hooks-common.feathersjs.com/hooks.html#preventchanges
  */
-export function preventChanges (
+export function preventChanges<A extends Application = Application, S extends Service = Service>(
   ifThrow: boolean,
   ...fieldNames: string[]
-): HookFunction {
+): Hook<A, S> {
   if (typeof ifThrow === 'string') {
     // eslint-disable-next-line no-console
     console.warn('**Deprecated** Use the preventChanges(true, ...fieldNames) syntax instead.');
-    fieldNames = [ifThrow, ...fieldNames]
+    fieldNames = [ifThrow, ...fieldNames];
   }
 
-  return (context: any) => {
+  return context => {
     checkContext(context, 'before', ['patch'], 'preventChanges');
     let data = { ...context.data };
 
@@ -29,6 +29,7 @@ export function preventChanges (
           throw new BadRequest(`Field ${name} may not be patched. (preventChanges)`);
         }
         // Delete data.contactPerson.name
+        // @ts-ignore
         data = _omit(data, name);
       }
     });

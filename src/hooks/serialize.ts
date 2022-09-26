@@ -4,23 +4,39 @@ import _omit from 'lodash/omit.js';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { HookFunction, SerializeSchema, SyncContextFunction } from '../types';
+import type { SyncContextFunction } from '../types';
+import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+
+export interface SerializeSchema<A extends Application = Application, S extends Service = Service> {
+  only?: string | string[];
+  exclude?: string | string[];
+  computed?: {
+    [propName: string]: (record: any, context: HookContext<A, S>) => any;
+  };
+
+  [key: string]:
+    | SerializeSchema<A, S>
+    | SerializeSchema<A, S>['computed']
+    | string
+    | string[]
+    | undefined;
+}
 
 /**
  * Prune values from related records. Calculate new values.
- * {@link https://hooks-common.feathersjs.com/hooks.html#serialize}
+ * @see https://hooks-common.feathersjs.com/hooks.html#serialize
  */
-export function serialize (
+export function serialize<A extends Application = Application, S extends Service = Service>(
   schema1: SerializeSchema | SyncContextFunction<SerializeSchema>
-): HookFunction {
-  return (context: any) => {
+): Hook<A, S> {
+  return context => {
     const schema = typeof schema1 === 'function' ? schema1(context) : schema1;
     const schemaDirectives = ['computed', 'exclude', 'only'];
 
     replaceItems(context, serializeItems(getItems(context), schema));
     return context;
 
-    function serializeItems (items: any, schema: any) {
+    function serializeItems(items: any, schema: any) {
       if (!Array.isArray(items)) {
         return serializeItem(items, schema);
       }
@@ -28,7 +44,7 @@ export function serialize (
       return items.map(item => serializeItem(item, schema));
     }
 
-    function serializeItem (item: any, schema: any) {
+    function serializeItem(item: any, schema: any) {
       const computed: Record<string, any> = {};
       Object.keys(schema.computed || {}).forEach(name => {
         computed[name] = schema.computed[name](item, context); // needs closure
@@ -57,7 +73,8 @@ export function serialize (
       item = Object.assign({}, item, computed, _computed.length ? { _computed } : {});
 
       Object.keys(schema).forEach(key => {
-        if (!schemaDirectives.includes(key) && typeof item[key] === 'object') { // needs closure
+        if (!schemaDirectives.includes(key) && typeof item[key] === 'object') {
+          // needs closure
           item[key] = serializeItems(item[key], schema[key]);
         }
       });

@@ -1,16 +1,18 @@
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 import { pluck } from '../common';
-import type { HookFunction } from '../types';
 import { checkContext } from '../utils/check-context';
 
 /**
  * Keep certain fields in the query object, deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#keepquery}
+ * @see https://hooks-common.feathersjs.com/hooks.html#keepquery
  */
-export function keepQuery (...fieldNames: string[]): HookFunction {
-  return (context: any) => {
+export function keepQuery<A extends Application = Application, S extends Service = Service>(
+  ...fieldNames: string[]
+): Hook<A, S> {
+  return context => {
     checkContext(context, 'before', null, 'keepQuery');
 
-    const query = (context.params || {}).query || {};
+    const query = context.params.query || {};
     context.params.query = pluck(query, fieldNames);
 
     return context;

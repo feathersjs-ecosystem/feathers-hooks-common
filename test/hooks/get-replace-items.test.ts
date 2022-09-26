@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { getItems, replaceItems } from '../../src';
 
@@ -18,25 +17,31 @@ describe('services getItems & replaceItems', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' }
+        data: { first: 'John', last: 'Doe' },
       };
       hookBeforeArray = {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: [{ first: 'John', last: 'Doe' }, { first: 'Jane', last: 'Doe' }]
+        data: [
+          { first: 'John', last: 'Doe' },
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane2', last: 'Doe2' }
+        result: { first: 'Jane2', last: 'Doe2' },
       };
       hookAfterArray = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: [{ first: 'John2', last: 'Doe2' }, { first: 'Jane', last: 'Doe' }]
+        result: [
+          { first: 'John2', last: 'Doe2' },
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
       hookFindPaginate = {
         type: 'after',
@@ -46,9 +51,9 @@ describe('services getItems & replaceItems', () => {
           total: 2,
           data: [
             { first: 'John3', last: 'Doe3' },
-            { first: 'Jane3', last: 'Doe3' }
-          ]
-        }
+            { first: 'Jane3', last: 'Doe3' },
+          ],
+        },
       };
       hookFind = {
         type: 'after',
@@ -56,8 +61,8 @@ describe('services getItems & replaceItems', () => {
         params: { provider: 'rest' },
         result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' }
-        ]
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
     });
 
@@ -70,7 +75,7 @@ describe('services getItems & replaceItems', () => {
       const stuff = getItems(hookBeforeArray);
       assert.deepEqual(stuff, [
         { first: 'John', last: 'Doe' },
-        { first: 'Jane', last: 'Doe' }
+        { first: 'Jane', last: 'Doe' },
       ]);
     });
 
@@ -83,7 +88,7 @@ describe('services getItems & replaceItems', () => {
       const stuff = getItems(hookAfterArray);
       assert.deepEqual(stuff, [
         { first: 'John2', last: 'Doe2' },
-        { first: 'Jane', last: 'Doe' }
+        { first: 'Jane', last: 'Doe' },
       ]);
     });
 
@@ -91,7 +96,7 @@ describe('services getItems & replaceItems', () => {
       const stuff = getItems(hookFindPaginate);
       assert.deepEqual(stuff, [
         { first: 'John3', last: 'Doe3' },
-        { first: 'Jane3', last: 'Doe3' }
+        { first: 'Jane3', last: 'Doe3' },
       ]);
     });
 
@@ -99,7 +104,7 @@ describe('services getItems & replaceItems', () => {
       const stuff = getItems(hookFind);
       assert.deepEqual(stuff, [
         { first: 'John', last: 'Doe' },
-        { first: 'Jane', last: 'Doe' }
+        { first: 'Jane', last: 'Doe' },
       ]);
     });
 
@@ -126,11 +131,13 @@ describe('services getItems & replaceItems', () => {
         params: { provider: 'rest' },
         result: {
           total: 200,
-          data: []
-        }
+          data: [],
+        },
       };
       hookFind = {
-        type: 'after', method: 'find', params: { provider: 'rest' }
+        type: 'after',
+        method: 'find',
+        params: { provider: 'rest' },
       };
     });
 

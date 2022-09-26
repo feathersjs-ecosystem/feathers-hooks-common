@@ -1,13 +1,14 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { HookFunction, SyncContextFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { SyncContextFunction } from '../types';
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
-export function sifter (
+export function sifter<A extends Application = Application, S extends Service = Service>(
   siftFunc: SyncContextFunction<(item: any) => boolean>
-): HookFunction {
-  return (context: any) => {
+): Hook<A, S> {
+  return context => {
     checkContext(context, 'after', 'find', 'sifter');
 
     if (typeof siftFunc !== 'function') {

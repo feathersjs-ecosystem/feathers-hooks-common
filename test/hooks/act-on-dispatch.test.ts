@@ -1,20 +1,12 @@
 import { assert } from 'chai';
-import {
-  actOnDefault,
-  actOnDispatch,
-  combine,
-  getItems,
-  replaceItems
-} from '../../src';
+import { actOnDefault, actOnDispatch, combine, getItems, replaceItems } from '../../src';
 
 let hookBefore: any;
 
-function testHook (what: any, code: any) {
-  return (context: any) => {
+function testHook(what: any, code: any) {
+  return context => {
     if (context.params._actOn !== what) {
-      throw new Error(
-        `Hook code ${code} expected ${what} found ${context.params._actOn}`
-      );
+      throw new Error(`Hook code ${code} expected ${what} found ${context.params._actOn}`);
     }
 
     context.params._actOnCodes.push(code);
@@ -27,7 +19,7 @@ describe('services actOn', () => {
       hookBefore = {
         type: 'before',
         method: 'get',
-        params: { _actOnCodes: [] }
+        params: { _actOnCodes: [] },
       };
     });
 
@@ -57,7 +49,7 @@ describe('services actOn', () => {
       hookBefore = {
         type: 'before',
         method: 'get',
-        params: { _actOnCodes: [] }
+        params: { _actOnCodes: [] },
       };
     });
 
@@ -72,9 +64,7 @@ describe('services actOn', () => {
 
     it('actOnDefault calling actOnDispatch', async () => {
       const result: any = await actOnDefault(
-        actOnDispatch(
-          combine(testHook('dispatch', 11), testHook('dispatch', 12))
-        ),
+        actOnDispatch(combine(testHook('dispatch', 11), testHook('dispatch', 12))),
         combine(testHook(undefined, 21), testHook(undefined, 22))
       )(hookBefore);
 
@@ -99,7 +89,7 @@ describe('services actOn', () => {
         data: { a: 1 },
         result: { b: 2 },
         dispatch: { c: 3 },
-        params: { _actOn: 'dispatch' }
+        params: { _actOn: 'dispatch' },
       };
     });
 

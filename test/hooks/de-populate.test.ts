@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { dePopulate } from '../../src';
 
@@ -26,9 +25,9 @@ describe('services dePopulate - not dot notation', () => {
           content: 'Lorem ipsum dolor sit amet 4',
           author: 'as61389dadhga62343hads6712',
           readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-          createdAt: 1480793101559
-        }
-      }
+          createdAt: 1480793101559,
+        },
+      },
     };
     hookBefore = {
       type: 'before',
@@ -37,8 +36,8 @@ describe('services dePopulate - not dot notation', () => {
       data: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
-        updatedAt: 1480793101475
-      }
+        updatedAt: 1480793101475,
+      },
     };
     hookBeforeArray = {
       type: 'before',
@@ -57,8 +56,8 @@ describe('services dePopulate - not dot notation', () => {
             content: 'Lorem ipsum dolor sit amet 4',
             author: 'as61389dadhga62343hads6712',
             readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-            createdAt: 1480793101559
-          }
+            createdAt: 1480793101559,
+          },
         },
         {
           userId: 'as61389dadhga62343hads6712',
@@ -72,8 +71,8 @@ describe('services dePopulate - not dot notation', () => {
             content: 'Lorem ipsum dolor sit amet 5',
             author: '167asdf3689348sdad7312131s',
             readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-            createdAt: 1480793101559
-          }
+            createdAt: 1480793101559,
+          },
         },
         {
           userId: '167asdf3689348sdad7312131s',
@@ -87,10 +86,10 @@ describe('services dePopulate - not dot notation', () => {
             content: 'Lorem ipsum dolor sit amet 4',
             author: 'as61389dadhga62343hads6712',
             readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-            createdAt: 1480793101559
-          }
-        }
-      ]
+            createdAt: 1480793101559,
+          },
+        },
+      ],
     };
   });
 
@@ -100,7 +99,7 @@ describe('services dePopulate - not dot notation', () => {
     assert.deepEqual(deHook.result, {
       userId: 'as61389dadhga62343hads6712',
       postId: 1,
-      updatedAt: 1480793101475
+      updatedAt: 1480793101475,
     });
   });
 
@@ -110,32 +109,30 @@ describe('services dePopulate - not dot notation', () => {
     assert.deepEqual(deHook.data, {
       userId: 'as61389dadhga62343hads6712',
       postId: 1,
-      updatedAt: 1480793101475
+      updatedAt: 1480793101475,
     });
   });
 
   it('item array, before hook', () => {
     const hook = clone(hookBeforeArray);
     const deHook: any = dePopulate()(hook);
-    assert.deepEqual(deHook.data,
-      [
-        {
-          userId: 'as61389dadhga62343hads6712',
-          postId: 1,
-          updatedAt: 1480793101475
-        },
-        {
-          userId: 'as61389dadhga62343hads6712',
-          postId: 2,
-          updatedAt: 1480793101475
-        },
-        {
-          userId: '167asdf3689348sdad7312131s',
-          postId: 1,
-          updatedAt: 1480793101475
-        }
-      ]
-    );
+    assert.deepEqual(deHook.data, [
+      {
+        userId: 'as61389dadhga62343hads6712',
+        postId: 1,
+        updatedAt: 1480793101475,
+      },
+      {
+        userId: 'as61389dadhga62343hads6712',
+        postId: 2,
+        updatedAt: 1480793101475,
+      },
+      {
+        userId: '167asdf3689348sdad7312131s',
+        postId: 1,
+        updatedAt: 1480793101475,
+      },
+    ]);
   });
 });
 
@@ -165,11 +162,11 @@ describe('services dePopulate - dot notation', () => {
               content: 'Lorem ipsum dolor sit amet 4',
               author: 'as61389dadhga62343hads6712',
               readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-              createdAt: 1480793101559
-            }
-          }
-        }
-      }
+              createdAt: 1480793101559,
+            },
+          },
+        },
+      },
     };
     hookBefore = {
       type: 'before',
@@ -178,8 +175,8 @@ describe('services dePopulate - dot notation', () => {
       data: {
         userId: 'as61389dadhga62343hads6712',
         postId: 1,
-        updatedAt: 1480793101475
-      }
+        updatedAt: 1480793101475,
+      },
     };
     hookBeforeArray = {
       type: 'before',
@@ -199,9 +196,9 @@ describe('services dePopulate - dot notation', () => {
               content: 'Lorem ipsum dolor sit amet 4',
               author: 'as61389dadhga62343hads6712',
               readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-              createdAt: 1480793101559
-            }
-          }
+              createdAt: 1480793101559,
+            },
+          },
         },
         {
           userId: 'as61389dadhga62343hads6712',
@@ -217,9 +214,9 @@ describe('services dePopulate - dot notation', () => {
               content: 'Lorem ipsum dolor sit amet 5',
               author: '167asdf3689348sdad7312131s',
               readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-              createdAt: 1480793101559
-            }
-          }
+              createdAt: 1480793101559,
+            },
+          },
         },
         {
           userId: '167asdf3689348sdad7312131s',
@@ -233,10 +230,10 @@ describe('services dePopulate - dot notation', () => {
             content: 'Lorem ipsum dolor sit amet 4',
             author: 'as61389dadhga62343hads6712',
             readers: ['as61389dadhga62343hads6712', '167asdf3689348sdad7312131s'],
-            createdAt: 1480793101559
-          }
-        }
-      ]
+            createdAt: 1480793101559,
+          },
+        },
+      ],
     };
   });
 
@@ -247,7 +244,7 @@ describe('services dePopulate - dot notation', () => {
       userId: 'as61389dadhga62343hads6712',
       postId: 1,
       updatedAt: 1480793101475,
-      post: { a: {} }
+      post: { a: {} },
     });
   });
 
@@ -257,37 +254,35 @@ describe('services dePopulate - dot notation', () => {
     assert.deepEqual(deHook.data, {
       userId: 'as61389dadhga62343hads6712',
       postId: 1,
-      updatedAt: 1480793101475
+      updatedAt: 1480793101475,
     });
   });
 
   it('item array, before hook', () => {
     const hook = clone(hookBeforeArray);
     const deHook: any = dePopulate()(hook);
-    assert.deepEqual(deHook.data,
-      [
-        {
-          userId: 'as61389dadhga62343hads6712',
-          postId: 1,
-          updatedAt: 1480793101475,
-          post: {}
-        },
-        {
-          userId: 'as61389dadhga62343hads6712',
-          postId: 2,
-          updatedAt: 1480793101475,
-          post: {}
-        },
-        {
-          userId: '167asdf3689348sdad7312131s',
-          postId: 1,
-          updatedAt: 1480793101475
-        }
-      ]
-    );
+    assert.deepEqual(deHook.data, [
+      {
+        userId: 'as61389dadhga62343hads6712',
+        postId: 1,
+        updatedAt: 1480793101475,
+        post: {},
+      },
+      {
+        userId: 'as61389dadhga62343hads6712',
+        postId: 2,
+        updatedAt: 1480793101475,
+        post: {},
+      },
+      {
+        userId: '167asdf3689348sdad7312131s',
+        postId: 1,
+        updatedAt: 1480793101475,
+      },
+    ]);
   });
 });
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

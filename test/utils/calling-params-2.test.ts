@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { makeCallingParams } from '../../src';
 
@@ -6,17 +5,37 @@ let context: any;
 
 describe('util calling-params-2.test.js', () => {
   beforeEach(() => {
-    context = { query: { aaa: 'bbb' }, params: { foo: 'bar', baz: 'faz', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' } };
+    context = {
+      query: { aaa: 'bbb' },
+      params: {
+        foo: 'bar',
+        baz: 'faz',
+        user: { name: 'Matt' },
+        authenticated: true,
+        provider: 'socketio',
+      },
+    };
   });
 
   it('retains default context', () => {
     const res: any = makeCallingParams(context);
-    assert.deepEqual(res, { _populate: 'skip', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
+    assert.deepEqual(res, {
+      _populate: 'skip',
+      user: { name: 'Matt' },
+      authenticated: true,
+      provider: 'socketio',
+    });
   });
 
   it('sets query', () => {
     const res: any = makeCallingParams(context, { a: 1 });
-    assert.deepEqual(res, { query: { a: 1 }, _populate: 'skip', user: { name: 'Matt' }, authenticated: true, provider: 'socketio' });
+    assert.deepEqual(res, {
+      query: { a: 1 },
+      _populate: 'skip',
+      user: { name: 'Matt' },
+      authenticated: true,
+      provider: 'socketio',
+    });
   });
 
   it('sets include string', () => {

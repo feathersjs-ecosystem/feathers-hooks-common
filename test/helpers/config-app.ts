@@ -8,32 +8,31 @@ export default function (dbNames: any) {
     users,
     comments,
     posts,
-    recommendation
+    recommendation,
   };
 
-  return feathers()
-    .configure(services);
+  return feathers().configure(services);
 
-  function services (this: any) {
+  function services(this: any) {
     dbNames.forEach((name: any) => {
       // console.log(`configure service ${name}`);
       this.configure(serviceConfigs[name]);
     });
   }
 
-  function users (this: any) {
+  function users(this: any) {
     this.use('users', memory(getInitDb('users')));
   }
 
-  function comments (this: any) {
+  function comments(this: any) {
     this.use('comments', memory(getInitDb('comments')));
   }
 
-  function posts (this: any) {
+  function posts(this: any) {
     this.use('posts', memory(getInitDb('posts')));
   }
 
-  function recommendation (this: any) {
+  function recommendation(this: any) {
     this.use('recommendation', memory(getInitDb('recommendation')));
   }
 }

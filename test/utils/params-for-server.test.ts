@@ -1,9 +1,6 @@
-
 import { assert } from 'chai';
 
-import {
-  paramsForServer
-} from '../../src';
+import { paramsForServer } from '../../src';
 
 describe('util paramsToServer', () => {
   it('handles empty params', () => {

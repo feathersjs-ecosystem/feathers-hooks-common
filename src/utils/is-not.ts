@@ -1,19 +1,21 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
+import type { Application, Service } from '@feathersjs/feathers';
 import { isPromise } from '../common';
 import type { PredicateFn } from '../types';
 
 /**
  * Negate a sync or async predicate function.
- * {@link https://hooks-common.feathersjs.com/hooks.html#isnot}
+ *
+ * @see https://hooks-common.feathersjs.com/utilities.html#isnot
  */
-export function isNot (
-  predicate: boolean | PredicateFn
-): PredicateFn {
+export function isNot<A extends Application, S extends Service = Service>(
+  predicate: boolean | PredicateFn<A, S>
+): PredicateFn<A, S> {
   if (typeof predicate !== 'function') {
     throw new MethodNotAllowed('Expected function as param. (isNot)');
   }
 
-  return (context: any) => {
+  return context => {
     const result = predicate(context); // Should we pass a clone? (safety vs performance)
 
     if (!isPromise(result)) {

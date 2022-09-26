@@ -3,17 +3,17 @@ import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
 import _has from 'lodash/has.js';
 import { getItems } from '../utils/get-items';
-import type { HookFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the record(s), deleting the rest.
- * {@link https://hooks-common.feathersjs.com/hooks.html#keepinarray}
+ * @see https://hooks-common.feathersjs.com/hooks.html#keepinarray
  */
-export function keepInArray (
+export function keepInArray<A extends Application = Application, S extends Service = Service>(
   arrayName: string,
   fieldNames: string[]
-): HookFunction {
-  return (context: any) => {
+): Hook<A, S> {
+  return context => {
     const items = getItems(context);
 
     if (Array.isArray(items)) {
@@ -26,16 +26,23 @@ export function keepInArray (
   };
 }
 
-function replaceIn (item: any, field: any, fieldNames: any) {
+function replaceIn(item: any, field: any, fieldNames: any) {
   const target = _get(item, field);
   if (target) {
-    if (!Array.isArray(target)) throw new BadRequest(`The 'field' param must lead to array. found type '${typeof target}' instead`);
+    if (!Array.isArray(target))
+      throw new BadRequest(
+        `The 'field' param must lead to array. found type '${typeof target}' instead`
+      );
 
-    _set(item, field, target.map(item => replaceItem(item, fieldNames)));
+    _set(
+      item,
+      field,
+      target.map(item => replaceItem(item, fieldNames))
+    );
   }
 }
 
-function replaceItem (item: any, fields: any) {
+function replaceItem(item: any, fields: any) {
   if (typeof item !== 'object' || item === null) return item;
 
   const newItem = {};

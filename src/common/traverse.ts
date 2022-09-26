@@ -1,6 +1,6 @@
 import traverser from 'traverse';
 
-export function traverse <T extends Record<string, any>> (
+export function traverse<T extends Record<string, any>>(
   items: T | T[],
   converter: (item: T) => void
 ) {

@@ -9,46 +9,43 @@ const initialUsers = [
   { name: 'Jack Doe', key: 'a', deleted: true },
   { name: 'Rick Doe', key: 'b' },
   { name: 'Mick Doe', key: 'b' },
-  { name: 'Mick Doe', key: 'b', deleted: true }
+  { name: 'Mick Doe', key: 'b', deleted: true },
 ];
 
 describe('services softDelete', () => {
   let userService: any;
 
   beforeEach(() => {
-    const app = feathers()
-      .use('/users', memory({
-        multi: ['create', 'patch', 'remove']
-      }));
+    const app = feathers().use(
+      '/users',
+      memory({
+        multi: ['create', 'patch', 'remove'],
+      })
+    );
 
     userService = app.service('users');
     userService.hooks({
       before: {
-        all: [
-          softDelete()
-        ]
-      }
+        all: [softDelete()],
+      },
     });
 
     userService.create(initialUsers);
   });
 
   it('throws error on wrong app version', async () => {
-    const app = feathers()
-      .use('/users', memory());
+    const app = feathers().use('/users', memory());
 
     app.service('users').hooks({
       before: {
-        all: [
-          softDelete()
-        ]
-      }
+        all: [softDelete()],
+      },
     });
 
     app.version = '3.1.4';
 
     await assert.rejects(() => app.service('users').find(), {
-      message: 'The softDelete hook requires Feathers 4.0.0 or later'
+      message: 'The softDelete hook requires Feathers 4.0.0 or later',
     });
   });
 
@@ -60,13 +57,13 @@ describe('services softDelete', () => {
         { name: 'Jane Doe', key: 'a', id: 0 },
         { name: 'Jack Doe', key: 'a', id: 1 },
         { name: 'Rick Doe', key: 'b', id: 3 },
-        { name: 'Mick Doe', key: 'b', id: 4 }
+        { name: 'Mick Doe', key: 'b', id: 4 },
       ]);
     });
 
     it('returns everything with params.disableSoftdelete', async () => {
       const users = await userService.find({
-        disableSoftDelete: true
+        disableSoftDelete: true,
       });
 
       assert.deepStrictEqual(users, [
@@ -75,7 +72,7 @@ describe('services softDelete', () => {
         { name: 'Jack Doe', key: 'a', deleted: true, id: 2 },
         { name: 'Rick Doe', key: 'b', id: 3 },
         { name: 'Mick Doe', key: 'b', id: 4 },
-        { name: 'Mick Doe', key: 'b', deleted: true, id: 5 }
+        { name: 'Mick Doe', key: 'b', deleted: true, id: 5 },
       ]);
     });
   });
@@ -85,36 +82,47 @@ describe('services softDelete', () => {
       const user = await userService.get(0);
 
       assert.deepStrictEqual(user, {
-        name: 'Jane Doe', key: 'a', id: 0
+        name: 'Jane Doe',
+        key: 'a',
+        id: 0,
       });
     });
 
     it('throws on deleted item', async () => {
-      assert.rejects(async () => {
-        await userService.get(2);
-      }, {
-        name: 'NotFound',
-        message: 'No record found for id \'2\''
-      });
+      assert.rejects(
+        async () => {
+          await userService.get(2);
+        },
+        {
+          name: 'NotFound',
+          message: "No record found for id '2'",
+        }
+      );
     });
 
     it('returns deleted when params.disableSoftDelete is set', async () => {
       const user = await userService.get(2, {
-        disableSoftDelete: true
+        disableSoftDelete: true,
       });
 
       assert.deepStrictEqual(user, {
-        name: 'Jack Doe', key: 'a', deleted: true, id: 2
+        name: 'Jack Doe',
+        key: 'a',
+        deleted: true,
+        id: 2,
       });
     });
 
     it('throws on missing item', async () => {
-      await assert.rejects(async () => {
-        await userService.get(99);
-      }, {
-        name: 'NotFound',
-        message: 'No record found for id \'99\''
-      });
+      await assert.rejects(
+        async () => {
+          await userService.get(99);
+        },
+        {
+          name: 'NotFound',
+          message: "No record found for id '99'",
+        }
+      );
     });
   });
 
@@ -126,12 +134,15 @@ describe('services softDelete', () => {
     });
 
     it.skip('throws on deleted item', async () => {
-      await assert.rejects(async () => {
-        await userService.update(2, { y: 'y' });
-      }, {
-        name: 'NotFound',
-        message: 'No record found for id \'2\''
-      });
+      await assert.rejects(
+        async () => {
+          await userService.update(2, { y: 'y' });
+        },
+        {
+          name: 'NotFound',
+          message: "No record found for id '2'",
+        }
+      );
     });
   });
 
@@ -140,14 +151,17 @@ describe('services softDelete', () => {
       const user = await userService.patch(0, { y: 'y' });
 
       assert.deepStrictEqual(user, {
-        name: 'Jane Doe', key: 'a', id: 0, y: 'y'
+        name: 'Jane Doe',
+        key: 'a',
+        id: 0,
+        y: 'y',
       });
     });
 
     it('throws on deleted item', async () => {
       await assert.rejects(() => userService.patch(2, { y: 'y' }), {
         name: 'NotFound',
-        message: 'No record found for id \'2\''
+        message: "No record found for id '2'",
       });
     });
 
@@ -158,7 +172,7 @@ describe('services softDelete', () => {
         { name: 'Jane Doe', key: 'a', id: 0, x: 'x' },
         { name: 'Jack Doe', key: 'a', id: 1, x: 'x' },
         { name: 'Rick Doe', key: 'b', id: 3, x: 'x' },
-        { name: 'Mick Doe', key: 'b', id: 4, x: 'x' }
+        { name: 'Mick Doe', key: 'b', id: 4, x: 'x' },
       ]);
     });
   });
@@ -168,17 +182,20 @@ describe('services softDelete', () => {
       const user = await userService.remove(0);
 
       assert.deepStrictEqual(user, {
-        name: 'Jane Doe', key: 'a', id: 0, deleted: true
+        name: 'Jane Doe',
+        key: 'a',
+        id: 0,
+        deleted: true,
       });
 
       await assert.rejects(() => userService.get(0), {
-        name: 'NotFound'
+        name: 'NotFound',
       });
     });
 
     it('throws if item already deleted', async () => {
       await assert.rejects(() => userService.remove(2), {
-        name: 'NotFound'
+        name: 'NotFound',
       });
     });
   });
@@ -204,10 +221,12 @@ describe('services softDelete', () => {
     let peopleService: any;
 
     beforeEach(() => {
-      const app = feathers()
-        .use('/people', memory({
-          multi: ['create', 'patch', 'remove']
-        }));
+      const app = feathers().use(
+        '/people',
+        memory({
+          multi: ['create', 'patch', 'remove'],
+        })
+      );
 
       peopleService = app.service('people');
       peopleService.hooks({
@@ -219,15 +238,15 @@ describe('services softDelete', () => {
               },
               removeData: async () => {
                 return { deletedAt: new Date() };
-              }
-            })
+              },
+            }),
           ],
           create: [
             (context: any) => {
               context.data.deletedAt = null;
-            }
-          ]
-        }
+            },
+          ],
+        },
       });
     });
 
@@ -238,7 +257,7 @@ describe('services softDelete', () => {
       assert.ok(deletedUser.deletedAt !== null);
 
       await assert.rejects(() => peopleService.get(user.id), {
-        name: 'NotFound'
+        name: 'NotFound',
       });
     });
   });

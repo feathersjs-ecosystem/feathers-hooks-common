@@ -1,23 +1,51 @@
 import type { HookContext, Params } from '@feathersjs/feathers';
 import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
-import type { CallingParamsOptions, SyncContextFunction } from '../types';
+import type { SyncContextFunction } from '../types';
+
+export type Disablable =
+  | 'populate'
+  | 'fastJoin'
+  | 'ignoreDeletedAt'
+  | 'softDelete'
+  | 'softDelete2'
+  | 'stashBefore';
+
+export interface CallingParamsOptions {
+  /**
+   * The params.query for the calling params.
+   */
+  query?: any;
+  /**
+   * The names of the props in context.params to include in the new params.
+   */
+  propNames?: string[];
+  /**
+   * Additional props to add to the new params.
+   */
+  newProps?: any;
+  /**
+   * The names of hooks to disable during the service call. populate, fastJoin, softDelete and stashBefore are supported.
+   */
+  hooksToDisable?: Disablable[] | Disablable;
+  /**
+   *    Ignore the defaults propNames and newProps.
+   */
+  ignoreDefaults?: boolean;
+}
 
 const stndAuthProps = ['provider', 'authenticated', 'user']; // feathers-authentication
 // App wide defaults
 const defaults = {
   propNames: stndAuthProps,
-  newProps: {}
+  newProps: {},
 };
 
 /**
  * Set defaults for building params for service calls with callingParams. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#callingparamsdefaults}
+ * @see https://hooks-common.feathersjs.com/utilities.html#callingparamsdefaults
  */
-export function callingParamsDefaults (
-  propNames: string[],
-  newProps?: any
-): void {
+export function callingParamsDefaults(propNames: string[], newProps?: any): void {
   if (propNames) {
     defaults.propNames = Array.isArray(propNames) ? propNames : [propNames];
   }
@@ -29,16 +57,16 @@ export function callingParamsDefaults (
 
 /**
  * Build params for a service call. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#callingparams}
+ * @see https://hooks-common.feathersjs.com/utilities.html#callingparams
  */
-export function callingParams ({
+export function callingParams({
   query,
   propNames = [],
   newProps = {},
   hooksToDisable = [],
-  ignoreDefaults
+  ignoreDefaults,
 }: CallingParamsOptions = {}): SyncContextFunction<Params> {
-  return (context: any) => {
+  return context => {
     propNames = Array.isArray(propNames) ? propNames : [propNames];
     hooksToDisable = Array.isArray(hooksToDisable) ? hooksToDisable : [hooksToDisable];
 
@@ -46,7 +74,8 @@ export function callingParams ({
     const allPropNames = ignoreDefaults ? propNames : [...defaults.propNames, ...propNames];
 
     allPropNames.forEach(name => {
-      if (name) { // for makeCallingParams compatibility
+      if (name) {
+        // for makeCallingParams compatibility
         const value = _get(context.params, name);
 
         if (value !== undefined) {
@@ -59,27 +88,27 @@ export function callingParams ({
 
     hooksToDisable.forEach(name => {
       switch (name) {
-      case 'populate': // fall through
-      case 'fastJoin':
-        // @ts-ignore
-        newParams._populate = 'skip';
-        break;
-      case 'softDelete':
-        newParams.query = newParams.query || {};
-        newParams.query.$disableSoftDelete = true;
-        break;
-      case 'softDelete2':
-        // @ts-ignore
-        newParams.$disableSoftDelete2 = true;
-        break;
-      case 'ignoreDeletedAt':
-        // @ts-ignore
-        newParams.$ignoreDeletedAt = true;
-        break;
-      case 'stashBefore':
-        // @ts-ignore
-        newParams.disableStashBefore = true;
-        break;
+        case 'populate': // fall through
+        case 'fastJoin':
+          // @ts-ignore
+          newParams._populate = 'skip';
+          break;
+        case 'softDelete':
+          newParams.query = newParams.query || {};
+          newParams.query.$disableSoftDelete = true;
+          break;
+        case 'softDelete2':
+          // @ts-ignore
+          newParams.$disableSoftDelete2 = true;
+          break;
+        case 'ignoreDeletedAt':
+          // @ts-ignore
+          newParams.$ignoreDeletedAt = true;
+          break;
+        case 'stashBefore':
+          // @ts-ignore
+          newParams.disableStashBefore = true;
+          break;
       }
     });
 
@@ -90,9 +119,9 @@ export function callingParams ({
 /**
  * You should prefer using the callingParams utility to makeCallingParams.
  * Build context.params for service calls. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#makecallingparams}
+ * @see https://hooks-common.feathersjs.com/utilities.html#makecallingparams
  */
-export function makeCallingParams (
+export function makeCallingParams(
   context: HookContext,
   query?: any,
   include?: string | string[],
@@ -100,12 +129,13 @@ export function makeCallingParams (
 ) {
   return callingParams({
     query,
-    propNames: include === undefined
-      ? ['provider', 'authenticated', 'user']
-      : Array.isArray(include)
+    propNames:
+      include === undefined
+        ? ['provider', 'authenticated', 'user']
+        : Array.isArray(include)
         ? include
         : [include],
     newProps: Object.assign({}, { _populate: 'skip' }, inject),
-    ignoreDefaults: true
+    ignoreDefaults: true,
   })(context);
 }

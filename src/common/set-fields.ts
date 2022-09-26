@@ -1,6 +1,6 @@
 import _set from 'lodash/set.js';
 
-export function setFields <T extends Record<string, any>> (
+export function setFields<T extends Record<string, any>>(
   items: T | T[],
   fieldValue: any | (() => any),
   fieldNames: string[],

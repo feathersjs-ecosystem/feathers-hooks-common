@@ -10,9 +10,9 @@ ajv.addSchema({
   $id: 'syncSchema',
   properties: {
     first: { type: 'string', format: 'startWithJo' },
-    last: { type: 'string' }
+    last: { type: 'string' },
   },
-  required: ['first', 'last']
+  required: ['first', 'last'],
 });
 
 describe('services validateSchema', () => {
@@ -29,7 +29,7 @@ describe('services validateSchema', () => {
       type: 'before',
       method: 'create',
       params: { provider: 'rest' },
-      data: { first: 'John', last: 'Doe' }
+      data: { first: 'John', last: 'Doe' },
     };
     hookBeforeArray = {
       type: 'before',
@@ -38,8 +38,8 @@ describe('services validateSchema', () => {
       data: [
         { first: 'John', last: 'Doe' },
         { first: 'Jane', last: 'Doe' },
-        { first: 'Joe', last: 'Doe' }
-      ]
+        { first: 'Joe', last: 'Doe' },
+      ],
     };
     hookBeforeArrayForAjvInstance = {
       type: 'before',
@@ -48,22 +48,22 @@ describe('services validateSchema', () => {
       data: [
         { first: 'John', last: 'Doe' },
         { first: 'Josh', last: 'Doe' },
-        { first: 'Joe', last: 'Doe' }
-      ]
+        { first: 'Joe', last: 'Doe' },
+      ],
     };
     schema = {
       properties: {
         first: { type: 'string' },
-        last: { type: 'string' }
+        last: { type: 'string' },
       },
-      required: ['first', 'last']
+      required: ['first', 'last'],
     };
     schemaForAjvInstance = {
       properties: {
         first: { type: 'string', format: 'startWithJo' },
-        last: { type: 'string' }
+        last: { type: 'string' },
       },
-      required: ['first', 'last']
+      required: ['first', 'last'],
     };
   });
 
@@ -72,9 +72,9 @@ describe('services validateSchema', () => {
       schema = {
         properties: {
           first: { type: 'string' },
-          last: { type: 'string' }
+          last: { type: 'string' },
         },
-        required: ['first', 'last']
+        required: ['first', 'last'],
       };
     });
 
@@ -110,8 +110,8 @@ describe('services validateSchema', () => {
         assert.fail(true, false, 'test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          '\'first\' should be string',
-          'should have required property \'last\''
+          "'first' should be string",
+          "should have required property 'last'",
         ]);
       }
     });
@@ -125,9 +125,9 @@ describe('services validateSchema', () => {
         assert.fail(true, false, 'test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          '\'in row 1 of 3, first\' should be string',
-          'in row 1 of 3, should have required property \'last\'',
-          'in row 3 of 3, should have required property \'last\''
+          "'in row 1 of 3, first' should be string",
+          "in row 1 of 3, should have required property 'last'",
+          "in row 3 of 3, should have required property 'last'",
         ]);
       }
     });
@@ -140,7 +140,7 @@ describe('services validateSchema', () => {
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           '\'first\' should match format "startWithJo"',
-          'should have required property \'last\''
+          "should have required property 'last'",
         ]);
       }
     });
@@ -155,9 +155,9 @@ describe('services validateSchema', () => {
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           '\'in row 1 of 3, first\' should match format "startWithJo"',
-          'in row 1 of 3, should have required property \'last\'',
+          "in row 1 of 3, should have required property 'last'",
           '\'in row 2 of 3, first\' should match format "startWithJo"',
-          'in row 3 of 3, should have required property \'last\''
+          "in row 3 of 3, should have required property 'last'",
         ]);
       }
     });
@@ -170,27 +170,27 @@ describe('services validateSchema', () => {
       ajvAsync.addKeyword('equalsDoe', {
         async: true,
         schema: false,
-        validate: (item: any) => new Promise((resolve, reject) => {
-          setTimeout(() => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            item === 'Doe'
-              ? resolve(true)
-              // @ts-ignore
-              : reject(new Ajv.ValidationError([{ message: 'should be Doe' }]));
-          }, 50);
-        })
+        validate: (item: any) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              item === 'Doe'
+                ? resolve(true)
+                : // @ts-ignore
+                  reject(new Ajv.ValidationError([{ message: 'should be Doe' }]));
+            }, 50);
+          }),
       });
 
       ajvAsync.addFormat('3or4chars', {
         async: true,
-        validate: (item: any) => new Promise((resolve, _reject) => {
-          setTimeout(() => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            (item.length === 3 || item.length === 4)
-              ? resolve(true)
-              : resolve(false);
-          }, 50);
-        })
+        validate: (item: any) =>
+          new Promise((resolve, _reject) => {
+            setTimeout(() => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              item.length === 3 || item.length === 4 ? resolve(true) : resolve(false);
+            }, 50);
+          }),
       });
 
       ajvAsync.addSchema({
@@ -199,14 +199,14 @@ describe('services validateSchema', () => {
         properties: {
           first: {
             type: 'string',
-            format: '3or4chars'
+            format: '3or4chars',
           },
           last: {
             type: 'string',
-            equalsDoe: true
-          }
+            equalsDoe: true,
+          },
         },
-        required: ['first', 'last']
+        required: ['first', 'last'],
       });
     });
 
@@ -216,20 +216,23 @@ describe('services validateSchema', () => {
         properties: {
           first: {
             type: 'string',
-            format: '3or4chars'
+            format: '3or4chars',
           },
           last: {
             type: 'string',
-            equalsDoe: true
-          }
+            equalsDoe: true,
+          },
         },
-        required: ['first', 'last']
+        required: ['first', 'last'],
       };
     });
 
     it('works with string schema id', (next: any) => {
       // @ts-ignore
-      validateSchema('asyncSchema', ajvAsync)(hookBefore)
+      validateSchema(
+        'asyncSchema',
+        ajvAsync
+      )(hookBefore)
         // @ts-ignore
         .then(() => {
           next();
@@ -242,7 +245,10 @@ describe('services validateSchema', () => {
 
     it('works with valid single item', (next: any) => {
       // @ts-ignore
-      validateSchema(asyncSchema, ajvAsync)(hookBefore)
+      validateSchema(
+        asyncSchema,
+        ajvAsync
+      )(hookBefore)
         // @ts-ignore
         .then(() => {
           next();
@@ -255,7 +261,10 @@ describe('services validateSchema', () => {
 
     it('works with array of valid items', (next: any) => {
       // @ts-ignore
-      validateSchema(asyncSchema, ajvAsync)(hookBeforeArray)
+      validateSchema(
+        asyncSchema,
+        ajvAsync
+      )(hookBeforeArray)
         // @ts-ignore
         .then(() => {
           next();
@@ -269,7 +278,10 @@ describe('services validateSchema', () => {
       hookBefore.data = { first: '1' };
 
       // @ts-ignore
-      validateSchema(asyncSchema, ajvAsync)(hookBefore)
+      validateSchema(
+        asyncSchema,
+        ajvAsync
+      )(hookBefore)
         // @ts-ignore
         .then(() => {
           assert.fail(true, false, 'test succeeds unexpectedly');
@@ -277,7 +289,7 @@ describe('services validateSchema', () => {
         .catch((err: any) => {
           assert.deepEqual(err.errors, [
             '\'first\' should match format "3or4chars"',
-            'should have required property \'last\''
+            "should have required property 'last'",
           ]);
           next();
         });
@@ -288,15 +300,18 @@ describe('services validateSchema', () => {
       delete hookBeforeArray.data[2].last;
 
       // @ts-ignore
-      validateSchema(asyncSchema, ajvAsync)(hookBeforeArray)
+      validateSchema(
+        asyncSchema,
+        ajvAsync
+      )(hookBeforeArray)
         // @ts-ignore
         .then(() => {
           assert.fail(true, false, 'test succeeds unexpectedly');
         })
         .catch((err: any) => {
           assert.deepEqual(err.errors, [
-            'in row 3 of 3, should have required property \'last\'',
-            '\'in row 1 of 3, last\' should be Doe'
+            "in row 3 of 3, should have required property 'last'",
+            "'in row 1 of 3, last' should be Doe",
           ]);
           next();
         });

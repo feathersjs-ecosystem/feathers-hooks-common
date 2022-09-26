@@ -4,14 +4,16 @@ import _has from 'lodash/has.js';
 
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
-import type { HookFunction } from '../types';
+import type { Application, Hook, Service } from '@feathersjs/feathers';
 
 /**
  * Check selected fields exist and are not falsey. Numeric 0 is acceptable.
- * {@link https://hooks-common.feathersjs.com/hooks.html#required}
+ * @see https://hooks-common.feathersjs.com/hooks.html#required
  */
-export function required (...fieldNames: string[]): HookFunction {
-  return (context: any) => {
+export function required<A extends Application = Application, S extends Service = Service>(
+  ...fieldNames: string[]
+): Hook<A, S> {
+  return context => {
     checkContext(context, 'before', ['create', 'update', 'patch'], 'required');
     const items = getItems(context);
 
@@ -19,7 +21,8 @@ export function required (...fieldNames: string[]): HookFunction {
       fieldNames.forEach(name => {
         if (!_has(item, name)) throw new BadRequest(`Field ${name} does not exist. (required)`);
         const value = _get(item, name);
-        if (!value && value !== 0 && value !== false) throw new BadRequest(`Field ${name} is null. (required)`);
+        if (!value && value !== 0 && value !== false)
+          throw new BadRequest(`Field ${name} is null. (required)`);
       });
     });
   };

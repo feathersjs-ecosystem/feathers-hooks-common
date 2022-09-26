@@ -93,8 +93,10 @@
     "chai": "^4.3.6",
     "clone": "^2.1.2",
     "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
     "feathers-memory": "^4.1.0",
     "mocha": "^10.0.0",
     "mongodb": "^4.9.1",
@@ -107,6 +109,6 @@
     "vitepress": "^1.0.0-alpha.14"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14"
   }
 }
