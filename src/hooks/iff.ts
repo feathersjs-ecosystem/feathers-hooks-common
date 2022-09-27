@@ -15,7 +15,6 @@ export function iff<H extends HookContext = HookContext>(
   ...hooks: HookFunction<H>[]
 ): IffHook<H> {
   const iffWithoutElse = function (context: H) {
-    // @ts-ignore
     return iffElse(predicate, hooks.slice())(context);
   };
 
@@ -25,7 +24,7 @@ export function iff<H extends HookContext = HookContext>(
       // @ts-ignore
       iffElse(predicate, hooks.slice(), falseHooks.slice())(context);
 
-  return iffWithoutElse;
+  return iffWithoutElse as IffHook<H>;
 }
 
 export { iff as when };

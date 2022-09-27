@@ -108,8 +108,8 @@ describe('util calling-params-1.test.js', () => {
       // @ts-ignore
       callingParamsDefaults(null, { bar: 'foo' });
       const res = callingParams()(context1);
-      // @ts-ignore
       assert.deepEqual(res, {
+        // @ts-ignore
         user: { name: 'Matt' },
         authenticated: true,
         provider: 'socketio',
@@ -120,8 +120,8 @@ describe('util calling-params-1.test.js', () => {
     it('change both defaults', () => {
       callingParamsDefaults(['foo', 'user.name', 'query.aaa'], { bar: 'foo', qqq: 'rrr' });
       const res = callingParams()(context1);
-      // @ts-ignore
       assert.deepEqual(res, {
+        // @ts-ignore
         foo: 'bar',
         user: { name: 'Matt' },
         query: { aaa: 'bbb' },

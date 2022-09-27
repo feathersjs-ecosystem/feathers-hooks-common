@@ -1,4 +1,4 @@
-import type { HookContext, Id, ServiceGenericType } from '@feathersjs/feathers';
+import type { HookContext, Id } from '@feathersjs/feathers';
 import { getItems } from '../utils/get-items';
 import { clone as defaultClone } from '../common/clone';
 
@@ -16,10 +16,11 @@ const defaultMakeCacheKey = (key: any) => key;
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#cache
  */
-export function cache<
-  H extends HookContext = HookContext,
-  T extends ServiceGenericType<S> = ServiceGenericType<S>
->(cacheMap: CacheMap<T>, keyField?: string, options?: CacheOptions<T>) {
+export function cache<H extends HookContext = HookContext, T = any>(
+  cacheMap: CacheMap<T>,
+  keyField?: string,
+  options?: CacheOptions<T>
+) {
   const clone = options?.clone || defaultClone;
   const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey;
 

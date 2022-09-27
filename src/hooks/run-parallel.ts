@@ -1,5 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { HookContext, HookFunction } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Run a hook in parallel to the other hooks and the service call.
@@ -18,6 +19,6 @@ export function runParallel<H extends HookContext = HookContext>(
     // must use function
     const copy = clone ? clone(context) : context;
 
-    setTimeout(() => hook.call(this, copy));
+    setTimeout(() => hook.call(this, copy as any));
   };
 }

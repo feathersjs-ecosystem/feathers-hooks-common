@@ -16,8 +16,8 @@ export interface FGraphQLResolverMap {
   };
 }
 
-export interface FGraphQLOptions {
-  skipHookWhen?: SyncContextFunction<boolean>;
+export interface FGraphQLOptions<H extends HookContext = HookContext> {
+  skipHookWhen?: SyncContextFunction<boolean, H>;
   inclAllFieldsServer?: boolean;
   inclAllFieldsClient?: boolean;
   inclAllFields?: boolean;
@@ -25,12 +25,12 @@ export interface FGraphQLOptions {
   extraAuthProps?: string[];
 }
 
-export interface FGraphQLHookOptions {
+export interface FGraphQLHookOptions<H extends HookContext = HookContext> {
   recordType: string;
   schema: string;
   resolvers: FGraphQLResolverMap | FGraphQLResolverMapFactory;
-  query: Query | SyncContextFunction<Query>;
-  options?: FGraphQLOptions;
+  query: Query | SyncContextFunction<Query, H>;
+  options?: FGraphQLOptions<H>;
   runTime: any;
   parse: typeof parse;
 }
@@ -42,7 +42,7 @@ const graphqlActions = ['Query', 'Mutation', 'Subscription'];
  * Generate Graphql Resolvers for services
  * @see https://medium.com/@eddyystop/38faee75dd1
  */
-export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQLHookOptions) {
+export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQLHookOptions<H>) {
   debug('init call');
   const { parse, recordType, resolvers, runTime, query } = options1;
   let { schema } = options1;

@@ -84,12 +84,12 @@ describe('services populate - throws on bad params', () => {
   });
 
   it('schema', () => {
-    // @ts-expect-error
     assert.throws(() => {
+      // @ts-ignore
       populate({});
     });
-    // @ts-expect-error
     assert.throws(() => {
+      // @ts-ignore
       populate({ schema: 1 });
     });
   });
@@ -98,6 +98,7 @@ describe('services populate - throws on bad params', () => {
     const hook = clone(hookAfter);
     // @ts-ignore
     return (
+      // @ts-ignore
       populate({ schema: {}, checkPermissions: 1 })(hook)
         // @ts-ignore
         .then(() => {

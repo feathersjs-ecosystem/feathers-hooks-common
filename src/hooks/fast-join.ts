@@ -40,8 +40,8 @@ export interface ResolverMap<H extends ResolverContext = ResolverContext> {
  * @see https://hooks-common.feathersjs.com/hooks.html#fastjoin
  */
 export function fastJoin<H extends ResolverContext = ResolverContext>(
-  resolvers: ResolverMap<H> | SyncContextFunction<ResolverMap<H>>,
-  query?: Query | SyncContextFunction<Query>
+  resolvers: ResolverMap<H> | SyncContextFunction<ResolverMap<H>, H>,
+  query?: Query | SyncContextFunction<Query, H>
 ) {
   return (context: H) => {
     const { method, data, result, params } = context;

@@ -74,8 +74,8 @@ describe('services iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if truthy non-function', () => {
-    // @ts-ignore
     iff(
+      // @ts-ignore
       'a',
       hookFcnSync
     )(hook)
@@ -101,8 +101,8 @@ describe('services iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if sync predicate truthy', () => {
-    // @ts-ignore
     iff(
+      // @ts-ignore
       () => 'a',
       hookFcnSync
     )(hook)
@@ -284,8 +284,8 @@ describe('services iff - sync predicate', () => {
   });
 
   it('does not need to access hook', () => {
-    // @ts-ignore
     iff(
+      // @ts-ignore
       () => 'a',
       hookFcnSync
     )(hook)

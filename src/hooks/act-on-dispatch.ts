@@ -17,16 +17,14 @@ export const actOnDispatch = <H extends HookContext = HookContext>(...hooks: Hoo
   actOn('dispatch', ...hooks);
 
 function actOn<H extends HookContext = HookContext>(what: any, ...hooks: HookFunction<H>[]) {
-  return (context: H) => {
+  return async (context: H) => {
     // @ts-ignore
     const currActOn = context.params._actOn;
     // @ts-ignore
     context.params._actOn = what;
 
-    return combine(...hooks)(context).then((newContext: any) => {
-      newContext.params._actOn = currActOn;
-
-      return newContext;
-    });
+    const newContext = await combine(...hooks)(context);
+    newContext.params._actOn = currActOn;
+    return newContext;
   };
 }

@@ -36,8 +36,8 @@ describe('util isNot - predicate', () => {
   });
 
   it('expects a function param', () => {
-    // @ts-expect-error
     assert.throws(() => {
+      // @ts-ignore
       isNot('not a function');
     });
   });

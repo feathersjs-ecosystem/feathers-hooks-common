@@ -104,10 +104,10 @@ describe('services iffElse', () => {
 
   describe('runs multiple hooks', () => {
     it('when true', () => {
-      // @ts-ignore
       return (
         iffElse(
           true,
+          // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
           null
         )(hook)
@@ -123,8 +123,8 @@ describe('services iffElse', () => {
     });
 
     it('when false', () => {
-      // @ts-ignore
       return (
+        // @ts-ignore
         iffElse(false, null, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
           // @ts-ignore
           .then((hook: any) => {
@@ -140,9 +140,9 @@ describe('services iffElse', () => {
 
   describe('predicate gets right params', () => {
     it('when true', () => {
-      // @ts-ignore
       return (
         iffElse(
+          // @ts-ignore
           predicateTrue,
           [hookFcnSync, hookFcnAsync, hookFcn],
           null
@@ -162,6 +162,7 @@ describe('services iffElse', () => {
         iffElse(
           // @ts-ignore
           every(predicateTrue),
+          // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
           null
         )(hook)
@@ -180,6 +181,7 @@ describe('services iffElse', () => {
         iffElse(
           // @ts-ignore
           some(predicateTrue),
+          // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
           null
         )(hook)
@@ -204,8 +206,8 @@ describe('services iffElse', () => {
     });
 
     it('services', () => {
-      // @ts-ignore
       return (
+        // @ts-ignore
         iffElse(predicateTrue, [hookFcnSync, hookFcnAsync, hookFcn], null)
           .call(context, hook)
           // @ts-ignore

@@ -1,19 +1,18 @@
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 
 /**
  * Sequentially execute multiple sync or async hooks.
  * @see https://hooks-common.feathersjs.com/utilities.html#combine
  */
-export function combine<H extends HookContext = HookContext>(
-  ...serviceHooks[]
-): (context: H) => Promise<H> {
+export function combine<H extends HookContext = HookContext>(...serviceHooks: HookFunction<H>[]) {
   const isContext = function (ctx: H) {
     return (
       typeof ctx === 'object' && typeof ctx.method === 'string' && typeof ctx.type === 'string'
     );
   };
 
-  return function (context: H) {
+  return async function (context: H) {
     let ctx = context;
 
     const updateCurrentHook = (current: void | H) => {
@@ -35,19 +34,20 @@ export function combine<H extends HookContext = HookContext>(
     // Go through all hooks and chain them into our promise
     const promise = serviceHooks.reduce((current, fn) => {
       // @ts-ignore
-      const hook = fn.bind(this);
+      const hook = fn.bind ? fn.bind(this) : fn;
 
       // Use the returned hook object or the old one
       // @ts-ignore
-      return current.then(currentHook => hook(currentHook)).then(updateCurrentHook);
+      return current.then(currentCtx => hook(currentCtx)).then(updateCurrentHook);
     }, Promise.resolve(ctx));
 
-    return promise
-      .then(() => ctx)
-      .catch(error => {
-        // Add the hook information to any errors
-        error.hook = ctx;
-        throw error;
-      });
+    try {
+      await promise;
+      return ctx;
+    } catch (error: any) {
+      // Add the hook information to any errors
+      error.hook = ctx;
+      throw error;
+    }
   };
 }

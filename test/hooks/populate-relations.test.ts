@@ -83,6 +83,7 @@ import { populate } from '../../src';
 
       // @ts-ignore
       return (
+        // @ts-ignore
         populate({ schema, checkPermissions: () => true, profile: 'test' })(hook)
           // @ts-ignore
           .then((hook1: any) => {
@@ -146,8 +147,8 @@ import { populate } from '../../src';
       const hook = clone(hookAfterArray);
       hook.app = app; // app is a func and wouldn't be cloned
 
-      // @ts-ignore
       return (
+        // @ts-ignore
         populate({ schema, checkPermissions: () => true, profile: 'test' })(hook)
           // @ts-ignore
           .then((hook1: any) => {

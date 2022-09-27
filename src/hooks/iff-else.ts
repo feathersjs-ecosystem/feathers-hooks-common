@@ -9,50 +9,45 @@ import type { HookFunction, PredicateFn } from '../types';
  */
 export function iffElse<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn<H>,
-  trueHooks: | HookFunction<H>[] | undefined,
-  falseHooks?: | HookFunction<H>[] | undefined
+  trueHook: HookFunction<H> | HookFunction<H>[] | undefined,
+  falseHook?: HookFunction<H> | HookFunction<H>[] | undefined
 ) {
   // fnArgs is [context] for service & permission hooks, [data, connection, context] for event filters
-  // @ts-ignore
-  return (this: any, ctx: H) => {
-    if (typeof trueHooks === 'function') {
-      trueHooks = [trueHooks];
-    }
-    if (typeof falseHooks === 'function') {
-      falseHooks = [falseHooks];
-    }
+  return function (this: any, ctx: H) {
+    const trueHooks = Array.isArray(trueHook)
+      ? trueHook
+      : typeof trueHook === 'function'
+      ? [trueHook]
+      : undefined;
 
-    // @ts-ignore
+    const falseHooks = Array.isArray(falseHook)
+      ? falseHook
+      : typeof falseHook === 'function'
+      ? [falseHook]
+      : undefined;
+
     const that = this;
     const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate;
 
     if (!check) {
-      // @ts-ignore
-      return callHooks.call(that, ctx, falseHooks);
+      return callHooks.call(that, ctx, falseHooks as any);
     }
 
     if (!isPromise(check)) {
-      // @ts-ignore
-      return callHooks.call(that, ctx, trueHooks);
+      return callHooks.call(that, ctx, trueHooks as any);
     }
 
     return check.then((check1: any) => {
       const hooks = check1 ? trueHooks : falseHooks;
-      // @ts-ignore
-      return callHooks.call(that, ctx, hooks);
+      return callHooks.call(that, ctx, hooks as any);
     });
   };
 }
 
 function callHooks<H extends HookContext = HookContext>(
   this: any,
-  ctx: HookContext<A, S>,
-  serviceHooks?[]
+  ctx: H,
+  serviceHooks: HookFunction<H>[]
 ) {
-  let hooks = serviceHooks;
-  if (serviceHooks && serviceHooks.length && Array.isArray(serviceHooks[0])) {
-    hooks = serviceHooks[0];
-  }
-
-  return hooks ? combine(...hooks).call(this, ctx) : ctx;
+  return serviceHooks ? combine(...serviceHooks).call(this, ctx) : ctx;
 }

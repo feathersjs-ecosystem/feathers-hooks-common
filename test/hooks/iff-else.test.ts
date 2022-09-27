@@ -37,7 +37,7 @@ const predicateAsync2 = (options: any) => (hook: any) => {
 
 const predicateAsyncFunny = (hook: any) => {
   predicateHook = clone(hook);
-  return new Promise<string>(resolve => {
+  return new Promise(resolve => {
     predicateValue = 'abc';
     return resolve(predicateValue);
   });
@@ -76,9 +76,9 @@ describe('services iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if truthy non-function', () => {
-    // @ts-ignore
     return (
       iff(
+        // @ts-ignore
         'a',
         hookFcnSync
       )(hook)
@@ -105,9 +105,9 @@ describe('services iff - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if sync predicate truthy', () => {
-    // @ts-ignore
     return (
       iff(
+        // @ts-ignore
         () => 'a',
         hookFcnSync
       )(hook)
@@ -278,9 +278,9 @@ describe('services iff - sync predicate', () => {
   });
 
   it('does not need to access hook', () => {
-    // @ts-ignore
     return (
       iff(
+        // @ts-ignore
         () => 'a',
         hookFcnSync
       )(hook)
@@ -356,9 +356,9 @@ describe('services iff - async predicate', () => {
   });
 
   it('is resolved', () => {
-    // @ts-ignore
     return (
       iff(
+        // @ts-ignore
         predicateAsyncFunny,
         hookFcnSync
       )(hook)
@@ -544,8 +544,8 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
   });
 
   it('runs iff(true, iff(true, hookFcnCb)) with the array syntax', () => {
-    // @ts-ignore
     return (
+      // @ts-ignore
       iff(true, [
         hookFcnSync,
         // @ts-ignore

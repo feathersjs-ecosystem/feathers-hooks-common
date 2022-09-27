@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 import { cache } from '../../src';
 
+// @ts-ignore
 import CacheMap from '@feathers-plus/cache';
 
 let cacheMap: any;
