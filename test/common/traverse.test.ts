@@ -13,14 +13,14 @@ describe('services traverse', () => {
       type: 'before',
       method: 'create',
       data: { a: ' a  b  ' },
-      params: { query: { b: '  b  b  ' } }
+      params: { query: { b: '  b  b  ' } },
     };
 
     hookBeforeArray = {
       type: 'before',
       method: 'create',
       data: [{ a: ' a  b  ' }, { c: ' c ' }],
-      params: { query: { b: '  b  b  ' }, something: { c: ' c', d: 'd ' } }
+      params: { query: { b: '  b  b  ' }, something: { c: ' c', d: 'd ' } },
     };
 
     hookAfter = {
@@ -28,7 +28,7 @@ describe('services traverse', () => {
       method: 'create',
       data: { q: 1 },
       params: { query: { b: '  b  b  ' } },
-      result: { a: ' a  b  ' }
+      result: { a: ' a  b  ' },
     };
 
     hookAfterArray = {
@@ -36,7 +36,7 @@ describe('services traverse', () => {
       method: 'create',
       data: { q: 1 },
       params: { query: { b: '  b  b  ' } },
-      result: [{ a: ' a  b  ' }, { c: ' c ' }]
+      result: [{ a: ' a  b  ' }, { c: ' c ' }],
     };
 
     trimmer = function (this: any, node: any) {
@@ -50,6 +50,7 @@ describe('services traverse', () => {
     const result = clone(hookBefore);
     result.data = { a: 'a  b' };
 
+    // @ts-ignore
     traverse(trimmer)(hookBefore);
 
     assert.deepEqual(hookBefore, result);
@@ -59,6 +60,7 @@ describe('services traverse', () => {
     const result = clone(hookBeforeArray);
     result.data = [{ a: 'a  b' }, { c: 'c' }];
 
+    // @ts-ignore
     traverse(trimmer)(hookBeforeArray);
 
     assert.deepEqual(hookBeforeArray, result);
@@ -68,6 +70,7 @@ describe('services traverse', () => {
     const result = clone(hookAfter);
     result.result = { a: 'a  b' };
 
+    // @ts-ignore
     traverse(trimmer)(hookAfter);
 
     assert.deepEqual(hookAfter, result);
@@ -77,6 +80,7 @@ describe('services traverse', () => {
     const result = clone(hookAfterArray);
     result.result = [{ a: 'a  b' }, { c: 'c' }];
 
+    // @ts-ignore
     traverse(trimmer)(hookAfterArray);
 
     assert.deepEqual(hookAfterArray, result);
@@ -86,6 +90,7 @@ describe('services traverse', () => {
     const result = clone(hookBefore);
     result.params.query = { b: 'b  b' };
 
+    // @ts-ignore
     traverse(trimmer, (hook: any) => hook.params.query)(hookBefore);
 
     assert.deepEqual(hookBefore, result);
@@ -95,6 +100,7 @@ describe('services traverse', () => {
     const result = clone(hookBeforeArray);
     result.params = { query: { b: 'b  b' }, something: { c: 'c', d: 'd' } };
 
+    // @ts-ignore
     traverse(trimmer, (hook: any) => [hook.params.query, hook.params.something])(hookBeforeArray);
 
     assert.deepEqual(hookBeforeArray, result);
@@ -104,6 +110,7 @@ describe('services traverse', () => {
     const obj: any = { query: { b: 'b  b' }, something: { c: 'c', d: 'd' } };
     const result = clone(obj);
 
+    // @ts-ignore
     traverse(trimmer, obj)(hookBeforeArray);
 
     assert.deepEqual(obj, result);
@@ -112,6 +119,6 @@ describe('services traverse', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

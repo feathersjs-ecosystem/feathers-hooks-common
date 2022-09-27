@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { lowerCase } from '../../src';
 
@@ -19,17 +18,17 @@ describe('services lowercase', () => {
           total: 2,
           data: [
             { first: 'John', last: 'Doe' },
-            { first: 'Jane', last: 'Doe' }
-          ]
-        }
+            { first: 'Jane', last: 'Doe' },
+          ],
+        },
       };
       hookFind = {
         type: 'after',
         method: 'find',
         result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' }
-        ]
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
     });
 
@@ -42,7 +41,7 @@ describe('services lowercase', () => {
       lowerCase('first', 'last')(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [
         { first: 'john', last: 'doe' },
-        { first: 'jane', last: 'doe' }
+        { first: 'jane', last: 'doe' },
       ]);
     });
 
@@ -50,7 +49,7 @@ describe('services lowercase', () => {
       lowerCase('first', 'last')(hookFind);
       assert.deepEqual(hookFind.result, [
         { first: 'john', last: 'doe' },
-        { first: 'jane', last: 'doe' }
+        { first: 'jane', last: 'doe' },
       ]);
     });
 
@@ -66,7 +65,11 @@ describe('services lowercase', () => {
     });
 
     it('does not throw if field is undefined', () => {
-      const hook: any = { type: 'before', method: 'create', data: { first: undefined, last: 'Doe' } };
+      const hook: any = {
+        type: 'before',
+        method: 'create',
+        data: { first: undefined, last: 'Doe' },
+      };
       lowerCase('first', 'last')(hook);
       assert.deepEqual(hook.data, { first: undefined, last: 'doe' });
     });
@@ -79,7 +82,9 @@ describe('services lowercase', () => {
 
     it('throws if field is not a string', () => {
       const hook: any = { type: 'before', method: 'create', data: { first: 1, last: 'Doe' } };
-      assert.throws(() => { lowerCase('first', 'last')(hook); });
+      assert.throws(() => {
+        lowerCase('first', 'last')(hook);
+      });
     });
   });
 
@@ -88,43 +93,48 @@ describe('services lowercase', () => {
       hookBefore = {
         type: 'before',
         method: 'create',
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
       };
     });
 
     it('prop with no dots', () => {
       lowerCase('dept')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'acct',
+      });
     });
 
     it('prop with 1 dot', () => {
       lowerCase('empl.status')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'aa' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'aa' },
+        dept: 'Acct',
+      });
     });
 
     it('prop with 2 dots', () => {
       lowerCase('empl.name.first')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'john', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'john', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing paths', () => {
       lowerCase('empl.xx.first')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing no dot path', () => {
       lowerCase('xx')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
   });
 });

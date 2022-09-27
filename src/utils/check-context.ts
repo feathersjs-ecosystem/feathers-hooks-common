@@ -1,14 +1,13 @@
 import type { HookContext } from '@feathersjs/feathers';
+import { methodNames } from '../types';
 import type { HookType, MethodName } from '../types';
-
-const stndMethods = ['find', 'get', 'create', 'update', 'patch', 'remove'];
 
 /**
  * Restrict a hook to run for certain methods and method types. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#checkcontext}
+ * @see https://hooks-common.feathersjs.com/utilities.html#checkcontext
  */
-export function checkContext (
-  context: HookContext,
+export function checkContext<H extends HookContext = HookContext>(
+  context: H,
   type?: HookType | HookType[] | null,
   methods?: MethodName | MethodName[] | null,
   label = 'anonymous'
@@ -20,13 +19,17 @@ export function checkContext (
     }
   }
 
-  if (!methods) { return; }
-  if (stndMethods.indexOf(context.method) === -1) { return; } // allow custom methods
+  if (!methods) {
+    return;
+  }
+  if (!methodNames.includes(context.method as any)) {
+    return;
+  } // allow custom methods
 
-  const myMethods = Array.isArray(methods) ? methods : [methods]; // safe enough for allowed values
+  const methodsArr = Array.isArray(methods) ? methods : [methods]; // safe enough for allowed values
 
-  if (myMethods.length > 0 && myMethods.indexOf(context.method) === -1) {
-    const msg = JSON.stringify(myMethods);
+  if (methodsArr.length > 0 && !methodsArr.includes(context.method as any)) {
+    const msg = JSON.stringify(methodsArr);
     throw new Error(`The '${label}' hook can only be used on the '${msg}' service method(s).`);
   }
 }

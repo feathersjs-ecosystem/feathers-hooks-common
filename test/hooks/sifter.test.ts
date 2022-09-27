@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 
 import sift from 'sift';
@@ -6,12 +5,10 @@ import { sifter } from '../../src';
 
 const dataCanada = [
   { name: 'john', address: { city: 'montreal', country: 'canada' } },
-  { name: 'david', address: { city: 'vancouver', country: 'canada' } }
+  { name: 'david', address: { city: 'vancouver', country: 'canada' } },
 ];
 
-const dataUsa = [
-  { name: 'marshall', address: { city: 'utah', country: 'usa' } }
-];
+const dataUsa = [{ name: 'marshall', address: { city: 'utah', country: 'usa' } }];
 
 const data = ([] as any[]).concat(dataCanada, dataUsa);
 
@@ -20,7 +17,7 @@ const origHook = { type: 'after', method: 'find', result: data };
 const origHookPaginated = {
   type: 'after',
   method: 'find',
-  result: { total: 1, limit: 10, skip: 0, data }
+  result: { total: 1, limit: 10, skip: 0, data },
 };
 
 const getCountry = (country: any) => (_hook: any) => sift({ 'address.country': country });
@@ -57,6 +54,6 @@ describe('services shifter', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

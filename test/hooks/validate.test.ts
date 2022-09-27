@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import { validate } from '../../src';
-import errors from '@feathersjs/errors';
-const { BadRequest } = errors;
+import { BadRequest } from '@feathersjs/errors';
 
 let fcnSync: any;
 let fcnPromise: any;
@@ -54,21 +53,22 @@ describe('services validate', () => {
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             values.email.trim()
               ? resolve()
-              // @ts-ignore
-              : reject(new BadRequest({ email: 'Email is invalid' }));
+              : // @ts-ignore
+                reject(new BadRequest({ email: 'Email is invalid' }));
           }, 100);
         });
       };
 
-      fcnPromiseSanitize = (values: any) => new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          values.email.trim()
-            ? resolve(Object.assign(values, { email: values.email.trim() }))
-            // @ts-ignore
-            : reject(new BadRequest({ email: 'Email is invalid' }));
-        }, 100);
-      });
+      fcnPromiseSanitize = (values: any) =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            values.email.trim()
+              ? resolve(Object.assign(values, { email: values.email.trim() }))
+              : // @ts-ignore
+                reject(new BadRequest({ email: 'Email is invalid' }));
+          }, 100);
+        });
     });
 
     it('test passes on correct data', (next: any) => {
@@ -105,6 +105,6 @@ describe('services validate', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

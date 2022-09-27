@@ -1,6 +1,5 @@
-
 import { assert } from 'chai';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import BatchLoader from '@feathers-plus/batch-loader';
 // @ts-ignore
 import CacheMap from '@feathers-plus/cache';
@@ -14,7 +13,7 @@ const postsStoreInit = [
   { id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] },
   { id: 2, body: 'Marshall post', userId: 102, starIds: [101, 103, 104] },
   { id: 3, body: 'Barbara post', userId: 103 },
-  { id: 4, body: 'Aubree post', userId: 104 }
+  { id: 4, body: 'Aubree post', userId: 104 },
 ];
 
 const usersStoreStartId = 105;
@@ -22,7 +21,7 @@ const usersStoreInit = [
   { id: 101, name: 'John' },
   { id: 102, name: 'Marshall' },
   { id: 103, name: 'Barbara' },
-  { id: 104, name: 'Aubree' }
+  { id: 104, name: 'Aubree' },
 ];
 
 let app: any;
@@ -34,33 +33,36 @@ let joinStarersCount: any;
 let userBatchLoaderCount: any;
 
 const cacheMapUsers = CacheMap({ max: 100 });
-const userBatchLoader = new BatchLoader(async (keys: any, context: any) => {
-  userBatchLoaderCount += 1;
-  const result: any = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
-  return getResultsByKey(keys, result, (user: any) => user.id, '!');
-},
-{ context: {}, cacheMap: cacheMapUsers }
+const userBatchLoader = new BatchLoader(
+  async (keys: any, context: any) => {
+    userBatchLoaderCount += 1;
+    const result: any = await users.find(
+      makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+    );
+    return getResultsByKey(keys, result, (user: any) => user.id, '!');
+  },
+  { context: {}, cacheMap: cacheMapUsers }
 );
 
-function services (this: any) {
+function services(this: any) {
   const app = this;
   app.configure(usersService);
   app.configure(postsService);
 }
 
-function postsService (this: any) {
+function postsService(this: any) {
   const app = this;
   const store = clone(postsStoreInit);
 
   class PostsService extends Service {
-    foo: boolean
+    foo: boolean;
 
-    constructor (...args: any[]) {
+    constructor(...args: any[]) {
       super(...args);
       this.foo = true;
     }
 
-    get (...args: any[]) {
+    get(...args: any[]) {
       // @ts-ignore
       return super.get(...args);
     }
@@ -70,23 +72,23 @@ function postsService (this: any) {
 
   app.service('posts').hooks({
     before: {
-      all: []
-    }
+      all: [],
+    },
   });
 }
 
-function usersService (this: any) {
+function usersService(this: any) {
   const app = this;
   const store = clone(usersStoreInit);
 
   class UsersService extends Service {
-    junk: boolean
-    constructor (...args: any[]) {
+    junk: boolean;
+    constructor(...args: any[]) {
       super(...args);
       this.junk = true;
     }
 
-    get (...args: any[]) {
+    get(...args: any[]) {
       // @ts-ignore
       return super.get(...args);
     }
@@ -96,18 +98,17 @@ function usersService (this: any) {
 
   app.service('users').hooks({
     before: {
-      all: iff(enableCache, cache(cacheMapUsers))
+      all: iff(enableCache, cache(cacheMapUsers)),
     },
     after: {
-      all: iff(enableCache, cache(cacheMapUsers))
-    }
+      all: iff(enableCache, cache(cacheMapUsers)),
+    },
   });
 }
 
 describe('services fastJoin & cache', () => {
   beforeEach(() => {
-    app = feathers()
-      .configure(services);
+    app = feathers().configure(services);
 
     posts = app.service('posts');
     users = app.service('users');
@@ -136,20 +137,22 @@ describe('services fastJoin & cache', () => {
 
       const result: any = {
         method: 'find',
-        result:
-        [{
-          id: 1,
-          body: 'John post',
-          userId: 101,
-          starIds: [102, 103, 104],
-          author: { id: 101, name: 'John' },
-          starers:
-          [{ id: 102, name: 'Marshall' },
-            { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' }]
-        }],
+        result: [
+          {
+            id: 1,
+            body: 'John post',
+            userId: 101,
+            starIds: [102, 103, 104],
+            author: { id: 101, name: 'John' },
+            starers: [
+              { id: 102, name: 'Marshall' },
+              { id: 103, name: 'Barbara' },
+              { id: 104, name: 'Aubree' },
+            ],
+          },
+        ],
         params: {},
-        _loaders: undefined
+        _loaders: undefined,
       };
 
       assert.deepEqual(context, result);
@@ -160,20 +163,22 @@ describe('services fastJoin & cache', () => {
 
       const result: any = {
         method: 'find',
-        result:
-        [{
-          id: 1,
-          body: 'John post',
-          userId: 101,
-          starIds: [102, 103, 104],
-          author: { id: 101, name: 'John' },
-          starers:
-          [{ id: 102, name: 'Marshall' },
-            { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' }]
-        }],
+        result: [
+          {
+            id: 1,
+            body: 'John post',
+            userId: 101,
+            starIds: [102, 103, 104],
+            author: { id: 101, name: 'John' },
+            starers: [
+              { id: 102, name: 'Marshall' },
+              { id: 103, name: 'Barbara' },
+              { id: 104, name: 'Aubree' },
+            ],
+          },
+        ],
         params: {},
-        _loaders: undefined
+        _loaders: undefined,
       };
 
       assert.deepEqual(context, result);
@@ -191,20 +196,22 @@ describe('services fastJoin & cache', () => {
 
       const result: any = {
         method: 'find',
-        result:
-        [{
-          id: 1,
-          body: 'John post',
-          userId: 101,
-          starIds: [102, 103, 104],
-          author: { id: 101, name: 'John' },
-          starers:
-          [{ id: 102, name: 'Marshall' },
-            { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' }]
-        }],
+        result: [
+          {
+            id: 1,
+            body: 'John post',
+            userId: 101,
+            starIds: [102, 103, 104],
+            author: { id: 101, name: 'John' },
+            starers: [
+              { id: 102, name: 'Marshall' },
+              { id: 103, name: 'Barbara' },
+              { id: 104, name: 'Aubree' },
+            ],
+          },
+        ],
         params: {},
-        _loaders: undefined
+        _loaders: undefined,
       };
 
       assert.deepEqual(context, result);
@@ -217,20 +224,22 @@ describe('services fastJoin & cache', () => {
 
       const result: any = {
         method: 'find',
-        result:
-        [{
-          id: 1,
-          body: 'John post',
-          userId: 101,
-          starIds: [102, 103, 104],
-          author: { id: 101, name: 'John' },
-          starers:
-          [{ id: 102, name: 'Marshall' },
-            { id: 103, name: 'Barbara' },
-            { id: 104, name: 'Aubree' }]
-        }],
+        result: [
+          {
+            id: 1,
+            body: 'John post',
+            userId: 101,
+            starIds: [102, 103, 104],
+            author: { id: 101, name: 'John' },
+            starers: [
+              { id: 102, name: 'Marshall' },
+              { id: 103, name: 'Barbara' },
+              { id: 104, name: 'Aubree' },
+            ],
+          },
+        ],
         params: {},
-        _loaders: undefined
+        _loaders: undefined,
       };
       // First call
       let context = await ex8b();
@@ -257,16 +266,19 @@ describe('services fastJoin & cache', () => {
   });
 });
 
-async function ex8 () {
+async function ex8() {
   const postResolvers = {
     before: (context: any) => {
       context._loaders = { user: {} };
 
-      context._loaders.user.id = new BatchLoader(async (keys: any, context: any) => {
-        const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
-        return getResultsByKey(keys, result, (user: any) => user.id, '!');
-      },
-      { context }
+      context._loaders.user.id = new BatchLoader(
+        async (keys: any, context: any) => {
+          const result = await users.find(
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+          );
+          return getResultsByKey(keys, result, (user: any) => user.id, '!');
+        },
+        { context }
       );
     },
 
@@ -278,27 +290,34 @@ async function ex8 () {
       starers: () => async (post: any, context: any) => {
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
-      }
-    }
+      },
+    },
   };
 
-  const context: any = { method: 'find', result: clone(await posts.find({ query: { id: 1 } })), params: {} };
+  const context: any = {
+    method: 'find',
+    result: clone(await posts.find({ query: { id: 1 } })),
+    params: {},
+  };
 
   return fastJoin(postResolvers)(context);
 }
 
-async function ex8a () {
+async function ex8a() {
   const cacheMap = CacheMap({ max: 100 });
 
   const postResolvers = {
     before: (context: any) => {
       context._loaders = { user: {} };
 
-      context._loaders.user.id = new BatchLoader(async (keys: any, context: any) => {
-        const result = await users.find(makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }));
-        return getResultsByKey(keys, result, (user: any) => user.id, '!');
-      },
-      { context, cacheMap }
+      context._loaders.user.id = new BatchLoader(
+        async (keys: any, context: any) => {
+          const result = await users.find(
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+          );
+          return getResultsByKey(keys, result, (user: any) => user.id, '!');
+        },
+        { context, cacheMap }
       );
     },
 
@@ -310,16 +329,20 @@ async function ex8a () {
       starers: () => async (post: any, context: any) => {
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
-      }
-    }
+      },
+    },
   };
 
-  const context: any = { method: 'find', result: clone(await posts.find({ query: { id: 1 } })), params: {} };
+  const context: any = {
+    method: 'find',
+    result: clone(await posts.find({ query: { id: 1 } })),
+    params: {},
+  };
 
   return fastJoin(postResolvers)(context);
 }
 
-async function ex8b () {
+async function ex8b() {
   const postResolvers = {
     before: (context: any) => {
       context._loaders = { user: {} };
@@ -337,15 +360,19 @@ async function ex8b () {
         joinStarersCount += 1;
         if (!post.starIds) return;
         post.starers = await context._loaders.user.id.loadMany(post.starIds);
-      }
-    }
+      },
+    },
   };
 
-  const context: any = { method: 'find', result: clone(await posts.find({ query: { id: 1 } })), params: {} };
+  const context: any = {
+    method: 'find',
+    result: clone(await posts.find({ query: { id: 1 } })),
+    params: {},
+  };
 
   return fastJoin(postResolvers)(context);
 }
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

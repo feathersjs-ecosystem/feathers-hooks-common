@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import * as allExported from '../src';
 
@@ -21,6 +20,7 @@ const members = [
   'fastJoin',
   'fgraphql',
   'getItems',
+  'hookTypes',
   'isProvider',
   'keep',
   'keepInArray',
@@ -28,6 +28,7 @@ const members = [
   'keepQueryInArray',
   'lowerCase',
   'makeCallingParams',
+  'methodNames',
   'mongoKeys',
   'paramsForServer',
   'paramsFromClient',
@@ -58,14 +59,7 @@ const members = [
 ].sort();
 
 describe('services exposed hooks', () => {
-  it('expected hooks are exposed', () => {
-
-  });
-
   it('no unexpected hooks', () => {
-    assert.deepEqual(
-      Object.keys(allExported).sort(),
-      [].concat(members).sort()
-    );
+    assert.deepEqual(Object.keys(allExported).sort(), [].concat(members).sort());
   });
 });

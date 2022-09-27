@@ -50,12 +50,13 @@ const hookFcnSync = (hook: HookContext) => {
   return hook;
 };
 
-const hookFcnAsync = (hook: HookContext) => new Promise<HookContext>(resolve => {
-  hookFcnAsyncCalls = +1;
-  hook.data.first = hook.data.first.toLowerCase();
+const hookFcnAsync = (hook: HookContext) =>
+  new Promise<HookContext>(resolve => {
+    hookFcnAsyncCalls = +1;
+    hook.data.first = hook.data.first.toLowerCase();
 
-  resolve(hook);
-});
+    resolve(hook);
+  });
 
 const hookFcn = (hook: any) => {
   hookFcnCalls = +1;
@@ -73,8 +74,11 @@ describe('services when - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if truthy non-function', () => {
-    // @ts-ignore
-    when('a', hookFcnSync)(hook)
+    when(
+      // @ts-ignore
+      'a',
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -97,8 +101,11 @@ describe('services when - sync predicate, sync hook', () => {
   });
 
   it('calls sync hook function if sync predicate truthy', () => {
-    // @ts-ignore
-    when(() => 'a', hookFcnSync)(hook)
+    when(
+      // @ts-ignore
+      () => 'a',
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -144,7 +151,6 @@ describe('services when - sync predicate, async hook', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 
@@ -173,7 +179,6 @@ describe('services when - sync predicate, async hook', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 });
@@ -200,7 +205,6 @@ describe('services when - async predicate, sync hook', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 
@@ -217,7 +221,6 @@ describe('services when - async predicate, sync hook', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 });
@@ -276,8 +279,11 @@ describe('services when - sync predicate', () => {
   });
 
   it('does not need to access hook', () => {
-    // @ts-ignore
-    when(() => 'a', hookFcnSync)(hook)
+    when(
+      // @ts-ignore
+      () => 'a',
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -287,7 +293,10 @@ describe('services when - sync predicate', () => {
   });
 
   it('is passed hook as param', () => {
-    when(predicateSync, hookFcnSync)(hook)
+    when(
+      predicateSync,
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(predicateHook, hookBefore);
@@ -298,7 +307,10 @@ describe('services when - sync predicate', () => {
   });
 
   it('a higher order predicate can pass more options', () => {
-    when(predicateSync2({ z: 'z' }), hookFcnSync)(hook)
+    when(
+      predicateSync2({ z: 'z' }),
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(predicateOptions, { z: 'z' });
@@ -337,7 +349,6 @@ describe('services when - async predicate', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 
@@ -358,7 +369,6 @@ describe('services when - async predicate', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 
@@ -378,7 +388,6 @@ describe('services when - async predicate', () => {
       });
     } else {
       assert.fail(true, false, 'promise unexpectedly not returned');
-
     }
   });
 });
@@ -393,22 +402,12 @@ describe('services when - runs multiple hooks', () => {
   });
 
   it('runs successfully', (done: any) => {
-    when(true, hookFcnSync, hookFcnAsync, hookFcn)(hook)
-      // @ts-ignore
-      .then((hook: any) => {
-        assert.deepEqual(hook, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCalls, 1);
-        assert.deepEqual(hook, hookAfter);
-
-        done();
-      });
-  });
-
-  it('runs successfully with the array syntax', (done: any) => {
-    // @ts-ignore
-    when(true, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
+    when(
+      true,
+      hookFcnSync,
+      hookFcnAsync,
+      hookFcn
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -424,6 +423,6 @@ describe('services when - runs multiple hooks', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

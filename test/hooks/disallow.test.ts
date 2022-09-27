@@ -1,8 +1,6 @@
 import { assert } from 'chai';
 
-import {
-  disallow
-} from '../../src';
+import { disallow } from '../../src';
 
 describe('services disallow', () => {
   describe('disallow is compatible with .disable (without predicate)', () => {
@@ -17,34 +15,52 @@ describe('services disallow', () => {
     });
 
     it('disables all providers with no param', () => {
-      assert.throws(() => { disallow()(hookSocketio); });
-      assert.throws(() => { disallow()(hookServer); });
+      assert.throws(() => {
+        disallow()(hookSocketio);
+      });
+      assert.throws(() => {
+        disallow()(hookServer);
+      });
     });
 
     it('disables a provider', () => {
-      assert.throws(() => { disallow('socketio')(hookSocketio); });
+      assert.throws(() => {
+        disallow('socketio')(hookSocketio);
+      });
     });
 
     it('does not disable the server', () => {
       disallow('socketio')(hookServer);
-      assert.throws(() => { disallow('socketio')(hookSocketio); });
+      assert.throws(() => {
+        disallow('socketio')(hookSocketio);
+      });
     });
 
     it('does not disable another provider', () => {
       disallow('socketio')(hookRest);
-      assert.throws(() => { disallow('socketio')(hookSocketio); });
+      assert.throws(() => {
+        disallow('socketio')(hookSocketio);
+      });
     });
 
     it('disables multiple providers', () => {
       disallow('socketio', 'rest')(hookServer);
-      assert.throws(() => { disallow('socketio', 'rest')(hookSocketio); });
-      assert.throws(() => { disallow('socketio', 'rest')(hookRest); });
+      assert.throws(() => {
+        disallow('socketio', 'rest')(hookSocketio);
+      });
+      assert.throws(() => {
+        disallow('socketio', 'rest')(hookRest);
+      });
     });
 
     it('"external" disables all external providers', () => {
       disallow('socketio', 'rest')(hookServer);
-      assert.throws(() => { disallow('socketio', 'rest')(hookSocketio); });
-      assert.throws(() => { disallow('socketio', 'rest')(hookRest); });
+      assert.throws(() => {
+        disallow('socketio', 'rest')(hookSocketio);
+      });
+      assert.throws(() => {
+        disallow('socketio', 'rest')(hookRest);
+      });
     });
   });
 
@@ -74,7 +90,9 @@ describe('services disallow', () => {
       const result = disallow('rest')(hook);
       assert.equal(result, undefined);
 
-      assert.throws(() => { disallow('socketio')(hook); });
+      assert.throws(() => {
+        disallow('socketio')(hook);
+      });
     });
 
     it('finds provider with 2 args', () => {
@@ -83,7 +101,9 @@ describe('services disallow', () => {
       const result = disallow('rest', 'server')(hook);
       assert.equal(result, undefined);
 
-      assert.throws(() => { disallow('rest', 'socketio')(hook); });
+      assert.throws(() => {
+        disallow('rest', 'socketio')(hook);
+      });
     });
 
     it('finds server', () => {
@@ -92,7 +112,9 @@ describe('services disallow', () => {
       const result = disallow('rest', 'socketio', 'external')(hook);
       assert.equal(result, undefined);
 
-      assert.throws(() => { disallow('rest', 'socketio', 'server')(hook); });
+      assert.throws(() => {
+        disallow('rest', 'socketio', 'server')(hook);
+      });
     });
 
     it('finds external', () => {
@@ -101,7 +123,9 @@ describe('services disallow', () => {
       const result = disallow('rest', 'server')(hook);
       assert.equal(result, undefined);
 
-      assert.throws(() => { disallow('rest', 'server', 'external')(hook); });
+      assert.throws(() => {
+        disallow('rest', 'server', 'external')(hook);
+      });
     });
 
     it('succeeds if not provider', () => {
@@ -129,6 +153,6 @@ describe('services disallow', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

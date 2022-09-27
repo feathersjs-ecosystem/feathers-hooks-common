@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { paramsFromClient } from '../../src';
 
@@ -23,9 +22,9 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
-          }
-        }
+            dept: 'b',
+          },
+        },
       };
       const hook1 = paramsFromClient('populate', 'serialize')(hook);
 
@@ -33,9 +32,9 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
-          }
-        }
+            dept: 'b',
+          },
+        },
       } as any);
     });
 
@@ -45,9 +44,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: 'z'
-          }
-        }
+            $client: 'z',
+          },
+        },
       };
 
       const hook1 = paramsFromClient('populate', 'serialize')(hook);
@@ -57,9 +56,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: 'z'
-          }
-        }
+            $client: 'z',
+          },
+        },
       } as any);
     });
   });
@@ -71,9 +70,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: { populate: 'aa', serialize: 'bb' }
-          }
-        }
+            $client: { populate: 'aa', serialize: 'bb' },
+          },
+        },
       };
 
       const hook1 = paramsFromClient()(hook);
@@ -82,9 +81,9 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
-          }
-        }
+            dept: 'b',
+          },
+        },
       } as any);
     });
 
@@ -94,9 +93,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: { populate: 'aa', serialize: 'bb' }
-          }
-        }
+            $client: { populate: 'aa', serialize: 'bb' },
+          },
+        },
       };
 
       const hook1 = paramsFromClient('populate', 'serialize')(hook);
@@ -105,11 +104,11 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
+            dept: 'b',
           },
           populate: 'aa',
-          serialize: 'bb'
-        }
+          serialize: 'bb',
+        },
       } as any);
     });
 
@@ -119,9 +118,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: { populate: 'aa', serialize: 'bb' }
-          }
-        }
+            $client: { populate: 'aa', serialize: 'bb' },
+          },
+        },
       };
 
       const hook1 = paramsFromClient('a', 'populate', 'b', 'serialize', 'q', 'r')(hook);
@@ -130,11 +129,11 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
+            dept: 'b',
           },
           populate: 'aa',
-          serialize: 'bb'
-        }
+          serialize: 'bb',
+        },
       } as any);
     });
 
@@ -144,9 +143,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: { populate: 'aa', serialize: 'bb' }
-          }
-        }
+            $client: { populate: 'aa', serialize: 'bb' },
+          },
+        },
       };
 
       const hook1 = paramsFromClient('populate')(hook);
@@ -155,10 +154,10 @@ describe('services params-from-client', () => {
         params: {
           query: {
             div: 'a',
-            dept: 'b'
+            dept: 'b',
           },
-          populate: 'aa'
-        }
+          populate: 'aa',
+        },
       } as any);
     });
 
@@ -168,9 +167,9 @@ describe('services params-from-client', () => {
           query: {
             div: 'a',
             dept: 'b',
-            $client: { populate: 'aa', serialize: 'bb' }
-          }
-        }
+            $client: { populate: 'aa', serialize: 'bb' },
+          },
+        },
       };
 
       const hook1 = paramsFromClient('q', 'q')(hook);
@@ -178,9 +177,10 @@ describe('services params-from-client', () => {
       assert.deepEqual(hook1, {
         params: {
           query: {
-            div: 'a', dept: 'b'
-          }
-        }
+            div: 'a',
+            dept: 'b',
+          },
+        },
       } as any);
     });
   });

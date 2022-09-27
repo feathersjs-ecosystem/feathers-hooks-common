@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import _set from 'lodash/set.js';
 
@@ -23,9 +22,11 @@ let provider: any;
       app.service('posts').hooks({
         before: {
           all: [
-            (hook: any) => { provider = hook.params.provider; }
-          ]
-        }
+            (hook: any) => {
+              provider = hook.params.provider;
+            },
+          ],
+        },
       });
 
       hookAfter = {
@@ -33,14 +34,14 @@ let provider: any;
         method: 'create',
         params: { provider: 'rest' },
         path: 'recommendations',
-        result: recommendation['1']
+        result: recommendation['1'],
       };
       hookAfterArray = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
         path: 'recommendations',
-        result: [recommendation['1'], recommendation['2'], recommendation['3']]
+        result: [recommendation['1'], recommendation['2'], recommendation['3']],
       };
     });
 
@@ -54,16 +55,18 @@ let provider: any;
             service: 'posts',
             nameAs: 'post',
             parentField: 'postId', // we have no test for dot notation 'cause no such data
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('post');
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('post');
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('saves in nameAs using dot notation', () => {
@@ -75,16 +78,18 @@ let provider: any;
             service: 'posts',
             nameAs: 'post.items',
             parentField: 'postId', // we have no test for dot notation 'cause no such data
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema })(hook)
-        // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('post.items');
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('post.items');
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('saves in service as default', () => {
@@ -95,16 +100,18 @@ let provider: any;
           include: makeInclude(type, {
             service: 'posts',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('ignores undefined parentField', () => {
@@ -117,21 +124,23 @@ let provider: any;
           include: makeInclude(type, {
             service: 'posts',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
 
-            delete expected.postId;
-            delete expected.posts;
-            expected._include = [];
+              delete expected.postId;
+              delete expected.posts;
+              expected._include = [];
 
-            assert.deepEqual(hook1.result, expected);
-          });
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('uses asArray', () => {
@@ -143,16 +152,18 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            asArray: true
-          })
+            asArray: true,
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts', true);
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts', true);
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('Stores null when no joined records and !asArray', () => {
@@ -165,20 +176,22 @@ let provider: any;
           include: makeInclude(type, {
             service: 'posts',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
 
-            expected.postId = '999';
-            expected.posts = null;
+              expected.postId = '999';
+              expected.posts = null;
 
-            assert.deepEqual(hook1.result, expected);
-          });
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('Stores [] when no joined records and asArray', () => {
@@ -192,20 +205,22 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            asArray: true
-          })
+            asArray: true,
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
 
-            expected.postId = '999';
-            expected.posts = [];
+              expected.postId = '999';
+              expected.posts = [];
 
-            assert.deepEqual(hook1.result, expected);
-          });
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('query overridden by childField', () => {
@@ -217,16 +232,18 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' }
-          })
+            query: { id: 'aaaaaa' },
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('Provider in joins defaults to method call', () => {
@@ -238,17 +255,19 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' }
-          })
+            query: { id: 'aaaaaa' },
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, 'rest'); // Feathers default if not from WebSocket
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+              assert.equal(provider, 'rest'); // Feathers default if not from WebSocket
+            })
+        );
       });
 
       it('Provider in joins can be overridden', () => {
@@ -261,17 +280,19 @@ let provider: any;
             parentField: 'postId',
             childField: 'id',
             query: { id: 'aaaaaa' },
-            provider: undefined
-          })
+            provider: undefined,
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, undefined);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+              assert.equal(provider, undefined);
+            })
+        );
       });
 
       it('Provider can be passed down from top level', () => {
@@ -284,17 +305,19 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' }
-          })
+            query: { id: 'aaaaaa' },
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, 'global');
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+              assert.equal(provider, 'global');
+            })
+        );
       });
 
       it('Global provider can be overwritten at schema level', () => {
@@ -308,17 +331,19 @@ let provider: any;
             parentField: 'postId',
             childField: 'id',
             query: { id: 'aaaaaa' },
-            provider: 'socketio'
-          })
+            provider: 'socketio',
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, 'socketio');
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+              assert.equal(provider, 'socketio');
+            })
+        );
       });
 
       it('Falsy providers override default provider', () => {
@@ -332,17 +357,19 @@ let provider: any;
             service: 'posts',
             parentField: 'postId',
             childField: 'id',
-            query: { id: 'aaaaaa' }
-          })
+            query: { id: 'aaaaaa' },
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-            assert.equal(provider, undefined);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+              assert.equal(provider, undefined);
+            })
+        );
       });
 
       it('childField overridden by select', () => {
@@ -355,17 +382,19 @@ let provider: any;
             parentField: 'updatedAt',
             childField: 'id',
             select: (_hook: any, parent: any) => ({
-              id: parent.postId
-            })
-          })
+              id: parent.postId,
+            }),
+          }),
         };
 
-        return populate({ schema })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const expected = recommendationPosts('posts');
-            assert.deepEqual(hook1.result, expected);
-          });
+        return (
+          populate({ schema })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const expected = recommendationPosts('posts');
+              assert.deepEqual(hook1.result, expected);
+            })
+        );
       });
 
       it('checks permissions', () => {
@@ -385,23 +414,25 @@ let provider: any;
             nameAs: 'post',
             parentField: 'postId',
             childField: 'id',
-            permissions: 'for posts'
-          })
+            permissions: 'for posts',
+          }),
         };
 
         // @ts-ignore
-        return populate({ schema, checkPermissions })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            let expected = recommendationPosts('post');
-            assert.deepEqual(hook1.result, expected);
+        return (
+          populate({ schema, checkPermissions })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              let expected = recommendationPosts('post');
+              assert.deepEqual(hook1.result, expected);
 
-            expected = [
-              { service: 'recommendations', permissions: 'for root', depth: 0 },
-              { service: 'posts', permissions: 'for posts', depth: 1 }
-            ];
-            assert.deepEqual(spy, expected);
-          });
+              expected = [
+                { service: 'recommendations', permissions: 'for root', depth: 0 },
+                { service: 'posts', permissions: 'for posts', depth: 1 },
+              ];
+              assert.deepEqual(spy, expected);
+            })
+        );
       });
 
       it('throws on invalid permissions', () => {
@@ -419,15 +450,21 @@ let provider: any;
             nameAs: 'post',
             parentField: 'postId',
             childField: 'id',
-            permissions: 'for posts'
-          })
+            permissions: 'for posts',
+          }),
         };
 
         // @ts-ignore
-        return populate({ schema, checkPermissions })(hook)
-          // @ts-ignore
-          .then(() => { throw new Error('was not supposed to succeed'); })
-          .catch((err: any) => { assert.notEqual(err, undefined); });
+        return (
+          populate({ schema, checkPermissions })(hook)
+            // @ts-ignore
+            .then(() => {
+              throw new Error('was not supposed to succeed');
+            })
+            .catch((err: any) => {
+              assert.notEqual(err, undefined);
+            })
+        );
       });
 
       it('stores elapsed time', () => {
@@ -439,18 +476,20 @@ let provider: any;
             service: 'posts',
             nameAs: 'post',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const elapsed = hook1.result._elapsed;
-            assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 999);
-            assert.isAtLeast(elapsed.total, elapsed.post);
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const elapsed = hook1.result._elapsed;
+              assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
+              assert.isAbove(elapsed.total, 999);
+              assert.isAtLeast(elapsed.total, elapsed.post);
+            })
+        );
       });
 
       it('allow non related field joins if query', () => {
@@ -461,18 +500,20 @@ let provider: any;
           include: makeInclude(type, {
             service: 'posts',
             nameAs: 'post',
-            query: { id: hookAfter.result.postId }
-          })
+            query: { id: hookAfter.result.postId },
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const elapsed = hook1.result._elapsed;
-            assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 999);
-            assert.isAtLeast(elapsed.total, elapsed.post);
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const elapsed = hook1.result._elapsed;
+              assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
+              assert.isAbove(elapsed.total, 999);
+              assert.isAtLeast(elapsed.total, elapsed.post);
+            })
+        );
       });
 
       it('allow non related field joins if select', () => {
@@ -484,19 +525,21 @@ let provider: any;
             service: 'posts',
             nameAs: 'post',
             select: (_hook: any, parentItem: any) => ({
-              id: parentItem.postId
-            })
-          })
+              id: parentItem.postId,
+            }),
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            const elapsed = hook1.result._elapsed;
-            assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
-            assert.isAbove(elapsed.total, 999);
-            assert.isAtLeast(elapsed.total, elapsed.post);
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              const elapsed = hook1.result._elapsed;
+              assert.deepEqual(Object.keys(elapsed), ['post', 'total']);
+              assert.isAbove(elapsed.total, 999);
+              assert.isAtLeast(elapsed.total, elapsed.post);
+            })
+        );
       });
 
       it('throws if no parentField option in related field join', () => {
@@ -507,18 +550,20 @@ let provider: any;
           include: makeInclude(type, {
             service: 'posts',
             nameAs: 'post',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then(() => {
-            assert(false, 'unexpectedly succeeeded');
-          })
-          .catch((err: any) => {
-            assert.isObject(err, 'no error object');
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then(() => {
+              assert(false, 'unexpectedly succeeeded');
+            })
+            .catch((err: any) => {
+              assert.isObject(err, 'no error object');
+            })
+        );
       });
 
       it('throws if no parentField defined in related field join', () => {
@@ -531,18 +576,20 @@ let provider: any;
             service: 'posts',
             nameAs: 'post',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then(() => {
-            assert(false, 'unexpectedly succeeded');
-          })
-          .catch((err: any) => {
-            assert.isObject(err, 'no error object');
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then(() => {
+              assert(false, 'unexpectedly succeeded');
+            })
+            .catch((err: any) => {
+              assert.isObject(err, 'no error object');
+            })
+        );
       });
     });
 
@@ -556,15 +603,17 @@ let provider: any;
             service: 'posts',
             nameAs: 'post',
             parentField: 'postId',
-            childField: 'id'
-          })
+            childField: 'id',
+          }),
         };
 
-        return populate({ schema, profile: true })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            assert.equal(hook1.result.length, 3);
-          });
+        return (
+          populate({ schema, profile: true })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              assert.equal(hook1.result.length, 3);
+            })
+        );
       });
     });
 
@@ -577,17 +626,19 @@ let provider: any;
           service: 'posts',
           nameAs: 'post',
           parentField: 'postId',
-          childField: 'id'
+          childField: 'id',
         });
 
         const include = makeInclude(type, includeOptions());
         const expected = makeInclude(type, includeOptions());
 
-        return populate({ schema: { include }, profile: true })(hook)
-          // @ts-ignore
-          .then((hook1: any) => {
-            assert.deepEqual(include, expected);
-          });
+        return (
+          populate({ schema: { include }, profile: true })(hook)
+            // @ts-ignore
+            .then((hook1: any) => {
+              assert.deepEqual(include, expected);
+            })
+        );
       });
     });
   });
@@ -595,11 +646,11 @@ let provider: any;
 
 // Helpers
 
-function makeInclude (type: any, obj: any) {
+function makeInclude(type: any, obj: any) {
   return type === 'obj' ? obj : [obj];
 }
 
-function recommendationPosts (nameAs: any, asArray?: any, recommendation?: any, posts?: any) {
+function recommendationPosts(nameAs: any, asArray?: any, recommendation?: any, posts?: any) {
   recommendation = recommendation || clone(getInitDb('recommendation').store['1']);
   posts = posts || clone(getInitDb('posts').store['1']);
 
@@ -612,6 +663,6 @@ function recommendationPosts (nameAs: any, asArray?: any, recommendation?: any, 
   return expected;
 }
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

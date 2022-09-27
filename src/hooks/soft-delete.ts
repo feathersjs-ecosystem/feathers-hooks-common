@@ -1,7 +1,15 @@
-import errors from '@feathersjs/errors';
-const { GeneralError } = errors;
-import type { SoftDeleteOptions } from '../types';
+import { GeneralError } from '@feathersjs/errors';
+import type { HookContext } from '@feathersjs/feathers';
 import { checkContext } from '../utils/check-context';
+
+export type SoftDeleteOptionFunction<H extends HookContext = HookContext> = (
+  context?: H
+) => Promise<{ [key: string]: any }>;
+
+export interface SoftDeleteOptions<H extends HookContext = HookContext> {
+  deletedQuery?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
+  removeData?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
+}
 
 const defaultQuery = { deleted: { $ne: true } };
 const defaultData = { deleted: true };
@@ -15,12 +23,13 @@ const getValue = (value: any, ...args: any[]) => {
 /**
  * Allow to mark items as deleted instead of removing them.
  */
-export function softDelete ({
+export function softDelete<H extends HookContext = HookContext>({
   deletedQuery = defaultQuery,
-  removeData = defaultData
-}: SoftDeleteOptions = {}) {
-  return async (context: any) => {
+  removeData = defaultData,
+}: SoftDeleteOptions<H> = {}) {
+  return async (context: H) => {
     const { service, method, params, app } = context;
+    // @ts-ignore
     const { disableSoftDelete, query = {} } = params;
 
     if (app.version < '4.0.0') {

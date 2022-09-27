@@ -1,9 +1,6 @@
-
 import { assert } from 'chai';
 
-import {
-  checkContext
-} from '../../src';
+import { checkContext } from '../../src';
 
 describe('util checkContext', () => {
   var hook: any; // eslint-disable-line no-var
@@ -23,7 +20,9 @@ describe('util checkContext', () => {
 
   it('handles unexpected type', () => {
     hook.type = 'after';
-    assert.throws(() => { checkContext(hook, 'before'); });
+    assert.throws(() => {
+      checkContext(hook, 'before');
+    });
   });
 
   it('handles undefined type', () => {
@@ -43,7 +42,9 @@ describe('util checkContext', () => {
 
   it('handles unexpected type as array', () => {
     hook.type = 'error';
-    assert.throws(() => { checkContext(hook, ['before', 'after']); });
+    assert.throws(() => {
+      checkContext(hook, ['before', 'after']);
+    });
   });
 
   it('handles expected method as string', () => {
@@ -53,7 +54,9 @@ describe('util checkContext', () => {
 
   it('handles unexpected method as string', () => {
     hook.method = 'patch';
-    assert.throws(() => { checkContext(hook, null, 'create'); });
+    assert.throws(() => {
+      checkContext(hook, null, 'create');
+    });
   });
 
   it('handles expected method as array', () => {
@@ -64,8 +67,12 @@ describe('util checkContext', () => {
 
   it('handles unexpected method as array', () => {
     hook.method = 'patch';
-    assert.throws(() => { checkContext(hook, null, ['create']); });
-    assert.throws(() => { checkContext(hook, null, ['create', 'update', 'remove']); });
+    assert.throws(() => {
+      checkContext(hook, null, ['create']);
+    });
+    assert.throws(() => {
+      checkContext(hook, null, ['create', 'update', 'remove']);
+    });
   });
 
   it('handles undefined method', () => {

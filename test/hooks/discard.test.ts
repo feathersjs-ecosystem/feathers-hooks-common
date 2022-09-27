@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import * as hooks from '../../src';
 
@@ -14,13 +13,13 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' }
+        data: { first: 'John', last: 'Doe' },
       };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { first: 'Jane', last: 'Doe' }
+        result: { first: 'Jane', last: 'Doe' },
       };
       hookFindPaginate = {
         type: 'after',
@@ -30,9 +29,9 @@ describe('services discard', () => {
           total: 2,
           data: [
             { first: 'John', last: 'Doe' },
-            { first: 'Jane', last: 'Doe' }
-          ]
-        }
+            { first: 'Jane', last: 'Doe' },
+          ],
+        },
       };
       hookFind = {
         type: 'after',
@@ -40,8 +39,8 @@ describe('services discard', () => {
         params: { provider: 'rest' },
         result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' }
-        ]
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
     });
 
@@ -52,18 +51,12 @@ describe('services discard', () => {
 
     it('updates hook after::find with pagination', () => {
       hooks.discard('last')(hookFindPaginate);
-      assert.deepEqual(hookFindPaginate.result.data, [
-        { first: 'John' },
-        { first: 'Jane' }
-      ]);
+      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
     });
 
     it('updates hook after::find with no pagination', () => {
       hooks.discard('last')(hookFind);
-      assert.deepEqual(hookFind.result, [
-        { first: 'John' },
-        { first: 'Jane' }
-      ]);
+      assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }]);
     });
 
     it('updates hook after', () => {
@@ -82,7 +75,7 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' }
+        data: { first: 'John', last: 'Doe' },
       };
       hooks.discard('first', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
@@ -93,7 +86,7 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { first: null, last: 'Doe' }
+        data: { first: null, last: 'Doe' },
       };
       hooks.discard('first')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
@@ -106,43 +99,47 @@ describe('services discard', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
       };
     });
 
     it('prop with no dots', () => {
       hooks.discard('dept')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+      });
     });
 
     it('prop with 1 dot', () => {
       hooks.discard('empl.status')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' } },
+        dept: 'Acct',
+      });
     });
 
     it('prop with 2 dots', () => {
       hooks.discard('empl.name.first')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing paths', () => {
       hooks.discard('empl.xx.first')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing no dot path', () => {
       hooks.discard('xx')(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('discards multiple fields', () => {
@@ -155,9 +152,9 @@ describe('services discard', () => {
           email: 'foo',
           password: 'bar',
           name: 'Rafael',
-          id: 'b'
+          id: 'b',
         },
-        query: {}
+        query: {},
       };
 
       hooks.discard('email', 'password')(hook);
@@ -168,7 +165,7 @@ describe('services discard', () => {
         // email: 'foo',
         // password: 'bar',
         name: 'Rafael',
-        id: 'b'
+        id: 'b',
       } as any);
     });
 
@@ -178,16 +175,16 @@ describe('services discard', () => {
         method: 'get',
         result: {
           property: null,
-          other: 'bar'
+          other: 'bar',
         },
-        query: {}
+        query: {},
       };
 
       hooks.discard('property.secret')(hook);
 
       assert.deepEqual(hook.result, {
         property: null,
-        other: 'bar'
+        other: 'bar',
       });
     });
   });

@@ -1,6 +1,5 @@
-
 import { assert } from 'chai';
-import feathers from '@feathersjs/feathers';
+import { feathers } from '@feathersjs/feathers';
 import memory from 'feathers-memory';
 import { iff, some, isNot } from '../../src';
 
@@ -8,8 +7,7 @@ describe('util some', () => {
   let app: any;
 
   beforeEach(() => {
-    app = feathers()
-      .use('/users', memory());
+    app = feathers().use('/users', memory());
   });
 
   describe('when at least 1 hook is truthy', () => {
@@ -28,16 +26,19 @@ describe('util some', () => {
                 (_hook: any) => {}
               ),
               (hook: any) => Promise.resolve(hook)
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     });
 
     it('returns true', () => {
-      return app.service('users').find().then((result: any) => {
-        assert.deepEqual(result, []);
-      });
+      return app
+        .service('users')
+        .find()
+        .then((result: any) => {
+          assert.deepEqual(result, []);
+        });
     });
   });
 
@@ -55,16 +56,19 @@ describe('util some', () => {
                 (_hook: any) => true
               ),
               (hook: any) => Promise.resolve(hook)
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     });
 
     it('rejects with the error', () => {
-      return app.service('users').find().catch((error: any) => {
-        assert.equal(error.message, 'Hook 2 errored');
-      });
+      return app
+        .service('users')
+        .find()
+        .catch((error: any) => {
+          assert.equal(error.message, 'Hook 2 errored');
+        });
     });
   });
 
@@ -80,16 +84,19 @@ describe('util some', () => {
                 (_hook: any) => true
               ),
               (hook: any) => Promise.resolve(hook)
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     });
 
     it('rejects with the error', () => {
-      return app.service('users').find().catch((error: any) => {
-        assert.equal(error.message, 'Hook 2 errored');
-      });
+      return app
+        .service('users')
+        .find()
+        .catch((error: any) => {
+          assert.equal(error.message, 'Hook 2 errored');
+        });
     });
   });
 
@@ -111,16 +118,19 @@ describe('util some', () => {
                 )
               ),
               () => Promise.reject(new Error('All hooks returned false'))
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     });
 
     it('returns false', () => {
-      return app.service('users').find().catch((error: any) => {
-        assert.equal(error.message, 'All hooks returned false');
-      });
+      return app
+        .service('users')
+        .find()
+        .catch((error: any) => {
+          assert.equal(error.message, 'All hooks returned false');
+        });
     });
   });
 });

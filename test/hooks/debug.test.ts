@@ -7,7 +7,7 @@ describe('services debug', () => {
       method: 'create',
       data: { a: 'a' },
       params: { query: { b: 'b' } },
-      result: { c: 'c' }
+      result: { c: 'c' },
     };
     debug('my message')(hook);
   });
@@ -18,7 +18,7 @@ describe('services debug', () => {
       method: 'create',
       data: { a: 'a' },
       params: { query: { b: 'b' }, foo: 'bar' },
-      result: { c: 'c' }
+      result: { c: 'c' },
     };
     debug('my message', 'query', 'foo')(hook);
   });
