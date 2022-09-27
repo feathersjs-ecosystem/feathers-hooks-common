@@ -1,6 +1,6 @@
 {
   "name": "feathers-hooks-common",
-  "version": "6.1.5",
+  "version": "7.0.0-pre.0",
   "description": "Useful hooks for use with Feathersjs services.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
