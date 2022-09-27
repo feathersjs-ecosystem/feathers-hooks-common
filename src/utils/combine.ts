@@ -6,10 +6,12 @@ import type { HookFunction } from '../types';
  * @see https://hooks-common.feathersjs.com/utilities.html#combine
  */
 export function combine<H extends HookContext = HookContext>(...serviceHooks: HookFunction<H>[]) {
+  // if (serviceHooks.length && Array.isArray(serviceHooks[0])) {
+  //   serviceHooks = serviceHooks[0];
+  // }
+
   const isContext = function (ctx: H) {
-    return (
-      typeof ctx === 'object' && typeof ctx.method === 'string' && typeof ctx.type === 'string'
-    );
+    return typeof ctx?.method === 'string' && typeof ctx?.type === 'string';
   };
 
   return async function (context: H) {
@@ -32,13 +34,15 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
     };
 
     // Go through all hooks and chain them into our promise
-    const promise = serviceHooks.reduce((current, fn) => {
+    const promise = serviceHooks.reduce(async (current, fn) => {
       // @ts-ignore
-      const hook = fn.bind ? fn.bind(this) : fn;
+      const hook = fn.bind(this);
 
       // Use the returned hook object or the old one
+      const currentHook = await current;
+      const currentCtx = await hook(currentHook);
       // @ts-ignore
-      return current.then(currentCtx => hook(currentCtx)).then(updateCurrentHook);
+      return updateCurrentHook(currentCtx);
     }, Promise.resolve(ctx));
 
     try {

@@ -14,6 +14,10 @@ export function iff<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn,
   ...hooks: HookFunction<H>[]
 ): IffHook<H> {
+  if (hooks.length && Array.isArray(hooks[0])) {
+    hooks = hooks[0];
+  }
+
   const iffWithoutElse = function (context: H) {
     return iffElse(predicate, hooks.slice())(context);
   };

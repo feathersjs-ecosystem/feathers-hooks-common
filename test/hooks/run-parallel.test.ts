@@ -25,8 +25,7 @@ describe('services runParallel', () => {
   });
 
   it('runs the func', (done: any) => {
-    // @ts-ignore
-    runParallel(test(tester), clone, 0)(contextBefore);
+    runParallel(test(tester))(contextBefore);
 
     function tester() {
       done();
@@ -34,8 +33,7 @@ describe('services runParallel', () => {
   });
 
   it('passes this', (done: any) => {
-    // @ts-ignore
-    runParallel(test(tester), clone, 0).call({ bar: true }, contextBefore);
+    runParallel(test(tester)).call({ bar: true }, contextBefore);
 
     function tester() {
       assert.strictEqual(that.bar, true);
@@ -44,8 +42,7 @@ describe('services runParallel', () => {
   });
 
   it('defaults to uncloned context', (done: any) => {
-    // @ts-ignore
-    runParallel(test(tester), clone, 0)(contextBefore);
+    runParallel(test(tester))(contextBefore);
     contextBefore._foo = true;
 
     function tester(contextCloned: any) {

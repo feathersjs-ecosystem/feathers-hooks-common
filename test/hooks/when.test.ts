@@ -419,21 +419,6 @@ describe('services when - runs multiple hooks', () => {
         done();
       });
   });
-
-  it('runs successfully with the array syntax', (done: any) => {
-    // @ts-ignore
-    when(true, [hookFcnSync, hookFcnAsync, hookFcn])(hook)
-      // @ts-ignore
-      .then((hook: any) => {
-        assert.deepEqual(hook, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCalls, 1);
-        assert.deepEqual(hook, hookAfter);
-
-        done();
-      });
-  });
 });
 
 // Helpers

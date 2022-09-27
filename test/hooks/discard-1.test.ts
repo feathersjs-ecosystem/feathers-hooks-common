@@ -27,7 +27,6 @@ describe('common hook discard', () => {
     });
 
     const decisionTable = [
-      // desc,                      context,       method,   provider,  args,            result
       ['before::create', beforeJohn(), 'create', null, ['first'], { last: 'Doe' }],
       [
         'after::find with paginate',
