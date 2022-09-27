@@ -1,7 +1,6 @@
 import type { HookContext, Params } from '@feathersjs/feathers';
 import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
-import type { SyncContextFunction } from '../types';
 
 export type Disablable =
   | 'populate'
@@ -59,14 +58,14 @@ export function callingParamsDefaults(propNames: string[], newProps?: any): void
  * Build params for a service call. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#callingparams
  */
-export function callingParams({
+export function callingParams<H extends HookContext = HookContext>({
   query,
   propNames = [],
   newProps = {},
   hooksToDisable = [],
   ignoreDefaults,
-}: CallingParamsOptions = {}): SyncContextFunction<Params> {
-  return context => {
+}: CallingParamsOptions = {}) {
+  return (context: H) => {
     propNames = Array.isArray(propNames) ? propNames : [propNames];
     hooksToDisable = Array.isArray(hooksToDisable) ? hooksToDisable : [hooksToDisable];
 
@@ -121,8 +120,8 @@ export function callingParams({
  * Build context.params for service calls. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#makecallingparams
  */
-export function makeCallingParams(
-  context: HookContext,
+export function makeCallingParams<H extends HookContext = HookContext>(
+  context: H,
   query?: any,
   include?: string | string[],
   inject = {}

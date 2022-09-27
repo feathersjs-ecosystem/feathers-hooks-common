@@ -1,15 +1,12 @@
 /* eslint-disable no-console */
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Display the current hook context for debugging.
  * @see https://hooks-common.feathersjs.com/hooks.html#debug
  */
-export function debug<A extends Application = Application, S extends Service = Service>(
-  msg: string,
-  ...fieldNames: string[]
-): Hook<A, S> {
-  return context => {
+export function debug<H extends HookContext = HookContext>(msg: string, ...fieldNames: string[]) {
+  return (context: H) => {
     console.log(`* ${msg || ''}\ntype:${context.type}, method: ${context.method}`);
     if (context.data) {
       console.log('data:', context.data);

@@ -1,27 +1,27 @@
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { iffElse } from './iff-else';
-import type { PredicateFn } from '../types';
+import type { HookFunction, PredicateFn } from '../types';
 
-export interface IffHook<A = Application, S = Service> extends Hook<A, S> {
-  else(...hooks: Hook<A, S>[]): Hook<A, S>;
+export interface IffHook<H extends HookContext = HookContext> extends HookFunction<H> {
+  else(...hooks: HookFunction<H>[]): HookFunction<H>;
 }
 
 /**
  * Execute one or another series of hooks depending on a sync or async predicate.
  * @see https://hooks-common.feathersjs.com/hooks.html#iff
  */
-export function iff<A extends Application = Application, S extends Service = Service>(
+export function iff<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn,
-  ...hooks: Hook<A, S>[]
-): IffHook<A, S> {
-  const iffWithoutElse = function (context: HookContext<A, S>) {
+  ...hooks: HookFunction<H>[]
+): IffHook<H> {
+  const iffWithoutElse = function (context: H) {
     // @ts-ignore
     return iffElse(predicate, hooks.slice())(context);
   };
 
   iffWithoutElse.else =
     (...falseHooks: any[]) =>
-    (context: HookContext<A, S>) =>
+    (context: H) =>
       // @ts-ignore
       iffElse(predicate, hooks.slice(), falseHooks.slice())(context);
 

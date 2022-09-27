@@ -1,15 +1,13 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import type { TransportName } from '../types';
 
 /**
  * Prevents access to a service method completely or for specific transports.
  * @see https://hooks-common.feathersjs.com/hooks.html#disallow
  */
-export function disallow<A extends Application = Application, S extends Service = Service>(
-  ...transports: TransportName[]
-): Hook<A, S> {
-  return context => {
+export function disallow<H extends HookContext = HookContext>(...transports: TransportName[]) {
+  return (context: H) => {
     const hookProvider = context.params?.provider;
 
     const anyProvider = transports.length === 0;

@@ -3,17 +3,17 @@ import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
 import _has from 'lodash/has.js';
 import { getItems } from '../utils/get-items';
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the record(s), deleting the rest.
  * @see https://hooks-common.feathersjs.com/hooks.html#keepinarray
  */
-export function keepInArray<A extends Application = Application, S extends Service = Service>(
+export function keepInArray<H extends HookContext = HookContext>(
   arrayName: string,
   fieldNames: string[]
-): Hook<A, S> {
-  return context => {
+) {
+  return (context: H) => {
     const items = getItems(context);
 
     if (Array.isArray(items)) {

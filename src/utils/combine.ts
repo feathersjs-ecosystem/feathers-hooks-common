@@ -4,19 +4,19 @@ import type { Application, Hook, HookContext, Service } from '@feathersjs/feathe
  * Sequentially execute multiple sync or async hooks.
  * @see https://hooks-common.feathersjs.com/utilities.html#combine
  */
-export function combine<A extends Application = Application, S extends Service = Service>(
-  ...serviceHooks: Hook<A, S>[]
-): (context: HookContext<A, S>) => Promise<HookContext<A, S>> {
-  const isContext = function (ctx: HookContext<A, S>) {
+export function combine<H extends HookContext = HookContext>(
+  ...serviceHooks[]
+): (context: H) => Promise<H> {
+  const isContext = function (ctx: H) {
     return (
       typeof ctx === 'object' && typeof ctx.method === 'string' && typeof ctx.type === 'string'
     );
   };
 
-  return function (context: HookContext<A, S>) {
+  return function (context: H) {
     let ctx = context;
 
-    const updateCurrentHook = (current: void | HookContext<A, S>) => {
+    const updateCurrentHook = (current: void | H) => {
       // Either use the returned hook object or the current
       // hook object from the chain if the hook returned undefined
       if (current) {
@@ -33,7 +33,7 @@ export function combine<A extends Application = Application, S extends Service =
     };
 
     // Go through all hooks and chain them into our promise
-    const promise = serviceHooks.reduce((current, fn: Hook<A, S>) => {
+    const promise = serviceHooks.reduce((current, fn) => {
       // @ts-ignore
       const hook = fn.bind(this);
 

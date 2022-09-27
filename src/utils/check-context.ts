@@ -6,8 +6,8 @@ import type { HookType, MethodName } from '../types';
  * Restrict a hook to run for certain methods and method types. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#checkcontext
  */
-export function checkContext(
-  context: HookContext,
+export function checkContext<H extends HookContext = HookContext>(
+  context: H,
   type?: HookType | HookType[] | null,
   methods?: MethodName | MethodName[] | null,
   label = 'anonymous'

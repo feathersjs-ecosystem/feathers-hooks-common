@@ -1,13 +1,10 @@
-import type { Application, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Replace the records in context.data or context.result[.data]. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#replaceitems
  */
-export function replaceItems<A extends Application = Application, S extends Service = Service>(
-  context: HookContext<A, S>,
-  items: any
-): void {
+export function replaceItems<H extends HookContext = HookContext>(context: H, items: any): void {
   // @ts-ignore
   if (context.params && context.params._actOn === 'dispatch') {
     context.dispatch = items;

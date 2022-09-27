@@ -1,4 +1,4 @@
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import traverse from 'traverse';
 import { checkContext } from '../utils/check-context';
 
@@ -7,10 +7,10 @@ import { checkContext } from '../utils/check-context';
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#mongokeys
  */
-export function mongoKeys<A extends Application = Application, S extends Service = Service>(
+export function mongoKeys<H extends HookContext = HookContext>(
   ObjectId: new (id?: string | number) => any,
   keyFields: string | string[]
-): Hook<A, S> {
+) {
   keyFields = Array.isArray(keyFields) ? keyFields : [keyFields];
   const keyLeaves: any = [];
 
@@ -22,7 +22,7 @@ export function mongoKeys<A extends Application = Application, S extends Service
     return { leaf, len: fieldNames.length, path: JSON.stringify(fieldNames) };
   });
 
-  return context => {
+  return (context: H) => {
     checkContext(context, 'before', null, 'mongoKeys');
     const query = context.params.query || {};
 

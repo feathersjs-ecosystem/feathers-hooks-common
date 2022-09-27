@@ -1,10 +1,11 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { assert } from 'chai';
 import { actOnDefault, actOnDispatch, combine, getItems, replaceItems } from '../../src';
 
 let hookBefore: any;
 
 function testHook(what: any, code: any) {
-  return context => {
+  return (context: HookContext) => {
     if (context.params._actOn !== what) {
       throw new Error(`Hook code ${code} expected ${what} found ${context.params._actOn}`);
     }

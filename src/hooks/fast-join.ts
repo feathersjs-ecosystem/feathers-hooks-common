@@ -1,4 +1,4 @@
-import type { Application, Hook, HookContext, Query, Service } from '@feathersjs/feathers';
+import type { Application, HookContext, Query, Service } from '@feathersjs/feathers';
 import type { SyncContextFunction } from '../types';
 
 export interface ResolverContext<A extends Application = Application, S extends Service = Service>
@@ -6,23 +6,20 @@ export interface ResolverContext<A extends Application = Application, S extends 
   _loaders: any;
 }
 
-export type SimpleResolver<A extends Application = Application, S extends Service = Service> = (
+export type SimpleResolver<H extends ResolverContext = ResolverContext> = (
   ...args: any[]
-) => (item: any, context: ResolverContext<A, S>) => Promise<any>;
+) => (item: any, context: H) => Promise<any>;
 
-export interface RecursiveResolver<
-  A extends Application = Application,
-  S extends Service = Service
-> {
-  resolver: SimpleResolver<A, S>;
+export interface RecursiveResolver<H extends ResolverContext = ResolverContext> {
+  resolver: SimpleResolver<H>;
   joins: ResolverMap<any>;
 }
 
-export interface ResolverMap<A extends Application = Application, S extends Service = Service> {
-  after?: (context: ResolverContext<A, S>) => void | Promise<void>;
-  before?: (context: ResolverContext<A, S>) => void | Promise<void>;
+export interface ResolverMap<H extends ResolverContext = ResolverContext> {
+  after?: (context: H) => void | Promise<void>;
+  before?: (context: H) => void | Promise<void>;
   joins: {
-    [property: string]: SimpleResolver<A, S> | RecursiveResolver<A, S>;
+    [property: string]: SimpleResolver<H> | RecursiveResolver<H>;
   };
 }
 
@@ -42,11 +39,11 @@ export interface ResolverMap<A extends Application = Application, S extends Serv
  * fastJoin(postResolvers, context => query) // supports queries from client
  * @see https://hooks-common.feathersjs.com/hooks.html#fastjoin
  */
-export function fastJoin<A extends Application = Application, S extends Service = Service>(
-  resolvers: ResolverMap<A, S> | SyncContextFunction<ResolverMap<A, S>>,
+export function fastJoin<H extends ResolverContext = ResolverContext>(
+  resolvers: ResolverMap<H> | SyncContextFunction<ResolverMap<H>>,
   query?: Query | SyncContextFunction<Query>
-): Hook<A, S> {
-  return context => {
+) {
+  return (context: H) => {
     const { method, data, result, params } = context;
 
     // @ts-ignore

@@ -1,20 +1,20 @@
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { isPromise } from '../common';
 import { combine } from '../utils/combine';
-import type { PredicateFn } from '../types';
+import type { HookFunction, PredicateFn } from '../types';
 
 /**
  * Execute one array of hooks or another based on a sync or async predicate.
  * @see https://hooks-common.feathersjs.com/hooks.html#iffelse
  */
-export function iffElse<A extends Application = Application, S extends Service = Service>(
-  predicate: boolean | PredicateFn<A, S>,
-  trueHooks: Hook<A, S> | Hook<A, S>[] | undefined,
-  falseHooks?: Hook<A, S> | Hook<A, S>[] | undefined
-): Hook<A, S> {
+export function iffElse<H extends HookContext = HookContext>(
+  predicate: boolean | PredicateFn<H>,
+  trueHooks: | HookFunction<H>[] | undefined,
+  falseHooks?: | HookFunction<H>[] | undefined
+) {
   // fnArgs is [context] for service & permission hooks, [data, connection, context] for event filters
   // @ts-ignore
-  return (this: any, ctx: HookContext<A, S>) => {
+  return (this: any, ctx: H) => {
     if (typeof trueHooks === 'function') {
       trueHooks = [trueHooks];
     }
@@ -44,10 +44,10 @@ export function iffElse<A extends Application = Application, S extends Service =
   };
 }
 
-function callHooks<A extends Application = Application, S extends Service = Service>(
+function callHooks<H extends HookContext = HookContext>(
   this: any,
   ctx: HookContext<A, S>,
-  serviceHooks?: Hook<A, S>[]
+  serviceHooks?[]
 ) {
   let hooks = serviceHooks;
   if (serviceHooks && serviceHooks.length && Array.isArray(serviceHooks[0])) {

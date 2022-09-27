@@ -1,22 +1,22 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import type { Ajv, ErrorObject as ajvErrorObject, Options as AjvOptions } from 'ajv';
 import { isPromise } from '../common';
 import { checkContext } from '../utils/check-context';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
-export type SyncValidatorFn<A extends Application = Application, S extends Service = Service> = (
+export type SyncValidatorFn<H extends HookContext = HookContext> = (
   values: any,
-  context: HookContext<A, S>
+  context: H
 ) => { [key: string]: string } | null;
-export type AsyncValidatorFn<A extends Application = Application, S extends Service = Service> = (
+export type AsyncValidatorFn<H extends HookContext = HookContext> = (
   values: any,
-  context: HookContext<A, S>
+  context: H
 ) => Promise<object | null>;
-export type ValidatorFn<A extends Application = Application, S extends Service = Service> =
-  | SyncValidatorFn<A, S>
-  | AsyncValidatorFn<A, S>;
+export type ValidatorFn<H extends HookContext = HookContext> =
+  | SyncValidatorFn<H>
+  | AsyncValidatorFn<H>;
 
 export type AjvOrNewable = Ajv | (new (options?: AjvOptions) => Ajv);
 
@@ -38,10 +38,8 @@ export interface ValidateSchemaOptions extends AjvOptions {
  * Validate data using a validation function.
  * @see https://hooks-common.feathersjs.com/hooks.html#validate
  */
-export function validate<A extends Application = Application, S extends Service = Service>(
-  validator: ValidatorFn
-): Hook<A, S> {
-  return context => {
+export function validate<H extends HookContext = HookContext>(validator: ValidatorFn) {
+  return (context: H) => {
     checkContext(context, 'before', ['create', 'update', 'patch'], 'validate');
 
     if (typeof validator !== 'function') {

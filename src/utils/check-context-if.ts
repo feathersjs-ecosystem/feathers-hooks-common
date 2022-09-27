@@ -9,8 +9,8 @@ import { checkContext } from './check-context';
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#checkcontextif
  */
-export function checkContextIf(
-  context: HookContext,
+export function checkContextIf<H extends HookContext = HookContext>(
+  context: H,
   type: HookType | HookType[],
   methods?: MethodName | MethodName[] | null,
   label?: string

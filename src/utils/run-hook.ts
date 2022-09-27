@@ -1,12 +1,12 @@
-import type { Application, Hook, HookContext, Paginated, Service } from '@feathersjs/feathers';
+import type { HookContext, Paginated } from '@feathersjs/feathers';
 
 /**
  * Let's you call a hook right after the service call. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#runhook
  */
-export function runHook<A extends Application = Application, S extends Service = Service>(
-  context?: HookContext<A, S>
-): (hook: Hook<A, S>) => (data: any[] | Paginated<any>) => Promise<any> {
+export function runHook<H extends HookContext = HookContext>(
+  context?: H
+): (hook: any) => (data: any[] | Paginated<any>) => Promise<any> {
   const extraContent = context; // cannot access extraContent1 below. why not?
 
   return hookFunc => result => {

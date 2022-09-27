@@ -1,5 +1,5 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import type { Application, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { isPromise } from '../common';
 import type { PredicateFn } from '../types';
 
@@ -8,14 +8,14 @@ import type { PredicateFn } from '../types';
  *
  * @see https://hooks-common.feathersjs.com/utilities.html#isnot
  */
-export function isNot<A extends Application, S extends Service = Service>(
-  predicate: boolean | PredicateFn<A, S>
-): PredicateFn<A, S> {
+export function isNot<H extends HookContext = HookContext>(
+  predicate: boolean | PredicateFn<H>
+): PredicateFn<H> {
   if (typeof predicate !== 'function') {
     throw new MethodNotAllowed('Expected function as param. (isNot)');
   }
 
-  return context => {
+  return (context: H) => {
     const result = predicate(context); // Should we pass a clone? (safety vs performance)
 
     if (!isPromise(result)) {

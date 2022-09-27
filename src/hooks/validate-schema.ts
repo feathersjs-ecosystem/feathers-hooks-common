@@ -1,5 +1,5 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import type { AjvOrNewable, ValidateSchemaOptions } from './validate';
 import { getItems } from '../utils/get-items';
 
@@ -7,12 +7,12 @@ import { getItems } from '../utils/get-items';
  * Validate data using JSON-Schema.
  * @see https://hooks-common.feathersjs.com/hooks.html#validateschema
  */
-export function validateSchema<A extends Application = Application, S extends Service = Service>(
+export function validateSchema<H extends HookContext = HookContext>(
   schema: object | string,
   ajvOrAjv: AjvOrNewable,
   // @ts-ignore
   options: ValidateSchemaOptions = { allErrors: true }
-): Hook<A, S> {
+) {
   const addNewError = options?.addNewError || addNewErrorDflt;
   // delete options.addNewError;
   // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?
@@ -28,7 +28,7 @@ export function validateSchema<A extends Application = Application, S extends Se
   }
   const validate = typeof schema === 'string' ? ajv.getSchema(schema) : ajv.compile(schema); // for fastest execution
 
-  return context => {
+  return (context: H) => {
     const items = getItems(context);
     const itemsArray = Array.isArray(items) ? items : [items];
     const itemsLen = itemsArray.length;

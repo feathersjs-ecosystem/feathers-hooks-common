@@ -4,7 +4,7 @@ import _clone from 'lodash/clone.js';
 import _debug from 'debug';
 import { checkContext } from '../utils/check-context';
 import { Forbidden } from '@feathersjs/errors';
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 export interface SetFieldOptions {
   as: string;
@@ -18,16 +18,16 @@ const debug = _debug('feathers-hooks-common/setField');
  * The `setField` hook allows to set a field on the hook context based on the value of another field on the hook context.
  * @see https://hooks-common.feathersjs.com/hooks.html#setfield
  */
-export function setField<A extends Application = Application, S extends Service = Service>({
+export function setField<H extends HookContext = HookContext>({
   as,
   from,
   allowUndefined = false,
-}: SetFieldOptions): Hook<A, S> {
+}: SetFieldOptions) {
   if (!as || !from) {
     throw new Error("'as' and 'from' options have to be set");
   }
 
-  return context => {
+  return (context: H) => {
     const { params, app } = context;
 
     if (app.version < '4.0.0') {

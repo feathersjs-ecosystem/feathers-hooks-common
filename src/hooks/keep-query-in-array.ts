@@ -3,17 +3,17 @@ import { BadRequest } from '@feathersjs/errors';
 import _get from 'lodash/get.js';
 import _set from 'lodash/set.js';
 import _has from 'lodash/has.js';
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Keep certain fields in a nested array inside the query object, deleting the rest.
  * @see https://hooks-common.feathersjs.com/hooks.html#keepqueryinarray
  */
-export function keepQueryInArray<A extends Application = Application, S extends Service = Service>(
+export function keepQueryInArray<H extends HookContext = HookContext>(
   arrayName: string,
   fieldNames: string[]
-): Hook<A, S> {
-  return context => {
+) {
+  return (context: H) => {
     checkContext(context, 'before', null, 'keepQueryInArray');
 
     replaceIn(context.query, arrayName, fieldNames);

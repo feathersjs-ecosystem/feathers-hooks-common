@@ -1,4 +1,4 @@
-import type { HookContext, Application, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 export const hookTypes = ['around', 'before', 'after', 'error'] as const;
 export type HookType = typeof hookTypes[number];
@@ -8,16 +8,21 @@ export type MethodName = typeof methodNames[number];
 
 export type TransportName = 'socketio' | 'rest' | 'external' | 'server';
 
-export type SyncContextFunction<T, A = Application, S = Service> = (
-  context: HookContext<A, S>
-) => T;
-export type AsyncContextFunction<T, A = Application, S = Service> = (
-  context: HookContext<A, S>
+export type SyncContextFunction<T, H extends HookContext = HookContext> = (context: H) => T;
+export type AsyncContextFunction<T, H extends HookContext = HookContext> = (
+  context: H
 ) => Promise<T>;
-export type ContextFunction<T, A = Application, S = Service> = (
-  context: HookContext<A, S>
+export type ContextFunction<T, H extends HookContext = HookContext> = (
+  context: H
 ) => T | Promise<T>;
 
-export type SyncPredicateFn<A = Application, S = Service> = SyncContextFunction<boolean, A, S>;
-export type AsyncPredicateFn<A = Application, S = Service> = AsyncContextFunction<boolean, A, S>;
-export type PredicateFn<A = Application, S = Service> = ContextFunction<boolean, A, S>;
+export type SyncPredicateFn<H extends HookContext = HookContext> = SyncContextFunction<boolean, H>;
+export type AsyncPredicateFn<H extends HookContext = HookContext> = AsyncContextFunction<
+  boolean,
+  H
+>;
+export type PredicateFn<H extends HookContext = HookContext> = ContextFunction<boolean, H>;
+
+export declare type HookFunction<H extends HookContext = HookContext> = (
+  context: H
+) => Promise<H | void> | H | void;

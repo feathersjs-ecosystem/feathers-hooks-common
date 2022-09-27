@@ -4,18 +4,13 @@ import { BadRequest } from '@feathersjs/errors';
 
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
-export interface PopulateOptions<A extends Application = Application, S extends Service = Service> {
+export interface PopulateOptions<H extends HookContext = HookContext> {
   schema:
     | Partial<PopulateSchema>
-    | ((context: HookContext<A, S>, options: PopulateOptions<A, S>) => Partial<PopulateSchema>);
-  checkPermissions?: (
-    context: HookContext<A, S>,
-    path: string,
-    permissions: any,
-    depth: number
-  ) => boolean;
+    | ((context: H, options: PopulateOptions<H>) => Partial<PopulateSchema>);
+  checkPermissions?: (context: H, path: string, permissions: any, depth: number) => boolean;
   profile?: boolean;
 }
 
@@ -77,9 +72,7 @@ export interface PopulateSchema {
   include: Partial<PopulateSchema> | Partial<PopulateSchema>[];
 }
 
-export function populate<A extends Application = Application, S extends Service = Service>(
-  options: PopulateOptions
-): Hook<A, S> {
+export function populate<H extends HookContext = HookContext>(options: PopulateOptions<H>) {
   // options.schema is like { service: '...', permissions: '...', include: [ ... ] }
 
   const typeofSchema = typeof options.schema;
@@ -87,7 +80,7 @@ export function populate<A extends Application = Application, S extends Service 
     throw new Error('Options.schema is not an object. (populate)');
   }
 
-  return function (context) {
+  return function (context: H) {
     const optionsDefault: PopulateOptions = {
       schema: {},
       checkPermissions: () => true,

@@ -1,4 +1,4 @@
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
@@ -32,16 +32,15 @@ const defaultConversions = {
  */
 export function sequelizeConvert<
   C extends { [name: string]: SequelizeConversion },
-  A extends Application = Application,
-  S extends Service = Service
+  H extends HookContext = HookContext
 >(
   converts: SequelizeConverts<C> | null | undefined | false,
   ignores?: string[] | null | undefined | false,
   conversions?: C
-): Hook<A, S> {
+) {
   const converter = sequelizeConversion(converts, ignores, conversions);
 
-  return context => {
+  return (context: H) => {
     if (context.type === 'before' && !methodsWithBeforeData.includes(context.method))
       return context;
 

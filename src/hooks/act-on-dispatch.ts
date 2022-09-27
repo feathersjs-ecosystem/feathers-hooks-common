@@ -1,27 +1,23 @@
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
+import type { HookFunction } from '../types';
 import { combine } from '../utils/combine';
 
 /**
  * Runs a series of hooks which mutate context.data or context.result (the Feathers default).
  * @see https://hooks-common.feathersjs.com/hooks.html#actondefault
  */
-export const actOnDefault = <A extends Application = Application, S extends Service = Service>(
-  ...hooks: Hook<A, S>[]
-) => actOn(undefined, ...hooks);
+export const actOnDefault = <H extends HookContext = HookContext>(...hooks: HookFunction<H>[]) =>
+  actOn(undefined, ...hooks);
 
 /**
  * Runs a series of hooks which mutate context.dispatch.
  * @see https://hooks-common.feathersjs.com/hooks.html#actondispatch
  */
-export const actOnDispatch = <A extends Application = Application, S extends Service = Service>(
-  ...hooks: Hook<A, S>[]
-) => actOn('dispatch', ...hooks);
+export const actOnDispatch = <H extends HookContext = HookContext>(...hooks: HookFunction<H>[]) =>
+  actOn('dispatch', ...hooks);
 
-function actOn<A extends Application = Application, S extends Service = Service>(
-  what: any,
-  ...hooks: Hook<A, S>[]
-): Hook<A, S> {
-  return context => {
+function actOn<H extends HookContext = HookContext>(what: any, ...hooks: HookFunction<H>[]) {
+  return (context: H) => {
     // @ts-ignore
     const currActOn = context.params._actOn;
     // @ts-ignore

@@ -5,18 +5,18 @@ import _omit from 'lodash/omit.js';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 import type { SyncContextFunction } from '../types';
-import type { Application, Hook, HookContext, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
-export interface SerializeSchema<A extends Application = Application, S extends Service = Service> {
+export interface SerializeSchema<H extends HookContext = HookContext> {
   only?: string | string[];
   exclude?: string | string[];
   computed?: {
-    [propName: string]: (record: any, context: HookContext<A, S>) => any;
+    [propName: string]: (record: any, context: H) => any;
   };
 
   [key: string]:
-    | SerializeSchema<A, S>
-    | SerializeSchema<A, S>['computed']
+    | SerializeSchema<H>
+    | SerializeSchema<H>['computed']
     | string
     | string[]
     | undefined;
@@ -26,10 +26,10 @@ export interface SerializeSchema<A extends Application = Application, S extends 
  * Prune values from related records. Calculate new values.
  * @see https://hooks-common.feathersjs.com/hooks.html#serialize
  */
-export function serialize<A extends Application = Application, S extends Service = Service>(
-  schema1: SerializeSchema | SyncContextFunction<SerializeSchema>
-): Hook<A, S> {
-  return context => {
+export function serialize<H extends HookContext = HookContext>(
+  schema1: SerializeSchema<H> | SyncContextFunction<SerializeSchema, H>
+) {
+  return (context: H) => {
     const schema = typeof schema1 === 'function' ? schema1(context) : schema1;
     const schemaDirectives = ['computed', 'exclude', 'only'];
 

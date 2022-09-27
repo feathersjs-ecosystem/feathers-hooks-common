@@ -1,4 +1,4 @@
-import type { Application, Hook, Service } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import _omit from 'lodash/omit.js';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
@@ -7,10 +7,8 @@ import { replaceItems } from '../utils/replace-items';
  * Remove records and properties created by the populate hook.
  * @see https://hooks-common.feathersjs.com/hooks.html#depopulate
  */
-export function dePopulate<A extends Application = Application, S extends Service = Service>(
-  func?: (item: any) => void
-): Hook<A, S> {
-  return context => {
+export function dePopulate<H extends HookContext = HookContext>(func?: (item: any) => void) {
+  return (context: H) => {
     const items = getItems(context);
     const converter = (item: any) => {
       if (typeof func === 'function') {

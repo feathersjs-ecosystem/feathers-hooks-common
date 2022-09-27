@@ -1,4 +1,4 @@
-import type { Application, Hook, Query, Service } from '@feathersjs/feathers';
+import type { Application, HookContext, Query } from '@feathersjs/feathers';
 import makeDebug from 'debug';
 import type { parse, GraphQLFieldResolver } from 'graphql';
 import type { SyncContextFunction } from '../types';
@@ -42,9 +42,7 @@ const graphqlActions = ['Query', 'Mutation', 'Subscription'];
  * Generate Graphql Resolvers for services
  * @see https://medium.com/@eddyystop/38faee75dd1
  */
-export function fgraphql<A extends Application = Application, S extends Service = Service>(
-  options1: FGraphQLHookOptions
-): Hook<A, S> {
+export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQLHookOptions) {
   debug('init call');
   const { parse, recordType, resolvers, runTime, query } = options1;
   let { schema } = options1;
@@ -95,7 +93,7 @@ export function fgraphql<A extends Application = Application, S extends Service 
   debug('schema now in internal form');
 
   // Return the hook.
-  return (context: any) => {
+  return (context: H) => {
     const contextParams = context.params;
     // @ts-ignore
     const optSkipHookWhen = options.skipHookWhen;
