@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.1...HEAD)
 
 **Merged pull requests:**
 
@@ -11,6 +11,15 @@
 - docs: move to vitepress [\#688](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/688) ([fratzinger](https://github.com/fratzinger))
 - chore\(dependencies\): Update all dependencies [\#686](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/686) ([daffl](https://github.com/daffl))
 - chore\(dependencies\): Update all dependencies [\#685](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/685) ([daffl](https://github.com/daffl))
+
+## [v7.0.0-pre.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.1) (2022-09-28)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.0...v7.0.0-pre.1)
+
+**Closed issues:**
+
+- Types for populate don't account for the function param [\#629](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/629)
+- Babel compile error [\#582](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/582)
 
 ## [v7.0.0-pre.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.0) (2022-09-27)
 
@@ -375,7 +384,6 @@
 
 - @feathersjs/commons dependency  [\#492](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/492)
 - Validation hook for restful api [\#491](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/491)
-- TS for keep fgraphql [\#467](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/467)
 
 **Merged pull requests:**
 
@@ -399,10 +407,6 @@
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.4...v4.19.5)
-
-**Closed issues:**
-
-- TS for keepQueryInArray [\#468](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/468)
 
 ## [v4.19.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.4) (2018-11-29)
 
