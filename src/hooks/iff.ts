@@ -11,7 +11,7 @@ export interface IffHook<H extends HookContext = HookContext> extends HookFuncti
  * @see https://hooks-common.feathersjs.com/hooks.html#iff
  */
 export function iff<H extends HookContext = HookContext>(
-  predicate: boolean | PredicateFn,
+  predicate: boolean | PredicateFn<H>,
   ...hooks: HookFunction<H>[]
 ): IffHook<H> {
   if (hooks.length && Array.isArray(hooks[0])) {
