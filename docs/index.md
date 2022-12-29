@@ -13,5 +13,5 @@ hero:
       link: /overview
     - theme: alt
       text: View on GitHub
-      link: https://github.com/feathers-ecosystem/feathers-hooks-common
+      link: https://github.com/feathersjs-ecosystem/feathers-hooks-common
 ---
