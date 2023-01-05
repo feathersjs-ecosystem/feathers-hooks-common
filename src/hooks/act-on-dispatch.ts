@@ -18,9 +18,7 @@ export const actOnDispatch = <H extends HookContext = HookContext>(...hooks: Hoo
 
 function actOn<H extends HookContext = HookContext>(what: any, ...hooks: HookFunction<H>[]) {
   return async (context: H) => {
-    // @ts-ignore
     const currActOn = context.params._actOn;
-    // @ts-ignore
     context.params._actOn = what;
 
     const newContext = await combine(...hooks)(context);

@@ -1,5 +1,5 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import type { TransportName } from '../types';
 
 /**
@@ -7,7 +7,7 @@ import type { TransportName } from '../types';
  * @see https://hooks-common.feathersjs.com/hooks.html#disallow
  */
 export function disallow<H extends HookContext = HookContext>(...transports: TransportName[]) {
-  return (context: H) => {
+  return (context: H, next?: NextFunction) => {
     const hookProvider = context.params?.provider;
 
     const anyProvider = transports.length === 0;
@@ -23,5 +23,11 @@ export function disallow<H extends HookContext = HookContext>(...transports: Tra
         `Provider '${context.params.provider}' can not call '${context.method}'. (disallow)`
       );
     }
+
+    if (next) {
+      return next();
+    }
+
+    return context;
   };
 }

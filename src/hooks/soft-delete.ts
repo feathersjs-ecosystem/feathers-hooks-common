@@ -29,7 +29,6 @@ export function softDelete<H extends HookContext = HookContext>({
 }: SoftDeleteOptions<H> = {}) {
   return async (context: H) => {
     const { service, method, params, app } = context;
-    // @ts-ignore
     const { disableSoftDelete, query = {} } = params;
 
     if (app.version < '4.0.0') {

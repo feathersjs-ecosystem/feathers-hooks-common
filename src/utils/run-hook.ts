@@ -12,7 +12,6 @@ export function runHook<H extends HookContext = HookContext>(
   return hookFunc => result => {
     const ctx = Object.assign({}, { type: 'after', params: {}, result }, extraContent);
 
-    // @ts-ignore
     if (typeof result === 'object' && result !== null && result.total && result.data) {
       // @ts-expect-error method is readonly
       ctx.method = 'find';

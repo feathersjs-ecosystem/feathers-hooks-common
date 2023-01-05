@@ -1,6 +1,6 @@
 import { BadRequest } from '@feathersjs/errors';
 import type { HookContext } from '@feathersjs/feathers';
-import { setFields as _setFields } from '../common';
+import { setFields } from '../common';
 import { getItems } from '../utils/get-items';
 
 /**
@@ -14,7 +14,7 @@ export function setNow<H extends HookContext = HookContext>(...fieldNames: strin
   }
 
   return (context: H) => {
-    _setFields(getItems(context), () => new Date(), fieldNames, 'setNow');
+    setFields(getItems(context), () => new Date(), fieldNames, 'setNow');
     return context;
   };
 }

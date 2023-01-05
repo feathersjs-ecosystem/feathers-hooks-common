@@ -11,11 +11,13 @@ export function replaceItems<H extends HookContext = HookContext>(context: H, it
     return;
   }
 
-  if (context.type === 'before') {
-    context.data = items;
-  } else if (context.method === 'find' && context.result && context.result.data) {
-    context.result.data = Array.isArray(items) ? items : [items];
+  if (context.result !== undefined) {
+    if (context.method === 'find' && context.result && context.result.data) {
+      context.result.data = Array.isArray(items) ? items : [items];
+    } else {
+      context.result = items;
+    }
   } else {
-    context.result = items;
+    context.data = items;
   }
 }
