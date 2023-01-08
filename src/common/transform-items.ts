@@ -7,6 +7,11 @@ export function transformItems <T extends Record<string, any>> (
 ): void {
   (Array.isArray(items) ? items : [items]).forEach(item => {
     fieldNames.forEach((fieldName: any) => {
+      const value = _get(item, fieldName);
+      if (value === undefined) {
+        return
+      }
+
       transformer(item, fieldName, _get(item, fieldName));
     });
   });
