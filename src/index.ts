@@ -37,6 +37,8 @@ export * from './hooks/unless';
 export * from './hooks/validate';
 export * from './hooks/validate-schema';
 
+export * from './utils/after-around';
+export * from './utils/before-around';
 export * from './utils/calling-params';
 export * from './utils/check-context';
 export * from './utils/combine';

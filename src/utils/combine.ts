@@ -43,7 +43,7 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
       const currentCtx = await hook(currentHook);
       // @ts-ignore
       return updateCurrentHook(currentCtx);
-    }, Promise.resolve(ctx));
+    }, Promise.resolve(ctx) as Promise<H>);
 
     try {
       await promise;

@@ -4,7 +4,9 @@ import * as allExported from '../src';
 const members = [
   'actOnDefault',
   'actOnDispatch',
+  'afterAround',
   'alterItems',
+  'beforeAround',
   'cache',
   'callingParams',
   'callingParamsDefaults',
