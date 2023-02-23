@@ -2,15 +2,24 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.1...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...HEAD)
 
 **Merged pull requests:**
 
+- Broken github link on Homepage [\#699](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/699) ([FossPrime](https://github.com/FossPrime))
 - docs: add version to navbar [\#690](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/690) ([fratzinger](https://github.com/fratzinger))
 - docs: add socialLinks [\#689](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/689) ([fratzinger](https://github.com/fratzinger))
 - docs: move to vitepress [\#688](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/688) ([fratzinger](https://github.com/fratzinger))
 - chore\(dependencies\): Update all dependencies [\#686](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/686) ([daffl](https://github.com/daffl))
 - chore\(dependencies\): Update all dependencies [\#685](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/685) ([daffl](https://github.com/daffl))
+
+## [v7.0.0-pre.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.2) (2023-02-23)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.1...v7.0.0-pre.2)
+
+**Closed issues:**
+
+- \[dove\] TypeScript issue when using hooks \(iff, isProvider, ...\) [\#693](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/693)
 
 ## [v7.0.0-pre.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.1) (2022-09-28)
 
@@ -402,7 +411,6 @@
 - add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
 - update names and fix the options property [\#481](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
 - add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
-- Add initial types for fgraphql [\#469](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/469) ([NickBolles](https://github.com/NickBolles))
 
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
@@ -439,7 +447,6 @@
 **Merged pull requests:**
 
 - Fixed cache to ignore find calls with [\#473](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/473) ([eddyystop](https://github.com/eddyystop))
-- required\(\) of value false throws fieldname is null [\#470](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/470) ([antarasi](https://github.com/antarasi))
 
 ## [v4.19.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.0) (2018-11-17)
 
