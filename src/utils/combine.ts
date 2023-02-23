@@ -34,6 +34,7 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
     };
 
     // Go through all hooks and chain them into our promise
+    // @ts-ignore
     const promise = serviceHooks.reduce(async (current, fn) => {
       // @ts-ignore
       const hook = fn.bind(this);
@@ -46,6 +47,7 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
     }, Promise.resolve(ctx));
 
     try {
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       await promise;
       return ctx;
     } catch (error: any) {
