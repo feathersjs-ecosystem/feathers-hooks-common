@@ -2,16 +2,21 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0...HEAD)
 
 **Merged pull requests:**
 
+- Dove [\#707](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/707) ([fratzinger](https://github.com/fratzinger))
 - Broken github link on Homepage [\#699](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/699) ([FossPrime](https://github.com/FossPrime))
 - docs: add version to navbar [\#690](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/690) ([fratzinger](https://github.com/fratzinger))
 - docs: add socialLinks [\#689](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/689) ([fratzinger](https://github.com/fratzinger))
 - docs: move to vitepress [\#688](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/688) ([fratzinger](https://github.com/fratzinger))
 - chore\(dependencies\): Update all dependencies [\#686](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/686) ([daffl](https://github.com/daffl))
 - chore\(dependencies\): Update all dependencies [\#685](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/685) ([daffl](https://github.com/daffl))
+
+## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0) (2023-02-24)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...v7.0.0)
 
 ## [v7.0.0-pre.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.2) (2023-02-23)
 
@@ -222,7 +227,6 @@
 - An in-range update of @feathersjs/feathers is breaking the build 🚨 [\#583](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/583)
 - Argument of type xxx is not assignable to parameter of type xxx [\#579](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/579)
 - Cache hook returns improper values when using $select or query on methods other than find\(\) [\#575](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/575)
-- Validation hook for passwords [\#471](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/471)
 
 **Merged pull requests:**
 
@@ -328,10 +332,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.20.2...v4.20.4)
 
-**Implemented enhancements:**
-
-- Finish dialablePhoneNumber hook [\#474](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/474)
-
 **Closed issues:**
 
 - query regarding set response to hook :after create [\#507](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/507)
@@ -428,10 +428,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.2...v4.19.3)
 
-**Merged pull requests:**
-
-- Added dialablePhoneNumber hook [\#475](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/475) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.19.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.2) (2018-11-25)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.1...v4.19.2)
@@ -439,14 +435,6 @@
 ## [v4.19.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.1) (2018-11-25)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.0...v4.19.1)
-
-**Fixed bugs:**
-
-- Cache Fails When Using $select [\#472](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/472)
-
-**Merged pull requests:**
-
-- Fixed cache to ignore find calls with [\#473](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/473) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.19.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.0) (2018-11-17)
 
