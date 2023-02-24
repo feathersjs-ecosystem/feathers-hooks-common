@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { serialize } from '../../src';
 
@@ -12,30 +11,30 @@ describe('services serialize', () => {
       method: 'create',
       params: { provider: 'rest' },
       path: 'recommendations',
-      result: {}
+      result: {},
     };
 
     schema = {
       only: ['updatedAt'],
       computed: {
-        commentsCount: (recommendation: any, _hook: any) => recommendation.post.commentsInfo.length
+        commentsCount: (recommendation: any, _hook: any) => recommendation.post.commentsInfo.length,
       },
       post: {
         exclude: ['id', 'createdAt', 'author', 'readers', '_id'],
         authorInfo: {
           exclude: ['id', 'password', '_id', 'age'],
           computed: {
-            isUnder18: (authorInfo: any, _hook: any) => authorInfo.age < 18
-          }
+            isUnder18: (authorInfo: any, _hook: any) => authorInfo.age < 18,
+          },
         },
         readersInfo: {
-          exclude: 'id'
+          exclude: 'id',
         },
         commentsInfo: {
           only: ['title', 'content'],
-          exclude: 'content'
-        }
-      }
+          exclude: 'content',
+        },
+      },
     };
   });
 
@@ -47,8 +46,7 @@ describe('services serialize', () => {
       updatedAt: 1480793101475,
       _include: ['post'],
       _elapsed: { post: 1, total: 1 },
-      post:
-      {
+      post: {
         id: 1,
         title: 'Post 1',
         content: 'Lorem ipsum dolor sit amet 4',
@@ -62,85 +60,81 @@ describe('services serialize', () => {
           name: 'Author 1',
           email: 'author1@posties.com',
           password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-          age: 55
+          age: 55,
         },
-        commentsInfo:
-        [
+        commentsInfo: [
           {
             title: 'Comment 1',
             content: 'Lorem ipsum dolor sit amet 1',
-            postId: 1
+            postId: 1,
           },
           {
             title: 'Comment 3',
             content: 'Lorem ipsum dolor sit amet 3',
-            postId: 1
-          }
+            postId: 1,
+          },
         ],
-        readersInfo:
-        [
+        readersInfo: [
           {
             id: 'as61389dadhga62343hads6712',
             name: 'Author 1',
             email: 'author1@posties.com',
             password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-            age: 55
+            age: 55,
           },
           {
             id: '167asdf3689348sdad7312131s',
             name: 'Author 2',
             email: 'author2@posties.com',
             password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-            age: 16
-          }
-        ]
-      }
+            age: 16,
+          },
+        ],
+      },
     };
 
     const hook1 = serialize(schema)(hook);
 
-    assert.deepEqual(hook1,
-      {
-        type: 'after',
-        method: 'create',
-        params: { provider: 'rest' },
-        path: 'recommendations',
-        result: {
-          updatedAt: 1480793101475,
-          _include: ['post'],
-          _elapsed: { post: 1, total: 1 },
-          post: {
-            title: 'Post 1',
-            content: 'Lorem ipsum dolor sit amet 4',
-            _include: ['authorInfo', 'commentsInfo', 'readersInfo'],
-            _elapsed: { authorInfo: 2, commentsInfo: 2, readersInfo: 2, total: 2 },
-            authorInfo: {
+    assert.deepEqual(hook1, {
+      type: 'after',
+      method: 'create',
+      params: { provider: 'rest' },
+      path: 'recommendations',
+      result: {
+        updatedAt: 1480793101475,
+        _include: ['post'],
+        _elapsed: { post: 1, total: 1 },
+        post: {
+          title: 'Post 1',
+          content: 'Lorem ipsum dolor sit amet 4',
+          _include: ['authorInfo', 'commentsInfo', 'readersInfo'],
+          _elapsed: { authorInfo: 2, commentsInfo: 2, readersInfo: 2, total: 2 },
+          authorInfo: {
+            name: 'Author 1',
+            email: 'author1@posties.com',
+            isUnder18: false,
+            _computed: ['isUnder18'],
+          },
+          commentsInfo: [{ title: 'Comment 1' }, { title: 'Comment 3' }],
+          readersInfo: [
+            {
               name: 'Author 1',
               email: 'author1@posties.com',
-              isUnder18: false,
-              _computed: ['isUnder18']
+              password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
+              age: 55,
             },
-            commentsInfo: [{ title: 'Comment 1' }, { title: 'Comment 3' }],
-            readersInfo: [
-              {
-                name: 'Author 1',
-                email: 'author1@posties.com',
-                password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-                age: 55
-              },
-              {
-                name: 'Author 2',
-                email: 'author2@posties.com',
-                password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-                age: 16
-              }
-            ]
-          },
-          commentsCount: 2,
-          _computed: ['commentsCount']
-        }
-      } as any
-    );
+            {
+              name: 'Author 2',
+              email: 'author2@posties.com',
+              password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
+              age: 16,
+            },
+          ],
+        },
+        commentsCount: 2,
+        _computed: ['commentsCount'],
+      },
+    } as any);
   });
 
   it('schema param is not changed', () => {
@@ -155,8 +149,7 @@ describe('services serialize', () => {
       updatedAt: 1480793101475,
       _include: ['post'],
       _elapsed: { post: 1, total: 1 },
-      post:
-      {
+      post: {
         id: 1,
         title: 'Post 1',
         content: 'Lorem ipsum dolor sit amet 4',
@@ -170,39 +163,37 @@ describe('services serialize', () => {
           name: 'Author 1',
           email: 'author1@posties.com',
           password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-          age: 55
+          age: 55,
         },
-        commentsInfo:
-        [
+        commentsInfo: [
           {
             title: 'Comment 1',
             content: 'Lorem ipsum dolor sit amet 1',
-            postId: 1
+            postId: 1,
           },
           {
             title: 'Comment 3',
             content: 'Lorem ipsum dolor sit amet 3',
-            postId: 1
-          }
+            postId: 1,
+          },
         ],
-        readersInfo:
-        [
+        readersInfo: [
           {
             id: 'as61389dadhga62343hads6712',
             name: 'Author 1',
             email: 'author1@posties.com',
             password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-            age: 55
+            age: 55,
           },
           {
             id: '167asdf3689348sdad7312131s',
             name: 'Author 2',
             email: 'author2@posties.com',
             password: '2347wjkadhad8y7t2eeiudhd98eu2rygr',
-            age: 16
-          }
-        ]
-      }
+            age: 16,
+          },
+        ],
+      },
     };
 
     assert.equal(typeof schema1, 'function');
@@ -219,6 +210,6 @@ describe('services serialize', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

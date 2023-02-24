@@ -1,15 +1,16 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 import traverse from 'traverse';
 import { checkContext } from '../utils/check-context';
 
 /**
  * Wrap MongoDB foreign keys in ObjectId.
- * {@link https://hooks-common.feathersjs.com/hooks.html#mongokeys}
+ *
+ * @see https://hooks-common.feathersjs.com/hooks.html#mongokeys
  */
-export function mongoKeys (
+export function mongoKeys<H extends HookContext = HookContext>(
   ObjectId: new (id?: string | number) => any,
   keyFields: string | string[]
-): Hook {
+) {
   keyFields = Array.isArray(keyFields) ? keyFields : [keyFields];
   const keyLeaves: any = [];
 
@@ -21,7 +22,7 @@ export function mongoKeys (
     return { leaf, len: fieldNames.length, path: JSON.stringify(fieldNames) };
   });
 
-  return (context: any) => {
+  return (context: H) => {
     checkContext(context, 'before', null, 'mongoKeys');
     const query = context.params.query || {};
 
@@ -60,7 +61,7 @@ export function mongoKeys (
     return context;
   };
 
-  function wrapValue (value: any) {
+  function wrapValue(value: any) {
     return Array.isArray(value) ? value.map(val => new ObjectId(val)) : new ObjectId(value);
   }
 }

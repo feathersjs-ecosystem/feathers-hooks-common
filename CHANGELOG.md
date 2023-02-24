@@ -2,12 +2,41 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.5...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...HEAD)
 
 **Merged pull requests:**
 
-- fix: add js extension to lodash imports [\#684](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/684) ([fratzinger](https://github.com/fratzinger))
-- Update hooks documentation - setField [\#683](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/683) ([arnoldtkl](https://github.com/arnoldtkl))
+- Broken github link on Homepage [\#699](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/699) ([FossPrime](https://github.com/FossPrime))
+- docs: add version to navbar [\#690](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/690) ([fratzinger](https://github.com/fratzinger))
+- docs: add socialLinks [\#689](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/689) ([fratzinger](https://github.com/fratzinger))
+- docs: move to vitepress [\#688](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/688) ([fratzinger](https://github.com/fratzinger))
+- chore\(dependencies\): Update all dependencies [\#686](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/686) ([daffl](https://github.com/daffl))
+- chore\(dependencies\): Update all dependencies [\#685](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/685) ([daffl](https://github.com/daffl))
+
+## [v7.0.0-pre.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.2) (2023-02-23)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.1...v7.0.0-pre.2)
+
+**Closed issues:**
+
+- \[dove\] TypeScript issue when using hooks \(iff, isProvider, ...\) [\#693](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/693)
+
+## [v7.0.0-pre.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.1) (2022-09-28)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.0...v7.0.0-pre.1)
+
+**Closed issues:**
+
+- Types for populate don't account for the function param [\#629](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/629)
+- Babel compile error [\#582](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/582)
+
+## [v7.0.0-pre.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.0) (2022-09-27)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v6.1.5...v7.0.0-pre.0)
+
+**Closed issues:**
+
+- Compatibility with future v5 \(aka Dove\) [\#687](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/687)
 
 ## [v6.1.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.5) (2022-07-31)
 
@@ -16,6 +45,11 @@
 **Closed issues:**
 
 - Wrong lodash imports [\#674](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/674)
+
+**Merged pull requests:**
+
+- fix: add js extension to lodash imports [\#684](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/684) ([fratzinger](https://github.com/fratzinger))
+- Update hooks documentation - setField [\#683](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/683) ([arnoldtkl](https://github.com/arnoldtkl))
 
 ## [v6.1.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v6.1.4) (2022-07-24)
 
@@ -213,10 +247,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.0...v5.0.1)
 
-**Implemented enhancements:**
-
-- Doument fgraphql [\#466](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/466)
-
 **Closed issues:**
 
 - TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
@@ -363,7 +393,6 @@
 
 - @feathersjs/commons dependency  [\#492](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/492)
 - Validation hook for restful api [\#491](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/491)
-- TS for keep fgraphql [\#467](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/467)
 
 **Merged pull requests:**
 
@@ -382,17 +411,10 @@
 - add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
 - update names and fix the options property [\#481](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
 - add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
-- Add initial types for fgraphql [\#469](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/469) ([NickBolles](https://github.com/NickBolles))
-- remove dtslint workaround in favor of npx [\#463](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/463) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.4...v4.19.5)
-
-**Closed issues:**
-
-- TS for keepQueryInArray [\#468](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/468)
-- dtslint-build folder in installed package? [\#461](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/461)
 
 ## [v4.19.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.4) (2018-11-29)
 
@@ -425,7 +447,6 @@
 **Merged pull requests:**
 
 - Fixed cache to ignore find calls with [\#473](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/473) ([eddyystop](https://github.com/eddyystop))
-- required\(\) of value false throws fieldname is null [\#470](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/470) ([antarasi](https://github.com/antarasi))
 
 ## [v4.19.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.0) (2018-11-17)
 
@@ -435,15 +456,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.14...v4.18.0)
 
-**Implemented enhancements:**
-
-- Document KeepQueryInarray [\#465](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/465)
-
-**Closed issues:**
-
-- Difference between serialize and alterItems [\#464](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/464)
-- softDelete2 returns error on delete [\#462](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/462)
-
 ## [v4.17.14](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.14) (2018-11-01)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.13...v4.17.14)
@@ -452,25 +464,13 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.12...v4.17.13)
 
-**Merged pull requests:**
-
-- Added support for dePopulate to fgraphql hook. [\#459](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/459) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.17.12](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.12) (2018-10-29)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.11...v4.17.12)
 
-**Merged pull requests:**
-
-- Added custom dePopulate func to dePopulate hook.' [\#458](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/458) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.17.11](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.11) (2018-10-26)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.17.10...v4.17.11)
-
-**Merged pull requests:**
-
-- Added fgraphql hook. [\#457](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/457) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.17.10](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.17.10) (2018-09-26)
 

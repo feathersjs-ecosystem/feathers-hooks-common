@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { required } from '../../src';
 
@@ -10,7 +9,7 @@ describe('services required', () => {
       type: 'before',
       method: 'create',
       params: { provider: 'rest' },
-      data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+      data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
     };
   });
 

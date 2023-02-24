@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 
 import { keepInArray } from '../../src';
@@ -16,13 +15,13 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 'John', last: 'Doe' }] }
+        data: { users: [{ first: 'John', last: 'Doe' }] },
       };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: { users: [{ first: 'Jane', last: 'Doe' }] }
+        result: { users: [{ first: 'Jane', last: 'Doe' }] },
       };
       hookFindPaginate = {
         type: 'after',
@@ -32,9 +31,9 @@ describe('services keepInArray', () => {
           total: 2,
           data: [
             { users: [{ first: 'John', last: 'Doe' }] },
-            { users: [{ first: 'Jane', last: 'Doe' }] }
-          ]
-        }
+            { users: [{ first: 'Jane', last: 'Doe' }] },
+          ],
+        },
       };
       hookFind = {
         type: 'after',
@@ -42,8 +41,8 @@ describe('services keepInArray', () => {
         params: { provider: 'rest' },
         result: [
           { users: [{ first: 'John', last: 'Doe' }] },
-          { users: [{ first: 'Jane', last: 'Doe' }] }
-        ]
+          { users: [{ first: 'Jane', last: 'Doe' }] },
+        ],
       };
     });
 
@@ -61,7 +60,7 @@ describe('services keepInArray', () => {
       keepInArray('users', ['first'])(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [
         { users: [{ first: 'John' }] },
-        { users: [{ first: 'Jane' }] }
+        { users: [{ first: 'Jane' }] },
       ]);
     });
 
@@ -69,7 +68,7 @@ describe('services keepInArray', () => {
       keepInArray('users', ['first'])(hookFind);
       assert.deepEqual(hookFind.result, [
         { users: [{ first: 'John' }] },
-        { users: [{ first: 'Jane' }] }
+        { users: [{ first: 'Jane' }] },
       ]);
     });
 
@@ -89,7 +88,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 'John', last: 'Doe' }] }
+        data: { users: [{ first: 'John', last: 'Doe' }] },
       };
       keepInArray('users', ['last', 'xx'])(hook);
       assert.deepEqual(hook.data, { users: [{ last: 'Doe' }] });
@@ -100,7 +99,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: undefined, last: 'Doe' }] }
+        data: { users: [{ first: undefined, last: 'Doe' }] },
       };
       keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: undefined }] });
@@ -111,7 +110,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: null, last: 'Doe' }] }
+        data: { users: [{ first: null, last: 'Doe' }] },
       };
       keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: null }] });
@@ -122,7 +121,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: false, last: 'Doe' }] }
+        data: { users: [{ first: false, last: 'Doe' }] },
       };
       keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: false }] });
@@ -133,7 +132,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: 0, last: 'Doe' }] }
+        data: { users: [{ first: 0, last: 'Doe' }] },
       };
       keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: 0 }] });
@@ -144,7 +143,7 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ first: '', last: 'Doe' }] }
+        data: { users: [{ first: '', last: 'Doe' }] },
       };
       keepInArray('users', ['first'])(hook);
       assert.deepEqual(hook.data, { users: [{ first: '' }] });
@@ -157,7 +156,9 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: { users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }] }
+        data: {
+          users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }],
+        },
       };
       hookFindNested = {
         type: 'after',
@@ -165,8 +166,8 @@ describe('services keepInArray', () => {
         params: { provider: 'rest' },
         result: [
           { account: { users: [{ first: 'John', last: 'Doe' }] } },
-          { account: { users: [{ first: 'Jane', last: 'Doe' }] } }
-        ]
+          { account: { users: [{ first: 'Jane', last: 'Doe' }] } },
+        ],
       };
     });
 
@@ -174,36 +175,34 @@ describe('services keepInArray', () => {
       keepInArray('account.users', ['first'])(hookFindNested);
       assert.deepEqual(hookFindNested.result, [
         { account: { users: [{ first: 'John' }] } },
-        { account: { users: [{ first: 'Jane' }] } }
+        { account: { users: [{ first: 'Jane' }] } },
       ]);
     });
 
     it('prop with no dots', () => {
       keepInArray('users', ['empl'])(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }] }
-      );
+      assert.deepEqual(hookBefore.data, {
+        users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }],
+      });
     });
 
     it('prop with 1 dot', () => {
       keepInArray('users', ['empl.name', 'dept'])(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { users: [{ empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct' }] }
-      );
+      assert.deepEqual(hookBefore.data, {
+        users: [{ empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct' }],
+      });
     });
 
     it('prop with 2 dots', () => {
       keepInArray('users', ['empl.name.last', 'empl.status', 'dept'])(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { users: [{ empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }] }
-      );
+      assert.deepEqual(hookBefore.data, {
+        users: [{ empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }],
+      });
     });
 
     it('ignores bad or missing paths', () => {
       keepInArray('users', ['empl.name.first', 'empl.name.surname'])(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        { users: [{ empl: { name: { first: 'John' } } }] }
-      );
+      assert.deepEqual(hookBefore.data, { users: [{ empl: { name: { first: 'John' } } }] });
     });
 
     it('ignores bad or missing no dot path', () => {
@@ -218,28 +217,58 @@ describe('services keepInArray', () => {
         type: 'before',
         method: 'create',
         params: { provider: 'rest' },
-        data: [{ users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }, null, undefined, Infinity] }, null, undefined, Infinity]
+        data: [
+          {
+            users: [
+              { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+              null,
+              undefined,
+              Infinity,
+            ],
+          },
+          null,
+          undefined,
+          Infinity,
+        ],
       };
       hookAfter = {
         type: 'after',
         method: 'create',
         params: { provider: 'rest' },
-        result: [{ users: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] }, null, undefined, Infinity]
+        result: [
+          { users: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity] },
+          null,
+          undefined,
+          Infinity,
+        ],
       };
     });
 
     it('before', () => {
       keepInArray('users', ['empl'])(hookBefore);
-      assert.deepEqual(hookBefore.data,
-        [{ users: [{ empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }, null, undefined, Infinity] }, null, undefined, Infinity]
-      );
+      assert.deepEqual(hookBefore.data, [
+        {
+          users: [
+            { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } },
+            null,
+            undefined,
+            Infinity,
+          ],
+        },
+        null,
+        undefined,
+        Infinity,
+      ]);
     });
 
     it('after', () => {
       keepInArray('users', ['first'])(hookAfter);
-      assert.deepEqual(hookAfter.result,
-        [{ users: [{ first: 'Jane' }, null, undefined, Infinity] }, null, undefined, Infinity]
-      );
+      assert.deepEqual(hookAfter.result, [
+        { users: [{ first: 'Jane' }, null, undefined, Infinity] },
+        null,
+        undefined,
+        Infinity,
+      ]);
     });
   });
 });

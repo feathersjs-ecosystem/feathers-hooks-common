@@ -1,18 +1,19 @@
-import type { Hook } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Pass context.params from client to server. Server hook.
- * {@link https://hooks-common.feathersjs.com/hooks.html#paramsfromclient}
+ * @see https://hooks-common.feathersjs.com/hooks.html#paramsfromclient
  */
-export function paramsFromClient (...whitelist: string[]): Hook {
-  return (context: any) => {
+export function paramsFromClient<H extends HookContext = HookContext>(...whitelist: string[]) {
+  return (context: H) => {
     const params = context.params;
 
-    if (params && params.query && params.query.$client && typeof params.query.$client === 'object') {
+    if (params?.query?.$client && typeof params.query.$client === 'object') {
       const client = params.query.$client;
 
       whitelist.forEach(key => {
         if (key in client) {
+          // @ts-ignore
           params[key] = client[key];
         }
       });

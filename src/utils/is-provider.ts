@@ -1,24 +1,24 @@
-import errors from '@feathersjs/errors';
-const { MethodNotAllowed } = errors;
-import type { SyncContextFunction, TransportName } from '../types';
+import { MethodNotAllowed } from '@feathersjs/errors';
+import type { HookContext } from '@feathersjs/feathers';
+import type { TransportName } from '../types';
 
 /**
  * Check which transport provided the service call.
- * {@link https://hooks-common.feathersjs.com/hooks.html#isprovider}
+ * @see https://hooks-common.feathersjs.com/utilities.html#isprovider
  */
-export function isProvider (
-  ...providers: TransportName[]
-): SyncContextFunction<boolean> {
+export function isProvider<H extends HookContext = HookContext>(...providers: TransportName[]) {
   if (!providers.length) {
-    throw new MethodNotAllowed('Calling iff() predicate incorrectly. (isProvider)');
+    throw new MethodNotAllowed('Calling isProvider predicate incorrectly.');
   }
 
-  return (context: any) => {
-    const hookProvider = (context.params || {}).provider;
+  return (context: H) => {
+    const hookProvider = context.params.provider;
 
-    return providers.some(provider => provider === hookProvider ||
-      (provider === 'server' && !hookProvider) ||
-      (provider === 'external' && !!hookProvider)
+    return providers.some(
+      provider =>
+        provider === hookProvider ||
+        (provider === 'server' && !hookProvider) ||
+        (provider === 'external' && !!hookProvider)
     );
   };
 }

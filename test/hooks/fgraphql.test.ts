@@ -64,39 +64,47 @@ describe('services fgraphql', () => {
     ];
     /* eslint-enable */
 
-    decisionTable.forEach(([desc, schema, resolvers, recordType, query, options, context, client, result]) => {
-      it(desc, async () => {
-        context.params = context.params || {};
-        if (client) {
-          context.params.provider = 'socketio';
-        }
-
-        try {
-          const newContext: any = await fgraphql({
-            parse, runTime, schema, resolvers, recordType, query, options
-          })(context);
-
-          if (!isObject(result)) {
-            assert(false, `Unexpected success. Expected ${result}.`);
-          } else {
-            // inspector('result=', result);
-            // inspector('actual=', newContext.data || newContext.result);
-            assert.deepEqual(newContext.data || newContext.result, result, 'unexpected result');
-          }
-        } catch (err: any) {
-          if (err.message.substr(0, 19) === 'Unexpected success.') {
-            throw err;
+    decisionTable.forEach(
+      ([desc, schema, resolvers, recordType, query, options, context, client, result]) => {
+        it(desc, async () => {
+          context.params = context.params || {};
+          if (client) {
+            context.params.provider = 'socketio';
           }
 
-          if (isObject(result)) {
-            assert(false, `unexpected fail: ${err.message}`);
-            return;
-          }
+          try {
+            const newContext: any = await fgraphql({
+              parse,
+              runTime,
+              schema,
+              resolvers,
+              recordType,
+              query,
+              options,
+            })(context);
 
-          assert.strictEqual(err.code, result, `unexpected error: ${err.message}`);
-        }
-      });
-    });
+            if (!isObject(result)) {
+              assert(false, `Unexpected success. Expected ${result}.`);
+            } else {
+              // inspector('result=', result);
+              // inspector('actual=', newContext.data || newContext.result);
+              assert.deepEqual(newContext.data || newContext.result, result, 'unexpected result');
+            }
+          } catch (err: any) {
+            if (err.message.substr(0, 19) === 'Unexpected success.') {
+              throw err;
+            }
+
+            if (isObject(result)) {
+              assert(false, `unexpected fail: ${err.message}`);
+              return;
+            }
+
+            assert.strictEqual(err.code, result, `unexpected error: ${err.message}`);
+          }
+        });
+      }
+    );
   });
 
   describe('using batchloader', () => {
@@ -115,13 +123,13 @@ describe('services fgraphql', () => {
       32: { _id: '32', name: 'user 32' },
       35: { _id: '35', name: 'user 35' },
       36: { _id: '36', name: 'user 36' },
-      37: { _id: '37', name: 'user 37' }
+      37: { _id: '37', name: 'user 37' },
     };
 
     const postsDb: any = {
       11: { _id: '11', body: 'body 11', userId: '31' },
       12: { _id: '12', body: 'body 12', userId: '31' },
-      13: { _id: '13', body: 'body 13', userId: '32' }
+      13: { _id: '13', body: 'body 13', userId: '32' },
     };
 
     const commentsDb: any = {
@@ -133,7 +141,7 @@ describe('services fgraphql', () => {
       26: { _id: '26', comment: 'comment 26', postId: '13', userId: '36' },
       27: { _id: '27', comment: 'comment 24', postId: '11', userId: '37' },
       28: { _id: '28', comment: 'comment 25', postId: '12', userId: '37' },
-      29: { _id: '29', comment: 'comment 26', postId: '13', userId: '37' }
+      29: { _id: '29', comment: 'comment 26', postId: '13', userId: '37' },
     };
 
     beforeEach(() => {
@@ -164,39 +172,38 @@ describe('services fgraphql', () => {
       context = {
         type: 'after',
         params: {},
-        result: Object.keys(postsDb).map(key => postsDb[key])
+        result: Object.keys(postsDb).map(key => postsDb[key]),
       };
 
       query = {
         body: 1,
         userId: 1,
         author: {
-          name: 1
+          name: 1,
         },
         comments: {
           userId: 1,
           author: {
-            name: 1
-          }
-        }
+            name: 1,
+          },
+        },
       };
 
       options = {
-        inclJoinedNames: false
+        inclJoinedNames: false,
       };
 
-      usersBatchLoader = new BatchLoader(
-        async (keys: any) => {
-          usersBatchLoaderCalls.push(keys);
-          const result = keys.map((key: any) => usersDb[key]);
-          return getResultsByKey(keys, result, (rec: any) => rec._id, '!');
-        }
-      );
+      usersBatchLoader = new BatchLoader(async (keys: any) => {
+        usersBatchLoaderCalls.push(keys);
+        const result = keys.map((key: any) => usersDb[key]);
+        return getResultsByKey(keys, result, (rec: any) => rec._id, '!');
+      });
 
       resolvers = () => ({
         Post: {
           // tests returning a Promise
-          author: (parent: any, _args: any, _content: any, _ast: any) => usersBatchLoader.load(parent.userId),
+          author: (parent: any, _args: any, _content: any, _ast: any) =>
+            usersBatchLoader.load(parent.userId),
           // tests returning a value
           comments: (parent: any, _args: any, _content: any, _ast: any) => {
             const x: any = [];
@@ -206,11 +213,12 @@ describe('services fgraphql', () => {
               }
             });
             return x;
-          }
+          },
         },
         Comment: {
-          author: (parent: any, _args: any, _content: any, _ast: any) => usersBatchLoader.load(parent.userId)
-        }
+          author: (parent: any, _args: any, _content: any, _ast: any) =>
+            usersBatchLoader.load(parent.userId),
+        },
       });
 
       result = [
@@ -220,42 +228,54 @@ describe('services fgraphql', () => {
           comments: [
             { userId: '35', author: { _id: '35', name: 'user 35' } },
             { userId: '36', author: { _id: '36', name: 'user 36' } },
-            { userId: '37', author: { _id: '37', name: 'user 37' } }
+            { userId: '37', author: { _id: '37', name: 'user 37' } },
           ],
-          author: { _id: '31', name: 'user 31' }
-        }, {
+          author: { _id: '31', name: 'user 31' },
+        },
+        {
           body: 'body 12',
           userId: '31',
           comments: [
             { userId: '35', author: { _id: '35', name: 'user 35' } },
             { userId: '36', author: { _id: '36', name: 'user 36' } },
-            { userId: '37', author: { _id: '37', name: 'user 37' } }
+            { userId: '37', author: { _id: '37', name: 'user 37' } },
           ],
-          author: { _id: '31', name: 'user 31' }
-        }, {
+          author: { _id: '31', name: 'user 31' },
+        },
+        {
           body: 'body 13',
           userId: '32',
           comments: [
             { userId: '35', author: { _id: '35', name: 'user 35' } },
             { userId: '36', author: { _id: '36', name: 'user 36' } },
-            { userId: '37', author: { _id: '37', name: 'user 37' } }
+            { userId: '37', author: { _id: '37', name: 'user 37' } },
           ],
-          author: { _id: '32', name: 'user 32' }
-        }
+          author: { _id: '32', name: 'user 32' },
+        },
       ];
     });
 
     it('batches calls', async () => {
       try {
         const newContext: any = await fgraphql({
-          parse, runTime, schema, resolvers, recordType, query, options
+          parse,
+          runTime,
+          schema,
+          resolvers,
+          recordType,
+          query,
+          options,
         })(context);
 
         // inspector('batchloader calls', usersBatchLoaderCalls);
         // inspector('actual=', newContext.data || newContext.result);
 
         assert.deepEqual(newContext.data || newContext.result, result, 'unexpected result');
-        assert.deepEqual(usersBatchLoaderCalls, [['31', '32', '35', '36', '37']], 'unexpected calls');
+        assert.deepEqual(
+          usersBatchLoaderCalls,
+          [['31', '32', '35', '36', '37']],
+          'unexpected calls'
+        );
       } catch (err) {
         console.log(err);
         throw err;
@@ -264,12 +284,12 @@ describe('services fgraphql', () => {
   });
 });
 
-function isObject (obj: any) {
+function isObject(obj: any) {
   return typeof obj === 'object' && obj !== null;
 }
 
 // schemas
-function s (typ: any) {
+function s(typ: any) {
   const SDL1 = `
 type User {
   _id: ID
@@ -331,174 +351,174 @@ type User {
 }`;
 
   switch (typ) {
-  case 'str':
-    return SDL1;
-  case 'cnv0':
-    return C0;
-  case 'cnv1':
-    return C1;
-  case 'fcn':
-    return () => SDL1;
-  case 'obj':
-    return {
-      User: {
-        firstName: { typeof: 'String' },
-        lastName: { typeof: 'String' },
-        fullName: { nonNullTypeField: true, typeof: 'String' }
-      }
-    };
-  case 'param':
-    return {
-      User: {
-        firstName: { typeof: 'String' },
-        lastName: { typeof: 'String' },
-        fullName: { nonNullTypeField: true, typeof: 'String' },
-        params: { typeof: 'JSON' }
-      }
-    };
-  case 'err1':
-    return (): any => null;
+    case 'str':
+      return SDL1;
+    case 'cnv0':
+      return C0;
+    case 'cnv1':
+      return C1;
+    case 'fcn':
+      return () => SDL1;
+    case 'obj':
+      return {
+        User: {
+          firstName: { typeof: 'String' },
+          lastName: { typeof: 'String' },
+          fullName: { nonNullTypeField: true, typeof: 'String' },
+        },
+      };
+    case 'param':
+      return {
+        User: {
+          firstName: { typeof: 'String' },
+          lastName: { typeof: 'String' },
+          fullName: { nonNullTypeField: true, typeof: 'String' },
+          params: { typeof: 'JSON' },
+        },
+      };
+    case 'err1':
+      return (): any => null;
 
-  case 'S2':
-    return S2;
-  case 'S3':
-    return S3;
-  default:
-    throw new Error(`Invalid typ ${typ} for "s" function.`);
+    case 'S2':
+      return S2;
+    case 'S3':
+      return S3;
+    default:
+      throw new Error(`Invalid typ ${typ} for "s" function.`);
   }
 }
 
 // resolvers
-function r (typ: any) {
-  return function resolvers (_app: any, _options: any) { // eslint-disable-line no-unused-vars
+function r(typ: any) {
+  return function resolvers(_app: any, _options: any) {
+    // eslint-disable-line no-unused-vars
     // const { convertArgsToFeathers, extractAllItems, extractFirstItem } = options; // eslint-disable-line no-unused-vars
     // const convertArgs = convertArgsToFeathers([]); // eslint-disable-line no-unused-vars
     // let comments = app.service('/comments');
 
     switch (typ) {
-    case 'full':
-      return {
-        User: {
-          // fullName: String!
-          fullName:
-              (parent: any, _args: any, _content: any, _ast: any) => `${parent.first} ${parent.last}` // eslint-disable-line no-unused-vars
-        }
-      };
-    case 'parent':
-      return {
-        User: {
-          // fullName: String!
-          fullName:
-              (parent: any, _args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                const returns = `${parent.first} ${parent.last}`;
-                parent.first = 'foo';
-                return returns;
-              }
-        }
-      };
-    case 'params':
-      return {
-        User: {
-          // fullName: String!
-          fullName:
-              (parent: any, _args: any, _content: any, _ast: any) => `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
-          params:
-              (_parent: any, args: any, _content: any, ast: any) => ({
-                args,
-                ast
-              })
-        }
-      };
-    case 'err1':
-      return { User: { fullName: 'foo' } };
+      case 'full':
+        return {
+          User: {
+            // fullName: String!
+            fullName: (parent: any, _args: any, _content: any, _ast: any) =>
+              `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
+          },
+        };
+      case 'parent':
+        return {
+          User: {
+            // fullName: String!
+            fullName: (parent: any, _args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              const returns = `${parent.first} ${parent.last}`;
+              parent.first = 'foo';
+              return returns;
+            },
+          },
+        };
+      case 'params':
+        return {
+          User: {
+            // fullName: String!
+            fullName: (parent: any, _args: any, _content: any, _ast: any) =>
+              `${parent.first} ${parent.last}`, // eslint-disable-line no-unused-vars
+            params: (_parent: any, args: any, _content: any, ast: any) => ({
+              args,
+              ast,
+            }),
+          },
+        };
+      case 'err1':
+        return { User: { fullName: 'foo' } };
 
-    case 'array2':
-      return {
-        User: {
-          fullName: () => [{ fullName: 'foo' }, { fullName: 'foo' }]
-        }
-      };
-    case 'undefin':
-      return {
-        User: {
-          fullName: (): any => undefined
-        }
-      };
-    case 'array1':
-      return {
-        User: {
-          fullName: (parent: any) => [`${parent.first} ${parent.last}`]
-        }
-      };
+      case 'array2':
+        return {
+          User: {
+            fullName: () => [{ fullName: 'foo' }, { fullName: 'foo' }],
+          },
+        };
+      case 'undefin':
+        return {
+          User: {
+            fullName: (): any => undefined,
+          },
+        };
+      case 'array1':
+        return {
+          User: {
+            fullName: (parent: any) => [`${parent.first} ${parent.last}`],
+          },
+        };
 
-    case 'S2':
-      return {
-        User: {
-          // posts: [Post]
-          posts:
-              (_parent: any, args: any, content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return [
-                  { _id: '1001', body: 'foo body' },
-                  { _id: (args.params || content.foo || {})._id || '1002', body: 'bar body' }
-                ];
-              },
-          // comments: [Comment]
-          comments:
-              (_parent: any, _args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return [
-                  { _id: '2001', comment: 'foo comment' },
-                  { _id: '2002', comment: 'bar comment' }
-                ];
-              }
-        },
-        Post: {}
-      };
+      case 'S2':
+        return {
+          User: {
+            // posts: [Post]
+            posts: (_parent: any, args: any, content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return [
+                { _id: '1001', body: 'foo body' },
+                { _id: (args.params || content.foo || {})._id || '1002', body: 'bar body' },
+              ];
+            },
+            // comments: [Comment]
+            comments: (_parent: any, _args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return [
+                { _id: '2001', comment: 'foo comment' },
+                { _id: '2002', comment: 'bar comment' },
+              ];
+            },
+          },
+          Post: {},
+        };
 
-    case 'S3':
-      return {
-        User: {
-          // posts: [Post]
-          posts:
-              (_parent: any, args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return [
-                  { _id: '1001', body: 'foo body' },
-                  { _id: (args.params || {})._id || '1002', body: 'bar body' }
-                ];
-              },
-          // comments: [Comment]
-          comments:
-              (_parent: any, _args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return [
-                  { _id: '2001', comment: 'foo comment' },
-                  { _id: '2002', comment: 'bar comment' }
-                ];
-              }
-        },
-        Post: {
-          // author: User
-          author:
-              (_parent: any, _args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return { _id: '3001', first: 'Jane', last: 'Doe' };
-              }
-        },
-        Comment: {
-          // author: User
-          author:
-              (_parent: any, _args: any, _content: any, _ast: any) => { // eslint-disable-line no-unused-vars
-                return { _id: '4001', first: 'Jane', last: 'Doe' };
-              }
-        }
-      };
-    default:
-      throw new Error(`Invalid typ ${typ} for "r" function.`);
+      case 'S3':
+        return {
+          User: {
+            // posts: [Post]
+            posts: (_parent: any, args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return [
+                { _id: '1001', body: 'foo body' },
+                { _id: (args.params || {})._id || '1002', body: 'bar body' },
+              ];
+            },
+            // comments: [Comment]
+            comments: (_parent: any, _args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return [
+                { _id: '2001', comment: 'foo comment' },
+                { _id: '2002', comment: 'bar comment' },
+              ];
+            },
+          },
+          Post: {
+            // author: User
+            author: (_parent: any, _args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return { _id: '3001', first: 'Jane', last: 'Doe' };
+            },
+          },
+          Comment: {
+            // author: User
+            author: (_parent: any, _args: any, _content: any, _ast: any) => {
+              // eslint-disable-line no-unused-vars
+              return { _id: '4001', first: 'Jane', last: 'Doe' };
+            },
+          },
+        };
+      default:
+        throw new Error(`Invalid typ ${typ} for "r" function.`);
     }
   };
 }
 
 // query
-function q (typ: any): any {
+function q(typ: any): any {
   switch (typ) {
-  /* eslint-disable */
+    /* eslint-disable */
     case 'obj':
       return        { fullName: {}                                    }   ;
     case 'none':
@@ -590,46 +610,46 @@ function q (typ: any): any {
 }
 
 // options
-function o (typ: any) {
+function o(typ: any) {
   switch (typ) {
-  case 'both':
-    return {
-      inclAllFieldsServer: true,
-      inclAllFieldsClient: true
-    };
-  case 'server-':
-    return { inclAllFieldsServer: false };
-  case 'client-':
-    return { inclAllFieldsClient: false };
-  case 'loop':
-    return { skipHookWhen: () => false };
-  case 'prop-':
-    return {
-      inclAllFieldsServer: true,
-      inclAllFieldsClient: true,
-      extraAuthProps: 1
-    };
-  case 'prop+':
-    return {
-      inclAllFieldsServer: true,
-      inclAllFieldsClient: true,
-      extraAuthProps: ['foo']
-    };
-  case 'join-':
-    return {
-      inclAllFieldsServer: true,
-      inclAllFieldsClient: true,
-      inclJoinedNames: false
-    };
-  default:
-    throw new Error(`Invalid typ ${typ} for "o" function.`);
+    case 'both':
+      return {
+        inclAllFieldsServer: true,
+        inclAllFieldsClient: true,
+      };
+    case 'server-':
+      return { inclAllFieldsServer: false };
+    case 'client-':
+      return { inclAllFieldsClient: false };
+    case 'loop':
+      return { skipHookWhen: () => false };
+    case 'prop-':
+      return {
+        inclAllFieldsServer: true,
+        inclAllFieldsClient: true,
+        extraAuthProps: 1,
+      };
+    case 'prop+':
+      return {
+        inclAllFieldsServer: true,
+        inclAllFieldsClient: true,
+        extraAuthProps: ['foo'],
+      };
+    case 'join-':
+      return {
+        inclAllFieldsServer: true,
+        inclAllFieldsClient: true,
+        inclJoinedNames: false,
+      };
+    default:
+      throw new Error(`Invalid typ ${typ} for "o" function.`);
   }
 }
 
 // results
-function a (typ: any) {
+function a(typ: any) {
   switch (typ) {
-  /* eslint-disable */
+    /* eslint-disable */
     case 'janeNull' :
       return { first: 'Jane', last: 'Doe', fullName: null,         _include: ['fullName'] };
     case 'janeFull' :

@@ -2,12 +2,10 @@ import type { Params } from '@feathersjs/feathers';
 
 /**
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)
- * {@link https://hooks-common.feathersjs.com/hooks.html#ParamsForServer}
+ *
+ * @see https://hooks-common.feathersjs.com/utilities.html#paramsforserver
  */
-export function paramsForServer (
-  params?: Params,
-  ...whitelist: string[]
-): Params {
+export function paramsForServer(params?: Params, ...whitelist: string[]): Params {
   const ifWhitelist = !!whitelist.length;
   const _params: Record<string, any> = Object.assign({}, params);
 

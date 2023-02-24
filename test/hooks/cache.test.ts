@@ -1,6 +1,6 @@
-
 import { assert } from 'chai';
 import { cache } from '../../src';
+
 // @ts-ignore
 import CacheMap from '@feathers-plus/cache';
 
@@ -31,7 +31,7 @@ describe('service cache', () => {
       id: undefined,
       method: undefined,
       params: { provider: 'rest' },
-      data: { id: 1, first: 'John', last: 'Doe' }
+      data: { id: 1, first: 'John', last: 'Doe' },
     };
     hookBeforeMulti = {
       type: 'before',
@@ -40,22 +40,22 @@ describe('service cache', () => {
       params: { provider: 'rest' },
       data: [
         { id: 1, first: 'John', last: 'Doe' },
-        { id: 2, first: 'Jane', last: 'Doe' }
-      ]
+        { id: 2, first: 'Jane', last: 'Doe' },
+      ],
     };
     hookAfterSingle = {
       type: 'after',
       id: undefined,
       method: undefined,
       params: { provider: 'rest' },
-      result: { id: 1, first: 'Jane', last: 'Doe' }
+      result: { id: 1, first: 'Jane', last: 'Doe' },
     };
     hookAfterSingleNormalize = {
       type: 'after',
       id: undefined,
       method: undefined,
       params: { provider: 'rest' },
-      result: { id: -1, first: 'Jane', last: 'Doe' }
+      result: { id: -1, first: 'Jane', last: 'Doe' },
     };
     hookAfterMulti = {
       type: 'after',
@@ -64,8 +64,8 @@ describe('service cache', () => {
       params: { provider: 'rest' },
       result: [
         { id: 1, first: 'John', last: 'Doe' },
-        { id: 2, first: 'Jane', last: 'Doe' }
-      ]
+        { id: 2, first: 'Jane', last: 'Doe' },
+      ],
     };
     hookAfterPaginated = {
       type: 'after',
@@ -75,9 +75,9 @@ describe('service cache', () => {
         total: 2,
         data: [
           { id: 1, first: 'John', last: 'Doe' },
-          { id: 2, first: 'Jane', last: 'Doe' }
-        ]
-      }
+          { id: 2, first: 'Jane', last: 'Doe' },
+        ],
+      },
     };
     hookBeforeUuid = {
       type: 'before',
@@ -85,7 +85,7 @@ describe('service cache', () => {
       method: undefined,
       params: { provider: 'rest' },
       data: { uuid: 1, first: 'John', last: 'Doe' },
-      service: { id: 'uuid' }
+      service: { id: 'uuid' },
     };
     hookAfterUuid = {
       type: 'after',
@@ -93,7 +93,7 @@ describe('service cache', () => {
       method: undefined,
       params: { provider: 'rest' },
       result: { uuid: 1, first: 'Jane', last: 'Doe' },
-      service: { id: 'uuid' }
+      service: { id: 'uuid' },
     };
     hookBeforeMultiMixed = {
       type: 'before',
@@ -102,8 +102,8 @@ describe('service cache', () => {
       params: { provider: 'rest' },
       data: [
         { _id: 1, first: 'John', last: 'Doe' },
-        { id: 2, first: 'Jane', last: 'Doe' }
-      ]
+        { id: 2, first: 'Jane', last: 'Doe' },
+      ],
     };
     hookAfterMultiMixed = {
       type: 'after',
@@ -112,8 +112,8 @@ describe('service cache', () => {
       params: { provider: 'rest' },
       result: [
         { id: 1, first: 'John', last: 'Doe' },
-        { _id: 2, first: 'Jane', last: 'Doe' }
-      ]
+        { _id: 2, first: 'Jane', last: 'Doe' },
+      ],
     };
   });
 
@@ -370,7 +370,7 @@ describe('service cache', () => {
   });
 });
 
-function clone (obj: any) {
+function clone(obj: any) {
   cloneCount += 1;
   return Object.assign({}, obj);
 }

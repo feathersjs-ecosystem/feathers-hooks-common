@@ -10,7 +10,7 @@ describe('services discardQuery', () => {
       hookBefore = {
         type: 'before',
         method: 'create',
-        params: { query: { first: 'John', last: 'Doe' } }
+        params: { query: { first: 'John', last: 'Doe' } },
       };
       hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
     });
@@ -21,7 +21,9 @@ describe('services discardQuery', () => {
     });
 
     it('throws on hook after', () => {
-      assert.throws(() => { discardQuery('last')(hookAfter); });
+      assert.throws(() => {
+        discardQuery('last')(hookAfter);
+      });
     });
 
     it('does not throw if field is missing', () => {
@@ -36,44 +38,48 @@ describe('services discardQuery', () => {
         type: 'before',
         method: 'create',
         params: {
-          query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-        }
+          query: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+        },
       };
     });
 
     it('prop with no dots', () => {
       discardQuery('dept')(hookBefore);
-      assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' } }
-      );
+      assert.deepEqual(hookBefore.params.query, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+      });
     });
 
     it('prop with 1 dot', () => {
       discardQuery('empl.status')(hookBefore);
-      assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' } }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.params.query, {
+        empl: { name: { first: 'John', last: 'Doe' } },
+        dept: 'Acct',
+      });
     });
 
     it('prop with 2 dots', () => {
       discardQuery('empl.name.first')(hookBefore);
-      assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.params.query, {
+        empl: { name: { last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing paths', () => {
       discardQuery('empl.xx.first')(hookBefore);
-      assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.params.query, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('ignores bad or missing no dot path', () => {
       discardQuery('xx')(hookBefore);
-      assert.deepEqual(hookBefore.params.query,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.params.query, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
   });
 });

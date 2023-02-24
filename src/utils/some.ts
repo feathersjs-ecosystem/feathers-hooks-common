@@ -3,12 +3,12 @@ import type { AsyncPredicateFn, PredicateFn } from '../types';
 
 /**
  * Return the or of a series of sync or async predicate functions.
- * {@link https://hooks-common.feathersjs.com/hooks.html#some}
+ * @see https://hooks-common.feathersjs.com/utilities.html#some
  */
-export function some (
-  ...predicates: PredicateFn[]
-): AsyncPredicateFn {
-  return async function (this: any, context: HookContext) {
+export function some<H extends HookContext = HookContext>(
+  ...predicates: PredicateFn<H>[]
+): AsyncPredicateFn<H> {
+  return async function (this: any, context: H) {
     const promises = predicates.map(fn => fn.apply(this, [context]));
 
     const results = await Promise.all(promises);

@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { iff, isNot, isProvider } from '../../src';
 import { isPromise } from '../../src/common';
@@ -15,10 +14,13 @@ const predicateSync = (value: any) => () => {
   return value;
 };
 
-const predicateAsync = <T>(value: T) => () => new Promise<T>(resolve => {
-  predicateCalls = +1;
-  return resolve(value);
-});
+const predicateAsync =
+  <T>(value: T) =>
+  () =>
+    new Promise<T>(resolve => {
+      predicateCalls = +1;
+      return resolve(value);
+    });
 
 const hookFcnSync = (hook: any) => {
   hookFcnSyncCalls = +1;
@@ -34,8 +36,10 @@ describe('util isNot - predicate', () => {
   });
 
   it('expects a function param', () => {
-    // @ts-expect-error
-    assert.throws(() => { isNot('not a function'); });
+    assert.throws(() => {
+      // @ts-ignore
+      isNot('not a function');
+    });
   });
 
   it('negates a sync function 1', () => {
@@ -87,17 +91,26 @@ describe('util isNot - predicate', () => {
 describe('services isNot - works with iff and isProvider', () => {
   beforeEach(() => {
     hookBefore = {
-      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }
+      type: 'before',
+      method: 'create',
+      data: { first: 'John' },
+      params: { provider: 'rest' },
     };
     hookAfter = {
-      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' }
+      type: 'before',
+      method: 'create',
+      data: { first: 'john' },
+      params: { provider: 'rest' },
     };
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
   });
 
   it('calls sync hook function if truthy', () => {
-    iff(isNot(isProvider('server')), hookFcnSync)(hook)
+    iff(
+      isNot(isProvider('server')),
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -121,6 +134,6 @@ describe('services isNot - works with iff and isProvider', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

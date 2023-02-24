@@ -5,7 +5,7 @@ import { runParallel } from '../../src';
 let contextBefore: any;
 let that: any;
 
-function test (tester: any) {
+function test(tester: any) {
   return function (this: any, contextCloned: any) {
     that = this;
     tester(contextCloned);
@@ -20,32 +20,32 @@ describe('services runParallel', () => {
       type: 'before',
       method: 'create',
       params: { provider: 'rest' },
-      data: { first: 'John', last: 'Doe' }
+      data: { first: 'John', last: 'Doe' },
     };
   });
 
   it('runs the func', (done: any) => {
-    runParallel(test(tester), clone, 0)(contextBefore);
+    runParallel(test(tester))(contextBefore);
 
-    function tester () {
+    function tester() {
       done();
     }
   });
 
   it('passes this', (done: any) => {
-    runParallel(test(tester), clone, 0).call({ bar: true }, contextBefore);
+    runParallel(test(tester)).call({ bar: true }, contextBefore);
 
-    function tester () {
+    function tester() {
       assert.strictEqual(that.bar, true);
       done();
     }
   });
 
   it('defaults to uncloned context', (done: any) => {
-    runParallel(test(tester), clone, 0)(contextBefore);
+    runParallel(test(tester))(contextBefore);
     contextBefore._foo = true;
 
-    function tester (contextCloned: any) {
+    function tester(contextCloned: any) {
       assert.property(contextCloned, '_foo');
       done();
     }
@@ -55,7 +55,7 @@ describe('services runParallel', () => {
     runParallel(test(tester), clone)(contextBefore);
     contextBefore._foo = true;
 
-    function tester (contextCloned: any) {
+    function tester(contextCloned: any) {
       assert.notProperty(contextCloned, '_foo');
       done();
     }

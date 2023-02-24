@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { iff, isProvider } from '../../src';
 import { isPromise } from '../../src/common';
@@ -94,17 +93,26 @@ describe('services isProvider - predicate', () => {
 describe('services isProvider - works with iff', () => {
   beforeEach(() => {
     hookBefore = {
-      type: 'before', method: 'create', data: { first: 'John' }, params: { provider: 'rest' }
+      type: 'before',
+      method: 'create',
+      data: { first: 'John' },
+      params: { provider: 'rest' },
     };
     hookAfter = {
-      type: 'before', method: 'create', data: { first: 'john' }, params: { provider: 'rest' }
+      type: 'before',
+      method: 'create',
+      data: { first: 'john' },
+      params: { provider: 'rest' },
     };
     hook = clone(hookBefore);
     hookFcnSyncCalls = 0;
   });
 
   it('calls sync hook function if truthy', () => {
-    iff(isProvider('rest'), hookFcnSync)(hook)
+    iff(
+      isProvider('rest'),
+      hookFcnSync
+    )(hook)
       // @ts-ignore
       .then((hook: any) => {
         assert.deepEqual(hook, hookAfter);
@@ -128,6 +136,6 @@ describe('services isProvider - works with iff', () => {
 
 // Helpers
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

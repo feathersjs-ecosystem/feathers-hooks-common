@@ -4,15 +4,16 @@ const postsStore = [
     body: 'John post',
     userId: 101,
     starIds: [102, 103, 104],
-    reputation: [ // The current populate hook cannot handle this structure.
+    reputation: [
+      // The current populate hook cannot handle this structure.
       { userId: 102, points: 1 },
       { userId: 103, points: 1 },
-      { userId: 104, points: 1 }
-    ]
+      { userId: 104, points: 1 },
+    ],
   },
   { id: 2, body: 'Marshall post', userId: 102, starIds: [101, 103, 104] },
   { id: 3, body: 'Barbara post', userId: 103 },
-  { id: 4, body: 'Aubree post', userId: 104 }
+  { id: 4, body: 'Aubree post', userId: 104 },
 ];
 
 const commentsStore = [
@@ -22,23 +23,23 @@ const commentsStore = [
   { id: 14, text: 'Marshall post John comment 14', postId: 2, userId: 101 },
   { id: 15, text: 'Marshall post John comment 15', postId: 2, userId: 101 },
   { id: 16, text: 'Barbara post John comment 16', postId: 3, userId: 101 },
-  { id: 17, text: 'Aubree post Marshall comment 17', postId: 4, userId: 102 }
+  { id: 17, text: 'Aubree post Marshall comment 17', postId: 4, userId: 102 },
 ];
 
 const usersStore = [
   { id: 101, name: 'John' },
   { id: 102, name: 'Marshall' },
   { id: 103, name: 'Barbara' },
-  { id: 104, name: 'Aubree' }
+  { id: 104, name: 'Aubree' },
 ];
 
 export const posts: any = makeService(postsStore, 'posts');
-export const comments: any = makeService(commentsStore, 'comments')
-export const users: any = makeService(usersStore, 'users')
+export const comments: any = makeService(commentsStore, 'comments');
+export const users: any = makeService(usersStore, 'users');
 
-function makeService (store1: any, _name: any) {
+function makeService(store1: any, _name: any) {
   return {
-    get (id: any) {
+    get(id: any) {
       // console.log(`... ${name} get ${id}`);
       const store = clone(store1);
 
@@ -49,7 +50,7 @@ function makeService (store1: any, _name: any) {
       throw Error(`post id ${id} not found`);
     },
 
-    find (params: any) {
+    find(params: any) {
       // console.log(`... ${name} find`, params ? params.query : '');
       const store = clone(store1);
 
@@ -59,25 +60,28 @@ function makeService (store1: any, _name: any) {
       const value = params.query[field];
       const $select = params.query.$select;
 
-      return asyncReturn(store
-        .filter((post: any) => {
-          return typeof value !== 'object'
-            ? post[field] === value
-            : value.$in.indexOf(post[field]) !== -1;
-        })
-        .map((post: any) => pluck(post, $select))
+      return asyncReturn(
+        store
+          .filter((post: any) => {
+            return typeof value !== 'object'
+              ? post[field] === value
+              : value.$in.indexOf(post[field]) !== -1;
+          })
+          .map((post: any) => pluck(post, $select))
       );
-    }
+    },
   };
 }
 
-function asyncReturn (value: any) {
+function asyncReturn(value: any) {
   return new Promise(resolve => {
-    setTimeout(() => { resolve(value); }, 10);
+    setTimeout(() => {
+      resolve(value);
+    }, 10);
   });
 }
 
-function pluck (obj: any, fields: any) {
+function pluck(obj: any, fields: any) {
   if (!fields) return obj;
 
   const res: any = {};
@@ -91,6 +95,6 @@ function pluck (obj: any, fields: any) {
   return res;
 }
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

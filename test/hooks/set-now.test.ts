@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { setNow } from '../../src';
 
@@ -20,17 +19,17 @@ describe('services setNow', () => {
           total: 2,
           data: [
             { first: 'John', last: 'Doe' },
-            { first: 'Jane', last: 'Doe' }
-          ]
-        }
+            { first: 'Jane', last: 'Doe' },
+          ],
+        },
       };
       hookFind = {
         type: 'after',
         method: 'find',
         result: [
           { first: 'John', last: 'Doe' },
-          { first: 'Jane', last: 'Doe' }
-        ]
+          { first: 'Jane', last: 'Doe' },
+        ],
       };
     });
 
@@ -79,7 +78,7 @@ describe('services setNow', () => {
       hookBefore = {
         type: 'before',
         method: 'create',
-        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
+        data: { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
       };
       hookBefore2 = {
         type: 'before',
@@ -87,23 +86,27 @@ describe('services setNow', () => {
         data: {
           empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
           dept: 'Acct',
-          created: { where: 'NYC' }
-        }
+          created: { where: 'NYC' },
+        },
       };
     });
 
     it('prop with no dots', () => {
       setNow('madeAt')(hookBefore);
-      checkHook(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-        , 'madeAt');
+      checkHook(
+        hookBefore.data,
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+        'madeAt'
+      );
     });
 
     it('props with no dots', () => {
       setNow('madeAt', 'builtAt')(hookBefore);
-      checkHook(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-        , ['madeAt', 'builtAt']);
+      checkHook(
+        hookBefore.data,
+        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
+        ['madeAt', 'builtAt']
+      );
     });
 
     it('prop with 1 dot', () => {
@@ -111,9 +114,10 @@ describe('services setNow', () => {
       assert.instanceOf(hookBefore.data.created.at, Date, 'not instance of Date');
       assert.equal(Object.keys(hookBefore.data.created).length, 1);
       delete hookBefore.data.created;
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
 
     it('prop with 1 dot in existing obj', () => {
@@ -121,13 +125,11 @@ describe('services setNow', () => {
       assert.instanceOf(hookBefore2.data.created.at, Date, 'not instance of Date');
       assert.equal(Object.keys(hookBefore2.data.created).length, 2);
       delete hookBefore2.data.created.at;
-      assert.deepEqual(hookBefore2.data,
-        {
-          empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
-          dept: 'Acct',
-          created: { where: 'NYC' }
-        }
-      );
+      assert.deepEqual(hookBefore2.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+        created: { where: 'NYC' },
+      });
     });
 
     it('prop with 2 dots', () => {
@@ -136,9 +138,10 @@ describe('services setNow', () => {
       assert.equal(Object.keys(hookBefore.data.created.at).length, 1);
       assert.equal(Object.keys(hookBefore.data.created).length, 1);
       delete hookBefore.data.created;
-      assert.deepEqual(hookBefore.data,
-        { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' }
-      );
+      assert.deepEqual(hookBefore.data, {
+        empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
+        dept: 'Acct',
+      });
     });
   });
 
@@ -162,7 +165,7 @@ describe('services setNow', () => {
 
 // Helpers
 
-function checkHook (item: any, template: any, dateFields: any) {
+function checkHook(item: any, template: any, dateFields: any) {
   const item1 = clone(item);
   if (typeof dateFields === 'string') {
     dateFields = [dateFields];
@@ -177,6 +180,6 @@ function checkHook (item: any, template: any, dateFields: any) {
   assert.deepEqual(item1, template, 'objects differ');
 }
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

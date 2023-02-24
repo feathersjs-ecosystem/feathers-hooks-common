@@ -1,4 +1,3 @@
-
 import { assert } from 'chai';
 import { preventChanges } from '../../src';
 
@@ -11,7 +10,7 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe' }
+        data: { first: 'John', last: 'Doe' },
       };
     });
 
@@ -38,7 +37,12 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', 'name.first': 'John', a: { b: undefined, c: { d: { e: 1 } } } }
+        data: {
+          first: 'John',
+          last: 'Doe',
+          'name.first': 'John',
+          a: { b: undefined, c: { d: { e: 1 } } },
+        },
       };
     });
 
@@ -69,7 +73,7 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } }
+        data: { first: 'John', last: 'Doe', a: { b: undefined, c: { d: { e: 1 } } } },
       };
     });
 
@@ -93,7 +97,7 @@ describe('services preventChanges', () => {
         type: 'before',
         method: 'patch',
         params: { provider: 'rest' },
-        data: { first: 'John', last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } }
+        data: { first: 'John', last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } },
       };
     });
 
@@ -107,43 +111,37 @@ describe('services preventChanges', () => {
 
     it('deletes if props found', () => {
       let context: any = preventChanges(false, 'name', 'first')(clone(hookBefore));
-      assert.deepEqual(context.data,
-        { last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } },
-        '1');
+      assert.deepEqual(context.data, { last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } }, '1');
 
       context = preventChanges(false, 'name', 'a')(clone(hookBefore));
-      assert.deepEqual(context.data,
-        { first: 'John', last: 'Doe' },
-        '2');
+      assert.deepEqual(context.data, { first: 'John', last: 'Doe' }, '2');
 
       context = preventChanges(false, 'name', 'a.b')(clone(hookBefore));
-      assert.deepEqual(context.data,
+      assert.deepEqual(
+        context.data,
         { first: 'John', last: 'Doe', a: { c: { d: { e: 1 } } } },
-        '3');
+        '3'
+      );
 
       context = preventChanges(false, 'name', 'a.c')(clone(hookBefore));
-      assert.deepEqual(context.data,
-        { first: 'John', last: 'Doe', a: { b: 'john' } },
-        '4');
+      assert.deepEqual(context.data, { first: 'John', last: 'Doe', a: { b: 'john' } }, '4');
 
       context = preventChanges(false, 'name', 'a.c.d.e')(clone(hookBefore));
-      assert.deepEqual(context.data,
+      assert.deepEqual(
+        context.data,
         { first: 'John', last: 'Doe', a: { b: 'john', c: { d: {} } } },
-        '5');
+        '5'
+      );
 
       context = preventChanges(false, 'first', 'last')(clone(hookBefore));
-      assert.deepEqual(context.data,
-        { a: { b: 'john', c: { d: { e: 1 } } } }
-      );
+      assert.deepEqual(context.data, { a: { b: 'john', c: { d: { e: 1 } } } });
 
       context = preventChanges(false, 'first', 'a.b', 'a.c.d.e')(clone(hookBefore));
-      assert.deepEqual(context.data,
-        { last: 'Doe', a: { c: { d: { } } } }
-      );
+      assert.deepEqual(context.data, { last: 'Doe', a: { c: { d: {} } } });
     });
   });
 });
 
-function clone (obj: any) {
+function clone(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }

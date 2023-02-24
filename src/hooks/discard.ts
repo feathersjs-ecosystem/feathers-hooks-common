@@ -1,15 +1,15 @@
-import type { Hook } from '@feathersjs/feathers';
 import _omit from 'lodash/omit.js';
-import { checkContextIf } from './check-context-if';
+import { checkContextIf } from '../utils/check-context-if';
 import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
+import type { HookContext } from '@feathersjs/feathers';
 
 /**
  * Delete certain fields from the record(s).
- * {@link https://hooks-common.feathersjs.com/hooks.html#discard}
+ * @see https://hooks-common.feathersjs.com/hooks.html#discard
  */
-export function discard (...fieldNames: string[]): Hook {
-  return (context: any) => {
+export function discard<H extends HookContext = HookContext>(...fieldNames: string[]) {
+  return (context: H) => {
     checkContextIf(context, 'before', ['create', 'update', 'patch'], 'discard');
 
     const items = getItems(context);

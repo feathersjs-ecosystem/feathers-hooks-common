@@ -12,9 +12,9 @@ Build `params` for a service call.
 
   - `{Object} options`
 
-| Argument  |   Type   | Default | Description                                                 |
-| --------- | :------: | ------- | ----------------------------------------------------------- |
-| `options` | `Object` |         | How to construct params for service call.                   |
+| Argument  |   Type   | Default | Description                               |
+| --------- | :------: | ------- | ----------------------------------------- |
+| `options` | `Object` |         | How to construct params for service call. |
 
 | `options`        | Argument          | Type | Default                                                                                                                      | Description |
 | ---------------- | ----------------- | :--: | ---------------------------------------------------------------------------------------------------------------------------- | ----------- |
@@ -23,21 +23,22 @@ Build `params` for a service call.
 | `newProps`       | `Object`          | `{}` | Additional props to add to the new params.                                                                                   |
 | `hooksToDisable` | `Array< String >` | `[]` | The names of hooks to disable during the service call. `populate`, `fastJoin`, `softDelete` and `stashBefore` are supported. |
 | `ignoreDefaults` | `Boolean`         |      | Ignore the defaults `propNames` and `newProps`.                                                                              |
+
 - **Returns**
 
   - `{Function}`
-  
+
   - **Arguments**
 
   - `{Object} context`
 
 | Argument  |   Type   | Default | Description                                                 |
 | --------- | :------: | ------- | ----------------------------------------------------------- |
-| `context` | `Object` |         | The `context` of the hook which will make the service call.   |
+| `context` | `Object` |         | The `context` of the hook which will make the service call. |
 
-  - **Returns**
+- **Returns**
 
-    - `{Object} newParams`
+  - `{Object} newParams`
 
 | Name        |   Type   | Description                      |
 | ----------- | :------: | -------------------------------- |
@@ -122,12 +123,12 @@ Restrict a hook to run for certain methods and method types.
   - `{String | Array< String >} [ methods ]`
   - `{String} [ label ]`
 
-| Argument  | Type                       | Default       | Description                                                     |
-| --------- | :------------------------: | ------------- | --------------------------------------------------------------- |
-| `context` |          `Object`          |               | The hook context.                                               |
-| `type`    | `String | Array< String >` | all types     | The service type allowed - before, after, error.                |
-| `methods` | `String | Array< String >` | all methods   | The service methods allowed - find, get, update, patch, remove. |
-| `label`   |         `String`           | `'anonymous'` | Name of hook to use with `throw`.                               |
+| Argument  |   Type   | Default          | Description                       |
+| --------- | :------: | ---------------- | --------------------------------- | --------------------------------------------------------------- |
+| `context` | `Object` |                  | The hook context.                 |
+| `type`    | `String  | Array< String >` | all types                         | The service type allowed - before, after, error.                |
+| `methods` | `String  | Array< String >` | all methods                       | The service methods allowed - find, get, update, patch, remove. |
+| `label`   | `String` | `'anonymous'`    | Name of hook to use with `throw`. |
 
 - **Example**
 
@@ -157,9 +158,9 @@ Restrict a hook to run for certain methods and method types.
 
 Sequentially execute multiple sync or async hooks.
 
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|n/a|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/combine.ts)|
+| before | after | methods | multi | details                                                                                                  |
+| ------ | ----- | ------- | ----- | -------------------------------------------------------------------------------------------------------- |
+| yes    | yes   | all     | n/a   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/combine.ts) |
 
 - **Arguments**
   - `{Array< Function >} hookFuncs`
@@ -171,14 +172,11 @@ Sequentially execute multiple sync or async hooks.
 - **Example**
 
   ```js
-  const { combine, createdAt, updatedAt } = require('feathers-hooks-common')
+  const { combine, createdAt, updatedAt } = require('feathers-hooks-common');
 
   async function myCustomHook(context) {
-    const newContext = await combine(
-      setNow('createdAt'),
-      setNow('updatedAt')
-    ).call(this, context)
-    return newContext
+    const newContext = await combine(setNow('createdAt'), setNow('updatedAt')).call(this, context);
+    return newContext;
   }
   ```
 
@@ -197,15 +195,14 @@ module.exports = { before: {
 } };
 ```
 
-
 ## every
 
 Return the and of a series of sync or async predicate functions.
 
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/every.ts)|
-  
+| before | after | methods | multi | details                                                                                                |
+| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------ |
+| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/every.ts) |
+
 - **Arguments**
   - `{Array< Function >} predicates`
 
@@ -213,15 +210,13 @@ Return the and of a series of sync or async predicate functions.
 | ------------ | :-----------------: | ------- | ----------------------------------------------------------------------------- |
 | `predicates` | `Array< Function >` |         | Functions which take the current hook as a param and return a boolean result. |
 
-
 **Returns**
 
 - `{Boolean} result`
 
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The logical and of predicates
-
+| Name   | Type    | Description                   |
+| ------ | ------- | ----------------------------- |
+| result | Boolean | The logical and of predicates |
 
 - **Example**
 
@@ -237,7 +232,6 @@ result|Boolean|The logical and of predicates
 
   `every` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if every predicate returns a truthy value.
 
-
 ## getItems
 
 Get the records in `context.data` or `context.result`
@@ -251,11 +245,11 @@ Get the records in `context.data` or `context.result`
 
 **Returns**
 
-  - `{Array< Object > | Object | undefined} records`
+- `{Array< Object > | Object | undefined} records`
 
-|Name|Type|Description|
-|---|---|---|
-records|Array< Object > | Object | undefined|The records.
+| Name    | Type            | Description |
+| ------- | --------------- | ----------- | --------- | ------------ |
+| records | Array< Object > | Object      | undefined | The records. |
 
 - **Example**
 
@@ -265,16 +259,20 @@ records|Array< Object > | Object | undefined|The records.
   const insertCode = code => context => {
     const items = getItems(context);
     if (Array.isArray(items)) {
-      items.forEach(item => { item.code = code; });
+      items.forEach(item => {
+        item.code = code;
+      });
     } else {
       items.code = code;
     }
     replaceItems(context, items);
   };
 
-  module.exports = { before: {
-    create: insertCode('a')
-  } };
+  module.exports = {
+    before: {
+      create: insertCode('a')
+    }
+  };
   ```
 
 - **Details**
@@ -285,9 +283,9 @@ records|Array< Object > | Object | undefined|The records.
 
 Negate a sync or async predicate function.
 
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-not.ts)|
+| before | after | methods | multi | details                                                                                                 |
+| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------- |
+| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-not.ts) |
 
 - **Arguments**
 
@@ -301,9 +299,9 @@ Negate a sync or async predicate function.
 
 - `{Boolean} result`
 
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The not of predicate
+| Name   | Type    | Description          |
+| ------ | ------- | -------------------- |
+| result | Boolean | The not of predicate |
 
 - **Example**
 
@@ -320,15 +318,14 @@ result|Boolean|The not of predicate
 
   `isNot` is a predicate function for use in conditional hooks.
 
-
 ## isProvider
 
 Check which transport provided the service call.
 
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-provider.ts)|
-  
+| before | after | methods | multi | details                                                                                                      |
+| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------ |
+| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-provider.ts) |
+
 - **Arguments**
   - `{Array< String >} transports`
 
@@ -339,43 +336,39 @@ Check which transport provided the service call.
 | `transports` |                Value                | Description |
 | ------------ | :---------------------------------: | ----------- |
 | `socketio`   | Allow calls by Socket.IO transport. |
-| `primus`     |  Allow calls by Primus transport.   |
 | `rest`       |   Allow calls by REST transport.    |
 | `external`   | Allow calls other than from server. |
 | `server`     |      Allow calls from server.       |
-
 
 **Returns**
 
 - `{Boolean} result`
 
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|If the call was made by one of the transports.
-
+| Name   | Type    | Description                                    |
+| ------ | ------- | ---------------------------------------------- |
+| result | Boolean | If the call was made by one of the transports. |
 
 - **Example**
 
   ```js
-  const { iff, isProvider, discard } = require('feathers-hooks-common')
+  const { iff, isProvider, discard } = require('feathers-hooks-common');
 
   module.exports = {
     after: {
       create: iff(isProvider('external'), discard('password'))
     }
-  }
+  };
   ```
 
 - **Details**
 
   `isProvider` is a predicate function for use in conditional hooks. Its determines which transport provided the service call by checking `context.params.provider`.
 
-
 ## makeCallingParams
 
 Build context.params for service calls.
 
-> __Tip:__ You should prefer using the `callingParams` utility to `makeCallingParams`.
+> **Tip:** You should prefer using the `callingParams` utility to `makeCallingParams`.
 
 - **Arguments**
 
@@ -420,7 +413,6 @@ Build context.params for service calls.
 
   The value `context.params._populate: 'skip'` is automatically added to skip any `fastJoin` or `populate` hooks registered on the called service. Set it to `false`, like in the example above, to make those hooks run.
 
-
 ## paramsForServer
 
 Pass an explicit context.params from client to server. Client-side.
@@ -438,7 +430,7 @@ Pass an explicit context.params from client to server. Client-side.
 
   ```js
   // client
-  const { paramsForServer } = require('feathers-hooks-common')
+  const { paramsForServer } = require('feathers-hooks-common');
 
   service.update(
     id,
@@ -448,16 +440,16 @@ Pass an explicit context.params from client to server. Client-side.
       populate: 'po-1',
       serialize: 'po-mgr'
     })
-  )
+  );
 
   // server
-  const { paramsFromClient } = require('feathers-hooks-common')
+  const { paramsFromClient } = require('feathers-hooks-common');
 
   module.exports = {
     before: {
       all: [paramsFromClient('populate', 'serialize', 'otherProp'), myHook]
     }
-  }
+  };
 
   // myHook's `context.params` will now be
   // { query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' } }
@@ -470,7 +462,6 @@ Pass an explicit context.params from client to server. Client-side.
   This technique also works for service calls made on the server.
 
   <p class="tip">The data is transfered using `context.params.query.$client`. If that field already exists, it must be an Object.</p>
-
 
 ## replaceItems
 
@@ -510,8 +501,6 @@ Replace the records in context.data or context.result[.data].
 
   `replaceItems` replaces the records in the hook context: `context.data` (before hook) or `context.result[.data]` (after hook).
 
-
-
 ## runHook
 
 Let's you call a hook right after the service call.
@@ -539,8 +528,8 @@ Let's you call a hook right after the service call.
   ```
 
   ```js
-  const { fastJoin, runHook } = require('feathers-hooks-common')
-  const runHookFinds = runHook({ app: app, method: 'find' })
+  const { fastJoin, runHook } = require('feathers-hooks-common');
+  const runHookFinds = runHook({ app: app, method: 'find' });
 
   const paymentsRecords = [
     { _id: 101, amount: 100, patientId: 1 },
@@ -549,15 +538,15 @@ Let's you call a hook right after the service call.
     { _id: 104, amount: 115, patientId: 2 },
     { _id: 105, amount: 120, patientId: 3 },
     { _id: 106, amount: 125, patientId: 3 }
-  ]
-  await payments.create(paymentsRecords)
+  ];
+  await payments.create(paymentsRecords);
 
   const patientsRecords = [
     { _id: 1, name: 'John' },
     { _id: 2, name: 'Marshall' },
     { _id: 3, name: 'David' }
-  ]
-  await patients.create(patientsRecords)
+  ];
+  await patients.create(patientsRecords);
 
   const paymentResolvers = {
     joins: {
@@ -568,18 +557,18 @@ Let's you call a hook right after the service call.
               id: payment.patientId
             }
           })
-        )[0]
+        )[0];
       }
     }
-  }
+  };
 
   await payments
     .find()
     .then(runHookFinds(fastJoin(paymentResolvers)))
-    .then(data => console.log(data))
+    .then(data => console.log(data));
 
   // log
-  ;[
+  [
     { _id: 101, amount: 100, patientId: 1, patient: { _id: 1, name: 'John' } },
     { _id: 102, amount: 105, patientId: 1, patient: { _id: 1, name: 'John' } },
     { _id: 103, amount: 110, patientId: 1, patient: { _id: 1, name: 'John' } },
@@ -591,7 +580,7 @@ Let's you call a hook right after the service call.
     },
     { _id: 105, amount: 120, patientId: 3, patient: { _id: 3, name: 'David' } },
     { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } }
-  ]
+  ];
   ```
 
 - **Details**
@@ -604,14 +593,13 @@ Let's you call a hook right after the service call.
 
   `runHook` is designed for such cases. Instead of having to register a conditioned hook, it allows us to run the hook in a `.then()` right after the service call.
 
-
 ## some
 
 Return the or of a series of sync or async predicate functions.
 
-|before|after|methods|multi|details|
-|---|---|---|---|---|
-|yes|yes|all|yes|[source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/some.ts)|
+| before | after | methods | multi | details                                                                                               |
+| ------ | ----- | ------- | ----- | ----------------------------------------------------------------------------------------------------- |
+| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/some.ts) |
 
 - **Arguments**
 
@@ -623,11 +611,11 @@ Return the or of a series of sync or async predicate functions.
 
 **Returns**
 
-  - `{Boolean} result`
+- `{Boolean} result`
 
-|Name|Type|Description|
-|---|---|---|
-result|Boolean|The logical or of predicates
+| Name   | Type    | Description                  |
+| ------ | ------- | ---------------------------- |
+| result | Boolean | The logical or of predicates |
 
 - **Example**
 
@@ -642,4 +630,3 @@ result|Boolean|The logical or of predicates
 - **Details**
 
   `some` is a predicate function for use in conditional hooks. The predicate functions are run in parallel, and `true` is returned if any predicate returns a truthy value.
-
