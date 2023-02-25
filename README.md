@@ -13,13 +13,15 @@
 
 A collection of useful hooks to use with Feathers services.
 
+> NOTE: This is the version for Feathers v5. For Feathers v4 use [feathers-hooks-common v6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/crow)
+
 ```
 npm install feathers-hooks-common --save
 ```
 
 ## Documentation
 
-For the full list and API of available hooks and utilities, refer to the [feathers-hooks-common documentation](https://hooks-common.feathersjs.com/overview.html). 
+For the full list and API of available hooks and utilities, refer to the [feathers-hooks-common documentation](https://hooks-common.feathersjs.com/overview.html).
 
 ## Tests
 
