@@ -34,6 +34,8 @@ export function preventChanges<H extends HookContext = HookContext>(
       }
     });
 
-    return { ...context, data };
+    context.data = data;
+
+    return context;
   };
 }
