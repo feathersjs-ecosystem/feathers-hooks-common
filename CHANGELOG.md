@@ -2,7 +2,19 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.1...HEAD)
+
+**Merged pull requests:**
+
+- fix\(prevent-changes\): return original context object [\#710](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/710) ([fratzinger](https://github.com/fratzinger))
+
+## [v7.0.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.1) (2023-03-09)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0...v7.0.1)
+
+## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0) (2023-02-24)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...v7.0.0)
 
 **Merged pull requests:**
 
@@ -13,10 +25,6 @@
 - docs: move to vitepress [\#688](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/688) ([fratzinger](https://github.com/fratzinger))
 - chore\(dependencies\): Update all dependencies [\#686](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/686) ([daffl](https://github.com/daffl))
 - chore\(dependencies\): Update all dependencies [\#685](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/685) ([daffl](https://github.com/daffl))
-
-## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0) (2023-02-24)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0-pre.2...v7.0.0)
 
 ## [v7.0.0-pre.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0-pre.2) (2023-02-23)
 
@@ -288,8 +296,6 @@
 - TypeScript definitions for iff [\#512](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/512)
 - SoftDelete2 use null or -1 [\#508](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/508)
 - Many-to-many fastJoin [\#505](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/505)
-- Remove fgraphql-async as its not used [\#482](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/482)
-- Proposal: Don't mutate objects in common hooks [\#480](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/480)
 
 **Merged pull requests:**
 
@@ -408,9 +414,6 @@
 
 - Trying to fix situational test failure soft-delete2-c timeout [\#486](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/486) ([eddyystop](https://github.com/eddyystop))
 - Merge forced by pr\#484 [\#485](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/485) ([eddyystop](https://github.com/eddyystop))
-- add asynciterable to tsconfig and bump ts version [\#484](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/484) ([j2L4e](https://github.com/j2L4e))
-- update names and fix the options property [\#481](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/481) ([NickBolles](https://github.com/NickBolles))
-- add typings for dialablePhoneNumber hook, add libphonenumber-js as a dependency [\#477](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/477) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
@@ -419,10 +422,6 @@
 ## [v4.19.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.4) (2018-11-29)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.3...v4.19.4)
-
-**Merged pull requests:**
-
-- Fixed dialablePhoneNumber [\#476](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/476) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.19.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.3) (2018-11-29)
 
