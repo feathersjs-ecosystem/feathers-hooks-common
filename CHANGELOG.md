@@ -2,15 +2,24 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.1...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.2...HEAD)
 
 **Merged pull requests:**
 
-- fix\(prevent-changes\): return original context object [\#710](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/710) ([fratzinger](https://github.com/fratzinger))
+- chore\(dependencies\): Update all dependencies [\#711](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/711) ([daffl](https://github.com/daffl))
+- chore\(dependencies\): Update all dependencies [\#708](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/708) ([daffl](https://github.com/daffl))
+
+## [v7.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.2) (2023-04-01)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.1...v7.0.2)
 
 ## [v7.0.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.1) (2023-03-09)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.0...v7.0.1)
+
+**Merged pull requests:**
+
+- fix\(prevent-changes\): return original context object [\#710](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/710) ([fratzinger](https://github.com/fratzinger))
 
 ## [v7.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.0) (2023-02-24)
 
@@ -409,11 +418,6 @@
 ## [v4.19.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.6) (2018-12-13)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.5...v4.19.6)
-
-**Merged pull requests:**
-
-- Trying to fix situational test failure soft-delete2-c timeout [\#486](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/486) ([eddyystop](https://github.com/eddyystop))
-- Merge forced by pr\#484 [\#485](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/485) ([eddyystop](https://github.com/eddyystop))
 
 ## [v4.19.5](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.5) (2018-12-13)
 
