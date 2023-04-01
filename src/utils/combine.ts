@@ -40,6 +40,7 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
       const hook = fn.bind(this);
 
       // Use the returned hook object or the old one
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       const currentHook = await current;
       const currentCtx = await hook(currentHook);
       // @ts-ignore
