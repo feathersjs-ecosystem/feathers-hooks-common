@@ -83,9 +83,10 @@ function addNewErrorDflt(errorMessages: any, ajvError: any, itemsLen: any, index
     message = `'${leader}${ajvError.dataPath.substring(1)}' ${ajvError.message}`;
   } else {
     message = `${leader}${ajvError.message}`;
-    if (ajvError.params && ajvError.params.additionalProperty) {
-      message += `: '${ajvError.params.additionalProperty}'`;
-    }
+  }
+
+  if (ajvError.params && ajvError.params.additionalProperty) {
+    message += `: '${ajvError.params.additionalProperty}'`;
   }
 
   return (errorMessages || []).concat(message);
