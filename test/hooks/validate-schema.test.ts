@@ -11,6 +11,10 @@ ajv.addSchema({
   properties: {
     first: { type: 'string', format: 'startWithJo' },
     last: { type: 'string' },
+    nested: {
+      type: 'object',
+      additionalProperties: false,
+    },
   },
   required: ['first', 'last'],
 });
@@ -55,6 +59,9 @@ describe('services validateSchema', () => {
       properties: {
         first: { type: 'string' },
         last: { type: 'string' },
+        nested: {
+          additionalProperties: false,
+        },
       },
       required: ['first', 'last'],
     };
@@ -62,6 +69,9 @@ describe('services validateSchema', () => {
       properties: {
         first: { type: 'string', format: 'startWithJo' },
         last: { type: 'string' },
+        nested: {
+          additionalProperties: false,
+        },
       },
       required: ['first', 'last'],
     };
@@ -159,6 +169,17 @@ describe('services validateSchema', () => {
           '\'in row 2 of 3, first\' should match format "startWithJo"',
           "in row 3 of 3, should have required property 'last'",
         ]);
+      }
+    });
+
+    it('properly displays incorrect additional properties in nested objects', () => {
+      hookBefore.data.nested = { foo: 'bar' };
+
+      try {
+        validateSchema(schemaForAjvInstance, ajv)(hookBefore);
+        assert.fail(true, false, 'test succeeds unexpectedly');
+      } catch (err: any) {
+        assert.deepEqual(err.errors, ["'nested' should NOT have additional properties: 'foo'"]);
       }
     });
   });
