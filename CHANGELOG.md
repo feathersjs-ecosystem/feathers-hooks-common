@@ -2,16 +2,24 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.3...HEAD)
+
+**Merged pull requests:**
+
+- Pass additionalProperty name in nested objects to validateSchema error messages [\#712](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/712) ([ardcore](https://github.com/ardcore))
+
+## [v7.0.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.3) (2023-04-06)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.2...v7.0.3)
+
+## [v7.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.2) (2023-04-01)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.1...v7.0.2)
 
 **Merged pull requests:**
 
 - chore\(dependencies\): Update all dependencies [\#711](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/711) ([daffl](https://github.com/daffl))
 - chore\(dependencies\): Update all dependencies [\#708](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/708) ([daffl](https://github.com/daffl))
-
-## [v7.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.2) (2023-04-01)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.1...v7.0.2)
 
 ## [v7.0.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.1) (2023-03-09)
 
@@ -391,10 +399,6 @@
 **Fixed bugs:**
 
 - Typings needed for libphonenumber-js [\#495](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/495)
-
-**Closed issues:**
-
-- graphql dependency [\#487](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/487)
 
 **Merged pull requests:**
 
