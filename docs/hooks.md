@@ -1877,7 +1877,7 @@ Flag records as logically deleted instead of physically removing them. Requires 
 
 - **Arguments**
 
-| Argument       | Type      | Default | Description                  |
+| Argument       | Type      | Default | Description                  |                                                                                                                |
 | -------------- | --------- | ------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `deletedQuery` | `Function | Object` | `{ deleted: { $ne: true } }` | An object or async function that takes the query which returns the part of the query to exclude deleted entrie |
 | `removeData`   | `Function | Object` | `{ deleted: true }`          | An object or async function that returns the data used to flag an entry as deleted                             |
