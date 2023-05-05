@@ -8,11 +8,10 @@ import type { HookContext } from '@feathersjs/feathers';
 async function* generateNext({ result, service, args = { query: {} } }) {
   yield result.data
   let pager = result
-  while (true) {
+  while (pager.data.length > 0) {
     args.query.$skip = (pager.limit + pager.skip) % pager.total
     pager = await service.find(args)
     yield pager.data
-    if (pager.total < pager.limit + pager.skip) break
   }
 }
 export function next<HookContext>(ctx) {
