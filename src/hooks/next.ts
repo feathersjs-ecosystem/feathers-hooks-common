@@ -14,6 +14,6 @@ async function* generateNext({ result, service, args = { query: {} } }) {
     yield pager.data
   }
 }
-export function next<HookContext>(ctx) {
+export function next<HookContext>(context) {
   return (context: H) =>  (context.result.next = context.result.skip === 0 ? generateNext(context) : undefined)
 }
