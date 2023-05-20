@@ -15,5 +15,5 @@ async function* generateNext({ result, service, args = { query: {} } }) {
   }
 }
 export function next<HookContext>(ctx) {
-  return (context: H) =>  (context.result.next = context.result.skip === 0 ? next(context) : undefined)
+  return (context: H) =>  (context.result.next = context.result.skip === 0 ? generateNext(context) : undefined)
 }
