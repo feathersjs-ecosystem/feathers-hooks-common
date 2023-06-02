@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { disablePagination } from '../../src';
+import type { HookContext } from '@feathersjs/feathers/lib';
 
 let hookBefore: any;
 
@@ -10,6 +11,20 @@ describe('services disablePagination', () => {
       method: 'find',
       params: { query: { id: 1, $limit: -1 } },
     };
+  });
+
+  it('can be used as around hook', async () => {
+    const context = {
+      type: 'around',
+      method: 'find',
+      params: { query: { id: 1, $limit: -1 } },
+    } as HookContext;
+
+    const result = await disablePagination()(context, async () => 'hello');
+
+    assert.equal(result, 'hello');
+
+    assert.deepStrictEqual(context.params, { paginate: false, query: { id: 1 } });
   });
 
   it('disables on $limit = -1', () => {

@@ -4,7 +4,7 @@ import _clone from 'lodash/clone.js';
 import _debug from 'debug';
 import { checkContext } from '../utils/check-context';
 import { Forbidden } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 
 export interface SetFieldOptions {
   as: string;
@@ -27,16 +27,10 @@ export function setField<H extends HookContext = HookContext>({
     throw new Error("'as' and 'from' options have to be set");
   }
 
-  return (context: H) => {
-    const { params, app } = context;
+  return (context: H, next?: NextFunction) => {
+    const { params } = context;
 
-    if (app.version < '4.0.0') {
-      throw new Error(
-        "The 'setField' hook only works with Feathers 4 and the latest database adapters"
-      );
-    }
-
-    checkContext(context, 'before', null, 'setField');
+    checkContext(context, ['before', 'around'], null, 'setField');
 
     const value = _get(context, from);
 
@@ -51,6 +45,12 @@ export function setField<H extends HookContext = HookContext>({
 
     debug(`Setting value '${value}' from '${from}' as '${as}'`);
 
-    return _setWith(context, as, value, _clone);
+    _setWith(context, as, value, _clone);
+
+    if (next) {
+      return next();
+    }
+
+    return context;
   };
 }

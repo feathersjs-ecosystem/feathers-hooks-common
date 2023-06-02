@@ -3,7 +3,7 @@ import _omit from 'lodash/omit.js';
 
 import { checkContext } from '../utils/check-context';
 import { BadRequest } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 
 /**
  * Prevent patch service calls from changing certain fields.
@@ -14,13 +14,14 @@ export function preventChanges<H extends HookContext = HookContext>(
   ...fieldNames: string[]
 ) {
   if (typeof ifThrow === 'string') {
+    // TODO: Remove this in the next major release
     // eslint-disable-next-line no-console
     console.warn('**Deprecated** Use the preventChanges(true, ...fieldNames) syntax instead.');
     fieldNames = [ifThrow, ...fieldNames];
   }
 
-  return (context: H) => {
-    checkContext(context, 'before', ['patch'], 'preventChanges');
+  return (context: H, next?: NextFunction) => {
+    checkContext(context, ['before', 'around'], ['patch'], 'preventChanges');
     let data = { ...context.data };
 
     fieldNames.forEach(name => {
@@ -35,6 +36,10 @@ export function preventChanges<H extends HookContext = HookContext>(
     });
 
     context.data = data;
+
+    if (next) {
+      return next();
+    }
 
     return context;
   };

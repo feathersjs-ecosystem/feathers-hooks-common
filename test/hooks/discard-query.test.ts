@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { discardQuery } from '../../src';
+import type { HookContext } from '@feathersjs/feathers/lib';
 
 let hookBefore: any;
 let hookAfter: any;
@@ -13,6 +14,18 @@ describe('services discardQuery', () => {
         params: { query: { first: 'John', last: 'Doe' } },
       };
       hookAfter = { type: 'after', method: 'create', result: { first: 'Jane', last: 'Doe' } };
+    });
+
+    it('can be used as around hook', async () => {
+      const context = {
+        type: 'around',
+        method: 'create',
+        params: { query: { first: 'John', last: 'Doe' } },
+      } as HookContext;
+      const result = await discardQuery('last')(context, async () => 'hello');
+
+      assert.equal(result, 'hello');
+      assert.deepEqual(context.params, { query: { first: 'John' } });
     });
 
     it('updates hook before::create', () => {

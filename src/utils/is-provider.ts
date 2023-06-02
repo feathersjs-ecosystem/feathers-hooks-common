@@ -11,14 +11,16 @@ export function isProvider<H extends HookContext = HookContext>(...providers: Tr
     throw new MethodNotAllowed('Calling isProvider predicate incorrectly.');
   }
 
+  const hasServer = providers.some(x => x === 'server');
+  const hasExternal = providers.some(x => x === 'external');
+
   return (context: H) => {
     const hookProvider = context.params.provider;
 
-    return providers.some(
-      provider =>
-        provider === hookProvider ||
-        (provider === 'server' && !hookProvider) ||
-        (provider === 'external' && !!hookProvider)
+    return (
+      (hasServer && !hookProvider) ||
+      (hasExternal && !!hookProvider) ||
+      providers.includes(hookProvider)
     );
   };
 }

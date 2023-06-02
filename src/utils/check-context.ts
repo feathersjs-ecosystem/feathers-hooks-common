@@ -6,12 +6,16 @@ import type { HookType, MethodName } from '../types';
  * Restrict a hook to run for certain methods and method types. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#checkcontext
  */
-export function checkContext<H extends HookContext = HookContext>(
-  context: H,
+export function checkContext(
+  context: HookContext,
   type?: HookType | HookType[] | null,
   methods?: MethodName | MethodName[] | null,
   label = 'anonymous'
 ): void {
+  if (!methods) {
+    return;
+  }
+
   if (type) {
     const types = Array.isArray(type) ? type : [type]; // safe enough for allowed values
     if (!types.includes(context.type)) {
@@ -19,9 +23,6 @@ export function checkContext<H extends HookContext = HookContext>(
     }
   }
 
-  if (!methods) {
-    return;
-  }
   if (!methodNames.includes(context.method as any)) {
     return;
   } // allow custom methods

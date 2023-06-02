@@ -1,5 +1,5 @@
 import { BadRequest } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import { setFields as _setFields } from '../common';
 import { getItems } from '../utils/get-items';
 
@@ -13,8 +13,13 @@ export function setNow<H extends HookContext = HookContext>(...fieldNames: strin
     throw new BadRequest('Field name is required. (setNow)');
   }
 
-  return (context: H) => {
+  return (context: H, next?: NextFunction) => {
     _setFields(getItems(context), () => new Date(), fieldNames, 'setNow');
+
+    if (next) {
+      return next();
+    }
+
     return context;
   };
 }

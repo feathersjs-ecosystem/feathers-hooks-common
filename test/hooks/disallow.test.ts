@@ -1,6 +1,7 @@
 import { assert } from 'chai';
 
 import { disallow } from '../../src';
+import type { HookContext } from '@feathersjs/feathers/lib';
 
 describe('services disallow', () => {
   describe('disallow is compatible with .disable (without predicate)', () => {
@@ -12,6 +13,23 @@ describe('services disallow', () => {
       hookRest = { method: 'create', params: { provider: 'rest' } };
       hookSocketio = { method: 'create', params: { provider: 'socketio' } };
       hookServer = { method: 'create', params: { provider: '' } };
+    });
+
+    it('can be used as around hook', async () => {
+      const result = await disallow('socketio')(hookServer, async () => 'hello');
+
+      assert.equal(result, 'hello');
+
+      assert.throws(() => {
+        disallow('socketio')(
+          {
+            method: 'create',
+            params: { provider: 'socketio' },
+            type: 'around',
+          } as HookContext,
+          async () => 'hello'
+        );
+      });
     });
 
     it('disables all providers with no param', () => {
@@ -88,7 +106,7 @@ describe('services disallow', () => {
       const hook = clone(hookSocketio);
 
       const result = disallow('rest')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
 
       assert.throws(() => {
         disallow('socketio')(hook);
@@ -99,7 +117,7 @@ describe('services disallow', () => {
       const hook = clone(hookSocketio);
 
       const result = disallow('rest', 'server')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
 
       assert.throws(() => {
         disallow('rest', 'socketio')(hook);
@@ -110,7 +128,7 @@ describe('services disallow', () => {
       const hook = clone(hookServer);
 
       const result = disallow('rest', 'socketio', 'external')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
 
       assert.throws(() => {
         disallow('rest', 'socketio', 'server')(hook);
@@ -121,7 +139,7 @@ describe('services disallow', () => {
       const hook = clone(hookSocketio);
 
       const result = disallow('rest', 'server')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
 
       assert.throws(() => {
         disallow('rest', 'server', 'external')(hook);
@@ -132,21 +150,21 @@ describe('services disallow', () => {
       const hook = clone(hookServer);
 
       const result = disallow('socketio')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
     });
 
     it('succeeds if not external', () => {
       const hook = clone(hookServer);
 
       const result = disallow('external')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
     });
 
     it('succeeds if not server', () => {
       const hook = clone(hookSocketio);
 
       const result = disallow('server')(hook);
-      assert.equal(result, undefined);
+      assert.ok(result);
     });
   });
 });

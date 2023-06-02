@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { preventChanges } from '../../src';
+import type { HookContext } from '@feathersjs/feathers/lib';
 
 let hookBefore: any;
 
@@ -28,6 +29,20 @@ describe('services preventChanges', () => {
           });
         }
       });
+    });
+
+    it('can be used as around hook', async () => {
+      const result = await preventChanges(true)(
+        {
+          type: 'around',
+          method: 'patch',
+          params: { provider: 'rest' },
+          data: { first: 'John', last: 'Doe' },
+        } as HookContext,
+        async () => 'hello'
+      );
+
+      assert.equal(result, 'hello');
     });
   });
 

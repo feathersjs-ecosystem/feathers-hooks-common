@@ -1,5 +1,6 @@
 import { assert } from 'chai';
-import * as hooks from '../../src';
+import { discard } from '../../src';
+import type { HookContext } from '@feathersjs/feathers/lib';
 
 let hookBefore: any;
 let hookAfter: any;
@@ -44,29 +45,42 @@ describe('services discard', () => {
       };
     });
 
+    it('can be used as around hook', async () => {
+      const context = {
+        type: 'around',
+        method: 'create',
+        params: { provider: 'rest' },
+        data: { first: 'John', last: 'Doe' },
+      } as HookContext;
+      const result = await discard('first')(context, async () => 'hello');
+
+      assert.equal(result, 'hello');
+      assert.deepStrictEqual(context.data, { last: 'Doe' });
+    });
+
     it('updates hook before::create', () => {
-      hooks.discard('first')(hookBefore);
+      discard('first')(hookBefore);
       assert.deepEqual(hookBefore.data, { last: 'Doe' });
     });
 
     it('updates hook after::find with pagination', () => {
-      hooks.discard('last')(hookFindPaginate);
+      discard('last')(hookFindPaginate);
       assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
     });
 
     it('updates hook after::find with no pagination', () => {
-      hooks.discard('last')(hookFind);
+      discard('last')(hookFind);
       assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }]);
     });
 
     it('updates hook after', () => {
-      hooks.discard('last')(hookAfter);
+      discard('last')(hookAfter);
       assert.deepEqual(hookAfter.result, { first: 'Jane' });
     });
 
     it('updates when called internally on server', () => {
       hookAfter.params.provider = '';
-      hooks.discard('last')(hookAfter);
+      discard('last')(hookAfter);
       assert.deepEqual(hookAfter.result, { first: 'Jane' });
     });
 
@@ -77,7 +91,7 @@ describe('services discard', () => {
         params: { provider: 'rest' },
         data: { first: 'John', last: 'Doe' },
       };
-      hooks.discard('first', 'xx')(hook);
+      discard('first', 'xx')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
 
@@ -88,7 +102,7 @@ describe('services discard', () => {
         params: { provider: 'rest' },
         data: { first: null, last: 'Doe' },
       };
-      hooks.discard('first')(hook);
+      discard('first')(hook);
       assert.deepEqual(hook.data, { last: 'Doe' });
     });
   });
@@ -104,14 +118,14 @@ describe('services discard', () => {
     });
 
     it('prop with no dots', () => {
-      hooks.discard('dept')(hookBefore);
+      discard('dept')(hookBefore);
       assert.deepEqual(hookBefore.data, {
         empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
       });
     });
 
     it('prop with 1 dot', () => {
-      hooks.discard('empl.status')(hookBefore);
+      discard('empl.status')(hookBefore);
       assert.deepEqual(hookBefore.data, {
         empl: { name: { first: 'John', last: 'Doe' } },
         dept: 'Acct',
@@ -119,7 +133,7 @@ describe('services discard', () => {
     });
 
     it('prop with 2 dots', () => {
-      hooks.discard('empl.name.first')(hookBefore);
+      discard('empl.name.first')(hookBefore);
       assert.deepEqual(hookBefore.data, {
         empl: { name: { last: 'Doe' }, status: 'AA' },
         dept: 'Acct',
@@ -127,7 +141,7 @@ describe('services discard', () => {
     });
 
     it('ignores bad or missing paths', () => {
-      hooks.discard('empl.xx.first')(hookBefore);
+      discard('empl.xx.first')(hookBefore);
       assert.deepEqual(hookBefore.data, {
         empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
         dept: 'Acct',
@@ -135,7 +149,7 @@ describe('services discard', () => {
     });
 
     it('ignores bad or missing no dot path', () => {
-      hooks.discard('xx')(hookBefore);
+      discard('xx')(hookBefore);
       assert.deepEqual(hookBefore.data, {
         empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' },
         dept: 'Acct',
@@ -157,7 +171,7 @@ describe('services discard', () => {
         query: {},
       };
 
-      hooks.discard('email', 'password')(hook);
+      discard('email', 'password')(hook);
 
       assert.deepEqual(hook.result, {
         roles: ['super'],
@@ -180,7 +194,7 @@ describe('services discard', () => {
         query: {},
       };
 
-      hooks.discard('property.secret')(hook);
+      discard('property.secret')(hook);
 
       assert.deepEqual(hook.result, {
         property: null,
