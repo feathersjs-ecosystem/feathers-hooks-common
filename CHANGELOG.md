@@ -2,15 +2,29 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.3...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.0.0...HEAD)
 
 **Merged pull requests:**
 
-- Pass additionalProperty name in nested objects to validateSchema error messages [\#712](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/712) ([ardcore](https://github.com/ardcore))
+- chore: update dependencies & @feathersjs/feathers as peerDependency [\#721](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/721) ([fratzinger](https://github.com/fratzinger))
+- \[docs\] Fix softDelete arguments array [\#716](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/716) ([mdartic](https://github.com/mdartic))
+
+## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.0.0) (2023-06-15)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.3...v8.0.0)
+
+**Closed issues:**
+
+- \[FR\] patch2Update hook [\#530](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/530)
+- \[FR\] simplifyAllObjects [\#527](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/527)
 
 ## [v7.0.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.3) (2023-04-06)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v7.0.2...v7.0.3)
+
+**Merged pull requests:**
+
+- Pass additionalProperty name in nested objects to validateSchema error messages [\#712](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/712) ([ardcore](https://github.com/ardcore))
 
 ## [v7.0.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.2) (2023-04-01)
 
@@ -245,7 +259,6 @@
 **Implemented enhancements:**
 
 - Hook to support $search in query [\#501](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/501)
-- Pass client info into socket [\#493](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/493)
 
 **Closed issues:**
 
@@ -407,17 +420,6 @@
 ## [v4.19.7](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.7) (2019-01-04)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.6...v4.19.7)
-
-**Closed issues:**
-
-- @feathersjs/commons dependency  [\#492](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/492)
-- Validation hook for restful api [\#491](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/491)
-
-**Merged pull requests:**
-
-- Remove redundant $eq to be compatible with all database adapters [\#494](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/494) ([KidkArolis](https://github.com/KidkArolis))
-- fix typings test [\#489](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/489) ([j2L4e](https://github.com/j2L4e))
-- fix: use graphql as a dependency to resolve TS type definition problems [\#488](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/488) ([PowerMogli](https://github.com/PowerMogli))
 
 ## [v4.19.6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.6) (2018-12-13)
 
