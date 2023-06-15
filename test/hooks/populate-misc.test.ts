@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { iff, populate } from '../../src';
 
 const userId = 6;
@@ -147,7 +147,7 @@ function user(this: any) {
 
   app.use(
     '/users',
-    memory({
+    new MemoryService({
       store: clone(userInit),
       startId: userId,
       paginate: {
@@ -173,7 +173,7 @@ function team(this: any) {
 
   app.use(
     '/teams',
-    memory({
+    new MemoryService({
       store: clone(teamInit),
       startId: teamId,
     })

@@ -1,4 +1,3 @@
-import { GeneralError } from '@feathersjs/errors';
 import type { HookContext } from '@feathersjs/feathers';
 import { checkContext } from '../utils/check-context';
 
@@ -28,13 +27,9 @@ export function softDelete<H extends HookContext = HookContext>({
   removeData = defaultData,
 }: SoftDeleteOptions<H> = {}) {
   return async (context: H) => {
-    const { service, method, params, app } = context;
+    const { service, method, params } = context;
     // @ts-ignore
     const { disableSoftDelete, query = {} } = params;
-
-    if (app.version < '4.0.0') {
-      throw new GeneralError('The softDelete hook requires Feathers 4.0.0 or later');
-    }
 
     checkContext(context, 'before', null, 'softDelete');
 

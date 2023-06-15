@@ -28,13 +28,7 @@ export function setField<H extends HookContext = HookContext>({
   }
 
   return (context: H) => {
-    const { params, app } = context;
-
-    if (app.version < '4.0.0') {
-      throw new Error(
-        "The 'setField' hook only works with Feathers 4 and the latest database adapters"
-      );
-    }
+    const { params } = context;
 
     checkContext(context, 'before', null, 'setField');
 

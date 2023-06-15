@@ -111,11 +111,13 @@ import { populate } from '../../src';
                 },
                 commentsInfo: [
                   {
+                    id: 1,
                     title: 'Comment 1',
                     content: 'Lorem ipsum dolor sit amet 1',
                     postId: 1,
                   },
                   {
+                    id: 3,
                     title: 'Comment 3',
                     content: 'Lorem ipsum dolor sit amet 3',
                     postId: 1,
@@ -177,11 +179,13 @@ import { populate } from '../../src';
                   },
                   commentsInfo: [
                     {
+                      id: 1,
                       title: 'Comment 1',
                       content: 'Lorem ipsum dolor sit amet 1',
                       postId: 1,
                     },
                     {
+                      id: 3,
                       title: 'Comment 3',
                       content: 'Lorem ipsum dolor sit amet 3',
                       postId: 1,
@@ -229,6 +233,7 @@ import { populate } from '../../src';
                   },
                   commentsInfo: [
                     {
+                      id: 2,
                       title: 'Comment 2',
                       content: 'Lorem ipsum dolor sit amet 2',
                       postId: 2,
@@ -276,11 +281,13 @@ import { populate } from '../../src';
                   },
                   commentsInfo: [
                     {
+                      id: 1,
                       title: 'Comment 1',
                       content: 'Lorem ipsum dolor sit amet 1',
                       postId: 1,
                     },
                     {
+                      id: 3,
                       title: 'Comment 3',
                       content: 'Lorem ipsum dolor sit amet 3',
                       postId: 1,

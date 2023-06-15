@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { combine } from '../../src';
 
 const startId = 6;
@@ -29,7 +29,7 @@ function user(this: any) {
 
   app.use(
     '/users',
-    memory({
+    new MemoryService({
       store,
       startId,
     })

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { setField } from '../../src';
 
 import type { Application } from '@feathersjs/feathers';
@@ -15,7 +15,7 @@ describe('setField', () => {
 
   beforeEach(async () => {
     app = feathers();
-    app.use('/messages', memory());
+    app.use('/messages', new MemoryService());
     app.service('messages').hooks({
       before: {
         all: [
@@ -62,19 +62,6 @@ describe('setField', () => {
           get: setField({ from: 'you' }),
         },
       })
-    );
-  });
-
-  it('errors when used with wrong app version', async () => {
-    app.version = '3.2.1';
-
-    await assert.rejects(
-      async () => {
-        await app.service('messages').get('testing');
-      },
-      {
-        message: "The 'setField' hook only works with Feathers 4 and the latest database adapters",
-      }
     );
   });
 
