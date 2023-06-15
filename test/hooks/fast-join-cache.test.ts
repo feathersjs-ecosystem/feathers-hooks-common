@@ -3,7 +3,7 @@ import { feathers } from '@feathersjs/feathers';
 import BatchLoader from '@feathers-plus/batch-loader';
 // @ts-ignore
 import CacheMap from '@feathers-plus/cache';
-import { Service } from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { cache, fastJoin, iff, makeCallingParams } from '../../src';
 
 const { getResultsByKey, getUniqueKeys } = BatchLoader;
@@ -54,7 +54,7 @@ function postsService(this: any) {
   const app = this;
   const store = clone(postsStoreInit);
 
-  class PostsService extends Service {
+  class PostsService extends MemoryService {
     foo: boolean;
 
     constructor(...args: any[]) {
@@ -81,7 +81,7 @@ function usersService(this: any) {
   const app = this;
   const store = clone(usersStoreInit);
 
-  class UsersService extends Service {
+  class UsersService extends MemoryService {
     junk: boolean;
     constructor(...args: any[]) {
       super(...args);

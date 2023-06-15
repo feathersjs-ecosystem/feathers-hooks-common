@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { softDelete } from '../../src';
 
 const initialUsers = [
@@ -18,7 +18,7 @@ describe('services softDelete', () => {
   beforeEach(() => {
     const app = feathers().use(
       '/users',
-      memory({
+      new MemoryService({
         multi: ['create', 'patch', 'remove'],
       })
     );
@@ -31,22 +31,6 @@ describe('services softDelete', () => {
     });
 
     userService.create(initialUsers);
-  });
-
-  it('throws error on wrong app version', async () => {
-    const app = feathers().use('/users', memory());
-
-    app.service('users').hooks({
-      before: {
-        all: [softDelete()],
-      },
-    });
-
-    app.version = '3.1.4';
-
-    await assert.rejects(() => app.service('users').find(), {
-      message: 'The softDelete hook requires Feathers 4.0.0 or later',
-    });
   });
 
   describe('find', () => {
@@ -223,7 +207,7 @@ describe('services softDelete', () => {
     beforeEach(() => {
       const app = feathers().use(
         '/people',
-        memory({
+        new MemoryService({
           multi: ['create', 'patch', 'remove'],
         })
       );

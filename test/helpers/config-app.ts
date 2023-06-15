@@ -1,5 +1,5 @@
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import getInitDb from './get-init-db';
 
 export default function (dbNames: any) {
@@ -21,18 +21,18 @@ export default function (dbNames: any) {
   }
 
   function users(this: any) {
-    this.use('users', memory(getInitDb('users')));
+    this.use('users', new MemoryService(getInitDb('users')));
   }
 
   function comments(this: any) {
-    this.use('comments', memory(getInitDb('comments')));
+    this.use('comments', new MemoryService(getInitDb('comments')));
   }
 
   function posts(this: any) {
-    this.use('posts', memory(getInitDb('posts')));
+    this.use('posts', new MemoryService(getInitDb('posts')));
   }
 
   function recommendation(this: any) {
-    this.use('recommendation', memory(getInitDb('recommendation')));
+    this.use('recommendation', new MemoryService(getInitDb('recommendation')));
   }
 }

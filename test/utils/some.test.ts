@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import { feathers } from '@feathersjs/feathers';
-import memory from 'feathers-memory';
+import { MemoryService } from '@feathersjs/memory';
 import { iff, some, isNot } from '../../src';
 
 describe('util some', () => {
   let app: any;
 
   beforeEach(() => {
-    app = feathers().use('/users', memory());
+    app = feathers().use('/users', new MemoryService());
   });
 
   describe('when at least 1 hook is truthy', () => {
