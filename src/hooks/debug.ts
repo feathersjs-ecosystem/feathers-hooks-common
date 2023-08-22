@@ -7,13 +7,24 @@ import type { HookContext } from '@feathersjs/feathers';
  */
 export function debug<H extends HookContext = HookContext>(msg: string, ...fieldNames: string[]) {
   return (context: H) => {
-    console.log(`* ${msg || ''}\ntype:${context.type}, method: ${context.method}`);
+    if (msg) {
+      console.log(msg);
+    }
+
+    console.log(`${context.type}: '${context.path}'.${context.method}`);
+
+    if (!['find', 'create'].includes(context.method) && 'id' in context) {
+      console.log('id:', context.id);
+    }
+
     if (context.data) {
       console.log('data:', context.data);
     }
-    if (context.params && context.params.query) {
+
+    if (context.params?.query) {
       console.log('query:', context.params.query);
     }
+
     if (context.result) {
       console.log('result:', context.result);
     }
