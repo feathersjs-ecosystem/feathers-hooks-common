@@ -2,12 +2,15 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.0.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.0...HEAD)
 
 **Merged pull requests:**
 
-- chore: update dependencies & @feathersjs/feathers as peerDependency [\#721](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/721) ([fratzinger](https://github.com/fratzinger))
-- \[docs\] Fix softDelete arguments array [\#716](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/716) ([mdartic](https://github.com/mdartic))
+- feat\(debug\): improve debug & update dependencies [\#729](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/729) ([fratzinger](https://github.com/fratzinger))
+
+## [v8.1.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.0) (2023-08-23)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.0.0...v8.1.0)
 
 ## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.0.0) (2023-06-15)
 
@@ -17,6 +20,11 @@
 
 - \[FR\] patch2Update hook [\#530](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/530)
 - \[FR\] simplifyAllObjects [\#527](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/527)
+
+**Merged pull requests:**
+
+- chore: update dependencies & @feathersjs/feathers as peerDependency [\#721](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/721) ([fratzinger](https://github.com/fratzinger))
+- \[docs\] Fix softDelete arguments array [\#716](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/716) ([mdartic](https://github.com/mdartic))
 
 ## [v7.0.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v7.0.3) (2023-04-06)
 
@@ -256,10 +264,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.2...v5.0.3)
 
-**Implemented enhancements:**
-
-- Hook to support $search in query [\#501](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/501)
-
 **Closed issues:**
 
 - An in-range update of @feathersjs/feathers is breaking the build 🚨 [\#583](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/583)
@@ -292,7 +296,6 @@
 **Closed issues:**
 
 - TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
-- Write docs for sequelizeConvert [\#497](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/497)
 
 **Merged pull requests:**
 
@@ -381,41 +384,17 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.20.1...v4.20.2)
 
-**Closed issues:**
-
-- Add typings for sequelizeConvert [\#498](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/498)
-
-**Merged pull requests:**
-
-- add types for sequelizeConvert hook [\#502](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/502) ([j2L4e](https://github.com/j2L4e))
-
 ## [v4.20.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.1) (2019-01-11)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.20.0...v4.20.1)
-
-**Merged pull requests:**
-
-- update type definition for debug hook [\#500](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/500) ([brane53](https://github.com/brane53))
 
 ## [v4.20.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.0) (2019-01-07)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.8...v4.20.0)
 
-**Merged pull requests:**
-
-- Delete unused fgraphql-async. Added sequelizeConvert. [\#499](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/499) ([eddyystop](https://github.com/eddyystop))
-
 ## [v4.19.8](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.8) (2019-01-04)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.19.7...v4.19.8)
-
-**Fixed bugs:**
-
-- Typings needed for libphonenumber-js [\#495](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/495)
-
-**Merged pull requests:**
-
-- move `@types/graphql` package from `devDependencies` into `dependencies` [\#496](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/496) ([j2L4e](https://github.com/j2L4e))
 
 ## [v4.19.7](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.19.7) (2019-01-04)
 
