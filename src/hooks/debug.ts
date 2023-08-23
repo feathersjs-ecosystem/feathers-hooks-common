@@ -7,12 +7,22 @@ import type { HookContext } from '@feathersjs/feathers';
  */
 export function debug<H extends HookContext = HookContext>(msg: string, ...fieldNames: string[]) {
   return (context: H) => {
+    // display timestamp
+    const now = new Date();
+    console.log(
+      `${now.getFullYear()}-${
+        now.getMonth() + 1
+      }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+    );
+
     if (msg) {
       console.log(msg);
     }
 
-    console.log(`${context.type}: '${context.path}'.${context.method}`);
+    // display service, method & type of hook (before/after/error)
+    console.log(`${context.type} service('${context.path}').${context.method}()`);
 
+    // display id for get, patch, update & remove
     if (!['find', 'create'].includes(context.method) && 'id' in context) {
       console.log('id:', context.id);
     }
@@ -29,6 +39,7 @@ export function debug<H extends HookContext = HookContext>(msg: string, ...field
       console.log('result:', context.result);
     }
 
+    // display additional params
     const params = context.params || {};
     console.log('params props:', Object.keys(params).sort());
 
