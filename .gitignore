@@ -33,3 +33,5 @@ node_modules
 dist/
 .idea/
 yarn.lock
+
+docs/.vitepress/cache
