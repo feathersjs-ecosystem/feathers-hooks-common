@@ -1,16 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
+## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.1) (2023-08-23)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.0...HEAD)
-
-**Merged pull requests:**
-
-- feat\(debug\): improve debug & update dependencies [\#729](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/729) ([fratzinger](https://github.com/fratzinger))
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.0...v8.1.1)
 
 ## [v8.1.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.0) (2023-08-23)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.0.0...v8.1.0)
+
+**Merged pull requests:**
+
+- feat\(debug\): improve debug & update dependencies [\#729](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/729) ([fratzinger](https://github.com/fratzinger))
 
 ## [v8.0.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.0.0) (2023-06-15)
 
@@ -149,7 +149,6 @@
 - alterItems requires returning item when multi is true [\#649](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/649)
 - Gets bad request when i pass any value with paramsForServer [\#590](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/590)
 - Concrete fastJoin example needed - populate id in array [\#535](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/535)
-- PreventChanges opposite [\#503](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/503)
 
 **Merged pull requests:**
 
