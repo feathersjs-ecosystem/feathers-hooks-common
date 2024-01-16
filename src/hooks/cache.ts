@@ -60,7 +60,7 @@ export function cache<H extends HookContext = HookContext, T = any>(
         return context;
       case 'get': {
         if (!Object.keys(query).length) {
-          const key = makeCacheKey(context.id);
+          const key = makeCacheKey(context.id!);
           const value = cacheMap.get(key);
           if (value) context.result = value;
         }

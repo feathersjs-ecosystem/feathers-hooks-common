@@ -28,7 +28,7 @@
     "update-dependencies": "ncu -u -x ajv",
     "test:unit": "vitest run",
     "coverage": "vitest run --coverage",
-    "test": "npm run lint && npm run test:unit"
+    "test": "npm run lint && npm run coverage"
   },
   "repository": {
     "type": "git",

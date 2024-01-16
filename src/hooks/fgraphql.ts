@@ -49,18 +49,15 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
 
   let ourResolvers: any; // will be initialized when hook is first called
 
-  const options = Object.assign(
-    {},
-    {
-      skipHookWhen: (context: any) => !!(context.params || {}).graphql,
-      inclAllFieldsServer: true,
-      inclAllFieldsClient: true,
-      inclAllFields: null, // Will be initialized each hook call.
-      inclJoinedNames: true,
-      extraAuthProps: [],
-    },
-    options1.options || {},
-  );
+  const options = {
+    skipHookWhen: (context: any) => !!(context.params || {}).graphql,
+    inclAllFieldsServer: true,
+    inclAllFieldsClient: true,
+    inclAllFields: null, // Will be initialized each hook call.
+    inclJoinedNames: true,
+    extraAuthProps: [],
+    ...(options1.options || {}),
+  };
 
   // @ts-ignore
   schema = isFunction(schema) ? schema() : schema;

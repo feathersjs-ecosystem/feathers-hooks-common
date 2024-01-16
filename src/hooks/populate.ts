@@ -122,7 +122,7 @@ export function populate<H extends HookContext = HookContext>(options: PopulateO
           throw new BadRequest('Schema does not resolve to an object. (populate)');
         }
 
-        const include = [].concat(schema1.include || []).map(schema => {
+        const include = [].concat((schema1.include || []) as any).map(schema => {
           if ('provider' in schema) {
             return schema;
           } else {
@@ -174,11 +174,11 @@ function populateItem(
 
   const elapsed: any = {};
   const startAtAllIncludes = new Date().getTime();
-  const include = [].concat(includeSchema || []);
+  const include = [].concat(includeSchema || []) as any;
   if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
   return Promise.all(
-    include.map(childSchema => {
+    include.map((childSchema: any) => {
       const { query, select, parentField } = childSchema;
 
       // A related column join is required if neither the query nor select options are provided.
