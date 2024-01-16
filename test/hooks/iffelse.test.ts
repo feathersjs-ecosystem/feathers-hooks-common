@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { iffElse, some, every } from '../../src';
 
 let hook: any;
@@ -72,7 +72,7 @@ describe('services iffElse', () => {
         iffElse(
           true,
           hookFcnSync,
-          hookFcnAsync
+          hookFcnAsync,
         )(hook)
           // @ts-ignore
           .then((hook: any) => {
@@ -89,7 +89,7 @@ describe('services iffElse', () => {
         iffElse(
           false,
           hookFcnSync,
-          hookFcnAsync
+          hookFcnAsync,
         )(hook)
           // @ts-ignore
           .then((hook: any) => {
@@ -109,7 +109,7 @@ describe('services iffElse', () => {
           true,
           // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
-          null
+          null,
         )(hook)
           // @ts-ignore
           .then((hook: any) => {
@@ -145,7 +145,7 @@ describe('services iffElse', () => {
           // @ts-ignore
           predicateTrue,
           [hookFcnSync, hookFcnAsync, hookFcn],
-          null
+          null,
         )(hook)
           // @ts-ignore
           .then(() => {
@@ -164,7 +164,7 @@ describe('services iffElse', () => {
           every(predicateTrue),
           // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
-          null
+          null,
         )(hook)
           // @ts-ignore
           .then(() => {
@@ -183,7 +183,7 @@ describe('services iffElse', () => {
           some(predicateTrue),
           // @ts-ignore
           [hookFcnSync, hookFcnAsync, hookFcn],
-          null
+          null,
         )(hook)
           // @ts-ignore
           .then(() => {

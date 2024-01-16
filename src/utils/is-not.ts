@@ -9,7 +9,7 @@ import type { PredicateFn } from '../types';
  * @see https://hooks-common.feathersjs.com/utilities.html#isnot
  */
 export function isNot<H extends HookContext = HookContext>(
-  predicate: boolean | PredicateFn<H>
+  predicate: boolean | PredicateFn<H>,
 ): PredicateFn<H> {
   if (typeof predicate !== 'function') {
     throw new MethodNotAllowed('Expected function as param. (isNot)');

@@ -10,7 +10,7 @@ import type { HookFunction, PredicateFn } from '../types';
 export function iffElse<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn<H>,
   trueHook: HookFunction<H> | HookFunction<H>[] | undefined,
-  falseHook?: HookFunction<H> | HookFunction<H>[] | undefined
+  falseHook?: HookFunction<H> | HookFunction<H>[] | undefined,
 ) {
   // fnArgs is [context] for service & permission hooks, [data, connection, context] for event filters
   return function (this: any, ctx: H) {
@@ -47,7 +47,7 @@ export function iffElse<H extends HookContext = HookContext>(
 function callHooks<H extends HookContext = HookContext>(
   this: any,
   ctx: H,
-  serviceHooks: HookFunction<H>[]
+  serviceHooks: HookFunction<H>[],
 ) {
   return serviceHooks ? combine(...serviceHooks).call(this, ctx) : ctx;
 }

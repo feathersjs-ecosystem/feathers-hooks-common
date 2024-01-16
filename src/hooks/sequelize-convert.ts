@@ -32,11 +32,11 @@ const defaultConversions = {
  */
 export function sequelizeConvert<
   C extends { [name: string]: SequelizeConversion },
-  H extends HookContext = HookContext
+  H extends HookContext = HookContext,
 >(
   converts: SequelizeConverts<C> | null | undefined | false,
   ignores?: string[] | null | undefined | false,
-  conversions?: C
+  conversions?: C,
 ) {
   const converter = sequelizeConversion(converts, ignores, conversions);
 

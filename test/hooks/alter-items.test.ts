@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { alterItems } from '../../src';
 
 let hookBefore: any;
@@ -159,7 +159,7 @@ describe('services alterItems', () => {
   it('updates hook before::create with new item returned', () => {
     // @ts-ignore
     return alterItems((rec: any) => Promise.resolve(Object.assign({}, rec, { state: 'UT' })))(
-      hookBefore
+      hookBefore,
     ).then(() => {
       assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
     });
@@ -197,7 +197,7 @@ describe('services alterItems', () => {
   it('updates hook after::create with new item returned', () => {
     // @ts-ignore
     return alterItems((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
-      hookAfter
+      hookAfter,
     ).then(() => {
       assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
     });
@@ -229,7 +229,7 @@ describe('services alterItems', () => {
   it('updates hook after::find with pagination with new item returned', () => {
     // @ts-ignore
     return alterItems((rec: any) => Promise.resolve(Object.assign({}, { first: rec.first })))(
-      hookFindPaginate
+      hookFindPaginate,
     ).then(() => {
       assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
     });
@@ -238,7 +238,7 @@ describe('services alterItems', () => {
   it('updates hook after::find with no pagination with new item returned', () => {
     // @ts-ignore
     return alterItems((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
-      hookFind
+      hookFind,
     ).then(() => {
       assert.deepEqual(hookFind.result, [
         { first: 'John', last: 'Doe', new: 'John' },

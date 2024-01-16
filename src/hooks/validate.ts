@@ -8,11 +8,11 @@ import { replaceItems } from '../utils/replace-items';
 
 export type SyncValidatorFn<H extends HookContext = HookContext> = (
   values: any,
-  context: H
+  context: H,
 ) => { [key: string]: string } | null;
 export type AsyncValidatorFn<H extends HookContext = HookContext> = (
   values: any,
-  context: H
+  context: H,
 ) => Promise<object | null>;
 export type ValidatorFn<H extends HookContext = HookContext> =
   | SyncValidatorFn<H>
@@ -30,7 +30,7 @@ export interface ValidateSchemaOptions extends AjvOptions {
     currentFormattedMessages: any,
     ajvErrorObject: ajvErrorObject,
     itemsLen: number,
-    itemIndex: number
+    itemIndex: number,
   ) => any;
 }
 

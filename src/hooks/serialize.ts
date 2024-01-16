@@ -27,7 +27,7 @@ export interface SerializeSchema<H extends HookContext = HookContext> {
  * @see https://hooks-common.feathersjs.com/hooks.html#serialize
  */
 export function serialize<H extends HookContext = HookContext>(
-  schema1: SerializeSchema<H> | SyncContextFunction<SerializeSchema, H>
+  schema1: SerializeSchema<H> | SyncContextFunction<SerializeSchema, H>,
 ) {
   return (context: H) => {
     const schema = typeof schema1 === 'function' ? schema1(context) : schema1;

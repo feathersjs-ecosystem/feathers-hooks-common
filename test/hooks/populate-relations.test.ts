@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import configApp from '../helpers/config-app';
 import getInitDb from '../helpers/get-init-db';
 import { populate } from '../../src';

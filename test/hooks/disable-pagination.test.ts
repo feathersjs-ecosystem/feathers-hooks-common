@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { disablePagination } from '../../src';
 
 let hookBefore: any;

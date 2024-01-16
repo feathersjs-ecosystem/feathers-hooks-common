@@ -1,25 +1,22 @@
 {
+  "root": true,
   "env": {
-    "browser": true,
-    "es6": true,
-    "mocha": true,
     "node": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended"
-  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "tsconfig.test.json",
-    "sourceType": "module"
+    "project": ["./tsconfig.json"]
   },
   "plugins": [
     "eslint-plugin-import",
     "eslint-plugin-prefer-arrow",
     "@typescript-eslint",
     "prettier"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     // "indent": ["warn", 2],

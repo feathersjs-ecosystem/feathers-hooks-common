@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 
 import sift from 'sift';
 import { sifter } from '../../src';

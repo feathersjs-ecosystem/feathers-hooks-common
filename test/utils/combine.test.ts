@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { combine } from '../../src';
@@ -32,7 +32,7 @@ function user(this: any) {
     new MemoryService({
       store,
       startId,
-    })
+    }),
   );
 
   app.service('users').hooks({
@@ -107,7 +107,7 @@ function user(this: any) {
             }
             hook.params.trace.push('sync3');
             return hook;
-          }
+          },
         ),
         function (this: any, hook: any) {
           if (hook.app !== app) {

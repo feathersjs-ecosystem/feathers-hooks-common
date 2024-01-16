@@ -2,7 +2,7 @@ import type { HookContext } from '@feathersjs/feathers';
 import { checkContext } from '../utils/check-context';
 
 export type SoftDeleteOptionFunction<H extends HookContext = HookContext> = (
-  context?: H
+  context?: H,
 ) => Promise<{ [key: string]: any }>;
 
 export interface SoftDeleteOptions<H extends HookContext = HookContext> {

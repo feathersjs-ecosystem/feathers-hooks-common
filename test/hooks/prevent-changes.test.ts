@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { preventChanges } from '../../src';
 
 let hookBefore: any;
@@ -120,7 +120,7 @@ describe('services preventChanges', () => {
       assert.deepEqual(
         context.data,
         { first: 'John', last: 'Doe', a: { c: { d: { e: 1 } } } },
-        '3'
+        '3',
       );
 
       context = preventChanges(false, 'name', 'a.c')(clone(hookBefore));
@@ -130,7 +130,7 @@ describe('services preventChanges', () => {
       assert.deepEqual(
         context.data,
         { first: 'John', last: 'Doe', a: { b: 'john', c: { d: {} } } },
-        '5'
+        '5',
       );
 
       context = preventChanges(false, 'first', 'last')(clone(hookBefore));

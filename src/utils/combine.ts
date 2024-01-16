@@ -23,7 +23,7 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
       if (current) {
         if (!isContext(current)) {
           throw new Error(
-            `${ctx.type} hook for '${ctx.method}' method returned invalid hook object`
+            `${ctx.type} hook for '${ctx.method}' method returned invalid hook object`,
           );
         }
 

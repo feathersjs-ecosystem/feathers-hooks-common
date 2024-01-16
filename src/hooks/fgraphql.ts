@@ -59,7 +59,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
       inclJoinedNames: true,
       extraAuthProps: [],
     },
-    options1.options || {}
+    options1.options || {},
   );
 
   // @ts-ignore
@@ -68,7 +68,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
   if (!isObject(schema) && !isString(schema)) {
     throwError(
       `Resolved schema is typeof ${typeof schema} rather than string or object. (fgraphql)`,
-      101
+      101,
     );
   }
 
@@ -85,7 +85,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     // @ts-ignore
     throwError(
       `option extraAuthProps is typeof ${typeof options.extraAuthProps} rather than array. (fgraphql)`,
-      105
+      105,
     );
   }
 
@@ -99,7 +99,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     const optSkipHookWhen = options.skipHookWhen;
     const skipHookWhen = isFunction(optSkipHookWhen) ? optSkipHookWhen(context) : optSkipHookWhen;
     debug(
-      `\n.....hook called. type ${context.type} method ${context.method} resolved skipHookWhen ${skipHookWhen}`
+      `\n.....hook called. type ${context.type} method ${context.method} resolved skipHookWhen ${skipHookWhen}`,
     );
 
     if (context.params.$populate) return context; // populate or fastJoin are running
@@ -179,7 +179,7 @@ function processRecords(store: any, query: any, recs: any, type: any, depth = 0)
   if (!isObject(storeOurResolversType)) {
     throwError(
       `Resolvers for Type ${type} are typeof ${typeof storeOurResolversType} not object. (fgraphql)`,
-      201
+      201,
     );
   }
 
@@ -188,7 +188,7 @@ function processRecords(store: any, query: any, recs: any, type: any, depth = 0)
   }
 
   return Promise.all(
-    recs.map((rec: any, j: any) => processRecord(store, query, depth, rec, type, j))
+    recs.map((rec: any, j: any) => processRecord(store, query, depth, rec, type, j)),
   ).then(() => {
     debug(`^^^^^^^^^^ exit ${depth}\n`);
   });
@@ -216,9 +216,9 @@ function processRecord(store: any, query: any, depth: any, rec: any, type: any, 
         recFieldNamesInQuery,
         joinedNamesInQuery,
         j,
-        i
-      )
-    )
+        i,
+      ),
+    ),
   ).then(() => {
     // Retain only record fields selected
     debug(`field names found ${recFieldNamesInQuery} joined names ${joinedNamesInQuery}`);
@@ -253,7 +253,7 @@ function processRecordQuery(
   recFieldNamesInQuery: any,
   joinedNamesInQuery: any,
   j: any,
-  i: any
+  i: any,
 ): any {
   debug(`\nprocessRecordQuery rec# ${j} Type ${type} field# ${i} name ${fieldName}`);
 
@@ -277,7 +277,7 @@ function processRecordFieldResolver(
   depth: any,
   rec: any,
   fieldName: any,
-  type: any
+  type: any,
 ) {
   debug('is resolver call');
   const ourQuery = store.feathersSdl[type][fieldName];
@@ -286,7 +286,7 @@ function processRecordFieldResolver(
   if (!isFunction(ourResolver)) {
     throwError(
       `Resolver for Type ${type} fieldName ${fieldName} is typeof ${typeof ourResolver} not function. (fgraphql)`,
-      203
+      203,
     );
   }
 
@@ -299,7 +299,7 @@ function processRecordFieldResolver(
       debug(
         `resolver returned typeof ${
           isArray(rawResult) ? `array #recs ${rawResult.length}` : typeof rawResult
-        }`
+        }`,
       );
 
       // Convert rawResult to query requirements.
@@ -308,7 +308,7 @@ function processRecordFieldResolver(
         debug(
           `.....resolver result converted to typeof ${
             isArray(result) ? `array #recs ${result.length}` : typeof result
-          }`
+          }`,
         );
       }
       rec[fieldName] = result;
@@ -323,7 +323,7 @@ function processRecordFieldResolver(
       } else {
         debug('no population of results required');
       }
-    }
+    },
   );
 }
 
@@ -339,7 +339,7 @@ function convertResolverResult(result: any, ourQuery: any, fieldName: any, type:
     if (result.length > 1) {
       throwError(
         `Query listType true. Resolver for Type ${type} fieldName ${fieldName} result is array len ${result.length} (fgraphql)`,
-        204
+        204,
       );
     }
 

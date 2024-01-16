@@ -5,7 +5,7 @@ import type { HookContext, Paginated } from '@feathersjs/feathers';
  * @see https://hooks-common.feathersjs.com/utilities.html#runhook
  */
 export function runHook<H extends HookContext = HookContext>(
-  context?: H
+  context?: H,
 ): (hook: any) => (data: any[] | Paginated<any>) => Promise<any> {
   const extraContent = context; // cannot access extraContent1 below. why not?
 

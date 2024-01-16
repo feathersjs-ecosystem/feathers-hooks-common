@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import clone from 'clone';
 import { runParallel } from '../../src';
 
@@ -24,42 +24,46 @@ describe('services runParallel', () => {
     };
   });
 
-  it('runs the func', (done: any) => {
-    runParallel(test(tester))(contextBefore);
+  it('runs the func', () =>
+    new Promise<void>(resolve => {
+      runParallel(test(tester))(contextBefore);
 
-    function tester() {
-      done();
-    }
-  });
+      function tester() {
+        resolve();
+      }
+    }));
 
-  it('passes this', (done: any) => {
-    runParallel(test(tester)).call({ bar: true }, contextBefore);
+  it('passes this', () =>
+    new Promise<void>(resolve => {
+      runParallel(test(tester)).call({ bar: true }, contextBefore);
 
-    function tester() {
-      assert.strictEqual(that.bar, true);
-      done();
-    }
-  });
+      function tester() {
+        assert.strictEqual(that.bar, true);
+        resolve();
+      }
+    }));
 
-  it('defaults to uncloned context', (done: any) => {
-    runParallel(test(tester))(contextBefore);
-    contextBefore._foo = true;
+  it('defaults to uncloned context', () =>
+    new Promise<void>(resolve => {
+      runParallel(test(tester))(contextBefore);
+      contextBefore._foo = true;
 
-    function tester(contextCloned: any) {
-      assert.property(contextCloned, '_foo');
-      done();
-    }
-  });
+      function tester(contextCloned: any) {
+        assert.property(contextCloned, '_foo');
+        resolve();
+      }
+    }));
 
-  it('clones', (done: any) => {
-    runParallel(test(tester), clone)(contextBefore);
-    contextBefore._foo = true;
+  it('clones', () =>
+    new Promise<void>(resolve => {
+      runParallel(test(tester), clone)(contextBefore);
+      contextBefore._foo = true;
 
-    function tester(contextCloned: any) {
-      assert.notProperty(contextCloned, '_foo');
-      done();
-    }
-  });
+      function tester(contextCloned: any) {
+        assert.notProperty(contextCloned, '_foo');
+        resolve();
+      }
+    }));
 
   it('Throws if no func', () => {
     assert.throws(() => {

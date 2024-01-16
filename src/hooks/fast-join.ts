@@ -41,7 +41,7 @@ export interface ResolverMap<H extends ResolverContext = ResolverContext> {
  */
 export function fastJoin<H extends ResolverContext = ResolverContext>(
   resolvers: ResolverMap<H> | SyncContextFunction<ResolverMap<H>, H>,
-  query?: Query | SyncContextFunction<Query, H>
+  query?: Query | SyncContextFunction<Query, H>,
 ) {
   return (context: H) => {
     const { method, data, result, params } = context;
@@ -64,7 +64,7 @@ export function fastJoin<H extends ResolverContext = ResolverContext>(
         // @ts-ignore
         .then(() => before && before(context))
         .then(
-          () => joins && results && recursive(joinsForQuery(joins2, q, context), results, context)
+          () => joins && results && recursive(joinsForQuery(joins2, q, context), results, context),
         )
         // @ts-ignore
         .then(() => after && after(context))
@@ -121,8 +121,8 @@ function recursive(joins: any, results: any, context: any) {
 
             return recursive(joins, addedResults, context);
           });
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 }

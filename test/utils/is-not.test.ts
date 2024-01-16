@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { iff, isNot, isProvider } from '../../src';
 import { isPromise } from '../../src/common';
 
@@ -58,32 +58,30 @@ describe('util isNot - predicate', () => {
     assert.equal(result, true);
   });
 
-  it('negates an async function 1', (done: any) => {
+  it('negates an async function 1', async () => {
     const hook = clone(hookServer);
 
-    isNot(predicateAsync(true))(hook)
+    await isNot(predicateAsync(true))(hook)
       // @ts-ignore
       .then((result: any) => {
         assert.equal(predicateCalls, 1);
         assert.equal(result, false);
-        done();
       })
       .catch(() => {
-        assert.equal(true, false, 'unexpected catch');
+        assert.fail('unexpected catch');
       });
   });
 
-  it('negates an async function 2', (done: any) => {
+  it('negates an async function 2', async () => {
     const hook = clone(hookServer);
-    isNot(predicateAsync(false))(hook)
+    await isNot(predicateAsync(false))(hook)
       // @ts-ignore
       .then((result: any) => {
         assert.equal(predicateCalls, 1);
         assert.equal(result, true);
-        done();
       })
       .catch(() => {
-        assert.equal(true, false, 'unexpected catch');
+        assert.fail('unexpected catch');
       });
   });
 });
@@ -109,7 +107,7 @@ describe('services isNot - works with iff and isProvider', () => {
   it('calls sync hook function if truthy', () => {
     iff(
       isNot(isProvider('server')),
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -123,7 +121,7 @@ describe('services isNot - works with iff and isProvider', () => {
     const result = iff(isNot(isProvider('rest')), hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);

@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert, expect } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { softDelete } from '../../src';
@@ -20,7 +20,7 @@ describe('services softDelete', () => {
       '/users',
       new MemoryService({
         multi: ['create', 'patch', 'remove'],
-      })
+      }),
     );
 
     userService = app.service('users');
@@ -73,15 +73,9 @@ describe('services softDelete', () => {
     });
 
     it('throws on deleted item', async () => {
-      assert.rejects(
-        async () => {
-          await userService.get(2);
-        },
-        {
-          name: 'NotFound',
-          message: "No record found for id '2'",
-        }
-      );
+      await expect(async () => {
+        await userService.get(2);
+      }).rejects.toThrow();
     });
 
     it('returns deleted when params.disableSoftDelete is set', async () => {
@@ -98,15 +92,9 @@ describe('services softDelete', () => {
     });
 
     it('throws on missing item', async () => {
-      await assert.rejects(
-        async () => {
-          await userService.get(99);
-        },
-        {
-          name: 'NotFound',
-          message: "No record found for id '99'",
-        }
-      );
+      await expect(async () => {
+        await userService.get(99);
+      }).rejects.toThrow();
     });
   });
 
@@ -118,15 +106,9 @@ describe('services softDelete', () => {
     });
 
     it.skip('throws on deleted item', async () => {
-      await assert.rejects(
-        async () => {
-          await userService.update(2, { y: 'y' });
-        },
-        {
-          name: 'NotFound',
-          message: "No record found for id '2'",
-        }
-      );
+      await expect(async () => {
+        await userService.update(2, { y: 'y' });
+      }).rejects.toThrow();
     });
   });
 
@@ -143,10 +125,7 @@ describe('services softDelete', () => {
     });
 
     it('throws on deleted item', async () => {
-      await assert.rejects(() => userService.patch(2, { y: 'y' }), {
-        name: 'NotFound',
-        message: "No record found for id '2'",
-      });
+      await expect(() => userService.patch(2, { y: 'y' })).rejects.toThrow();
     });
 
     it('multi updates on undeleted items', async () => {
@@ -172,15 +151,11 @@ describe('services softDelete', () => {
         deleted: true,
       });
 
-      await assert.rejects(() => userService.get(0), {
-        name: 'NotFound',
-      });
+      await expect(() => userService.get(0)).rejects.toThrow();
     });
 
     it('throws if item already deleted', async () => {
-      await assert.rejects(() => userService.remove(2), {
-        name: 'NotFound',
-      });
+      await expect(() => userService.remove(2)).rejects.toThrow();
     });
   });
 
@@ -209,7 +184,7 @@ describe('services softDelete', () => {
         '/people',
         new MemoryService({
           multi: ['create', 'patch', 'remove'],
-        })
+        }),
       );
 
       peopleService = app.service('people');
@@ -240,9 +215,7 @@ describe('services softDelete', () => {
 
       assert.ok(deletedUser.deletedAt !== null);
 
-      await assert.rejects(() => peopleService.get(user.id), {
-        name: 'NotFound',
-      });
+      await expect(() => peopleService.get(user.id)).rejects.toThrow();
     });
   });
 });

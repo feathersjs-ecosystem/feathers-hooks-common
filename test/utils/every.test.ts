@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { iff, every, isNot } from '../../src';
@@ -21,9 +21,9 @@ describe('util every', () => {
                 // @ts-ignore
                 (_hook: any) => 1,
                 (_hook: any) => {},
-                (_hook: any) => Promise.resolve(true)
+                (_hook: any) => Promise.resolve(true),
               ),
-              (hook: any) => Promise.resolve(hook)
+              (hook: any) => Promise.resolve(hook),
             ),
           ],
         },
@@ -51,9 +51,9 @@ describe('util every', () => {
                 (_hook: any) => {
                   throw new Error('Hook 2 errored');
                 },
-                (_hook: any) => true
+                (_hook: any) => true,
               ),
-              (hook: any) => Promise.resolve(hook)
+              (hook: any) => Promise.resolve(hook),
             ),
           ],
         },
@@ -79,9 +79,9 @@ describe('util every', () => {
               every(
                 (_hook: any) => true,
                 (_hook: any) => Promise.reject(Error('Hook 2 errored')),
-                (_hook: any) => true
+                (_hook: any) => true,
               ),
-              (hook: any) => Promise.resolve(hook)
+              (hook: any) => Promise.resolve(hook),
             ),
           ],
         },
@@ -114,10 +114,10 @@ describe('util every', () => {
                   (_hook: any) => 0,
                   (_hook: any) => null,
                   (_hook: any) => undefined,
-                  (_hook: any) => true
-                )
+                  (_hook: any) => true,
+                ),
               ),
-              () => Promise.reject(new Error('A hook returned false'))
+              () => Promise.reject(new Error('A hook returned false')),
             ),
           ],
         },

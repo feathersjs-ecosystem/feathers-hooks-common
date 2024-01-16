@@ -144,7 +144,7 @@ function populateItemArray(
   context: HookContext,
   items: any,
   includeSchema: any,
-  depth: number
+  depth: number,
 ): any {
   // 'items' is an item or an array of items
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
@@ -158,7 +158,7 @@ function populateItemArray(
   }
 
   return Promise.all(
-    items.map(item => populateItem(options, context, item, includeSchema, depth + 1))
+    items.map(item => populateItem(options, context, item, includeSchema, depth + 1)),
   );
 }
 
@@ -167,7 +167,7 @@ function populateItem(
   context: HookContext,
   item: any,
   includeSchema: any,
-  depth: number
+  depth: number,
 ): any {
   // 'item' is one item
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
@@ -194,7 +194,7 @@ function populateItem(
 
         return result;
       });
-    })
+    }),
   ).then(children => {
     // 'children' is like
     //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
@@ -218,7 +218,7 @@ function populateAddChild(
   context: HookContext,
   parentItem: any,
   childSchema: any,
-  depth: any
+  depth: any,
 ): any {
   /*
   @params
@@ -281,7 +281,7 @@ function populateAddChild(
         {},
         query,
         sqlQuery,
-        selectQuery // dynamic options override static ones
+        selectQuery, // dynamic options override static ones
       );
 
       const serviceHandle = context.app.service(service);
@@ -305,7 +305,7 @@ function populateAddChild(
         paginateObj,
         { query: queryObj },
         useInnerPopulate ? {} : { _populate: 'skip' },
-        'provider' in childSchema ? { provider: childSchema.provider } : {}
+        'provider' in childSchema ? { provider: childSchema.provider } : {},
       );
 
       return serviceHandle.find(params);

@@ -10,7 +10,7 @@ import { replaceItems } from '../utils/replace-items';
  * @see https://hooks-common.feathersjs.com/hooks.html#alteritems
  */
 export function alterItems<T = any, H extends HookContext = HookContext>(
-  cb: (record: T, context: H) => any
+  cb: (record: T, context: H) => any,
 ) {
   if (!cb) {
     cb = () => {};

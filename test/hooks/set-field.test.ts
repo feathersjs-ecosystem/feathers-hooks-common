@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert, expect } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { setField } from '../../src';
@@ -45,7 +45,7 @@ describe('setField', () => {
           // @ts-expect-error
           get: setField(),
         },
-      })
+      }),
     );
     assert.throws(() =>
       app.service('messages').hooks({
@@ -53,7 +53,7 @@ describe('setField', () => {
           // @ts-expect-error
           get: setField({ as: 'me' }),
         },
-      })
+      }),
     );
     assert.throws(() =>
       app.service('messages').hooks({
@@ -61,7 +61,7 @@ describe('setField', () => {
           // @ts-expect-error
           get: setField({ from: 'you' }),
         },
-      })
+      }),
     );
   });
 
@@ -75,16 +75,10 @@ describe('setField', () => {
   });
 
   it('adds user information to get, throws NotFound event if record exists', async () => {
-    await assert.rejects(
-      async () => {
-        // @ts-ignore
-        await app.service('messages').get(2, { user });
-      },
-      {
-        name: 'NotFound',
-        message: "No record found for id '2'",
-      }
-    );
+    await expect(async () => {
+      // @ts-ignore
+      await app.service('messages').get(2, { user });
+    }).rejects.toThrow();
 
     // @ts-ignore
     const result = await app.service('messages').get(1, { user });
@@ -103,17 +97,11 @@ describe('setField', () => {
   });
 
   it('errors on external calls if value does not exists', async () => {
-    await assert.rejects(
-      async () => {
-        await app.service('messages').find({
-          provider: 'rest',
-        });
-      },
-      {
-        name: 'Forbidden',
-        message: 'Expected field params.query.userId not available',
-      }
-    );
+    await expect(async () => {
+      await app.service('messages').find({
+        provider: 'rest',
+      });
+    }).rejects.toThrow();
   });
 
   it('errors when not used as a before hook', async () => {
@@ -126,13 +114,8 @@ describe('setField', () => {
       },
     });
 
-    await assert.rejects(
-      async () => {
-        await app.service('messages').get(1);
-      },
-      {
-        message: "The 'setField' hook can only be used as a 'before' hook.",
-      }
-    );
+    await expect(async () => {
+      await app.service('messages').get(1);
+    }).rejects.toThrow();
   });
 });

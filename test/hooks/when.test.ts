@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { when } from '../../src';
 import { isPromise } from '../../src/common';
 
@@ -77,7 +77,7 @@ describe('services when - sync predicate, sync hook', () => {
     when(
       // @ts-ignore
       'a',
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -92,7 +92,7 @@ describe('services when - sync predicate, sync hook', () => {
     const result = when('', hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);
@@ -104,7 +104,7 @@ describe('services when - sync predicate, sync hook', () => {
     when(
       // @ts-ignore
       () => 'a',
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -119,7 +119,7 @@ describe('services when - sync predicate, sync hook', () => {
     const result = when(() => '', hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);
@@ -137,28 +137,25 @@ describe('services when - sync predicate, async hook', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('calls async hook function if sync predicate truthy', (done: any) => {
-    // @ts-ignore
+  it('calls async hook function if sync predicate truthy', async () => {
     const result = when(true, hookFcnAsync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.deepEqual(hook, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnAsyncCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    });
   });
 
   it('does not call async hook function if sync predicate falsey', () => {
     const result = when(false, hookFcnAsync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnAsyncCalls, 0);
@@ -166,20 +163,18 @@ describe('services when - sync predicate, async hook', () => {
     }
   });
 
-  it('calls async hook function if sync predicate returns truthy', (done: any) => {
+  it('calls async hook function if sync predicate returns truthy', async () => {
     const result = when(() => true, hookFcnAsync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.deepEqual(hook, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnAsyncCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    });
   });
 });
 
@@ -192,36 +187,32 @@ describe('services when - async predicate, sync hook', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('calls sync hook function if async predicate truthy', (done: any) => {
+  it('calls sync hook function if async predicate truthy', async () => {
     const result = when(() => new Promise(resolve => resolve(true)), hookFcnSync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.deepEqual(result1, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(result1, hookAfter);
+    });
   });
 
-  it('does not call sync hook function if async predicate falsey', (done: any) => {
+  it('does not call sync hook function if async predicate falsey', async () => {
     const result = when(() => new Promise(resolve => resolve(false)), hookFcnSync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookBefore);
-        assert.equal(hookFcnSyncCalls, 0);
-        assert.deepEqual(hook, hookBefore);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookBefore);
+      assert.equal(hookFcnSyncCalls, 0);
+      assert.deepEqual(hook, hookBefore);
+    });
   });
 });
 
@@ -234,36 +225,32 @@ describe('services when - async predicate, async hook', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('calls async hook function if async predicate truthy', (done: any) => {
+  it('calls async hook function if async predicate truthy', async () => {
     const result = when(() => new Promise(resolve => resolve(true)), hookFcnAsync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.deepEqual(result1, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnAsyncCalls, 1);
+      assert.deepEqual(result1, hookAfter);
+    });
   });
 
-  it('does not call async hook function if async predicate falsey', (done: any) => {
+  it('does not call async hook function if async predicate falsey', async () => {
     const result = when(() => new Promise(resolve => resolve(false)), hookFcnAsync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(result1, hookBefore);
-        assert.equal(hookFcnAsyncCalls, 0);
-        assert.deepEqual(hook, hookBefore);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(result1, hookBefore);
+      assert.equal(hookFcnAsyncCalls, 0);
+      assert.deepEqual(hook, hookBefore);
+    });
   });
 });
 
@@ -282,7 +269,7 @@ describe('services when - sync predicate', () => {
     when(
       // @ts-ignore
       () => 'a',
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -295,7 +282,7 @@ describe('services when - sync predicate', () => {
   it('is passed hook as param', () => {
     when(
       predicateSync,
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -309,7 +296,7 @@ describe('services when - sync predicate', () => {
   it('a higher order predicate can pass more options', () => {
     when(
       predicateSync2({ z: 'z' }),
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -334,61 +321,53 @@ describe('services when - async predicate', () => {
     predicateValue = null;
   });
 
-  it('is passed hook as param', (done: any) => {
+  it('is passed hook as param', async () => {
     // @ts-ignore
     const result = when(predicateAsync, hookFcnSync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(predicateHook, hookBefore);
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.deepEqual(result1, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(predicateHook, hookBefore);
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(result1, hookAfter);
+    });
   });
 
-  it('is resolved', (done: any) => {
-    // @ts-ignore
+  it('is resolved', async () => {
     const result = when(predicateAsyncFunny, hookFcnSync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(predicateHook, hookBefore);
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.deepEqual(result1, hookAfter);
-
-        assert.equal(predicateValue, 'abc');
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(predicateHook, hookBefore);
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(result1, hookAfter);
+
+      assert.equal(predicateValue, 'abc');
+    });
   });
 
-  it('a higher order predicate can pass more options', (done: any) => {
-    // @ts-ignore
+  it('a higher order predicate can pass more options', async () => {
     const result = when(predicateAsync2({ y: 'y' }), hookFcnSync)(hook);
 
-    if (isPromise(result)) {
-      result.then((result1: any) => {
-        assert.deepEqual(predicateOptions, { y: 'y' });
-        assert.deepEqual(predicateHook, hookBefore);
-        assert.deepEqual(result1, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.deepEqual(result1, hookAfter);
-
-        done();
-      });
-    } else {
-      assert.fail(true, false, 'promise unexpectedly not returned');
+    if (!isPromise(result)) {
+      assert.fail('promise unexpectedly not returned');
     }
+
+    await result.then((result1: any) => {
+      assert.deepEqual(predicateOptions, { y: 'y' });
+      assert.deepEqual(predicateHook, hookBefore);
+      assert.deepEqual(result1, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.deepEqual(result1, hookAfter);
+    });
   });
 });
 
@@ -401,23 +380,19 @@ describe('services when - runs multiple hooks', () => {
     hookFcnAsyncCalls = 0;
   });
 
-  it('runs successfully', (done: any) => {
-    when(
+  it('runs successfully', async () => {
+    await when(
       true,
       hookFcnSync,
       hookFcnAsync,
-      hookFcn
-    )(hook)
-      // @ts-ignore
-      .then((hook: any) => {
-        assert.deepEqual(hook, hookAfter);
-        assert.equal(hookFcnSyncCalls, 1);
-        assert.equal(hookFcnAsyncCalls, 1);
-        assert.equal(hookFcnCalls, 1);
-        assert.deepEqual(hook, hookAfter);
-
-        done();
-      });
+      hookFcn,
+    )(hook).then((hook: any) => {
+      assert.deepEqual(hook, hookAfter);
+      assert.equal(hookFcnSyncCalls, 1);
+      assert.equal(hookFcnAsyncCalls, 1);
+      assert.equal(hookFcnCalls, 1);
+      assert.deepEqual(hook, hookAfter);
+    });
   });
 });
 

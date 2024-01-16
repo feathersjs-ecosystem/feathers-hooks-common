@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { setNow } from '../../src';
 
 let hookBefore: any;
@@ -96,7 +96,7 @@ describe('services setNow', () => {
       checkHook(
         hookBefore.data,
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
-        'madeAt'
+        'madeAt',
       );
     });
 
@@ -105,7 +105,7 @@ describe('services setNow', () => {
       checkHook(
         hookBefore.data,
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },
-        ['madeAt', 'builtAt']
+        ['madeAt', 'builtAt'],
       );
     });
 
@@ -150,16 +150,17 @@ describe('services setNow', () => {
       hookBefore = { type: 'before', method: 'create', data: { first: 'John', last: 'Doe' } };
     });
 
-    it('for 2 hooks', (next: any) => {
-      setNow('createdAt')(hookBefore);
-      const firstTime = hookBefore.data.createdAt;
-
-      setTimeout(() => {
+    it('for 2 hooks', () =>
+      new Promise<void>(resolve => {
         setNow('createdAt')(hookBefore);
-        assert.isAbove(hookBefore.data.createdAt.getTime(), firstTime.getTime());
-        next();
-      }, 50);
-    });
+        const firstTime = hookBefore.data.createdAt;
+
+        setTimeout(() => {
+          setNow('createdAt')(hookBefore);
+          assert.isAbove(hookBefore.data.createdAt.getTime(), firstTime.getTime());
+          resolve();
+        }, 50);
+      }));
   });
 });
 

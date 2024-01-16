@@ -124,7 +124,7 @@ export function makeCallingParams<H extends HookContext = HookContext>(
   context: H,
   query?: any,
   include?: string | string[],
-  inject = {}
+  inject = {},
 ) {
   return callingParams({
     query,

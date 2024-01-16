@@ -13,7 +13,7 @@ export function checkContextIf<H extends HookContext = HookContext>(
   context: H,
   type: HookType | HookType[],
   methods?: MethodName | MethodName[] | null,
-  label?: string
+  label?: string,
 ) {
   if (Array.isArray(type) ? !type.includes(context.type) : type !== context.type) {
     return;

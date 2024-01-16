@@ -19,7 +19,7 @@ export function keep<H extends HookContext = HookContext>(...fieldNames: string[
     if (Array.isArray(items)) {
       replaceItems(
         context,
-        items.map(item => replaceItem(item, fieldNames))
+        items.map(item => replaceItem(item, fieldNames)),
       );
     } else {
       replaceItems(context, replaceItem(items, fieldNames));

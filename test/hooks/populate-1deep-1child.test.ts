@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import _set from 'lodash/set.js';
 
 import configApp from '../helpers/config-app';
@@ -558,7 +558,7 @@ let provider: any;
           populate({ schema, profile: true })(hook)
             // @ts-ignore
             .then(() => {
-              assert(false, 'unexpectedly succeeeded');
+              assert.fail('unexpectedly succeeeded');
             })
             .catch((err: any) => {
               assert.isObject(err, 'no error object');
@@ -584,7 +584,7 @@ let provider: any;
           populate({ schema, profile: true })(hook)
             // @ts-ignore
             .then(() => {
-              assert(false, 'unexpectedly succeeded');
+              assert.fail('unexpectedly succeeded');
             })
             .catch((err: any) => {
               assert.isObject(err, 'no error object');

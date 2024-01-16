@@ -11,7 +11,7 @@ export function validateSchema<H extends HookContext = HookContext>(
   schema: object | string,
   ajvOrAjv: AjvOrNewable,
   // @ts-ignore
-  options: ValidateSchemaOptions = { allErrors: true }
+  options: ValidateSchemaOptions = { allErrors: true },
 ) {
   const addNewError = options?.addNewError || addNewErrorDflt;
   // delete options.addNewError;
@@ -45,7 +45,7 @@ export function validateSchema<H extends HookContext = HookContext>(
 
             addErrors(err.errors, index);
           });
-        })
+        }),
       ).then(() => {
         if (invalid) {
           throw new BadRequest('Data does not match schema', { errors: errorMessages });

@@ -4,7 +4,7 @@ export function setFields<T extends Record<string, any>>(
   items: T | T[],
   fieldValue: any,
   fieldNames: string[],
-  defaultFieldName: string
+  defaultFieldName: string,
 ): void {
   const value = typeof fieldValue === 'function' ? fieldValue() : fieldValue;
 

@@ -19,7 +19,7 @@ const defaultMakeCacheKey = (key: any) => key;
 export function cache<H extends HookContext = HookContext, T = any>(
   cacheMap: CacheMap<T>,
   keyField?: string,
-  options?: CacheOptions<T>
+  options?: CacheOptions<T>,
 ) {
   const clone = options?.clone || defaultClone;
   const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey;
