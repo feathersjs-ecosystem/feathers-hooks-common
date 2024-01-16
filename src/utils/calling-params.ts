@@ -132,8 +132,8 @@ export function makeCallingParams<H extends HookContext = HookContext>(
       include === undefined
         ? ['provider', 'authenticated', 'user']
         : Array.isArray(include)
-        ? include
-        : [include],
+          ? include
+          : [include],
     newProps: Object.assign({}, { _populate: 'skip' }, inject),
     ignoreDefaults: true,
   })(context);

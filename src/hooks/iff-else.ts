@@ -17,14 +17,14 @@ export function iffElse<H extends HookContext = HookContext>(
     const trueHooks = Array.isArray(trueHook)
       ? trueHook
       : typeof trueHook === 'function'
-      ? [trueHook]
-      : undefined;
+        ? [trueHook]
+        : undefined;
 
     const falseHooks = Array.isArray(falseHook)
       ? falseHook
       : typeof falseHook === 'function'
-      ? [falseHook]
-      : undefined;
+        ? [falseHook]
+        : undefined;
 
     const that = this;
     const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate;
