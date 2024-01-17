@@ -1,12 +1,14 @@
+<script setup>
+import HookTable from './components/HookTable.vue'
+</script>
+
 # Hooks
 
 ## actOnDefault
 
 Runs a series of hooks which mutate context.data or content.result (the Feathers default).
 
-| before | after | methods | multi | details                                                                                                          |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/act-on-dispatch.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/act-on-dispatch.ts" />
 
 - **Arguments**
 
@@ -41,9 +43,7 @@ Runs a series of hooks which mutate context.data or content.result (the Feathers
 
 Runs a series of hooks which mutate context.dispatch.
 
-| before | after | methods | multi | details                                                                                                          |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/act-on-dispatch.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/act-on-dispatch.ts" />
 
 - **Arguments**
 
@@ -78,9 +78,7 @@ Runs a series of hooks which mutate context.dispatch.
 
 Make changes to data or result items. Very flexible.
 
-| before | after | methods | multi | details                                                                                                      |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/alter-items.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/alter-items.ts" />
 
 - **Arguments**
   - `{Function} func`
@@ -156,9 +154,7 @@ The mutated `item`. Returning `undefined` means the `item` in the parameters was
 
 Persistent, least-recently-used record cache for services.
 
-| before | after | methods | multi | details                                                                                                |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/cache.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/cache.ts" />
 
 - **Arguments**
 
@@ -267,9 +263,7 @@ Persistent, least-recently-used record cache for services.
 
 Display the current hook context for debugging.
 
-| before | after | methods | multi | details                                                                                                |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/debug.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/debug.ts" />
 
 - **Arguments**
   - `{String} label`
@@ -314,9 +308,7 @@ Display the current hook context for debugging.
 
 Remove records and properties created by the populate hook.
 
-| before | after | methods | multi | details                                                                                                      |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/de-populate.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/de-populate.ts" />
 
 - **Arguments**
   - `{Function} customDepop`
@@ -347,9 +339,7 @@ Remove records and properties created by the populate hook.
 
 Disables pagination when query.$limit is -1 or '-1'.
 
-| before | after | methods | multi | details                                                                                                             |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------------- |
-| yes    | no    | find    | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/disable-pagination.ts) |
+<HookTable :before="true" :after="false" :methods="['find']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/disable-pagination.ts" />
 
 - **Example**
 
@@ -371,9 +361,7 @@ Disables pagination when query.$limit is -1 or '-1'.
 
 Prevents access to a service method completely or for specific transports.
 
-| before | after | methods | multi | details                                                                                                   |
-| ------ | ----- | ------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/disallow.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/disallow.ts" />
 
 - **Arguments**
 
@@ -417,10 +405,7 @@ Prevents access to a service method completely or for specific transports.
 
 Delete certain fields from the record(s).
 
-| before | after | methods               | multi | details                                                                                                  |
-| ------ | ----- | --------------------- | ----- | -------------------------------------------------------------------------------------------------------- |
-| yes    |       | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/discard.ts) |
-|        | yes   | all                   |       |                                                                                                          |
+<HookTable :before="true" :after="true" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/discard.ts" />
 
 > **Note:** The discard hook will remove fields even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discard(...))`.
 
@@ -452,9 +437,7 @@ Delete certain fields from the record(s).
 
 Delete certain fields from the query object.
 
-| before | after | methods | multi | details                                                                                                        |
-| ------ | ----- | ------- | ----- | -------------------------------------------------------------------------------------------------------------- |
-| yes    | no    | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/discard-query.ts) |
+<HookTable :before="true" :after="false" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/discard-query.ts" />
 
 > **Note:** The discardQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), discardQuery(...))`.
 
@@ -485,9 +468,7 @@ Delete certain fields from the query object.
 
 Join related records.
 
-| before | after | methods | multi | details                                                                                                    |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/fast-join.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/fast-join.ts" />
 
 > `fastJoin` is preferred over using `populate`.
 
@@ -876,9 +857,7 @@ The `cache` hook also makes `get` service calls more efficient.
 
 Execute one or another series of hooks depending on a sync or async predicate.
 
-| before | after | methods | multi | details                                                                                              |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/iff.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/iff.ts" />
 
 - **Arguments**
   - `{Boolean | Promise | Function} predicate`
@@ -928,9 +907,7 @@ Execute one or another series of hooks depending on a sync or async predicate.
 
 Execute one array of hooks or another based on a sync or async predicate.
 
-| before | after | methods | multi | details                                                                                                   |
-| ------ | ----- | ------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/iff-else.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/iff-else.ts" />
 
 - **Arguments**
   - `{Function} predicate`
@@ -966,10 +943,7 @@ Execute one array of hooks or another based on a sync or async predicate.
 
 Keep certain fields in the record(s), deleting the rest.
 
-| before | after | methods               | multi | details                                                                                               |
-| ------ | ----- | --------------------- | ----- | ----------------------------------------------------------------------------------------------------- |
-| yes    |       | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep.ts) |
-|        | yes   | all                   |       |                                                                                                       |
+<HookTable :before="true" :after="true" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep.ts" />
 
 > **Note:** The keep hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keep(...))`.
 
@@ -1001,10 +975,7 @@ Keep certain fields in the record(s), deleting the rest.
 
 Keep certain fields in a nested array inside the record(s), deleting the rest.
 
-| before | after | methods               | multi | details                                                                                                        |
-| ------ | ----- | --------------------- | ----- | -------------------------------------------------------------------------------------------------------------- |
-| yes    |       | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-in-array.ts) |
-|        | yes   | all                   |       |                                                                                                                |
+<HookTable :before="true" :after="true" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-in-array.ts" />
 
 > **Note:** The keepInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepInArray(...))`.
 
@@ -1039,9 +1010,7 @@ Keep certain fields in a nested array inside the record(s), deleting the rest.
 
 Keep certain fields in the query object, deleting the rest.
 
-| before | after | methods | multi | details                                                                                                     |
-| ------ | ----- | ------- | ----- | ----------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query.ts) |
+<HookTable :before="true" :after="true" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query.ts" />
 
 > **Note:** The keepQuery hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQuery(...))`.
 
@@ -1072,9 +1041,7 @@ Keep certain fields in the query object, deleting the rest.
 
 Keep certain fields in a nested array inside the query object, deleting the rest.
 
-| before | after | methods | multi | details                                                                                                              |
-| ------ | ----- | ------- | ----- | -------------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query-in-array.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/keep-query-in-array.ts" />
 
 > **Note:** The keepQueryInArray hook will remove any fields not specified even if the service is being called from the server. You may want to condition the hook to run only for external transports, e.g. `iff(isProvider('external'), keepQueryInArray(...))`.
 
@@ -1115,10 +1082,7 @@ Keep certain fields in a nested array inside the query object, deleting the rest
 
 Convert certain field values to lower case.
 
-| before | after | methods               | multi | details                                                                                                     |
-| ------ | ----- | --------------------- | ----- | ----------------------------------------------------------------------------------------------------------- |
-| yes    |       | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/lower-case.ts) |
-|        | yes   | all                   |       |                                                                                                             |
+<HookTable :before="true" :after="true" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/lower-case.ts" />
 
 - Arguments
   - `{Array < String >} fieldNames`
@@ -1147,9 +1111,7 @@ Convert certain field values to lower case.
 
 Wrap MongoDB foreign keys in ObjectID.
 
-| before | after | methods | multi | details                                                                                                     |
-| ------ | ----- | ------- | ----- | ----------------------------------------------------------------------------------------------------------- |
-| yes    | no    | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/mongo-keys.ts) |
+<HookTable :before="true" :after="false" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/mongo-keys.ts" />
 
 - **Arguments**
 
@@ -1204,9 +1166,7 @@ Wrap MongoDB foreign keys in ObjectID.
 
 Pass `context.params` from client to server. Server hook.
 
-| before | after | methods | multi | details                                                                                                             |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/params-from-client.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/params-from-client.ts" />
 
 - **Arguments**
 
@@ -1255,9 +1215,7 @@ Pass `context.params` from client to server. Server hook.
 
 Join related records.
 
-| before | after | methods | multi | details                                                                                                   |
-| ------ | ----- | ------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/populate.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/populate.ts" />
 
 > `fastJoin` is preferred over using `populate`.
 
@@ -1474,9 +1432,7 @@ Join related records.
 
 Prevent patch service calls from changing certain fields.
 
-| before | after | methods | multi | details                                                                                                          |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------- |
-| yes    | no    | patch   | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/prevent-changes.ts) |
+<HookTable :before="true" :after="true" :methods="['patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/prevent-changes.ts" />
 
 - **Arguments**
 
@@ -1508,9 +1464,7 @@ Prevent patch service calls from changing certain fields.
 
 Check selected fields exist and are not falsey. Numeric 0 is acceptable.
 
-| before | after | methods               | multi | details                                                                                                   |
-| ------ | ----- | --------------------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | no    | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/required.ts) |
+<HookTable :before="true" :after="false" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/required.ts" />
 
 - Arguments
   - `{Array < String >} fieldNames`
@@ -1535,9 +1489,7 @@ Check selected fields exist and are not falsey. Numeric 0 is acceptable.
 
 Run a hook in parallel to the other hooks and the service call.
 
-| before | after | methods | multi | details                                                                                                       |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/run-parallel.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/run-parallel.ts" />
 
 - **Arguments**
 
@@ -1576,9 +1528,7 @@ Run a hook in parallel to the other hooks and the service call.
 
 Prune values from related records. Calculate new values.
 
-| before | after | methods | multi | details                                                                                                    |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/serialize.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/serialize.ts" />
 
 - **Arguments**
   - `{Object | Function} schema`
@@ -1648,9 +1598,7 @@ Prune values from related records. Calculate new values.
 
 The `setField` hook allows to set a field on the hook context based on the value of another field on the hook context.
 
-| before | after | methods | multi | details                                                                                                    |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-field.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-field.ts" />
 
 ### Options
 
@@ -1744,9 +1692,7 @@ app.service('messages').hooks({
 
 Create/update certain fields to the current date-time.
 
-| before | after | methods | multi | details                                                                                                  |
-| ------ | ----- | ------- | ----- | -------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-now.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-now.ts" />
 
 - Arguments
   - `{Array < String >} fieldNames`
@@ -1775,9 +1721,7 @@ Create/update certain fields to the current date-time.
 
 Set slugs in URL, e.g. /stores/:storeId.
 
-| before | after | methods | multi | details                                                                                                   |
-| ------ | ----- | ------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-slug.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/set-slug.ts" />
 
 - **Arguments**
   - `{String} slug`
@@ -1819,9 +1763,7 @@ This hook normalizes the difference between the transports.
 
 Filter data or result records using a MongoDB-like selection syntax.
 
-| before | after | methods | multi | details                                                                                                 |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------- |
-| no     | yes   | find    | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/sifter.ts) |
+<HookTable :before="true" :after="true" :methods="['find']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/sifter.ts" />
 
 - **Arguments**
 
@@ -1871,9 +1813,7 @@ Filter data or result records using a MongoDB-like selection syntax.
 
 Flag records as logically deleted instead of physically removing them. Requires a Feathers v4 or later database adapter.
 
-| before | after | methods | multi | details                                                                                                      |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------ |
-| yes    | no    | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/soft-delete.ts) |
+<HookTable :before="true" :after="false" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/soft-delete.ts" />
 
 - **Arguments**
 
@@ -1940,9 +1880,7 @@ Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hoo
 
 Stash current value of record, usually before mutating it. Performs a get call.
 
-| before | after | methods                    | multi | details                                                                                                       |
-| ------ | ----- | -------------------------- | ----- | ------------------------------------------------------------------------------------------------------------- |
-| yes    | no    | get, update, patch, remove | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/stash-before.ts) |
+<HookTable :before="true" :after="false" :methods="['get', 'update', 'patch', 'remove']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/stash-before.ts" />
 
 - **Arguments**
   - `{String} fieldName`
@@ -1979,9 +1917,7 @@ Stash current value of record, usually before mutating it. Performs a get call.
 
 Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
 
-| before | after | methods | multi | details                                                                                                   |
-| ------ | ----- | ------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/traverse.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/traverse.ts" />
 
 - **Arguments**
   - `{Function} transformer`
@@ -2030,9 +1966,7 @@ Transform fields & objects in place in the record(s) using a recursive walk. Pow
 
 Execute a series of hooks if a sync or async predicate is falsey.
 
-| before | after | methods | multi | details                                                                                                 |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/unless.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/unless.ts" />
 
 - **Arguments**
   - `{Boolean | Promise | Function} predicate`
@@ -2070,9 +2004,7 @@ Execute a series of hooks if a sync or async predicate is falsey.
 
 Validate data using a validation function.
 
-| before | after | methods               | multi | details                                                                                                   |
-| ------ | ----- | --------------------- | ----- | --------------------------------------------------------------------------------------------------------- |
-| yes    | no    | create, update, patch | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/validate.ts) |
+<HookTable :before="true" :after="false" :methods="['create', 'update', 'patch']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/validate.ts" />
 
 - **Arguments**
 
@@ -2127,9 +2059,7 @@ Validate data using a validation function.
 
 Validate data using JSON-Schema.
 
-| before | after | methods | multi | details                                                                                                          |
-| ------ | ----- | ------- | ----- | ---------------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/validate-schema.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/hooks/validate-schema.ts" />
 
 - **Arguments**
   - `{Object} schema`
