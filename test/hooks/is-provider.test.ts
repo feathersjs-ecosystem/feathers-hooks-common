@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { iff, isProvider } from '../../src';
 import { isPromise } from '../../src/common';
 
@@ -111,7 +111,7 @@ describe('services isProvider - works with iff', () => {
   it('calls sync hook function if truthy', () => {
     iff(
       isProvider('rest'),
-      hookFcnSync
+      hookFcnSync,
     )(hook)
       // @ts-ignore
       .then((hook: any) => {
@@ -125,7 +125,7 @@ describe('services isProvider - works with iff', () => {
     const result = iff(isProvider('server'), hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);

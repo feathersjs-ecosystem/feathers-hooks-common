@@ -9,7 +9,7 @@ import type { HookFunction } from '../types';
  */
 export function runParallel<H extends HookContext = HookContext>(
   hook: HookFunction<H>,
-  clone?: (item: H) => H
+  clone?: (item: H) => H,
 ) {
   if (typeof hook !== 'function') {
     throw new BadRequest('Function not provided. (runParallel)');

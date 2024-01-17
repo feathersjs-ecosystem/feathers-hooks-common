@@ -1,12 +1,12 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import configApp from '../helpers/config-app';
 
 describe('services populate - test scaffolding', () => {
-  it('can reinitialize database', (done: any) => {
+  it('can reinitialize database', async () => {
     const app = configApp(['users', 'comments', 'posts', 'recommendation']);
     const users = app.service('users');
 
-    users
+    await users
       .find({ query: {} })
       .then((data: any) => {
         assert.equal(data.length, 2);
@@ -28,7 +28,6 @@ describe('services populate - test scaffolding', () => {
       })
       .then((data: any) => {
         assert.equal(data.length, 2);
-        done();
       });
   });
 });

@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { discardQuery } from '../../src';
 
 let hookBefore: any;

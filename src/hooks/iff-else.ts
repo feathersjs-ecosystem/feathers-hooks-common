@@ -10,21 +10,21 @@ import type { HookFunction, PredicateFn } from '../types';
 export function iffElse<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn<H>,
   trueHook: HookFunction<H> | HookFunction<H>[] | undefined,
-  falseHook?: HookFunction<H> | HookFunction<H>[] | undefined
+  falseHook?: HookFunction<H> | HookFunction<H>[] | undefined,
 ) {
   // fnArgs is [context] for service & permission hooks, [data, connection, context] for event filters
   return function (this: any, ctx: H) {
     const trueHooks = Array.isArray(trueHook)
       ? trueHook
       : typeof trueHook === 'function'
-      ? [trueHook]
-      : undefined;
+        ? [trueHook]
+        : undefined;
 
     const falseHooks = Array.isArray(falseHook)
       ? falseHook
       : typeof falseHook === 'function'
-      ? [falseHook]
-      : undefined;
+        ? [falseHook]
+        : undefined;
 
     const that = this;
     const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate;
@@ -47,7 +47,7 @@ export function iffElse<H extends HookContext = HookContext>(
 function callHooks<H extends HookContext = HookContext>(
   this: any,
   ctx: H,
-  serviceHooks: HookFunction<H>[]
+  serviceHooks: HookFunction<H>[],
 ) {
   return serviceHooks ? combine(...serviceHooks).call(this, ctx) : ctx;
 }

@@ -9,7 +9,7 @@ import { checkContext } from '../utils/check-context';
  */
 export function mongoKeys<H extends HookContext = HookContext>(
   ObjectId: new (id?: string | number) => any,
-  keyFields: string | string[]
+  keyFields: string | string[],
 ) {
   keyFields = Array.isArray(keyFields) ? keyFields : [keyFields];
   const keyLeaves: any = [];

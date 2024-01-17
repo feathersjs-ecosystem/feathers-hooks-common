@@ -19,7 +19,7 @@ const defaultMakeCacheKey = (key: any) => key;
 export function cache<H extends HookContext = HookContext, T = any>(
   cacheMap: CacheMap<T>,
   keyField?: string,
-  options?: CacheOptions<T>
+  options?: CacheOptions<T>,
 ) {
   const clone = options?.clone || defaultClone;
   const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey;
@@ -60,7 +60,7 @@ export function cache<H extends HookContext = HookContext, T = any>(
         return context;
       case 'get': {
         if (!Object.keys(query).length) {
-          const key = makeCacheKey(context.id);
+          const key = makeCacheKey(context.id!);
           const value = cacheMap.get(key);
           if (value) context.result = value;
         }

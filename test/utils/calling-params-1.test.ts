@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { callingParamsDefaults, callingParams } from '../../src';
 
 let context1: any;

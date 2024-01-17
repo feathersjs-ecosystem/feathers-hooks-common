@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { paramsFromClient } from '../../src';
 
 describe('services params-from-client', () => {

@@ -1,6 +1,6 @@
----
-title: Utilities
----
+<script setup>
+import HookTable from './components/HookTable.vue'
+</script>
 
 # Utilities
 
@@ -158,9 +158,7 @@ Restrict a hook to run for certain methods and method types.
 
 Sequentially execute multiple sync or async hooks.
 
-| before | after | methods | multi | details                                                                                                  |
-| ------ | ----- | ------- | ----- | -------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | n/a   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/combine.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" multi="n/a" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/combine.ts" />
 
 - **Arguments**
   - `{Array< Function >} hookFuncs`
@@ -199,9 +197,7 @@ module.exports = { before: {
 
 Return the and of a series of sync or async predicate functions.
 
-| before | after | methods | multi | details                                                                                                |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/every.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/every.ts" />
 
 - **Arguments**
   - `{Array< Function >} predicates`
@@ -283,9 +279,7 @@ Get the records in `context.data` or `context.result`
 
 Negate a sync or async predicate function.
 
-| before | after | methods | multi | details                                                                                                 |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-not.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-not.ts" />
 
 - **Arguments**
 
@@ -322,9 +316,7 @@ Negate a sync or async predicate function.
 
 Check which transport provided the service call.
 
-| before | after | methods | multi | details                                                                                                      |
-| ------ | ----- | ------- | ----- | ------------------------------------------------------------------------------------------------------------ |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-provider.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/is-provider.ts" />
 
 - **Arguments**
   - `{Array< String >} transports`
@@ -597,9 +589,7 @@ Let's you call a hook right after the service call.
 
 Return the or of a series of sync or async predicate functions.
 
-| before | after | methods | multi | details                                                                                               |
-| ------ | ----- | ------- | ----- | ----------------------------------------------------------------------------------------------------- |
-| yes    | yes   | all     | yes   | [source](https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/some.ts) |
+<HookTable :before="true" :after="true" :methods="['all']" :multi="true" source="https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/src/utils/some.ts" />
 
 - **Arguments**
 

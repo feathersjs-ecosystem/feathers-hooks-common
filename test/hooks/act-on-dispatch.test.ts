@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { actOnDefault, actOnDispatch, combine, getItems, replaceItems } from '../../src';
 
 let hookBefore: any;
@@ -28,7 +28,7 @@ describe('services actOn', () => {
       const result: any = await actOnDefault(
         testHook(undefined, 1),
         testHook(undefined, 2),
-        testHook(undefined, 3)
+        testHook(undefined, 3),
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [1, 2, 3]);
@@ -38,7 +38,7 @@ describe('services actOn', () => {
       const result: any = await actOnDispatch(
         testHook('dispatch', 10),
         testHook('dispatch', 20),
-        testHook('dispatch', 30)
+        testHook('dispatch', 30),
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [10, 20, 30]);
@@ -57,7 +57,7 @@ describe('services actOn', () => {
     it('actOnDefault calling actOnDefault', async () => {
       const result: any = await actOnDefault(
         combine(testHook(undefined, 11), testHook(undefined, 12)),
-        combine(testHook(undefined, 21), testHook(undefined, 22))
+        combine(testHook(undefined, 21), testHook(undefined, 22)),
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [11, 12, 21, 22]);
@@ -66,7 +66,7 @@ describe('services actOn', () => {
     it('actOnDefault calling actOnDispatch', async () => {
       const result: any = await actOnDefault(
         actOnDispatch(combine(testHook('dispatch', 11), testHook('dispatch', 12))),
-        combine(testHook(undefined, 21), testHook(undefined, 22))
+        combine(testHook(undefined, 21), testHook(undefined, 22)),
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [11, 12, 21, 22]);
@@ -75,7 +75,7 @@ describe('services actOn', () => {
     it('actOnDispatch calling actOnDefault', async () => {
       const result: any = await actOnDispatch(
         actOnDefault(combine(testHook(undefined, 11), testHook(undefined, 12))),
-        combine(testHook('dispatch', 21), testHook('dispatch', 22))
+        combine(testHook('dispatch', 21), testHook('dispatch', 22)),
       )(hookBefore);
 
       assert.deepEqual(result.params._actOnCodes, [11, 12, 21, 22]);

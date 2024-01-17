@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { fastJoin, keep, runHook } from '../../src';
 
 const app = { a: 'a' };
@@ -38,7 +38,7 @@ describe('util runHooks', () => {
             result: data,
             type: 'after',
           },
-          'test hook'
+          'test hook',
         );
       });
   });

@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { makeCallingParams } from '../../src';
 
 let context: any;

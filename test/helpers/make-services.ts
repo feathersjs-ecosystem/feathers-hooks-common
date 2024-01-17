@@ -67,7 +67,7 @@ function makeService(store1: any, _name: any) {
               ? post[field] === value
               : value.$in.indexOf(post[field]) !== -1;
           })
-          .map((post: any) => pluck(post, $select))
+          .map((post: any) => pluck(post, $select)),
       );
     },
   };

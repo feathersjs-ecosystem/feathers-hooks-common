@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert, expect } from 'vitest';
 import { validate } from '../../src';
 import { BadRequest } from '@feathersjs/errors';
 
@@ -71,34 +71,21 @@ describe('services validate', () => {
         });
     });
 
-    it('test passes on correct data', (next: any) => {
-      validate(fcnPromise)(hookOk)
-        // @ts-ignore
-        .then((hook: any) => {
-          assert.deepEqual(hook, origHookOk);
-          assert.deepEqual(fcnHook, origHookOk);
-          next();
-        })
-        .catch((err: any) => next(err));
+    it('test passes on correct data', async () => {
+      const result = await validate(fcnPromise)(hookOk);
+
+      assert.deepEqual(result, origHookOk);
+      assert.deepEqual(fcnHook, origHookOk);
     });
 
-    it('test can sanitize correct data', (next: any) => {
-      validate(fcnPromiseSanitize)(hookOk)
-        // @ts-ignore
-        .then((hook: any) => {
-          assert.equal(hook.data.email, 'a@a.com');
-          next();
-        })
-        .catch((err: any) => next(err));
+    it('test can sanitize correct data', async () => {
+      const result = await validate(fcnPromiseSanitize)(hookOk);
+
+      assert.equal(result.data.email, 'a@a.com');
     });
 
-    it('test fails on errors', (next: any) => {
-      validate(fcnPromiseSanitize)(hookBad)
-        // @ts-ignore
-        .then(() => {
-          assert.fail(true, false, 'test should not have completed successfully');
-        })
-        .catch(() => next());
+    it('test fails on errors', async () => {
+      await expect(validate(fcnPromiseSanitize)(hookBad)).rejects.toThrow();
     });
   });
 });

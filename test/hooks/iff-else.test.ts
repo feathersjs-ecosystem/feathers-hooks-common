@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { iff } from '../../src';
 import { isPromise } from '../../src/common';
 
@@ -80,7 +80,7 @@ describe('services iff - sync predicate, sync hook', () => {
       iff(
         // @ts-ignore
         'a',
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -96,7 +96,7 @@ describe('services iff - sync predicate, sync hook', () => {
     const result: any = iff('', hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);
@@ -109,7 +109,7 @@ describe('services iff - sync predicate, sync hook', () => {
       iff(
         // @ts-ignore
         () => 'a',
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -125,7 +125,7 @@ describe('services iff - sync predicate, sync hook', () => {
     const result = iff(() => '', hookFcnSync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnSyncCalls, 0);
@@ -147,7 +147,7 @@ describe('services iff - sync predicate, async hook', () => {
     return (
       iff(
         true,
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -162,7 +162,7 @@ describe('services iff - sync predicate, async hook', () => {
     const result = iff(false, hookFcnAsync)(hook);
 
     if (isPromise(result)) {
-      assert.fail(true, false, 'promise unexpectedly returned');
+      assert.fail('promise unexpectedly returned');
     } else {
       assert.deepEqual(result, hookBefore);
       assert.equal(hookFcnAsyncCalls, 0);
@@ -174,7 +174,7 @@ describe('services iff - sync predicate, async hook', () => {
     return (
       iff(
         () => true,
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -199,7 +199,7 @@ describe('services iff - async predicate, sync hook', () => {
     return (
       iff(
         () => new Promise(resolve => resolve(true)),
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -214,7 +214,7 @@ describe('services iff - async predicate, sync hook', () => {
     return (
       iff(
         () => new Promise(resolve => resolve(false)),
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -239,7 +239,7 @@ describe('services iff - async predicate, async hook', () => {
     return (
       iff(
         () => new Promise(resolve => resolve(true)),
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -254,7 +254,7 @@ describe('services iff - async predicate, async hook', () => {
     return (
       iff(
         () => new Promise(resolve => resolve(false)),
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -282,7 +282,7 @@ describe('services iff - sync predicate', () => {
       iff(
         // @ts-ignore
         () => 'a',
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -297,7 +297,7 @@ describe('services iff - sync predicate', () => {
     return (
       iff(
         predicateSync,
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -313,7 +313,7 @@ describe('services iff - sync predicate', () => {
     return (
       iff(
         predicateSync2({ z: 'z' }),
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -343,7 +343,7 @@ describe('services iff - async predicate', () => {
     return (
       iff(
         predicateAsync,
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -360,7 +360,7 @@ describe('services iff - async predicate', () => {
       iff(
         // @ts-ignore
         predicateAsyncFunny,
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -378,7 +378,7 @@ describe('services iff - async predicate', () => {
     return (
       iff(
         predicateAsync2({ y: 'y' }),
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((result1: any) => {
@@ -408,7 +408,7 @@ describe('services iff - runs .else()', () => {
         true,
         hookFcnSync,
         hookFcnSync,
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -442,7 +442,7 @@ describe('services iff - runs .else()', () => {
         .else(
           hookFcnSync,
           hookFcnSync,
-          hookFcnSync
+          hookFcnSync,
         )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -472,7 +472,7 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
         true,
         hookFcnAsync,
         iff(true, hookFcnSync),
-        hookCb
+        hookCb,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -491,7 +491,7 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
         true,
         hookFcnSync,
         iff(true, hookFcnAsync),
-        hookCb
+        hookCb,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -510,7 +510,7 @@ describe('services iff - runs iff(true, iff(true, ...)', () => {
         true,
         hookFcnSync,
         iff(true, hookCb),
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -540,7 +540,7 @@ describe('services iff - runs iff(true, iff(false).else(...)', () => {
         true,
         hookFcnAsync,
         iff(false, hookCb).else(hookFcnSync),
-        hookFcnAsync
+        hookFcnAsync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -559,7 +559,7 @@ describe('services iff - runs iff(true, iff(false).else(...)', () => {
         true,
         hookFcnSync,
         iff(false, hookFcnSync).else(hookFcnAsync),
-        hookFcnSync
+        hookFcnSync,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -589,7 +589,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
         .else(
           hookFcnSync,
           iff(true, hookFcnAsync),
-          hookFcnSync
+          hookFcnSync,
         )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -608,7 +608,7 @@ describe('services iff - runs iff(false).else(iff(...).else(...))', () => {
         .else(
           hookFcnSync,
           iff(false, hookFcnSync).else(hookFcnAsync),
-          hookFcnSync
+          hookFcnSync,
         )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -640,7 +640,7 @@ describe('services iff - multiple iff() sequentially', () => {
         iff(true, hookFcnSync, hookFcnSync, hookFcnSync),
         hookCb,
         iff(true, hookFcnAsync, hookFcnAsync, hookFcnAsync, hookFcnAsync),
-        hookCb
+        hookCb,
       )(hook)
         // @ts-ignore
         .then((hook: any) => {
@@ -660,7 +660,7 @@ describe('services iff - multiple iff() sequentially', () => {
           hookFcnSync,
           iff(true, hookFcnAsync),
           iff(false, hookFcnSync).else(hookCb),
-          hookFcnSync
+          hookFcnSync,
         )(hook)
         // @ts-ignore
         .then((hook: any) => {

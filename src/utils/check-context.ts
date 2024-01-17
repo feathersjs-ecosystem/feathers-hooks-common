@@ -10,7 +10,7 @@ export function checkContext<H extends HookContext = HookContext>(
   context: H,
   type?: HookType | HookType[] | null,
   methods?: MethodName | MethodName[] | null,
-  label = 'anonymous'
+  label = 'anonymous',
 ): void {
   if (type) {
     const types = Array.isArray(type) ? type : [type]; // safe enough for allowed values

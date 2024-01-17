@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import * as allExported from '../src';
 
 const members = [
@@ -55,7 +55,7 @@ const members = [
   'unless',
   'some',
   'every',
-  'isNot'
+  'isNot',
 ].sort();
 
 describe('services exposed hooks', () => {

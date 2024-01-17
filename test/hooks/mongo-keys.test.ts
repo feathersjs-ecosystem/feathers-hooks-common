@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { ObjectId } from 'mongodb';
 import { mongoKeys } from '../../src';
 
@@ -68,7 +68,7 @@ describe('services mongoKeys', () => {
 function wrapper(keys: any, query: any) {
   const newContext: any = mongoKeys(
     ObjectId,
-    keys
+    keys,
   )({ params: { query }, type: 'before', method: 'find' } as any);
   return newContext.params.query;
 }

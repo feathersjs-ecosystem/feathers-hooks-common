@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert, expect } from 'vitest';
 
 import { validateSchema } from '../../src/hooks/validate-schema';
 
@@ -117,7 +117,7 @@ describe('services validateSchema', () => {
 
       try {
         validateSchema(schema, Ajv)(hookBefore);
-        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           "'first' should be string",
@@ -132,7 +132,7 @@ describe('services validateSchema', () => {
 
       try {
         validateSchema(schema, Ajv)(hookBeforeArray);
-        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           "'in row 1 of 3, first' should be string",
@@ -146,7 +146,7 @@ describe('services validateSchema', () => {
 
       try {
         validateSchema(schemaForAjvInstance, ajv)(hookBefore);
-        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           '\'first\' should match format "startWithJo"',
@@ -161,7 +161,7 @@ describe('services validateSchema', () => {
 
       try {
         validateSchema(schemaForAjvInstance, ajv)(hookBeforeArray);
-        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
           '\'in row 1 of 3, first\' should match format "startWithJo"',
@@ -177,7 +177,7 @@ describe('services validateSchema', () => {
 
       try {
         validateSchema(schemaForAjvInstance, ajv)(hookBefore);
-        assert.fail(true, false, 'test succeeds unexpectedly');
+        assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, ["'nested' should NOT have additional properties: 'foo'"]);
       }
@@ -185,7 +185,7 @@ describe('services validateSchema', () => {
   });
 
   describe('Async validation', () => {
-    before(() => {
+    beforeAll(() => {
       ajvAsync = new Ajv({ allErrors: true });
 
       ajvAsync.addKeyword('equalsDoe', {
@@ -248,94 +248,45 @@ describe('services validateSchema', () => {
       };
     });
 
-    it('works with string schema id', (next: any) => {
-      // @ts-ignore
-      validateSchema(
-        'asyncSchema',
-        ajvAsync
-      )(hookBefore)
-        // @ts-ignore
-        .then(() => {
-          next();
-        })
-        .catch((err: any) => {
-          console.log(err);
-          assert.fail(true, false, 'test fails unexpectedly');
-        });
+    it('works with string schema id', async () => {
+      await validateSchema('asyncSchema', ajvAsync)(hookBefore);
     });
 
-    it('works with valid single item', (next: any) => {
-      // @ts-ignore
-      validateSchema(
-        asyncSchema,
-        ajvAsync
-      )(hookBefore)
-        // @ts-ignore
-        .then(() => {
-          next();
-        })
-        .catch((err: any) => {
-          console.log(err);
-          assert.fail(true, false, 'test fails unexpectedly');
-        });
+    it('works with valid single item', async () => {
+      await validateSchema(asyncSchema, ajvAsync)(hookBefore);
     });
 
-    it('works with array of valid items', (next: any) => {
-      // @ts-ignore
-      validateSchema(
-        asyncSchema,
-        ajvAsync
-      )(hookBeforeArray)
-        // @ts-ignore
-        .then(() => {
-          next();
-        })
-        .catch(() => {
-          assert.fail(true, false, 'test fails unexpectedly');
-        });
+    it('works with array of valid items', async () => {
+      await validateSchema(asyncSchema, ajvAsync)(hookBeforeArray);
     });
 
-    it('fails with in valid single item', (next: any) => {
+    it('fails with in valid single item', async () => {
       hookBefore.data = { first: '1' };
 
-      // @ts-ignore
-      validateSchema(
-        asyncSchema,
-        ajvAsync
-      )(hookBefore)
-        // @ts-ignore
-        .then(() => {
-          assert.fail(true, false, 'test succeeds unexpectedly');
-        })
-        .catch((err: any) => {
+      await expect(validateSchema(asyncSchema, ajvAsync)(hookBefore)).rejects.toSatisfy(
+        (err: any) => {
           assert.deepEqual(err.errors, [
             '\'first\' should match format "3or4chars"',
             "should have required property 'last'",
           ]);
-          next();
-        });
+          return true;
+        },
+      );
     });
 
-    it('fails with array of invalid items', (next: any) => {
+    it('fails with array of invalid items', async () => {
       hookBeforeArray.data[0].last = 'not Doe';
       delete hookBeforeArray.data[2].last;
 
-      // @ts-ignore
-      validateSchema(
-        asyncSchema,
-        ajvAsync
-      )(hookBeforeArray)
-        // @ts-ignore
-        .then(() => {
-          assert.fail(true, false, 'test succeeds unexpectedly');
-        })
-        .catch((err: any) => {
+      await expect(validateSchema(asyncSchema, ajvAsync)(hookBeforeArray)).rejects.toSatisfy(
+        (err: any) => {
           assert.deepEqual(err.errors, [
             "in row 3 of 3, should have required property 'last'",
             "'in row 1 of 3, last' should be Doe",
           ]);
-          next();
-        });
+          return true;
+        },
+      );
     });
   });
 });

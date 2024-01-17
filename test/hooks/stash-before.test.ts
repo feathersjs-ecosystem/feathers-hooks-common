@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert, expect } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { stashBefore } from '../../src';
@@ -32,7 +32,7 @@ function users(this: any) {
       store,
       startId,
       multi: true,
-    })
+    }),
   );
 
   app.service('users').hooks({
@@ -79,15 +79,8 @@ describe('services stash-before', () => {
   });
 
   ['create', 'find'].forEach(method => {
-    it(`throws on ${method}`, (done: any) => {
-      users[method]({})
-        .then(() => {
-          assert(false, 'unexpectedly successful');
-          done();
-        })
-        .catch(() => {
-          done();
-        });
+    it(`throws on ${method}`, async () => {
+      await expect(users[method]({})).rejects.toThrow();
     });
   });
 

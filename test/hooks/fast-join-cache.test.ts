@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import BatchLoader from '@feathers-plus/batch-loader';
 // @ts-ignore
@@ -37,11 +37,11 @@ const userBatchLoader = new BatchLoader(
   async (keys: any, context: any) => {
     userBatchLoaderCount += 1;
     const result: any = await users.find(
-      makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+      makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }),
     );
     return getResultsByKey(keys, result, (user: any) => user.id, '!');
   },
-  { context: {}, cacheMap: cacheMapUsers }
+  { context: {}, cacheMap: cacheMapUsers },
 );
 
 function services(this: any) {
@@ -274,11 +274,11 @@ async function ex8() {
       context._loaders.user.id = new BatchLoader(
         async (keys: any, context: any) => {
           const result = await users.find(
-            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }),
           );
           return getResultsByKey(keys, result, (user: any) => user.id, '!');
         },
-        { context }
+        { context },
       );
     },
 
@@ -313,11 +313,11 @@ async function ex8a() {
       context._loaders.user.id = new BatchLoader(
         async (keys: any, context: any) => {
           const result = await users.find(
-            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }),
           );
           return getResultsByKey(keys, result, (user: any) => user.id, '!');
         },
-        { context, cacheMap }
+        { context, cacheMap },
       );
     },
 

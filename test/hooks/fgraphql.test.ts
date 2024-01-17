@@ -1,7 +1,7 @@
 // @ts-ignore
 import runTime from '@feathers-plus/graphql/lib/run-time';
 import BatchLoader from '@feathers-plus/batch-loader';
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { parse } from 'graphql';
 import { fgraphql } from '../../src';
 
@@ -84,7 +84,7 @@ describe('services fgraphql', () => {
             })(context);
 
             if (!isObject(result)) {
-              assert(false, `Unexpected success. Expected ${result}.`);
+              assert.fail(`Unexpected success. Expected ${result}.`);
             } else {
               // inspector('result=', result);
               // inspector('actual=', newContext.data || newContext.result);
@@ -96,14 +96,14 @@ describe('services fgraphql', () => {
             }
 
             if (isObject(result)) {
-              assert(false, `unexpected fail: ${err.message}`);
+              assert.fail(`unexpected fail: ${err.message}`);
               return;
             }
 
             assert.strictEqual(err.code, result, `unexpected error: ${err.message}`);
           }
         });
-      }
+      },
     );
   });
 
@@ -274,7 +274,7 @@ describe('services fgraphql', () => {
         assert.deepEqual(
           usersBatchLoaderCalls,
           [['31', '32', '35', '36', '37']],
-          'unexpected calls'
+          'unexpected calls',
         );
       } catch (err) {
         console.log(err);

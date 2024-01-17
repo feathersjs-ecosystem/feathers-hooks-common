@@ -18,7 +18,7 @@ export function isProvider<H extends HookContext = HookContext>(...providers: Tr
       provider =>
         provider === hookProvider ||
         (provider === 'server' && !hookProvider) ||
-        (provider === 'external' && !!hookProvider)
+        (provider === 'external' && !!hookProvider),
     );
   };
 }

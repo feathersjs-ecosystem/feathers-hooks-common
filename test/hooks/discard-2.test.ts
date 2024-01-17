@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { discard } from '../../src';
 
 describe('common hook discard', () => {
@@ -117,7 +117,7 @@ describe('common hook discard', () => {
         discard(...args)(context);
         assert.deepEqual(
           context.data ? context.data : context.result.data || context.result,
-          result
+          result,
         );
       });
     });
@@ -181,7 +181,7 @@ describe('common hook discard', () => {
         discard(...args)(context);
         assert.deepEqual(
           context.data ? context.data : context.result.data || context.result,
-          result
+          result,
         );
       });
     });

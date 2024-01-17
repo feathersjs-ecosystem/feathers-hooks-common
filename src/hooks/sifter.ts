@@ -6,7 +6,7 @@ import { getItems } from '../utils/get-items';
 import { replaceItems } from '../utils/replace-items';
 
 export function sifter<H extends HookContext = HookContext>(
-  siftFunc: SyncContextFunction<(item: any) => boolean, H>
+  siftFunc: SyncContextFunction<(item: any) => boolean, H>,
 ) {
   return (context: H) => {
     checkContext(context, 'after', 'find', 'sifter');

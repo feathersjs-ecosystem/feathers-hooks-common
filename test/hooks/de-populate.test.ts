@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { dePopulate } from '../../src';
 
 describe('services dePopulate - not dot notation', () => {

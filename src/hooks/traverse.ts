@@ -10,7 +10,7 @@ import { getItems } from '../utils/get-items';
  */
 export function traverse<H extends HookContext = HookContext>(
   transformer: (transformContext: any) => any,
-  getObject?: SyncContextFunction<any, H>
+  getObject?: SyncContextFunction<any, H>,
 ) {
   return (context: H) => {
     const items =

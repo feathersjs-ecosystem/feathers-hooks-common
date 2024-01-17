@@ -122,7 +122,7 @@ export function populate<H extends HookContext = HookContext>(options: PopulateO
           throw new BadRequest('Schema does not resolve to an object. (populate)');
         }
 
-        const include = [].concat(schema1.include || []).map(schema => {
+        const include = [].concat((schema1.include || []) as any).map(schema => {
           if ('provider' in schema) {
             return schema;
           } else {
@@ -144,7 +144,7 @@ function populateItemArray(
   context: HookContext,
   items: any,
   includeSchema: any,
-  depth: number
+  depth: number,
 ): any {
   // 'items' is an item or an array of items
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
@@ -158,7 +158,7 @@ function populateItemArray(
   }
 
   return Promise.all(
-    items.map(item => populateItem(options, context, item, includeSchema, depth + 1))
+    items.map(item => populateItem(options, context, item, includeSchema, depth + 1)),
   );
 }
 
@@ -167,18 +167,18 @@ function populateItem(
   context: HookContext,
   item: any,
   includeSchema: any,
-  depth: number
+  depth: number,
 ): any {
   // 'item' is one item
   // 'includeSchema' is like [ { nameAs: 'author', ... }, { nameAs: 'readers', ... } ]
 
   const elapsed: any = {};
   const startAtAllIncludes = new Date().getTime();
-  const include = [].concat(includeSchema || []);
+  const include = [].concat(includeSchema || []) as any;
   if (!Object.prototype.hasOwnProperty.call(item, '_include')) item._include = [];
 
   return Promise.all(
-    include.map(childSchema => {
+    include.map((childSchema: any) => {
       const { query, select, parentField } = childSchema;
 
       // A related column join is required if neither the query nor select options are provided.
@@ -194,7 +194,7 @@ function populateItem(
 
         return result;
       });
-    })
+    }),
   ).then(children => {
     // 'children' is like
     //   [{ nameAs: 'authorInfo', items: {...} }, { nameAs: readersInfo, items: [{...}, {...}] }]
@@ -218,7 +218,7 @@ function populateAddChild(
   context: HookContext,
   parentItem: any,
   childSchema: any,
-  depth: any
+  depth: any,
 ): any {
   /*
   @params
@@ -281,7 +281,7 @@ function populateAddChild(
         {},
         query,
         sqlQuery,
-        selectQuery // dynamic options override static ones
+        selectQuery, // dynamic options override static ones
       );
 
       const serviceHandle = context.app.service(service);
@@ -305,7 +305,7 @@ function populateAddChild(
         paginateObj,
         { query: queryObj },
         useInnerPopulate ? {} : { _populate: 'skip' },
-        'provider' in childSchema ? { provider: childSchema.provider } : {}
+        'provider' in childSchema ? { provider: childSchema.provider } : {},
       );
 
       return serviceHandle.find(params);

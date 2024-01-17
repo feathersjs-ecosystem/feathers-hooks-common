@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { sequelizeConvert } from '../../src';
 
 const converts: any = {
@@ -313,7 +313,7 @@ describe('sequelize-convert.test.ts', function () {
 
     it('uses datetime converter', () => {
       const newContext: any = sequelizeConvert(converts, null, { date: convertDatetime })(
-        contextISO
+        contextISO,
       );
 
       assert.deepEqual(newContext.result, {

@@ -15,12 +15,12 @@ export function disallow<H extends HookContext = HookContext>(...transports: Tra
       provider =>
         provider === hookProvider ||
         (provider === 'server' && !hookProvider) ||
-        (provider === 'external' && !!hookProvider)
+        (provider === 'external' && !!hookProvider),
     );
 
     if (anyProvider || thisProvider) {
       throw new MethodNotAllowed(
-        `Provider '${context.params.provider}' can not call '${context.method}'. (disallow)`
+        `Provider '${context.params.provider}' can not call '${context.method}'. (disallow)`,
       );
     }
   };

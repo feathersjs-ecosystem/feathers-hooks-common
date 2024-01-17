@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { iff, populate } from '../../src';
@@ -154,7 +154,7 @@ function user(this: any) {
         default: 2,
         max: 2,
       },
-    })
+    }),
   );
 
   app.service('users').hooks({
@@ -176,7 +176,7 @@ function team(this: any) {
     new MemoryService({
       store: clone(teamInit),
       startId: teamId,
-    })
+    }),
   );
 
   app.service('teams').hooks({
@@ -255,7 +255,7 @@ describe('services populate - hook.params passed to includes', () => {
     return teams
       .find({ query: { id: 0 } })
       .then(() => {
-        assert.fail(true, false, 'unexpected succeeded');
+        assert.fail('unexpected succeeded');
       })
       .catch((err: any) => {
         assert.equal(err.className, 'bad-request');

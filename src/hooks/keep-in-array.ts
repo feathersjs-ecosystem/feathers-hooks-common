@@ -11,7 +11,7 @@ import type { HookContext } from '@feathersjs/feathers';
  */
 export function keepInArray<H extends HookContext = HookContext>(
   arrayName: string,
-  fieldNames: string[]
+  fieldNames: string[],
 ) {
   return (context: H) => {
     const items = getItems(context);
@@ -31,13 +31,13 @@ function replaceIn(item: any, field: any, fieldNames: any) {
   if (target) {
     if (!Array.isArray(target))
       throw new BadRequest(
-        `The 'field' param must lead to array. found type '${typeof target}' instead`
+        `The 'field' param must lead to array. found type '${typeof target}' instead`,
       );
 
     _set(
       item,
       field,
-      target.map(item => replaceItem(item, fieldNames))
+      target.map(item => replaceItem(item, fieldNames)),
     );
   }
 }

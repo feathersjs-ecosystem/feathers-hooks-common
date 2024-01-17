@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import { getItems, replaceItems } from '../../src';
 
 // Tests when context.params._actOn === 'dispatch' are in act-on.test.ts

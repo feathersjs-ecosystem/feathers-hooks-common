@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'vitest';
 import BatchLoader from '@feathers-plus/batch-loader';
 import { fastJoin, makeCallingParams } from '../../src';
 
@@ -485,7 +485,7 @@ async function ex3() {
 
   return fastJoin(
     (_context: any) => postResolvers,
-    (_context: any) => query
+    (_context: any) => query,
   )(context);
 }
 
@@ -644,11 +644,11 @@ async function ex8() {
       context._loaders.user.id = new BatchLoader(
         async (keys: any, context: any) => {
           const result = await users.find(
-            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }),
           );
           return getResultsByKey(keys, result, (user: any) => user.id, '!');
         },
-        { context }
+        { context },
       );
     },
 
@@ -690,22 +690,22 @@ async function ex9() {
       context._loaders.user.id = new BatchLoader(
         async (keys: any, context: any) => {
           const result = await users.find(
-            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } })
+            makeCallingParams(context, { id: { $in: getUniqueKeys(keys) } }),
           );
           return getResultsByKey(keys, result, (user: any) => user.id, '!');
         },
-        { context }
+        { context },
       );
 
       context._loaders.comments.postId = new BatchLoader(
         async (keys: any, context: any) => {
           const result = await comments.find(
-            makeCallingParams(context, { postId: { $in: getUniqueKeys(keys) } })
+            makeCallingParams(context, { postId: { $in: getUniqueKeys(keys) } }),
           );
           // @ts-ignore
           return getResultsByKey(keys, result, (comment: any) => comment.postId, '[!]');
         },
-        { context }
+        { context },
       );
     },
 
@@ -724,7 +724,7 @@ async function ex9() {
         async (post: any, context: any): Promise<any> => {
           if (!post.reputation) return null;
           const authors = await context._loaders.user.id.loadMany(
-            post.reputation.map((rep: any) => rep.userId)
+            post.reputation.map((rep: any) => rep.userId),
           );
           post.reputation.forEach((rep: any, i: any) => {
             rep.author = authors[i].name;
