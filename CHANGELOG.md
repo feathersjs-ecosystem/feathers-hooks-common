@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.2...HEAD)
+
+**Merged pull requests:**
+
+- chore: update dependencies & migrate to vitest from mocha/chai [\#739](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/739) ([fratzinger](https://github.com/fratzinger))
+
+## [v8.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.2) (2024-01-17)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.1...v8.1.2)
+
 ## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.1) (2023-08-23)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.0...v8.1.1)
@@ -373,7 +385,6 @@
 **Closed issues:**
 
 - query regarding set response to hook :after create [\#507](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/507)
-- Many-to-many fastJoin [\#504](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/504)
 
 **Merged pull requests:**
 
