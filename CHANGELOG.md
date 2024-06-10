@@ -2,15 +2,27 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.2...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.3...HEAD)
 
 **Merged pull requests:**
 
-- chore: update dependencies & migrate to vitest from mocha/chai [\#739](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/739) ([fratzinger](https://github.com/fratzinger))
+- fix: handle actOn dispatch correctly in replace items [\#751](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/751) ([jd1378](https://github.com/jd1378))
+
+## [v8.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.3) (2024-06-10)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.2...v8.1.3)
+
+**Closed issues:**
+
+- update replaceItems util to support pagination on dispatch [\#750](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/750)
 
 ## [v8.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.2) (2024-01-17)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.1...v8.1.2)
+
+**Merged pull requests:**
+
+- chore: update dependencies & migrate to vitest from mocha/chai [\#739](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/739) ([fratzinger](https://github.com/fratzinger))
 
 ## [v8.1.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.1) (2023-08-23)
 
@@ -336,10 +348,6 @@
 - \[REGRESSION\]: 4.8.0-4.20.7 args is not iterable error on initiation [\#520](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/520)
 - populate include array [\#519](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/519)
 - fastJoin not reactive [\#517](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/517)
-- `keep` fails when object key contains dot [\#514](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/514)
-- TypeScript definitions for iff [\#512](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/512)
-- SoftDelete2 use null or -1 [\#508](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/508)
-- Many-to-many fastJoin [\#505](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/505)
 
 **Merged pull requests:**
 
@@ -361,10 +369,6 @@
 - Update dependencies to enable Greenkeeper 🌴 [\#534](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/534) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
 - Update README.md [\#525](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/525) ([bartduisters](https://github.com/bartduisters))
 - Upgrade ajv dependency and fix failing tests. [\#518](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/518) ([rybaczewa](https://github.com/rybaczewa))
-- Annoying typo fixed [\#516](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/516) ([midzdotdev](https://github.com/midzdotdev))
-- Ensure `existsByDot` and `getByDot` honour properties with dots in keys [\#515](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/515) ([anthonygood](https://github.com/anthonygood))
-- Updated typings. [\#513](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/513) ([deskoh](https://github.com/deskoh))
-- Fix promise-to-callback hook preventing other hook import. [\#506](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/506) ([rybaczewa](https://github.com/rybaczewa))
 
 ## [v4.20.7](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.7) (2019-02-22)
 
@@ -381,14 +385,6 @@
 ## [v4.20.4](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.4) (2019-02-22)
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v4.20.2...v4.20.4)
-
-**Closed issues:**
-
-- query regarding set response to hook :after create [\#507](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/507)
-
-**Merged pull requests:**
-
-- Update iff predicates typings to be either sync or async [\#509](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/509) ([NickBolles](https://github.com/NickBolles))
 
 ## [v4.20.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.2) (2019-01-11)
 
