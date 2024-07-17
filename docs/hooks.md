@@ -1960,7 +1960,7 @@ Transform fields & objects in place in the record(s) using a recursive walk. Pow
 
   Traverse and transform objects in place by visiting every node on a recursive walk. Any object in the hook may be traversed, including the query object.
 
-  > [substack/js-traverse](https://github.com/substack/js-traverse) documents the extensive methods and context available to the transformer function.
+  > [traverse (NPM)](https://npmjs.com/package/traverse) documents the extensive methods and context available to the transformer function.
 
 ## unless
 
