@@ -1,5 +1,4 @@
 import { assert } from 'vitest';
-import clone from 'clone';
 import { runParallel } from '../../src';
 
 let contextBefore: any;
@@ -56,7 +55,7 @@ describe('services runParallel', () => {
 
   it('clones', () =>
     new Promise<void>(resolve => {
-      runParallel(test(tester), clone)(contextBefore);
+      runParallel(test(tester), structuredClone)(contextBefore);
       contextBefore._foo = true;
 
       function tester(contextCloned: any) {
