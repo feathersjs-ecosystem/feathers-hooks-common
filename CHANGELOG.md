@@ -2,11 +2,17 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.3...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.2.0...HEAD)
 
 **Merged pull requests:**
 
-- fix: handle actOn dispatch correctly in replace items [\#751](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/751) ([jd1378](https://github.com/jd1378))
+- Fix/neotraverse [\#753](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/753) ([fratzinger](https://github.com/fratzinger))
+- chore: update tests for replaceItems with actOnDispatch [\#752](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/752) ([jd1378](https://github.com/jd1378))
+- docs\(traverse\): replace dead link [\#741](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/741) ([JulienZD](https://github.com/JulienZD))
+
+## [v8.2.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.2.0) (2024-07-17)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.3...v8.2.0)
 
 ## [v8.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.3) (2024-06-10)
 
@@ -15,6 +21,10 @@
 **Closed issues:**
 
 - update replaceItems util to support pagination on dispatch [\#750](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/750)
+
+**Merged pull requests:**
+
+- fix: handle actOn dispatch correctly in replace items [\#751](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/751) ([jd1378](https://github.com/jd1378))
 
 ## [v8.1.2](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.2) (2024-01-17)
 
@@ -316,10 +326,6 @@
 
 [Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v5.0.0...v5.0.1)
 
-**Closed issues:**
-
-- TypeScript definition for fastJoin don't reflect examples for recursive resolvers [\#521](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/521)
-
 **Merged pull requests:**
 
 - Tweaks for v5 release [\#560](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/560) ([daffl](https://github.com/daffl))
@@ -342,12 +348,6 @@
 - version upgrade for feathers v4 [\#531](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/531)
 - SoftDelete2 - before hook for 'get' method returned invalid hook object [\#528](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/528)
 - Doesn't work with @feathersjs/feathers@^4.3.0-pre.3 [\#526](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/526)
-- SoftDelete2 throws with feathers-sequelize 5 and above [\#524](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/524)
-- Race Condition in defaultPatchCall of SoftDelete2 [\#523](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/523)
-- SoftDelete2 Skip Symbol mismatch in browser [\#522](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/522)
-- \[REGRESSION\]: 4.8.0-4.20.7 args is not iterable error on initiation [\#520](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/520)
-- populate include array [\#519](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/519)
-- fastJoin not reactive [\#517](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/517)
 
 **Merged pull requests:**
 
@@ -367,8 +367,6 @@
 - Update badges [\#537](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/537) ([daffl](https://github.com/daffl))
 - Upgrade to Feathers v4 [\#536](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/536) ([daffl](https://github.com/daffl))
 - Update dependencies to enable Greenkeeper 🌴 [\#534](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/534) ([greenkeeper[bot]](https://github.com/apps/greenkeeper))
-- Update README.md [\#525](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/525) ([bartduisters](https://github.com/bartduisters))
-- Upgrade ajv dependency and fix failing tests. [\#518](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/518) ([rybaczewa](https://github.com/rybaczewa))
 
 ## [v4.20.7](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v4.20.7) (2019-02-22)
 
