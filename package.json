@@ -67,7 +67,7 @@
     "debug": "^4.3.4",
     "graphql": "^16.8.1",
     "lodash": "^4.17.21",
-    "traverse": "^0.6.8"
+    "neotraverse": "^0.6.11"
   },
   "devDependencies": {
     "@feathers-plus/batch-loader": "^0.3.6",
@@ -84,7 +84,6 @@
     "@types/debug": "^4.1.12",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.4",
-    "@types/traverse": "^0.6.36",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "@vitest/coverage-v8": "^1.2.0",

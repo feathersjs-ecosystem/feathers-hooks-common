@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import traverse from 'traverse';
+import traverse from 'neotraverse';
 import { checkContext } from '../utils/check-context';
 
 /**
