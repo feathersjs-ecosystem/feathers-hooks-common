@@ -2,17 +2,25 @@
 
 ## [Unreleased](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/HEAD)
 
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.2.0...HEAD)
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.2.1...HEAD)
+
+**Merged pull requests:**
+
+- feat: neotraverse/legacy; v0.6.14 [\#756](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/756) ([fratzinger](https://github.com/fratzinger))
+
+## [v8.2.1](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.2.1) (2024-07-21)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.2.0...v8.2.1)
+
+## [v8.2.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.2.0) (2024-07-17)
+
+[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.3...v8.2.0)
 
 **Merged pull requests:**
 
 - Fix/neotraverse [\#753](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/753) ([fratzinger](https://github.com/fratzinger))
 - chore: update tests for replaceItems with actOnDispatch [\#752](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/752) ([jd1378](https://github.com/jd1378))
 - docs\(traverse\): replace dead link [\#741](https://github.com/feathersjs-ecosystem/feathers-hooks-common/pull/741) ([JulienZD](https://github.com/JulienZD))
-
-## [v8.2.0](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.2.0) (2024-07-17)
-
-[Full Changelog](https://github.com/feathersjs-ecosystem/feathers-hooks-common/compare/v8.1.3...v8.2.0)
 
 ## [v8.1.3](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/v8.1.3) (2024-06-10)
 
@@ -53,7 +61,6 @@
 **Closed issues:**
 
 - \[FR\] patch2Update hook [\#530](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/530)
-- \[FR\] simplifyAllObjects [\#527](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/527)
 
 **Merged pull requests:**
 
@@ -346,8 +353,6 @@
 - An in-range update of @feathersjs/errors is breaking the build 🚨 [\#547](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/547)
 - feathers 4 with softDelete2 and feathers-mongoose fails with 404 not found [\#532](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/532)
 - version upgrade for feathers v4 [\#531](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/531)
-- SoftDelete2 - before hook for 'get' method returned invalid hook object [\#528](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/528)
-- Doesn't work with @feathersjs/feathers@^4.3.0-pre.3 [\#526](https://github.com/feathersjs-ecosystem/feathers-hooks-common/issues/526)
 
 **Merged pull requests:**
 
