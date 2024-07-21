@@ -1,4 +1,4 @@
-import traverser from 'neotraverse';
+import traverser from 'neotraverse/legacy';
 
 export function traverse<T extends Record<string, any>>(
   items: T | T[],

@@ -67,7 +67,7 @@
     "debug": "^4.3.5",
     "graphql": "^16.9.0",
     "lodash": "^4.17.21",
-    "neotraverse": "^0.6.11"
+    "neotraverse": "^0.6.14"
   },
   "devDependencies": {
     "@feathers-plus/batch-loader": "^0.3.6",
