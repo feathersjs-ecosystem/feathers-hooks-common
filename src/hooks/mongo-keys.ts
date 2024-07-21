@@ -26,7 +26,7 @@ export function mongoKeys<H extends HookContext = HookContext>(
     checkContext(context, 'before', null, 'mongoKeys');
     const query = context.params.query || {};
 
-    traverse(query).forEach(function (this: any, node: any) {
+    traverse(query).forEach(function (node: any) {
       const typeofNode = typeof node;
       const key = this.key;
       const path = this.path;
