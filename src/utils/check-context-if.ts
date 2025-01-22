@@ -1,6 +1,6 @@
 import type { HookContext } from '@feathersjs/feathers';
 import type { MethodName, HookType } from '../types';
-import { checkContext } from './check-context';
+import { checkContext } from './check-context/check-context';
 
 // TODO: Add checkContextIf to docs
 /**

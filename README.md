@@ -1,5 +1,23 @@
 ## feathers-hooks-common
 
+### WIP Changes:
+
+- added alterData, alterResult, deprecated alterItems
+- added discardData, discardResult, deprecated discard
+  - moved to omitData, omitResult, deprecated omit
+- added keepData, keepResult, deprecated keep
+  - moved to pickData, pickResult, deprecated pick
+- added lowercaseData, lowercaseResult, deprecated lowercase
+- added setNowData, setNowResult, deprecated setNow
+
+- added getDataIsArray, getResultIsArray, deprecated getItems
+- added replaceData, replaceResult, deprecated replaceItems
+
+- removed several checks that are handled by typescript
+- removed check for `preventChanges(true, ...fieldNames)`
+
+- renamed 'keepQuery' to 'pickQuery', added alias
+
 <p align="center">
   <img src="https://hooks-common.feathersjs.com/feathers-hooks-common-logo.png" width="200">
 </p>
