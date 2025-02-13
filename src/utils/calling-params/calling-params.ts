@@ -89,7 +89,7 @@ export function callingParams<H extends HookContext = HookContext>({
       switch (name) {
         case 'populate': // fall through
         case 'fastJoin':
-          // @ts-ignore
+          // @ts-expect-error TODO
           newParams._populate = 'skip';
           break;
         case 'softDelete':
@@ -97,15 +97,15 @@ export function callingParams<H extends HookContext = HookContext>({
           newParams.query.$disableSoftDelete = true;
           break;
         case 'softDelete2':
-          // @ts-ignore
+          // @ts-expect-error TODO
           newParams.$disableSoftDelete2 = true;
           break;
         case 'ignoreDeletedAt':
-          // @ts-ignore
+          // @ts-expect-error TODO
           newParams.$ignoreDeletedAt = true;
           break;
         case 'stashBefore':
-          // @ts-ignore
+          // @ts-expect-error TODO
           newParams.disableStashBefore = true;
           break;
       }

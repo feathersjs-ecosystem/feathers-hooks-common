@@ -33,11 +33,11 @@ const usersStore = [
   { id: 104, name: 'Aubree' },
 ];
 
-export const posts: any = makeService(postsStore, 'posts');
-export const comments: any = makeService(commentsStore, 'comments');
-export const users: any = makeService(usersStore, 'users');
+export const posts: any = makeService(postsStore);
+export const comments: any = makeService(commentsStore);
+export const users: any = makeService(usersStore);
 
-function makeService(store1: any, _name: any) {
+function makeService(store1: any) {
   return {
     get(id: any) {
       // console.log(`... ${name} get ${id}`);

@@ -13,7 +13,6 @@ export function paramsFromClient<H extends HookContext = HookContext>(...whiteli
 
       whitelist.forEach(key => {
         if (key in client) {
-          // @ts-ignore
           params[key] = client[key];
         }
       });

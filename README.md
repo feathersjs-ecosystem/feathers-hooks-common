@@ -20,7 +20,6 @@
 
 - added utils from feathers-utils
 
-  - allowsMulti
   - getPaginate
   - isMulti
   - isPaginated

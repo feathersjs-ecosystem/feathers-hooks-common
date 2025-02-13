@@ -25,7 +25,6 @@ export function iff<H extends HookContext = HookContext>(
   iffWithoutElse.else =
     (...falseHooks: any[]) =>
     (context: H) =>
-      // @ts-ignore
       iffElse(predicate, hooks.slice(), falseHooks.slice())(context);
 
   return iffWithoutElse as IffHook<H>;

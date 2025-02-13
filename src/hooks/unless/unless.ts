@@ -11,6 +11,5 @@ export function unless<H extends HookContext = HookContext>(
   predicate: boolean | PredicateFn,
   ...hooks: HookFunction<H>[]
 ) {
-  // @ts-ignore
   return iffElse(predicate, undefined, hooks.slice());
 }

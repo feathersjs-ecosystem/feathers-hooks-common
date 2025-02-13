@@ -59,7 +59,6 @@ export function validate<H extends HookContext = HookContext>(validator: Validat
 
     // Sync function returns errors. It cannot sanitize.
     if (results && Object.keys(results).length) {
-      // @ts-ignore
       throw new BadRequest({ errors: results });
     }
 

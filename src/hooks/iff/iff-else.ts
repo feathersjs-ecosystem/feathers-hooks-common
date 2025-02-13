@@ -26,6 +26,7 @@ export function iffElse<H extends HookContext = HookContext>(
         ? [falseHook]
         : undefined;
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate;
 

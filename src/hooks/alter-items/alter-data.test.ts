@@ -66,31 +66,29 @@ describe('alterData', () => {
     assert.deepEqual(result, hookBefore);
   });
 
-  it('updates hook before::create with new item returned', () => {
-    // @ts-ignore
-    return alterData((rec: any) => Promise.resolve(Object.assign({}, rec, { state: 'UT' })))(
+  it('updates hook before::create with new item returned', async () => {
+    await alterData((rec: any) => Promise.resolve(Object.assign({}, rec, { state: 'UT' })))(
       hookBefore,
-    ).then(() => {
-      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    });
+    );
+
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
   });
 
-  it('updates hook before::create async', () => {
+  it('updates hook before::create async', async () => {
     const alterFunc = (rec: any) => {
       rec.state = 'UT';
       return Promise.resolve();
     };
-    // @ts-ignore
-    return alterData(alterFunc)(hookBefore).then(() => {
-      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    });
+    await alterData(alterFunc)(hookBefore);
+
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
   });
 
-  it('updates hook before::create async with new item returned', () => {
+  it('updates hook before::create async with new item returned', async () => {
     const alterFunc = (rec: any) => Promise.resolve(Object.assign({}, rec, { state: 'UT' }));
-    // @ts-ignore
-    return alterData(alterFunc)(hookBefore).then(() => {
-      assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
-    });
+
+    await alterData(alterFunc)(hookBefore);
+
+    assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe', state: 'UT' });
   });
 });

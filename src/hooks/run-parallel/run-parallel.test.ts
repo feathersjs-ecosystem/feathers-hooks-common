@@ -6,6 +6,7 @@ let that: any;
 
 function test(tester: any) {
   return function (this: any, contextCloned: any) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     that = this;
     tester(contextCloned);
   };

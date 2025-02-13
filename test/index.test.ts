@@ -103,7 +103,6 @@ const members = [
   'getPaginate',
   'isMulti',
   'isPaginated',
-  'allowsMulti',
   'skipResult',
 ].sort();
 

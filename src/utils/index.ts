@@ -19,7 +19,6 @@ export * from './replace-items/replace-result';
 export * from './some/some';
 export * from './run-hook/run-hook';
 
-export * from './allows-multi/allows-multi';
 export * from './get-paginate/get-paginate';
 export * from './is-multi/is-multi';
 export * from './is-paginated/is-paginated';

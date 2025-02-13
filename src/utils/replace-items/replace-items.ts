@@ -7,7 +7,6 @@ import type { HookContext } from '@feathersjs/feathers';
  * @deprecated Use `replaceData` or `replaceResult` instead.
  */
 export function replaceItems<H extends HookContext = HookContext>(context: H, items: any): void {
-  // @ts-ignore
   if (context.params && context.params._actOn === 'dispatch') {
     if (context.method === 'find' && context.dispatch?.data) {
       context.dispatch.data = Array.isArray(items) ? items : [items];

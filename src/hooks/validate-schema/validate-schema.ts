@@ -10,7 +10,7 @@ import { getItems } from '../../utils';
 export function validateSchema<H extends HookContext = HookContext>(
   schema: object | string,
   ajvOrAjv: AjvOrNewable,
-  // @ts-ignore
+  // @ts-expect-error TODO
   options: ValidateSchemaOptions = { allErrors: true },
 ) {
   const addNewError = options?.addNewError || addNewErrorDflt;
@@ -18,10 +18,10 @@ export function validateSchema<H extends HookContext = HookContext>(
   // TODO: Any better way to tell if ajvOrAjv is an instance or a constructor?
   let ajv: any;
   let Ajv;
-  // @ts-ignore
+  // @ts-expect-error TODO
   if (typeof ajvOrAjv.addKeyword !== 'function') {
     Ajv = ajvOrAjv;
-    // @ts-ignore
+    // @ts-expect-error TODO
     ajv = new Ajv(options);
   } else {
     ajv = ajvOrAjv;

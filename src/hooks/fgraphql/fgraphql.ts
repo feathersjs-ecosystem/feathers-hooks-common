@@ -55,6 +55,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     ...(options1.options || {}),
   };
 
+  // @ts-expect-error TODO
   schema = isFunction(schema) ? schema() : schema;
 
   if (!isObject(schema) && !isString(schema)) {
@@ -90,6 +91,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     if (context.params.$populate) return context; // populate or fastJoin are running
     if (skipHookWhen) return context;
 
+    // @ts-expect-error TODO
     const q = isFunction(query) ? query(context) : query;
 
     if (!isObject(q)) {
@@ -97,6 +99,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     }
 
     if (!ourResolvers) {
+      // @ts-expect-error TODO
       ourResolvers = resolvers(context.app, runTime);
     }
 
@@ -160,13 +163,11 @@ function processRecords(store: any, query: any, recs: any, type: any, depth = 0)
     throwError(`query at Type ${type} are typeof ${typeof query} not object. (fgraphql)`, 202);
   }
 
-  return Promise.all(
-    recs.map((rec: any, j: any) => processRecord(store, query, depth, rec, type, j)),
-  );
+  return Promise.all(recs.map((rec: any) => processRecord(store, query, depth, rec, type)));
 }
 
 // Process the a record.
-function processRecord(store: any, query: any, depth: any, rec: any, type: any, j: any): any {
+function processRecord(store: any, query: any, depth: any, rec: any, type: any): any {
   if (!rec) return; // Catch any null values from resolvers.
 
   const queryPropNames = Object.keys(query);
@@ -175,7 +176,7 @@ function processRecord(store: any, query: any, depth: any, rec: any, type: any, 
 
   // Process every query item.
   return Promise.all(
-    queryPropNames.map((fieldName, i) =>
+    queryPropNames.map(fieldName =>
       processRecordQuery(
         store,
         query,
@@ -185,8 +186,6 @@ function processRecord(store: any, query: any, depth: any, rec: any, type: any, 
         type,
         recFieldNamesInQuery,
         joinedNamesInQuery,
-        j,
-        i,
       ),
     ),
   ).then(() => {
@@ -221,8 +220,6 @@ function processRecordQuery(
   type: any,
   recFieldNamesInQuery: any,
   joinedNamesInQuery: any,
-  j: any,
-  i: any,
 ): any {
   // One way to include/exclude rec fields is to give their names a falsey value.
   // _args and _none are not record field names but special purpose
@@ -391,6 +388,7 @@ function convertFieldDefinitionType(fieldDefinitionType: any, errDesc: any, conv
 
 function throwError(msg: any, code: any) {
   const err = new Error(msg);
+  // @ts-expect-error code does not exist on Error
   err.code = code;
   throw err;
 }

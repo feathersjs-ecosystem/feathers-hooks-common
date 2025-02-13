@@ -34,16 +34,16 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
     };
 
     // Go through all hooks and chain them into our promise
-    // @ts-ignore
+
+    // @ts-expect-error TODO
     const promise = serviceHooks.reduce(async (current, fn) => {
-      // @ts-ignore
+      // @ts-expect-error TODO
       const hook = fn.bind(this);
 
       // Use the returned hook object or the old one
 
       const currentHook = await current;
       const currentCtx = await hook(currentHook);
-      // @ts-ignore
       return updateCurrentHook(currentCtx);
     }, Promise.resolve(ctx));
 

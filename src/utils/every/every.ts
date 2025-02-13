@@ -9,7 +9,7 @@ export function every<H extends HookContext = HookContext>(
   ...predicates: PredicateFn<H>[]
 ): AsyncPredicateFn<H> {
   return async function (this: any, ...fnArgs: any[]) {
-    // @ts-ignore
+    // @ts-expect-error TODO
     const promises = predicates.map(fn => fn.apply(this, fnArgs));
 
     const results = await Promise.all(promises);

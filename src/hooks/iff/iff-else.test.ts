@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import type { HookContext } from '@feathersjs/feathers';
 import { assert } from 'vitest';
 import { iffElse, some, every } from '../..';

@@ -54,7 +54,7 @@ describe('services alterItems', () => {
   });
 
   it('default func is a no-op', () => {
-    // @ts-ignore
+    // @ts-expect-error test case
     alterItems()(hookBefore);
     assert.deepEqual(hookBefore.data, { first: 'John', last: 'Doe' });
   });
@@ -69,10 +69,9 @@ describe('services alterItems', () => {
 
   it('throws if 1st param is not a func', () => {
     try {
-      // @ts-ignore
+      // @ts-expect-error test case
       alterItems('no-func');
-    } catch (error) {
-      // @ts-ignore
+    } catch (error: any) {
       assert.equal(error.message, 'Function required. (alter)');
       return;
     }

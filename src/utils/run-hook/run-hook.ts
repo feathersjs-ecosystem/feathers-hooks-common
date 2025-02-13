@@ -12,30 +12,27 @@ export function runHook<H extends HookContext = HookContext>(
   return hookFunc => result => {
     const ctx = Object.assign({}, { type: 'after', params: {}, result }, extraContent);
 
-    // @ts-ignore
+    // @ts-expect-error TODO
     if (typeof result === 'object' && result !== null && result.total && result.data) {
       // @ts-expect-error method is readonly
       ctx.method = 'find';
     }
 
-    return (
-      Promise.resolve()
-        // @ts-ignore
-        .then(() => hookFunc(ctx))
-        .then(newContext => {
-          if (!newContext) {
-            return;
-          }
+    return Promise.resolve()
+      .then(() => hookFunc(ctx))
+      .then(newContext => {
+        if (!newContext) {
+          return;
+        }
 
-          const result = newContext.result;
+        const result = newContext.result;
 
-          if (typeof result === 'object' && result !== null && result.total && result.data) {
-            // find
-            return newContext.result;
-          }
+        if (typeof result === 'object' && result !== null && result.total && result.data) {
+          // find
+          return newContext.result;
+        }
 
-          return newContext.result.data || newContext.result;
-        })
-    );
+        return newContext.result.data || newContext.result;
+      });
   };
 }
