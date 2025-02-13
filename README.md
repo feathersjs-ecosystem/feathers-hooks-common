@@ -18,6 +18,16 @@
 
 - renamed 'keepQuery' to 'pickQuery', added alias
 
+- added utils from feathers-utils
+
+  - allowsMulti
+  - getPaginate
+  - isMulti
+  - isPaginated
+  - setResultEmpty
+
+- stashBefore multi
+
 <p align="center">
   <img src="https://hooks-common.feathersjs.com/feathers-hooks-common-logo.png" width="200">
 </p>

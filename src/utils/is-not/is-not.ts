@@ -16,7 +16,7 @@ export function isNot<H extends HookContext = HookContext>(
   }
 
   return (context: H) => {
-    const result = predicate(context); // Should we pass a clone? (safety vs performance)
+    const result = predicate(context);
 
     if (!isPromise(result)) {
       return !result;

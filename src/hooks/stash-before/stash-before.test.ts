@@ -1,5 +1,5 @@
 import { assert, expect } from 'vitest';
-import { feathers } from '@feathersjs/feathers';
+import { Application, feathers } from '@feathersjs/feathers';
 import { MemoryService } from '@feathersjs/memory';
 import { stashBefore } from './stash-before';
 import { clone } from '../../common';
@@ -18,11 +18,11 @@ let store;
 let finalParams: any;
 let innerCallParams: any;
 
-function services(app: any) {
+function services(app: Application) {
   app.configure(users);
 }
 
-function users(app: any) {
+function users(app: Application) {
   store = clone(storeInit);
 
   app.use(
@@ -51,8 +51,8 @@ function users(app: any) {
   });
 }
 
-describe('services stash-before', () => {
-  let app;
+describe('stash-before', () => {
+  let app: Application<{ users: MemoryService }>;
   let users: any;
 
   beforeEach(() => {
@@ -63,47 +63,57 @@ describe('services stash-before', () => {
     users = app.service('users');
   });
 
-  ['get', 'update', 'patch', 'remove'].forEach(method => {
-    it(`stashes on ${method}`, () => {
-      return users[method](0, {}).then(() => {
-        assert.deepEqual(finalParams.before, storeInit[0]);
-      });
-    });
+  it(`stashes on 'update'`, async () => {
+    await users.update(0, {});
+
+    assert.deepEqual(finalParams.before, storeInit[0]);
   });
 
-  it('Do not stash when query is used in remove', () => {
-    return users.remove(null, { query: {} }).then(() => {
-      assert.notProperty(finalParams, 'before');
-    });
+  it(`stashes on 'patch'`, async () => {
+    await users.patch(0, {});
+
+    assert.deepEqual(finalParams.before, storeInit[0]);
   });
 
-  ['create', 'find'].forEach(method => {
-    it(`throws on ${method}`, async () => {
-      await expect(users[method]({})).rejects.toThrow();
-    });
+  it(`stashes on 'remove'`, async () => {
+    await users.remove(0);
+
+    assert.deepEqual(finalParams.before, storeInit[0]);
   });
 
-  it('stashes on get with original params', () => {
-    return users.get(0, { provider: 'socketio', eyecatcher: -1 }).then(() => {
-      assert.equal(finalParams.provider, 'socketio');
-      assert.equal(finalParams.eyecatcher, -1);
-
-      assert.equal(innerCallParams.provider, 'socketio');
-      assert.equal(innerCallParams.eyecatcher, -1);
-      assert.notProperty(innerCallParams, 'authenticated');
-      assert.notProperty(innerCallParams, 'user');
-    });
+  it("throws on 'create'", async () => {
+    await expect(users.create({})).rejects.toThrow();
   });
 
-  it('stashes on patch with custom params', () => {
-    return users.patch(0, {}, { provider: 'socketio', eyecatcher: -1 }).then(() => {
-      assert.equal(finalParams.provider, 'socketio');
-      assert.equal(finalParams.eyecatcher, -1);
+  it("throws on 'find'", async () => {
+    await expect(users.find({})).rejects.toThrow();
+  });
 
-      assert.equal(innerCallParams.provider, 'socketio');
-      assert.notProperty(innerCallParams, 'eyecatcher');
-      assert.property(innerCallParams, 'authenticated');
-      assert.property(innerCallParams, 'user');
-    });
+  it("throws on 'get'", async () => {
+    await expect(users.get(0)).rejects.toThrow();
+  });
+
+  it('stashes on patch with custom params', async () => {
+    await users.patch(0, {}, { provider: 'socketio', eyecatcher: -1 });
+
+    assert.equal(finalParams.provider, 'socketio');
+    assert.equal(finalParams.eyecatcher, -1);
+
+    assert.equal(innerCallParams.provider, 'socketio');
+    assert.property(innerCallParams, 'eyecatcher');
+  });
+
+  it('stashes multi patch', async () => {
+    const items = [storeInit[0], storeInit[1], storeInit[2]];
+    await users.patch(null, { key: 'c' }, { query: { id: { $in: items.map(x => x.id) } } });
+
+    assert.deepEqual(finalParams.before, items);
+  });
+
+  it('stashes multi remove', async () => {
+    const items = [storeInit[0], storeInit[1], storeInit[2]];
+    await users.remove(null, { query: { id: { $in: items.map(x => x.id) } } });
+
+    assert.deepEqual(finalParams.before, items);
   });
 });

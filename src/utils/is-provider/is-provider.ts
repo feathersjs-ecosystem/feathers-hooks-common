@@ -11,7 +11,7 @@ export function isProvider<H extends HookContext = HookContext>(...providers: Tr
     throw new MethodNotAllowed('Calling isProvider predicate incorrectly.');
   }
 
-  return (context: H) => {
+  return (context: H): boolean => {
     const hookProvider = context.params.provider;
 
     return providers.some(

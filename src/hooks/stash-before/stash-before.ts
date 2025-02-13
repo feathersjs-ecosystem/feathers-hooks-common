@@ -1,4 +1,3 @@
-import { BadRequest } from '@feathersjs/errors';
 import type { HookContext } from '@feathersjs/feathers';
 import { checkContext } from '../../utils';
 
@@ -10,41 +9,27 @@ export function stashBefore<H extends HookContext = HookContext>(fieldName?: str
   const beforeField = fieldName || 'before';
 
   return (context: H) => {
-    checkContext(context, 'before', ['get', 'update', 'patch', 'remove'], 'stashBefore');
-
-    // @ts-ignore
     if (context.params.disableStashBefore) {
       return context;
     }
 
-    if ((context.id === null || context.id === undefined) && !context.params.query) {
-      throw new BadRequest('Id is required. (stashBefore)');
-    }
+    checkContext(context, ['before', 'around'], ['update', 'patch', 'remove'], 'stashBefore');
 
-    const params =
-      context.method === 'get'
-        ? context.params
-        : {
-            provider: context.params.provider,
-            // @ts-ignore
-            authenticated: context.params.authenticated,
-            // @ts-ignore
-            user: context.params.user,
-          };
+    const isMulti = context.id == null;
 
-    return context.service
-      .get(context.id, {
-        ...params,
-        // @ts-ignore
-        query: params.query || {},
-        // @ts-ignore
-        disableStashBefore: true,
-      })
-      .then((data: any) => {
-        // @ts-ignore
-        context.params[beforeField] = JSON.parse(JSON.stringify(data));
+    const params = {
+      ...context.params,
+      disableStashBefore: true,
+      ...(isMulti ? { paginate: false } : {}),
+    };
+
+    return (!isMulti ? context.service.get(context.id, params) : context.service.find(params))
+      .then((result: any) => {
+        context.params[beforeField] = result;
         return context;
       })
-      .catch(() => context);
+      .catch(() => {
+        return context;
+      });
   };
 }

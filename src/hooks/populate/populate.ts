@@ -86,7 +86,6 @@ export function populate<H extends HookContext = HookContext>(options: PopulateO
       profile: false,
     };
 
-    // @ts-ignore
     if (context.params._populate === 'skip') {
       // this service call made from another populate
       return context;

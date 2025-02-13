@@ -1,5 +1,4 @@
 import type { Application, HookContext, Query } from '@feathersjs/feathers';
-import makeDebug from 'debug';
 import type { parse, GraphQLFieldResolver } from 'graphql';
 import type { SyncContextFunction } from '../../types';
 import { getItems, replaceItems } from '../../utils';
@@ -34,7 +33,6 @@ export interface FGraphQLHookOptions<H extends HookContext = HookContext> {
   parse: typeof parse;
 }
 
-const debug = makeDebug('fgraphql');
 const graphqlActions = ['Query', 'Mutation', 'Subscription'];
 
 /**
@@ -42,7 +40,6 @@ const graphqlActions = ['Query', 'Mutation', 'Subscription'];
  * @see https://medium.com/@eddyystop/38faee75dd1
  */
 export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQLHookOptions<H>) {
-  debug('init call');
   const { parse, recordType, resolvers, runTime, query } = options1;
   let { schema } = options1;
 
@@ -58,7 +55,6 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     ...(options1.options || {}),
   };
 
-  // @ts-ignore
   schema = isFunction(schema) ? schema() : schema;
 
   if (!isObject(schema) && !isString(schema)) {
@@ -76,9 +72,7 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     throwError(`recordType is typeof ${typeof recordType} rather than string. (fgraphql)`, 103);
   }
 
-  // @ts-ignore
   if (!isArray(options.extraAuthProps)) {
-    // @ts-ignore
     throwError(
       `option extraAuthProps is typeof ${typeof options.extraAuthProps} rather than array. (fgraphql)`,
       105,
@@ -86,22 +80,16 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
   }
 
   const feathersSdl = isObject(schema) ? schema : convertSdlToFeathersSchemaObject(schema, parse);
-  debug('schema now in internal form');
 
   // Return the hook.
   return (context: H) => {
     const contextParams = context.params;
-    // @ts-ignore
     const optSkipHookWhen = options.skipHookWhen;
     const skipHookWhen = isFunction(optSkipHookWhen) ? optSkipHookWhen(context) : optSkipHookWhen;
-    debug(
-      `\n.....hook called. type ${context.type} method ${context.method} resolved skipHookWhen ${skipHookWhen}`,
-    );
 
     if (context.params.$populate) return context; // populate or fastJoin are running
     if (skipHookWhen) return context;
 
-    // @ts-ignore
     const q = isFunction(query) ? query(context) : query;
 
     if (!isObject(q)) {
@@ -109,23 +97,16 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     }
 
     if (!ourResolvers) {
-      // @ts-ignore
       ourResolvers = resolvers(context.app, runTime);
-      debug(`ourResolvers has Types ${Object.keys(ourResolvers)}`);
     }
 
     if (!ourResolvers[recordType]) {
       throwError(`recordType ${recordType} not found in resolvers. (fgraphql)`, 104);
     }
 
-    // @ts-ignore
     options.inclAllFields = contextParams.provider
-      ? // @ts-ignore
-        options.inclAllFieldsClient
-      : // @ts-ignore
-        options.inclAllFieldsServer;
-    // @ts-ignore
-    debug(`inclAllField ${options.inclAllFields}`);
+      ? options.inclAllFieldsClient
+      : options.inclAllFieldsServer;
 
     // Build content parameter passed to resolver functions.
     const resolverContent: Record<string, any> = {
@@ -137,7 +118,6 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
       cache: {},
     };
 
-    // @ts-ignore
     (options.extraAuthProps || []).forEach((name: any) => {
       if (name in contextParams && !(name in resolverContent)) {
         resolverContent[name] = contextParams[name];
@@ -155,7 +135,6 @@ export function fgraphql<H extends HookContext = HookContext>(options1: FGraphQL
     // Populate data.
     const recs = getItems(context);
 
-    // @ts-ignore
     return processRecords(store, q, recs, recordType).then(() => {
       replaceItems(context, recs);
       return context;
@@ -168,8 +147,6 @@ function processRecords(store: any, query: any, recs: any, type: any, depth = 0)
   if (!recs) return; // Catch no data to populate.
 
   recs = isArray(recs) ? recs : [recs];
-  debug(`\nvvvvvvvvvv enter ${depth}`);
-  debug(`processRecords depth ${depth} #recs ${recs.length} Type ${type}`);
 
   const storeOurResolversType = store.ourResolvers[type];
   if (!isObject(storeOurResolversType)) {
@@ -185,14 +162,11 @@ function processRecords(store: any, query: any, recs: any, type: any, depth = 0)
 
   return Promise.all(
     recs.map((rec: any, j: any) => processRecord(store, query, depth, rec, type, j)),
-  ).then(() => {
-    debug(`^^^^^^^^^^ exit ${depth}\n`);
-  });
+  );
 }
 
 // Process the a record.
 function processRecord(store: any, query: any, depth: any, rec: any, type: any, j: any): any {
-  debug(`processRecord rec# ${j} typeof ${typeof rec} Type ${type}`);
   if (!rec) return; // Catch any null values from resolvers.
 
   const queryPropNames = Object.keys(query);
@@ -217,7 +191,6 @@ function processRecord(store: any, query: any, depth: any, rec: any, type: any, 
     ),
   ).then(() => {
     // Retain only record fields selected
-    debug(`field names found ${recFieldNamesInQuery} joined names ${joinedNamesInQuery}`);
     if (
       recFieldNamesInQuery.length ||
       !store.options.inclAllFields ||
@@ -251,8 +224,6 @@ function processRecordQuery(
   j: any,
   i: any,
 ): any {
-  debug(`\nprocessRecordQuery rec# ${j} Type ${type} field# ${i} name ${fieldName}`);
-
   // One way to include/exclude rec fields is to give their names a falsey value.
   // _args and _none are not record field names but special purpose
   if (query[fieldName] && fieldName !== '_args' && fieldName !== '_none') {
@@ -260,7 +231,6 @@ function processRecordQuery(
       joinedNamesInQuery.push(fieldName);
       return processRecordFieldResolver(store, query, depth, rec, fieldName, type);
     } else {
-      debug('is not resolver call');
       recFieldNamesInQuery.push(fieldName);
     }
   }
@@ -275,7 +245,6 @@ function processRecordFieldResolver(
   fieldName: any,
   type: any,
 ) {
-  debug('is resolver call');
   const ourQuery = store.feathersSdl[type][fieldName];
   const ourResolver = store.ourResolvers[type][fieldName];
 
@@ -287,37 +256,21 @@ function processRecordFieldResolver(
   }
 
   const args = isObject(query[fieldName]) ? query[fieldName]._args : undefined;
-  debug(`resolver listType ${ourQuery.listType} args ${JSON.stringify(args)}`);
 
   // Call resolver function.
   return Promise.resolve(ourResolver(rec, args || {}, store.resolverContent)).then(
     async rawResult => {
-      debug(
-        `resolver returned typeof ${
-          isArray(rawResult) ? `array #recs ${rawResult.length}` : typeof rawResult
-        }`,
-      );
-
       // Convert rawResult to query requirements.
       const result = convertResolverResult(rawResult, ourQuery, fieldName, type);
-      if (isArray(rawResult !== isArray(result) || typeof rawResult !== typeof result)) {
-        debug(
-          `.....resolver result converted to typeof ${
-            isArray(result) ? `array #recs ${result.length}` : typeof result
-          }`,
-        );
-      }
+
       rec[fieldName] = result;
 
       const nextType = ourQuery.typeof;
-      debug(`Type ${type} fieldName ${fieldName} next Type ${nextType}`);
 
       // Populate returned records if their query defn has more fields or Types.
       // Ignore resolvers returning base values like string.
       if (store.ourResolvers[nextType] && isObject(query[fieldName])) {
         return processRecords(store, query[fieldName], result, nextType, depth + 1);
-      } else {
-        debug('no population of results required');
       }
     },
   );
@@ -438,7 +391,6 @@ function convertFieldDefinitionType(fieldDefinitionType: any, errDesc: any, conv
 
 function throwError(msg: any, code: any) {
   const err = new Error(msg);
-  // @ts-ignore
   err.code = code;
   throw err;
 }

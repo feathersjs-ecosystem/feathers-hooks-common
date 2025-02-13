@@ -99,6 +99,12 @@ const members = [
   'some',
   'every',
   'isNot',
+
+  'getPaginate',
+  'isMulti',
+  'isPaginated',
+  'allowsMulti',
+  'skipResult',
 ].sort();
 
 describe('services exposed hooks', () => {

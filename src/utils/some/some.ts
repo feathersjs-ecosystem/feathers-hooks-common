@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import type { AsyncPredicateFn, PredicateFn } from '../types';
+import type { AsyncPredicateFn, PredicateFn } from '../../types';
 
 /**
  * Return the or of a series of sync or async predicate functions.
@@ -12,6 +12,6 @@ export function some<H extends HookContext = HookContext>(
     const promises = predicates.map(fn => fn.apply(this, [context]));
 
     const results = await Promise.all(promises);
-    return await Promise.resolve(results.some(result => !!result));
+    return await Promise.resolve(results.some((result: any) => !!result));
   };
 }
