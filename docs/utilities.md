@@ -123,12 +123,12 @@ Restrict a hook to run for certain methods and method types.
   - `{String | Array< String >} [ methods ]`
   - `{String} [ label ]`
 
-| Argument  |   Type   | Default          | Description                       |
+| Argument  |   Type   | Default          | Description                       |                                                                 |
 | --------- | :------: | ---------------- | --------------------------------- | --------------------------------------------------------------- |
-| `context` | `Object` |                  | The hook context.                 |
+| `context` | `Object` |                  | The hook context.                 |                                                                 |
 | `type`    | `String  | Array< String >` | all types                         | The service type allowed - before, after, error.                |
 | `methods` | `String  | Array< String >` | all methods                       | The service methods allowed - find, get, update, patch, remove. |
-| `label`   | `String` | `'anonymous'`    | Name of hook to use with `throw`. |
+| `label`   | `String` | `'anonymous'`    | Name of hook to use with `throw`. |                                                                 |
 
 - **Example**
 
