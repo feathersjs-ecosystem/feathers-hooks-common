@@ -1,5 +1,58 @@
 ## feathers-hooks-common
 
+#### hooks
+
+- added alterData, alterResult, deprecated alterItems
+- added discardData, discardResult, deprecated discard
+  - moved to omitData, omitResult, deprecated omit
+- added keepData, keepResult, deprecated keep
+  - moved to pickData, pickResult, deprecated pick
+- added lowercaseData, lowercaseResult, deprecated lowercase
+- added setNowData, setNowResult, deprecated setNow
+
+- removed several checks that are handled by typescript
+- removed check for `preventChanges(true, ...fieldNames)`
+
+- renamed 'keepQuery' to 'pickQuery', added alias
+- renamed 'required' to 'checkRequired', added alias
+
+- added throwIf
+- added throwIfIsProvider
+- added throwIfIsMulti
+- added paramsForServer2 & paramsForClient2
+
+- added 'onDelete' & 'createRelated'
+
+- stashBefore multi
+
+- softDelete: added 'transformParams' & added 'key' option
+
+- rm support for spread argument
+
+#### predicates
+
+- renamed 'isNot' to 'not' (added alias for 'isNot')
+- added predicate isMulti
+- added predicate isPaginated
+- added predicate isContext
+
+#### utils
+
+- added getDataIsArray, getResultIsArray, deprecated getItems
+- added replaceData, replaceResult, deprecated replaceItems
+- added util getPaginate
+- added util skipResult
+
+### Hooks to discuss
+
+- cache
+- populate
+- dePopulate
+- fgraphql
+- fastJoin
+- sequelizeConvert
+- serialize
+
 <p align="center">
   <img src="https://hooks-common.feathersjs.com/feathers-hooks-common-logo.png" width="200">
 </p>
