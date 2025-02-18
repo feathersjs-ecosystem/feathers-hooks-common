@@ -23,6 +23,10 @@
 
 - added 'onDelete' & 'createRelated'
 
+- stashBefore multi
+
+- softDelete: added 'transformParams' & added 'key' option
+
 - rm support for spread argument
 
 #### predicates
@@ -37,16 +41,7 @@
 - added getDataIsArray, getResultIsArray, deprecated getItems
 - added replaceData, replaceResult, deprecated replaceItems
 - added util getPaginate
-- added util setResultEmpty
-
-- add onDelete
-
-- stashBefore multi
-
-- new: createRelated
-- new: onDelete
-
-- softDelete: added 'transformParams' & added 'key' option
+- added util skipResult
 
 ### Hooks to discuss
 

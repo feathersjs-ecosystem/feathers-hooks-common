@@ -16,6 +16,4 @@ export * from './replace-items/replace-result';
 export * from './run-hook/run-hook';
 
 export * from './get-paginate/get-paginate';
-export * from '../predicates/is-multi/is-multi';
-export * from '../predicates/is-paginated/is-paginated';
 export * from './skip-result/skip-result';

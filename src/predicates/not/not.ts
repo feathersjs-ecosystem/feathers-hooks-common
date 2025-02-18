@@ -1,4 +1,3 @@
-import { MethodNotAllowed } from '@feathersjs/errors';
 import type { HookContext } from '@feathersjs/feathers';
 import { isPromise } from '../../common';
 import type { PredicateFn } from '../../types';
