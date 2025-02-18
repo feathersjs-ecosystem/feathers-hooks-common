@@ -1,6 +1,5 @@
 import { assert } from 'vitest';
 import { setNowResult } from './set-now-result';
-import { clone } from '../../common';
 
 let hookAfter: any;
 let hookFindPaginate: any;
@@ -54,7 +53,7 @@ describe('setNowResult', () => {
 // Helpers
 
 function checkHook(item: any, template: any, dateFields: any) {
-  const item1 = clone(item);
+  const item1 = structuredClone(item);
   if (typeof dateFields === 'string') {
     dateFields = [dateFields];
   }

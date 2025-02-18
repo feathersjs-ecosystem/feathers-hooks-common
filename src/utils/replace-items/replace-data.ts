@@ -1,7 +1,7 @@
 import { HookContext } from '@feathersjs/feathers';
 import { getDataIsArray } from '../get-data-is-array/get-data-is-array';
 import { isPromise } from '../../common';
-import { Promisable } from '../../types';
+import { Promisable } from '../../internal.utils';
 
 export function replaceData<H extends HookContext = HookContext>(
   context: H,

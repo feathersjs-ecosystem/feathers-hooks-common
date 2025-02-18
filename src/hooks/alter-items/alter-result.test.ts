@@ -1,5 +1,6 @@
 import { assert } from 'vitest';
 import { alterResult } from './alter-result';
+import { HookContext } from '@feathersjs/feathers';
 
 let hookAfter: any;
 let hookFindPaginate: any;
@@ -40,6 +41,7 @@ describe('alterResult', () => {
     alterResult((rec: any) => {
       delete rec.last;
     })(hookFindPaginate);
+
     assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
   });
 
@@ -47,6 +49,7 @@ describe('alterResult', () => {
     alterResult((rec: any) => {
       rec.new = rec.first;
     })(hookFind);
+
     assert.deepEqual(hookFind.result, [
       { first: 'John', last: 'Doe', new: 'John' },
       { first: 'Jane', last: 'Doe', new: 'Jane' },
@@ -57,16 +60,19 @@ describe('alterResult', () => {
     alterResult((rec: any) => {
       rec.new = rec.first;
     })(hookAfter);
+
     assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
 
   it('updates hook after::find with pagination with new item returned', () => {
     alterResult((rec: any) => Object.assign({}, { first: rec.first }))(hookFindPaginate);
+
     assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
   });
 
   it('updates hook after::find with pagination with new item returned', () => {
     alterResult((rec: any) => Object.assign({}, rec, { new: rec.first }))(hookFind);
+
     assert.deepEqual(hookFind.result, [
       { first: 'John', last: 'Doe', new: 'John' },
       { first: 'Jane', last: 'Doe', new: 'Jane' },
@@ -75,69 +81,124 @@ describe('alterResult', () => {
 
   it('updates hook after with new item returned', () => {
     alterResult((rec: any) => Object.assign({}, rec, { new: rec.first }))(hookAfter);
+
     assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
 
-  it('updates hook after::create', () => {
-    return alterResult((rec: any) => {
+  it('updates hook after::create', async () => {
+    await alterResult((rec: any) => {
       rec.new = rec.first;
       return Promise.resolve();
-      // @ts-ignore
-    })(hookAfter).then(() => {
-      assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
-    });
+    })(hookAfter);
+
+    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
 
-  it('updates hook after::create with new item returned', () => {
-    // @ts-ignore
-    return alterResult((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
+  it('updates hook after::create with new item returned', async () => {
+    await alterResult((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
       hookAfter,
-    ).then(() => {
-      assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
-    });
+    );
+
+    assert.deepEqual(hookAfter.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
   });
 
-  it('updates hook after::find with pagination', () => {
-    return alterResult((rec: any) => {
+  it('updates hook after::find with pagination', async () => {
+    await alterResult((rec: any) => {
       delete rec.last;
       return Promise.resolve();
-      // @ts-ignore
-    })(hookFindPaginate).then(() => {
-      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+    })(hookFindPaginate);
+
+    assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
   });
 
-  it('updates hook after::find with no pagination', () => {
-    return alterResult((rec: any) => {
+  it('updates hook after::find with no pagination', async () => {
+    await alterResult((rec: any) => {
       rec.new = rec.first;
       return Promise.resolve();
-      // @ts-ignore
-    })(hookFind).then(() => {
-      assert.deepEqual(hookFind.result, [
-        { first: 'John', last: 'Doe', new: 'John' },
-        { first: 'Jane', last: 'Doe', new: 'Jane' },
-      ]);
-    });
+    })(hookFind);
+
+    assert.deepEqual(hookFind.result, [
+      { first: 'John', last: 'Doe', new: 'John' },
+      { first: 'Jane', last: 'Doe', new: 'Jane' },
+    ]);
   });
 
-  it('updates hook after::find with pagination with new item returned', () => {
-    // @ts-ignore
-    return alterResult((rec: any) => Promise.resolve(Object.assign({}, { first: rec.first })))(
+  it('updates hook after::find with pagination with new item returned', async () => {
+    await alterResult((rec: any) => Promise.resolve(Object.assign({}, { first: rec.first })))(
       hookFindPaginate,
-    ).then(() => {
-      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+    );
+
+    assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
   });
 
-  it('updates hook after::find with no pagination with new item returned', () => {
-    // @ts-ignore
-    return alterResult((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
+  it('updates hook after::find with no pagination with new item returned', async () => {
+    await alterResult((rec: any) => Promise.resolve(Object.assign({}, rec, { new: rec.first })))(
       hookFind,
-    ).then(() => {
-      assert.deepEqual(hookFind.result, [
-        { first: 'John', last: 'Doe', new: 'John' },
-        { first: 'Jane', last: 'Doe', new: 'Jane' },
-      ]);
-    });
+    );
+
+    assert.deepEqual(hookFind.result, [
+      { first: 'John', last: 'Doe', new: 'John' },
+      { first: 'Jane', last: 'Doe', new: 'Jane' },
+    ]);
+  });
+
+  it('updates dispatch', () => {
+    const context = {
+      type: 'after',
+      method: 'create',
+      params: { provider: 'rest' },
+      result: { first: 'Jane', last: 'Doe' },
+      dispatch: { first: 'Jack', last: 'Doe' },
+    } as HookContext;
+
+    alterResult(
+      (rec: any) => {
+        rec.new = rec.first;
+      },
+      { dispatch: true },
+    )(context);
+
+    assert.deepEqual(context.result, { first: 'Jane', last: 'Doe' });
+    assert.deepEqual(context.dispatch, { first: 'Jack', last: 'Doe', new: 'Jack' });
+  });
+
+  it('updates dispatch even though it is not defined', () => {
+    const context = {
+      type: 'after',
+      method: 'create',
+      params: { provider: 'rest' },
+      result: { first: 'Jane', last: 'Doe' },
+      dispatch: undefined,
+    } as HookContext;
+
+    alterResult(
+      (rec: any) => {
+        rec.new = rec.first;
+      },
+      { dispatch: true },
+    )(context);
+
+    assert.deepEqual(context.result, { first: 'Jane', last: 'Doe' });
+    assert.deepEqual(context.dispatch, { first: 'Jane', last: 'Doe', new: 'Jane' });
+  });
+
+  it('updates dispatch and result', () => {
+    const context = {
+      type: 'after',
+      method: 'create',
+      params: { provider: 'rest' },
+      result: { first: 'Jane', last: 'Doe' },
+      dispatch: { first: 'Jack', last: 'Doe' },
+    } as HookContext;
+
+    alterResult(
+      (rec: any) => {
+        rec.new = rec.first;
+      },
+      { dispatch: 'both' },
+    )(context);
+
+    assert.deepEqual(context.result, { first: 'Jane', last: 'Doe', new: 'Jane' });
+    assert.deepEqual(context.dispatch, { first: 'Jack', last: 'Doe', new: 'Jack' });
   });
 });

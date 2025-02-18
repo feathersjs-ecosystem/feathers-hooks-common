@@ -1,52 +1,84 @@
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import { checkContext } from '../../utils';
+import { TransformParamsFn } from '../../types';
+import { transformParams } from '../../utils/transform-params/transform-params';
+import { Promisable } from '../../internal.utils';
 
 export type SoftDeleteOptionFunction<H extends HookContext = HookContext> = (
   context?: H,
-) => Promise<{ [key: string]: any }>;
+) => Promisable<{ [key: string]: any }>;
 
 export interface SoftDeleteOptions<H extends HookContext = HookContext> {
+  /**
+   * @default { deleted: { $ne: true } }
+   */
   deletedQuery?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
+  /**
+   * @default { deleted: true }
+   */
   removeData?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
+  /**
+   * Transform the params before calling the service method. E.g. remove 'params.provider' or add custom params.
+   */
+  transformParams?: TransformParamsFn;
+
+  /**
+   * @default 'disableSoftDelete'
+   */
+  disableSoftDeleteKey?: string;
 }
 
 const defaultQuery = { deleted: { $ne: true } };
 const defaultData = { deleted: true };
-const getValue = (value: any, ...args: any[]) => {
-  if (typeof value === 'function') {
-    return Promise.resolve(value(...args));
-  }
-  return Promise.resolve(value);
-};
 
 /**
  * Allow to mark items as deleted instead of removing them.
  */
-export function softDelete<H extends HookContext = HookContext>({
-  deletedQuery = defaultQuery,
-  removeData = defaultData,
-}: SoftDeleteOptions<H> = {}) {
-  return async (context: H) => {
-    const { service, method, params } = context;
-    const { disableSoftDelete, query = {} } = params;
+export const softDelete =
+  <H extends HookContext = HookContext>(options: SoftDeleteOptions<H> = {}) =>
+  async (context: H, next?: NextFunction) => {
+    checkContext(context, ['before', 'around'], null, 'softDelete');
 
-    checkContext(context, 'before', null, 'softDelete');
+    const { disableSoftDeleteKey = 'disableSoftDelete' } = options;
 
-    if (disableSoftDelete) {
+    if (context.params[disableSoftDeleteKey]) {
       return context;
     }
 
+    const { deletedQuery = defaultQuery, removeData = defaultData } = options;
+
     const deleteQuery = await getValue(deletedQuery, context);
 
-    context.params.query = Object.assign({}, query, deleteQuery);
+    const params = transformParams(
+      {
+        ...context.params,
+        query: {
+          ...context.params.query,
+          ...deleteQuery,
+        },
+      },
+      options.transformParams,
+    );
 
-    if (method === 'remove') {
+    context.params = params;
+
+    if (context.method === 'remove') {
       const data = await getValue(removeData, context);
-      const result = await service.patch(context.id, data, params);
+      const result = await context.service.patch(context.id, data, params);
 
       context.result = result;
     }
 
+    if (next) {
+      await next();
+    }
+
     return context;
   };
-}
+
+const getValue = (value: any, ...args: any[]) => {
+  if (typeof value === 'function') {
+    return value(...args);
+  }
+  return value;
+};

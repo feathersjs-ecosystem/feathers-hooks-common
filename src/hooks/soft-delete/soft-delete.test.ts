@@ -12,7 +12,7 @@ const initialUsers = [
   { name: 'Mick Doe', key: 'b', deleted: true },
 ];
 
-describe('services softDelete', () => {
+describe('softDelete', () => {
   let userService: any;
 
   beforeEach(() => {

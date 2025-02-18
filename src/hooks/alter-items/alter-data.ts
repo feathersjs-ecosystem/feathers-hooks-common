@@ -1,6 +1,6 @@
 import type { HookContext } from '@feathersjs/feathers';
 import { replaceData } from '../../utils/replace-items/replace-data';
-import { isPromise } from 'util/types';
+import { isPromise } from '../../common';
 
 /**
  * Make changes to data items. Very flexible.

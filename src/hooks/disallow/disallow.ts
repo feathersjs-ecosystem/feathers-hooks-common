@@ -1,6 +1,7 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
 import type { HookContext } from '@feathersjs/feathers';
 import type { TransportName } from '../../types';
+import { isProvider } from '../../predicates';
 
 /**
  * Prevents access to a service method completely or for specific transports.
@@ -8,17 +9,11 @@ import type { TransportName } from '../../types';
  */
 export function disallow<H extends HookContext = HookContext>(...transports: TransportName[]) {
   return (context: H) => {
-    const hookProvider = context.params?.provider;
+    if (transports.length === 0) {
+      throw new MethodNotAllowed('Method not allowed');
+    }
 
-    const anyProvider = transports.length === 0;
-    const thisProvider = transports.some(
-      provider =>
-        provider === hookProvider ||
-        (provider === 'server' && !hookProvider) ||
-        (provider === 'external' && !!hookProvider),
-    );
-
-    if (anyProvider || thisProvider) {
+    if (isProvider(...transports)(context)) {
       throw new MethodNotAllowed(
         `Provider '${context.params.provider}' can not call '${context.method}'. (disallow)`,
       );

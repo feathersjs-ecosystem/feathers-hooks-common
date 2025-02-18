@@ -5,8 +5,9 @@ import _omit from 'lodash/omit.js';
  * Delete certain fields from the query object.
  * @see https://hooks-common.feathersjs.com/hooks.html#discardquery
  */
-export function omitQuery<H extends HookContext = HookContext>(...fieldNames: string[]) {
-  return (context: H) => {
+export const omitQuery =
+  <H extends HookContext = HookContext>(...fieldNames: string[]) =>
+  (context: H) => {
     if (!context.params.query) {
       return context;
     }
@@ -15,6 +16,5 @@ export function omitQuery<H extends HookContext = HookContext>(...fieldNames: st
 
     return context;
   };
-}
 
 export { omitQuery as discardQuery };

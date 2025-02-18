@@ -1,16 +1,25 @@
 import { HookContext } from '@feathersjs/feathers';
+import copy from 'fast-copy';
+
+type GetResultIsArrayOptions = {
+  dispatch?: boolean;
+};
 
 export function getResultIsArray<H extends HookContext = HookContext>(
   context: H,
-  dispatch?: boolean,
+  options?: GetResultIsArrayOptions,
 ): { isArray: boolean; result: any[]; key: 'dispatch' | 'result' } {
-  const result = dispatch ? context.dispatch : context.result;
+  const { dispatch = false } = options || {};
+
+  const isDispatch: boolean = dispatch && context.dispatch !== undefined;
+
+  const result = dispatch ? (isDispatch ? context.dispatch : copy(context.result)) : context.result;
 
   if (!result) {
     return {
       isArray: false,
       result: [],
-      key: dispatch ? 'dispatch' : 'result',
+      key: isDispatch ? 'dispatch' : 'result',
     };
   }
 
@@ -21,6 +30,6 @@ export function getResultIsArray<H extends HookContext = HookContext>(
   return {
     isArray,
     result: isArray ? items : items ? [items] : [],
-    key: dispatch ? 'dispatch' : 'result',
+    key: isDispatch ? 'dispatch' : 'result',
   };
 }

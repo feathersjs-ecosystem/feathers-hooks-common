@@ -6,8 +6,9 @@ import type { HookContext } from '@feathersjs/feathers';
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#setslug
  */
-export function setSlug<H extends HookContext = HookContext>(slug: string, fieldName?: string) {
-  return (context: H) => {
+export const setSlug =
+  <H extends HookContext = HookContext>(slug: string, fieldName?: string) =>
+  (context: H) => {
     if (typeof fieldName !== 'string') {
       fieldName = `query.${slug}`;
     }
@@ -19,4 +20,3 @@ export function setSlug<H extends HookContext = HookContext>(slug: string, field
       }
     }
   };
-}

@@ -3,10 +3,9 @@ import type { HookContext } from '@feathersjs/feathers';
 import type { SyncContextFunction } from '../../types';
 import { replaceResult } from '../../utils/replace-items/replace-result';
 
-export function sifter<H extends HookContext = HookContext>(
-  siftFunc: SyncContextFunction<(item: any) => boolean, H>,
-) {
-  return (context: H) => {
+export const sifter =
+  <H extends HookContext = HookContext>(siftFunc: SyncContextFunction<(item: any) => boolean, H>) =>
+  (context: H) => {
     const sifter = siftFunc(context);
 
     if (typeof sifter !== 'function') {
@@ -17,4 +16,3 @@ export function sifter<H extends HookContext = HookContext>(
       transform: items => items.filter(sifter),
     });
   };
-}

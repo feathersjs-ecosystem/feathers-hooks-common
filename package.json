@@ -28,7 +28,8 @@
     "update-dependencies": "ncu -u -x ajv",
     "test:unit": "vitest run",
     "coverage": "vitest run --coverage",
-    "test": "npm run lint && npm run coverage"
+    "test": "npm run lint && npm run coverage",
+    "vitest": "vitest"
   },
   "repository": {
     "type": "git",
@@ -64,6 +65,7 @@
   "dependencies": {
     "@feathersjs/errors": "^5.0.31",
     "ajv": "^6.12.6",
+    "fast-copy": "^3.0.2",
     "graphql": "^16.10.0",
     "lodash": "^4.17.21",
     "neotraverse": "^0.6.18"
@@ -87,8 +89,8 @@
     "@typescript-eslint/parser": "^8.21.0",
     "@vitest/coverage-v8": "^3.0.3",
     "eslint": "^9.18.0",
-    "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import-x": "^4.6.1",
     "eslint-plugin-prettier": "^5.2.3",
     "mongodb": "^5.9.2",

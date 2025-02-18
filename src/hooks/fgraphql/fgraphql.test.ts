@@ -758,11 +758,3 @@ function a(typ: any) {
   }
   /* eslint-enable */
 }
-
-/*
-const { inspect } = require('util');
-function inspector(desc, obj) {
-  console.log(desc);
-  console.log(inspect(obj, { colors: true, depth: 5 }));
-}
-*/

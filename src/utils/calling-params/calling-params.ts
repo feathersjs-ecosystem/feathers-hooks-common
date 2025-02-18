@@ -58,14 +58,15 @@ export function callingParamsDefaults(propNames: string[], newProps?: any): void
  * Build params for a service call. (Utility function.)
  * @see https://hooks-common.feathersjs.com/utilities.html#callingparams
  */
-export function callingParams<H extends HookContext = HookContext>({
-  query,
-  propNames = [],
-  newProps = {},
-  hooksToDisable = [],
-  ignoreDefaults,
-}: CallingParamsOptions = {}) {
-  return (context: H) => {
+export const callingParams =
+  <H extends HookContext = HookContext>({
+    query,
+    propNames = [],
+    newProps = {},
+    hooksToDisable = [],
+    ignoreDefaults,
+  }: CallingParamsOptions = {}) =>
+  (context: H) => {
     propNames = Array.isArray(propNames) ? propNames : [propNames];
     hooksToDisable = Array.isArray(hooksToDisable) ? hooksToDisable : [hooksToDisable];
 
@@ -113,7 +114,6 @@ export function callingParams<H extends HookContext = HookContext>({
 
     return newParams;
   };
-}
 
 /**
  * You should prefer using the callingParams utility to makeCallingParams.

@@ -1,6 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { isMulti } from '../is-multi/is-multi';
-import { isPaginated } from '../is-paginated/is-paginated';
+import { isMulti, isPaginated } from '../../predicates';
 
 /**
  * util to set `context.result` to an empty array or object, depending on the hook type

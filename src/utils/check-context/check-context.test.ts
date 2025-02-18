@@ -1,101 +1,77 @@
-import { assert } from 'vitest';
+import { assert, expect } from 'vitest';
 
 import { checkContext } from './check-context';
+import { HookContext } from '@feathersjs/feathers';
+
+const make = (type: any, method: any) => ({ type, method }) as HookContext;
 
 describe('util checkContext', () => {
-  var hook: any; // eslint-disable-line no-var
-
-  beforeEach(() => {
-    hook = { type: 'before', method: 'create' };
-  });
-
   it('handles "any" type and method', () => {
-    assert.equal(checkContext(hook), undefined);
+    expect(() => checkContext(make('before', 'create'))).not.toThrow();
   });
 
   it('handles expected type', () => {
-    hook.type = 'before';
-    assert.equal(checkContext(hook, 'before'), undefined);
+    expect(() => checkContext(make('before', 'create'), 'before')).not.toThrow();
   });
 
   it('handles unexpected type', () => {
-    hook.type = 'after';
-    assert.throws(() => {
-      checkContext(hook, 'before');
-    });
+    expect(() => checkContext(make('after', 'create'), 'before')).toThrow();
   });
 
   it('handles undefined type', () => {
-    hook.type = 'after';
-    assert.equal(checkContext(hook), undefined);
+    expect(() => checkContext(make('after', 'create'), undefined, 'create')).not.toThrow();
   });
 
   it('handles null type', () => {
-    hook.type = 'after';
-    assert.equal(checkContext(hook, null), undefined);
+    expect(() => checkContext(make('after', 'create'), null, 'create')).not.toThrow();
   });
 
   it('handles expected type as array', () => {
-    hook.type = 'before';
-    assert.equal(checkContext(hook, ['before', 'after']), undefined);
+    expect(() => checkContext(make('before', 'create'), ['before', 'after'])).not.toThrow();
   });
 
   it('handles unexpected type as array', () => {
-    hook.type = 'error';
-    assert.throws(() => {
-      checkContext(hook, ['before', 'after']);
-    });
+    expect(() => checkContext(make('error', 'create'), ['before', 'after'])).toThrow();
   });
 
   it('handles expected method as string', () => {
-    hook.method = 'create';
-    assert.equal(checkContext(hook, null, 'create'), undefined);
+    expect(() => checkContext(make('before', 'create'), null, 'create')).not.toThrow();
   });
 
   it('handles unexpected method as string', () => {
-    hook.method = 'patch';
-    assert.throws(() => {
-      checkContext(hook, null, 'create');
-    });
+    expect(() => checkContext(make('before', 'patch'), null, 'create')).toThrow();
   });
 
   it('handles expected method as array', () => {
-    hook.method = 'create';
-    assert.equal(checkContext(hook, null, ['create']), undefined);
-    assert.equal(checkContext(hook, null, ['create', 'update', 'remove']), undefined);
+    expect(() =>
+      checkContext(make('before', 'create'), null, ['create', 'update', 'remove']),
+    ).not.toThrow();
   });
 
   it('handles unexpected method as array', () => {
-    hook.method = 'patch';
-    assert.throws(() => {
-      checkContext(hook, null, ['create']);
-    });
-    assert.throws(() => {
-      checkContext(hook, null, ['create', 'update', 'remove']);
-    });
+    expect(() =>
+      checkContext(make('before', 'patch'), null, ['create', 'update', 'remove']),
+    ).toThrow();
   });
 
   it('handles undefined method', () => {
-    hook.method = 'patch';
-    assert.equal(checkContext(hook, null), undefined);
+    expect(() => checkContext(make('before', 'patch'), null, undefined)).not.toThrow();
   });
 
   it('handles null method', () => {
-    hook.method = 'patch';
-    assert.equal(checkContext(hook, null, null), undefined);
+    expect(() => checkContext(make('before', 'patch'), null, null)).not.toThrow();
   });
 
   it('handles expected type and method as array', () => {
-    hook.type = 'before';
-    hook.method = 'create';
-    assert.equal(checkContext(hook, 'before', ['create']), undefined);
-    assert.equal(checkContext(hook, 'before', ['create', 'update', 'remove']), undefined);
+    expect(() =>
+      checkContext(make('before', 'create'), ['before', 'after'], ['create', 'update', 'remove']),
+    ).not.toThrow();
   });
 
   it('allows custom methods', () => {
-    hook.type = 'before';
-    hook.method = 'custom';
-    assert.equal(checkContext(hook, 'before', ['create']), undefined);
-    assert.equal(checkContext(hook, 'before', ['create', 'update', 'remove']), undefined);
+    expect(() => checkContext(make('before', 'custom'), 'before', 'create')).toThrow();
+    expect(() =>
+      checkContext(make('before', 'custom'), 'before', ['create', 'custom']),
+    ).not.toThrow();
   });
 });

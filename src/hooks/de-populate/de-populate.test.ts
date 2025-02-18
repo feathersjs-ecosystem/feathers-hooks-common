@@ -1,6 +1,5 @@
 import { assert } from 'vitest';
 import { dePopulate } from './de-populate';
-import { clone } from '../../common';
 
 describe('services dePopulate - not dot notation', () => {
   let hookAfter: any;
@@ -95,7 +94,7 @@ describe('services dePopulate - not dot notation', () => {
   });
 
   it('one item, after hook, missing props', () => {
-    const hook = clone(hookAfter);
+    const hook = structuredClone(hookAfter);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.result, {
       userId: 'as61389dadhga62343hads6712',
@@ -105,7 +104,7 @@ describe('services dePopulate - not dot notation', () => {
   });
 
   it('one item, before hook, not populated', () => {
-    const hook = clone(hookBefore);
+    const hook = structuredClone(hookBefore);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.data, {
       userId: 'as61389dadhga62343hads6712',
@@ -115,7 +114,7 @@ describe('services dePopulate - not dot notation', () => {
   });
 
   it('item array, before hook', () => {
-    const hook = clone(hookBeforeArray);
+    const hook = structuredClone(hookBeforeArray);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.data, [
       {
@@ -239,7 +238,7 @@ describe('services dePopulate - dot notation', () => {
   });
 
   it('one item, after hook, missing props', () => {
-    const hook = clone(hookAfter);
+    const hook = structuredClone(hookAfter);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.result, {
       userId: 'as61389dadhga62343hads6712',
@@ -250,7 +249,7 @@ describe('services dePopulate - dot notation', () => {
   });
 
   it('one item, before hook, not populated', () => {
-    const hook = clone(hookBefore);
+    const hook = structuredClone(hookBefore);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.data, {
       userId: 'as61389dadhga62343hads6712',
@@ -260,7 +259,7 @@ describe('services dePopulate - dot notation', () => {
   });
 
   it('item array, before hook', () => {
-    const hook = clone(hookBeforeArray);
+    const hook = structuredClone(hookBeforeArray);
     const deHook: any = dePopulate()(hook);
     assert.deepEqual(deHook.data, [
       {

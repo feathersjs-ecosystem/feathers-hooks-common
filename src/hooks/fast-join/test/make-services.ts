@@ -40,7 +40,6 @@ export const users: any = makeService(usersStore);
 function makeService(store1: any) {
   return {
     get(id: any) {
-      // console.log(`... ${name} get ${id}`);
       const store = clone(store1);
 
       for (let i = 0, leni = store.length; i < leni; i++) {
@@ -51,7 +50,6 @@ function makeService(store1: any) {
     },
 
     find(params: any) {
-      // console.log(`... ${name} find`, params ? params.query : '');
       const store = clone(store1);
 
       if (!params || !params.query) return asyncReturn(store);

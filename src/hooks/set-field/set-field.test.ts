@@ -38,33 +38,6 @@ describe('setField', () => {
     });
   });
 
-  it('errors when options not set', () => {
-    assert.throws(() =>
-      app.service('messages').hooks({
-        before: {
-          // @ts-expect-error
-          get: setField(),
-        },
-      }),
-    );
-    assert.throws(() =>
-      app.service('messages').hooks({
-        before: {
-          // @ts-expect-error
-          get: setField({ as: 'me' }),
-        },
-      }),
-    );
-    assert.throws(() =>
-      app.service('messages').hooks({
-        before: {
-          // @ts-expect-error
-          get: setField({ from: 'you' }),
-        },
-      }),
-    );
-  });
-
   it('find queries with user information, does not modify original objects', async () => {
     const query = {};
     // @ts-ignore

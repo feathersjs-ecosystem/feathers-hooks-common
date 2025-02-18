@@ -36,7 +36,7 @@ export default tseslint.config(
     },
     rules: {
       'import-x/no-dynamic-require': 'warn',
-      'import-x/no-nodejs-modules': 'off',
+      'import-x/no-nodejs-modules': 'error',
     },
   },
   {
@@ -45,6 +45,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      'import-x/no-nodejs-modules': 'off',
     },
   },
   eslintPluginPrettierRecommended,

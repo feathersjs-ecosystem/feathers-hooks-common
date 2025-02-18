@@ -1,7 +1,5 @@
 import { assert } from 'vitest';
-
 import { disallow } from './disallow';
-import { clone } from '../../common';
 
 describe('services disallow', () => {
   describe('disallow is compatible with .disable (without predicate)', () => {
@@ -86,7 +84,7 @@ describe('services disallow', () => {
     });
 
     it('finds provider with 1 arg', () => {
-      const hook = clone(hookSocketio);
+      const hook = structuredClone(hookSocketio);
 
       const result = disallow('rest')(hook);
       assert.equal(result, undefined);
@@ -97,7 +95,7 @@ describe('services disallow', () => {
     });
 
     it('finds provider with 2 args', () => {
-      const hook = clone(hookSocketio);
+      const hook = structuredClone(hookSocketio);
 
       const result = disallow('rest', 'server')(hook);
       assert.equal(result, undefined);
@@ -108,7 +106,7 @@ describe('services disallow', () => {
     });
 
     it('finds server', () => {
-      const hook = clone(hookServer);
+      const hook = structuredClone(hookServer);
 
       const result = disallow('rest', 'socketio', 'external')(hook);
       assert.equal(result, undefined);
@@ -119,7 +117,7 @@ describe('services disallow', () => {
     });
 
     it('finds external', () => {
-      const hook = clone(hookSocketio);
+      const hook = structuredClone(hookSocketio);
 
       const result = disallow('rest', 'server')(hook);
       assert.equal(result, undefined);
@@ -130,21 +128,21 @@ describe('services disallow', () => {
     });
 
     it('succeeds if not provider', () => {
-      const hook = clone(hookServer);
+      const hook = structuredClone(hookServer);
 
       const result = disallow('socketio')(hook);
       assert.equal(result, undefined);
     });
 
     it('succeeds if not external', () => {
-      const hook = clone(hookServer);
+      const hook = structuredClone(hookServer);
 
       const result = disallow('external')(hook);
       assert.equal(result, undefined);
     });
 
     it('succeeds if not server', () => {
-      const hook = clone(hookSocketio);
+      const hook = structuredClone(hookSocketio);
 
       const result = disallow('server')(hook);
       assert.equal(result, undefined);

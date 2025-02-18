@@ -1,6 +1,6 @@
 import type { HookContext } from '@feathersjs/feathers';
-import { methodNames } from '../../types';
 import type { HookType, MethodName } from '../../types';
+import { isContext } from '../../predicates/is-context/is-context';
 
 /**
  * Restrict a hook to run for certain methods and method types. (Utility function.)
@@ -12,24 +12,12 @@ export function checkContext<H extends HookContext = HookContext>(
   methods?: MethodName | MethodName[] | null,
   label = 'anonymous',
 ): void {
-  if (type) {
-    const types = Array.isArray(type) ? type : [type]; // safe enough for allowed values
-    if (!types.includes(context.type)) {
-      throw new Error(`The '${label}' hook can only be used as a '${type}' hook.`);
-    }
-  }
-
-  if (!methods) {
-    return;
-  }
-  if (!methodNames.includes(context.method as any)) {
-    return;
-  } // allow custom methods
-
-  const methodsArr = Array.isArray(methods) ? methods : [methods]; // safe enough for allowed values
-
-  if (methodsArr.length > 0 && !methodsArr.includes(context.method as any)) {
-    const msg = JSON.stringify(methodsArr);
-    throw new Error(`The '${label}' hook can only be used on the '${msg}' service method(s).`);
+  if (
+    !isContext({
+      method: methods ?? undefined,
+      type: type ?? undefined,
+    })(context)
+  ) {
+    throw new Error(`The '${label}' hook has invalid context.`);
   }
 }

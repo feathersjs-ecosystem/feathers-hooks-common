@@ -3,6 +3,8 @@ import type { HookContext } from '@feathersjs/feathers';
 /**
  * Pass context.params from client to server. Server hook.
  * @see https://hooks-common.feathersjs.com/hooks.html#paramsfromclient
+ *
+ * @deprecated use `paramsFromClient2` instead
  */
 export function paramsFromClient<H extends HookContext = HookContext>(...whitelist: string[]) {
   return (context: H) => {

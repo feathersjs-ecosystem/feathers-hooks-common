@@ -4,6 +4,8 @@ import type { Params } from '@feathersjs/feathers';
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)
  *
  * @see https://hooks-common.feathersjs.com/utilities.html#paramsforserver
+ *
+ * @deprecated use the hook `paramsForServer2` instead
  */
 export function paramsForServer(params?: Params, ...whitelist: string[]): Params {
   const ifWhitelist = !!whitelist.length;

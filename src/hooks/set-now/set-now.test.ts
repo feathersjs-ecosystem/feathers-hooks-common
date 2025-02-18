@@ -1,6 +1,5 @@
 import { assert } from 'vitest';
 import { setNow } from './set-now';
-import { clone } from '../../common';
 
 let hookBefore: any;
 let hookBefore2: any;
@@ -168,7 +167,7 @@ describe('services setNow', () => {
 // Helpers
 
 function checkHook(item: any, template: any, dateFields: any) {
-  const item1 = clone(item);
+  const item1 = structuredClone(item);
   if (typeof dateFields === 'string') {
     dateFields = [dateFields];
   }

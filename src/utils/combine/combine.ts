@@ -2,7 +2,7 @@ import type { HookContext } from '@feathersjs/feathers';
 import type { HookFunction } from '../../types';
 
 /**
- * Sequentially execute multiple sync or async hooks.
+ * Sequentially execute multiple hooks.
  * @see https://hooks-common.feathersjs.com/utilities.html#combine
  */
 export function combine<H extends HookContext = HookContext>(...serviceHooks: HookFunction<H>[]) {

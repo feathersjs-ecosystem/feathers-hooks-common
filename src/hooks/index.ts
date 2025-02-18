@@ -23,6 +23,7 @@ export * from './fgraphql/fgraphql';
 // iff
 export * from './iff/iff';
 export * from './iff/iff-else';
+export * from './iff/unless';
 
 // pick
 export * from './pick/pick';
@@ -42,7 +43,7 @@ export * from './mongo-keys/mongo-keys';
 export * from './params-from-client/params-from-client';
 export * from './populate/populate';
 export * from './prevent-changes/prevent-changes';
-export * from './required/required';
+export * from './check-required/check-required';
 export * from './run-parallel/run-parallel';
 export * from './sequelize-convert/sequelize-convert';
 export * from './serialize/serialize';
@@ -57,6 +58,6 @@ export * from './sifter/sifter';
 export * from './soft-delete/soft-delete';
 export * from './stash-before/stash-before';
 export * from './traverse/traverse';
-export * from './unless/unless';
+
 export * from './validate/validate';
 export * from './validate-schema/validate-schema';

@@ -72,6 +72,7 @@ const members = [
   'replaceData',
   'replaceResult',
 
+  'checkRequired',
   'required',
   'runHook',
   'runParallel',
@@ -96,13 +97,17 @@ const members = [
   'iff',
   'when',
   'unless',
+
+  // predicates
   'some',
   'every',
   'isNot',
-
-  'getPaginate',
+  'not',
   'isMulti',
   'isPaginated',
+  'isContext',
+
+  'getPaginate',
   'skipResult',
 ].sort();
 

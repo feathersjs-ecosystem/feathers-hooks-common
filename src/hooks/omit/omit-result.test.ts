@@ -75,7 +75,7 @@ describe('omitResult', () => {
         query: {},
       };
 
-      omitResult('email', 'password')(hook);
+      omitResult(['email', 'password'])(hook);
 
       assert.deepEqual(hook.result, {
         roles: ['super'],
