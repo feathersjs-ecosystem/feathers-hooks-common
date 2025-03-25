@@ -861,14 +861,12 @@ Execute one or another series of hooks depending on a sync or async predicate.
 
 - **Arguments**
   - `{Boolean | Promise | Function} predicate`
-  - `{Array< Function >} hookFuncsTrue`
-  - `{Array< Function >} hookFuncsFalse`
+  - `{Array< Function >}] hookFuncs`
 
 | Argument         |                Type                | Default | Description                                                                                                                                                                                                 |
 | ---------------- | :--------------------------------: | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `predicate`      | `Boolean`, `Promise` or `Function` |         | Determine if `hookFuncsTrue` or `hookFuncsFalse` should be run. If a function, `predicate` is called with the `context` as its param. It returns either a boolean or a Promise that evaluates to a boolean. |
-| `hookFuncsTrue`  |       `Array<` `Function >`        |         | Sync or async hook functions to run if `true`. They may include other conditional hooks.                                                                                                                    |
-| `hookFuncsFalse` |       `Array<` `Function >`        |         | Sync or async hook functions to run if `false`. They may include other conditional hooks.                                                                                                                   |
+| `predicate`      | `Boolean`, `Promise` or `Function` |         | Determine if `hookFuncs` should be run. If a function, `predicate` is called with the `context` as its param. It returns either a boolean or a Promise that evaluates to a boolean. |
+| `hookFuncs`  |       `Array< Function >`        |         | Sync or async hook functions to run if `true`. They may include other conditional hooks.                                                                                                                    |
 
 - **Example**
 
