@@ -1,28 +1,53 @@
 import type { HookContext } from '@feathersjs/feathers';
+import { FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } from '../params-for-server/params-for-server';
+import { MaybeArray, toArray } from '../../internal.utils';
 
-/**
- * Pass context.params from client to server. Server hook.
- * @see https://hooks-common.feathersjs.com/hooks.html#paramsfromclient
- *
- * @deprecated use `paramsFromClient2` instead
- */
-export function paramsFromClient<H extends HookContext = HookContext>(...whitelist: string[]) {
-  return (context: H) => {
-    const params = context.params;
+export type paramsFromClientOptions = {
+  /**
+   * @default '_$client'
+   */
+  keyToHide?: string;
+};
 
-    if (params?.query?.$client && typeof params.query.$client === 'object') {
-      const client = params.query.$client;
-
-      whitelist.forEach(key => {
-        if (key in client) {
-          params[key] = client[key];
-        }
-      });
-
-      params.query = Object.assign({}, params.query);
-      delete params.query.$client;
+export const paramsFromClient = (
+  whitelist: MaybeArray<string>,
+  options?: paramsFromClientOptions,
+): ((context: HookContext) => HookContext) => {
+  const whitelistArr = toArray(whitelist);
+  const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {};
+  return (context: HookContext): HookContext => {
+    if (
+      !context.params?.query?.[keyToHide] ||
+      typeof context.params.query[keyToHide] !== 'object'
+    ) {
+      return context;
     }
+
+    const params = {
+      ...context.params,
+      query: {
+        ...context.params.query,
+        [keyToHide]: {
+          ...context.params.query[keyToHide],
+        },
+      },
+    };
+
+    const client = params.query[keyToHide];
+
+    whitelistArr.forEach(key => {
+      if (key in client) {
+        params[key] = client[key];
+        delete client[key];
+      }
+    });
+
+    if (Object.keys(client).length === 0) {
+      delete params.query[keyToHide];
+    }
+
+    context.params = params;
 
     return context;
   };
-}
+};

@@ -1,26 +1,23 @@
 import { HookContext } from '@feathersjs/feathers';
-import { paramsFromClient2 } from './params-from-client2';
+import { paramsForServer } from './params-for-server';
 
-describe('paramsFromClient2', () => {
+describe('paramsForServer', () => {
   it('should move params to query._$client', () => {
     expect(
-      paramsFromClient2(['a', 'b'])({
+      paramsForServer(['a', 'b'])({
         params: {
-          query: {
-            _$client: {
-              a: 1,
-              b: 2,
-            },
-            c: 3,
-          },
+          a: 1,
+          b: 2,
+          query: {},
         },
       } as HookContext),
     ).toEqual({
       params: {
-        a: 1,
-        b: 2,
         query: {
-          c: 3,
+          _$client: {
+            a: 1,
+            b: 2,
+          },
         },
       },
     });
@@ -28,25 +25,20 @@ describe('paramsFromClient2', () => {
 
   it('should move params to query._$client and leave remaining', () => {
     expect(
-      paramsFromClient2('a')({
+      paramsForServer('a')({
         params: {
-          query: {
-            _$client: {
-              a: 1,
-              b: 2,
-            },
-            c: 3,
-          },
+          a: 1,
+          b: 2,
+          query: {},
         },
       } as HookContext),
     ).toEqual({
       params: {
-        a: 1,
+        b: 2,
         query: {
           _$client: {
-            b: 2,
+            a: 1,
           },
-          c: 3,
         },
       },
     });

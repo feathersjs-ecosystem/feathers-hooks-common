@@ -10,11 +10,11 @@ export type SoftDeleteOptionFunction<H extends HookContext = HookContext> = (
 
 export interface SoftDeleteOptions<H extends HookContext = HookContext> {
   /**
-   * @default { deleted: { $ne: true } }
+   * @default { deletedAt: { $ne: true } }
    */
   deletedQuery?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
   /**
-   * @default { deleted: true }
+   * @default { deletedAt: new Date() }
    */
   removeData?: { [key: string]: any } | SoftDeleteOptionFunction<H>;
   /**
@@ -28,8 +28,8 @@ export interface SoftDeleteOptions<H extends HookContext = HookContext> {
   disableSoftDeleteKey?: string;
 }
 
-const defaultQuery = { deleted: { $ne: true } };
-const defaultData = { deleted: true };
+const defaultQuery = () => ({ deletedAt: { $ne: true } });
+const defaultData = () => ({ deletedAt: new Date() });
 
 /**
  * Allow to mark items as deleted instead of removing them.

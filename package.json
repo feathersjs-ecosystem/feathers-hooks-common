@@ -25,7 +25,7 @@
     "release:major": "npm version major && npm publish",
     "changelog": "github_changelog_generator --max-issues 200 -u feathersjs-ecosystem -p feathers-hooks-common && git add CHANGELOG.md && git commit -am \"Updating changelog\"",
     "lint": "eslint .",
-    "update-dependencies": "ncu -u -x ajv",
+    "update-dependencies": "ncu -u",
     "test:unit": "vitest run",
     "coverage": "vitest run --coverage",
     "test": "npm run lint && npm run coverage",
@@ -64,9 +64,7 @@
   ],
   "dependencies": {
     "@feathersjs/errors": "^5.0.31",
-    "ajv": "^6.12.6",
     "fast-copy": "^3.0.2",
-    "graphql": "^16.10.0",
     "lodash": "^4.17.21",
     "neotraverse": "^0.6.18"
   },

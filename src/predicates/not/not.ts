@@ -18,6 +18,3 @@ export const not =
 
     return result.then(result1 => !result1);
   };
-
-// alias
-export { not as isNot };

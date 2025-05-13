@@ -1,4 +1,4 @@
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import { replaceData } from '../../utils/replace-items/replace-data';
 import { isPromise } from '../../common';
 
@@ -8,8 +8,8 @@ import { isPromise } from '../../common';
  */
 export const alterData =
   <T = any, H extends HookContext = HookContext>(cb: (record: T, context: H) => any) =>
-  (context: H) =>
-    replaceData(context, (item: any) => {
+  async (context: H, next?: NextFunction) => {
+    await replaceData(context, (item: any) => {
       const result = cb(item, context);
 
       if (isPromise(result)) {
@@ -18,3 +18,8 @@ export const alterData =
         return result ?? item;
       }
     });
+
+    if (next) {
+      return next();
+    }
+  };

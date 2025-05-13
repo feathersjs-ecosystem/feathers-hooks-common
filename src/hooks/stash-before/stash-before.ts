@@ -1,4 +1,4 @@
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import { checkContext } from '../../utils';
 
 /**
@@ -8,7 +8,7 @@ import { checkContext } from '../../utils';
 export function stashBefore<H extends HookContext = HookContext>(fieldName?: string) {
   const beforeField = fieldName || 'before';
 
-  return (context: H) => {
+  return async (context: H, next?: NextFunction) => {
     if (context.params.disableStashBefore) {
       return context;
     }
@@ -23,7 +23,7 @@ export function stashBefore<H extends HookContext = HookContext>(fieldName?: str
       ...(isMulti ? { paginate: false } : {}),
     };
 
-    return (!isMulti ? context.service.get(context.id, params) : context.service.find(params))
+    await (!isMulti ? context.service.get(context.id, params) : context.service.find(params))
       .then((result: any) => {
         context.params[beforeField] = result;
         return context;
@@ -31,5 +31,11 @@ export function stashBefore<H extends HookContext = HookContext>(fieldName?: str
       .catch(() => {
         return context;
       });
+
+    if (next) {
+      return await next();
+    }
+
+    return context;
   };
 }

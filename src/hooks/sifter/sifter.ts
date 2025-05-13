@@ -1,15 +1,14 @@
-import { BadRequest } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import type { SyncContextFunction } from '../../types';
 import { replaceResult } from '../../utils/replace-items/replace-result';
 
 export const sifter =
   <H extends HookContext = HookContext>(siftFunc: SyncContextFunction<(item: any) => boolean, H>) =>
-  (context: H) => {
+  async (context: H, next?: NextFunction) => {
     const sifter = siftFunc(context);
 
-    if (typeof sifter !== 'function') {
-      throw new BadRequest('The result of calling the sifter param must be a function. (sifter)');
+    if (next) {
+      await next();
     }
 
     return replaceResult(context, item => item, {

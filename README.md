@@ -2,13 +2,13 @@
 
 #### hooks
 
-- added alterData, alterResult, deprecated alterItems
-- added discardData, discardResult, deprecated discard
-  - moved to omitData, omitResult, deprecated omit
-- added keepData, keepResult, deprecated keep
-  - moved to pickData, pickResult, deprecated pick
-- added lowercaseData, lowercaseResult, deprecated lowercase
-- added setNowData, setNowResult, deprecated setNow
+- added alterData, alterResult, rm alterItems
+- added discardData, discardResult, rm discard
+  - moved to omitData, omitResult, rm omit
+- added keepData, keepResult, rm keep
+  - moved to pickData, pickResult, rm pick
+- added lowercaseData, lowercaseResult, rm lowercase
+- added setNowData, setNowResult, rm setNow
 
 - removed several checks that are handled by typescript
 - removed check for `preventChanges(true, ...fieldNames)`
@@ -28,6 +28,8 @@
 - softDelete: added 'transformParams' & added 'key' option
 
 - rm support for spread argument
+
+- rm 'actOnDispatch' & 'actOnDefault'
 
 #### predicates
 

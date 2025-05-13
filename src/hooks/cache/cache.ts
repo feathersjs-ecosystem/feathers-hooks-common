@@ -12,6 +12,8 @@ export interface CacheOptions<T> {
 const defaultMakeCacheKey = (key: any) => key;
 
 /**
+ * TODO: rm 'getItems' & migrate to around hook
+ *
  * Persistent, most-recently-used record cache for services.
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#cache

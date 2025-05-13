@@ -1,22 +1,28 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import type { TransportName } from '../../types';
 import { isProvider } from '../../predicates';
+import { MaybeArray, toArray } from '../../internal.utils';
 
 /**
  * Prevents access to a service method completely or for specific transports.
  * @see https://hooks-common.feathersjs.com/hooks.html#disallow
  */
-export function disallow<H extends HookContext = HookContext>(...transports: TransportName[]) {
-  return (context: H) => {
-    if (transports.length === 0) {
+export const disallow = <H extends HookContext = HookContext>(
+  transports: MaybeArray<TransportName>,
+) => {
+  const transportsArr = toArray(transports);
+  return (context: H, next?: NextFunction) => {
+    if (transportsArr.length === 0) {
       throw new MethodNotAllowed('Method not allowed');
     }
 
-    if (isProvider(...transports)(context)) {
+    if (isProvider(...transportsArr)(context)) {
       throw new MethodNotAllowed(
         `Provider '${context.params.provider}' can not call '${context.method}'. (disallow)`,
       );
     }
+
+    if (next) return next().then(() => context);
   };
-}
+};

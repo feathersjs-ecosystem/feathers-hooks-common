@@ -1,11 +1,16 @@
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 
 /**
  * Display the current hook context for debugging.
  * @see https://hooks-common.feathersjs.com/hooks.html#debug
  */
-export function debug<H extends HookContext = HookContext>(msg: string, ...fieldNames: string[]) {
-  return (context: H) => {
+export const debug =
+  <H extends HookContext = HookContext>(msg: string, ...fieldNames: string[]) =>
+  async (context: H, next?: NextFunction) => {
+    if (next) {
+      await next();
+    }
+
     // display timestamp
     const now = new Date();
     console.log(
@@ -50,4 +55,3 @@ export function debug<H extends HookContext = HookContext>(msg: string, ...field
       console.log('error', context.error);
     }
   };
-}

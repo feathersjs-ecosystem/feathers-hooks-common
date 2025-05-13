@@ -3,7 +3,7 @@ import _has from 'lodash/has.js';
 import { BadRequest } from '@feathersjs/errors';
 
 import { checkContext, getDataIsArray } from '../../utils';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 import { MaybeArray, toArray } from '../../internal.utils';
 
 /**
@@ -12,8 +12,8 @@ import { MaybeArray, toArray } from '../../internal.utils';
  */
 export function checkRequired<H extends HookContext = HookContext>(fieldNames: MaybeArray<string>) {
   const fieldNamesArray = toArray(fieldNames);
-  return (context: H) => {
-    checkContext(context, 'before', ['create', 'update', 'patch'], 'required');
+  return (context: H, next?: NextFunction) => {
+    checkContext(context, ['before', 'around'], ['create', 'update', 'patch'], 'required');
 
     const { data } = getDataIsArray(context);
 
@@ -34,7 +34,7 @@ export function checkRequired<H extends HookContext = HookContext>(fieldNames: M
         }
       }
     }
+
+    if (next) return next().then(() => context);
   };
 }
-
-export { checkRequired as required };

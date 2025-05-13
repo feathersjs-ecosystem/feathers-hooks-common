@@ -3,7 +3,7 @@ import { MaybeArray, toArray } from '../../internal.utils';
 
 export const FROM_CLIENT_FOR_SERVER_DEFAULT_KEY = '_$client' as const;
 
-export type ParamsForServer2Options = {
+export type ParamsForServerOptions = {
   /**
    * @default '_$client'
    */
@@ -16,9 +16,9 @@ export type ParamsForServer2Options = {
  * So, to use `$populateParams` on the server, we need to move the params to query._$client
  * the server will move them back to params
  */
-export const paramsForServer2 = (
+export const paramsForServer = (
   whitelist: MaybeArray<string>,
-  options?: ParamsForServer2Options,
+  options?: ParamsForServerOptions,
 ) => {
   const whitelistArr = toArray(whitelist);
 

@@ -3,7 +3,7 @@ import _setWith from 'lodash/setWith.js';
 import _clone from 'lodash/clone.js';
 import { checkContext } from '../../utils';
 import { Forbidden } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext, NextFunction } from '@feathersjs/feathers';
 
 export interface SetFieldOptions {
   as: string;
@@ -17,10 +17,10 @@ export interface SetFieldOptions {
  */
 export const setField =
   <H extends HookContext = HookContext>({ as, from, allowUndefined = false }: SetFieldOptions) =>
-  (context: H) => {
+  (context: H, next?: NextFunction) => {
     const { params } = context;
 
-    checkContext(context, 'before', null, 'setField');
+    checkContext(context, ['before', 'around'], null, 'setField');
 
     const value = _get(context, from);
 
@@ -32,5 +32,9 @@ export const setField =
       throw new Forbidden(`Expected field ${as} not available`);
     }
 
-    return _setWith(context, as, value, _clone);
+    context = _setWith(context, as, value, _clone);
+
+    if (next) return next().then(() => context);
+
+    return context;
   };
