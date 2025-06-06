@@ -1,9 +1,9 @@
-import { assert } from 'vitest';
-import { omitResult } from './omit-result';
+import { assert } from 'vitest'
+import { omitResult } from './omit-result.js'
 
-let hookAfter: any;
-let hookFindPaginate: any;
-let hookFind: any;
+let hookAfter: any
+let hookFindPaginate: any
+let hookFind: any
 
 describe('omitResult', () => {
   describe('removes fields', () => {
@@ -13,7 +13,7 @@ describe('omitResult', () => {
         method: 'create',
         params: { provider: 'rest' },
         result: { first: 'Jane', last: 'Doe' },
-      };
+      }
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -25,7 +25,7 @@ describe('omitResult', () => {
             { first: 'Jane', last: 'Doe' },
           ],
         },
-      };
+      }
       hookFind = {
         type: 'after',
         method: 'find',
@@ -34,30 +34,30 @@ describe('omitResult', () => {
           { first: 'John', last: 'Doe' },
           { first: 'Jane', last: 'Doe' },
         ],
-      };
-    });
+      }
+    })
 
     it('updates hook after::find with pagination', () => {
-      omitResult('last')(hookFindPaginate);
-      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+      omitResult('last')(hookFindPaginate)
+      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }])
+    })
 
     it('updates hook after::find with no pagination', () => {
-      omitResult('last')(hookFind);
-      assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+      omitResult('last')(hookFind)
+      assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }])
+    })
 
     it('updates hook after', () => {
-      omitResult('last')(hookAfter);
-      assert.deepEqual(hookAfter.result, { first: 'Jane' });
-    });
+      omitResult('last')(hookAfter)
+      assert.deepEqual(hookAfter.result, { first: 'Jane' })
+    })
 
     it('updates when called internally on server', () => {
-      hookAfter.params.provider = '';
-      omitResult('last')(hookAfter);
-      assert.deepEqual(hookAfter.result, { first: 'Jane' });
-    });
-  });
+      hookAfter.params.provider = ''
+      omitResult('last')(hookAfter)
+      assert.deepEqual(hookAfter.result, { first: 'Jane' })
+    })
+  })
 
   describe('handles dot notation', () => {
     it('discards multiple fields', () => {
@@ -73,9 +73,9 @@ describe('omitResult', () => {
           id: 'b',
         },
         query: {},
-      };
+      }
 
-      omitResult(['email', 'password'])(hook);
+      omitResult(['email', 'password'])(hook)
 
       assert.deepEqual(hook.result, {
         roles: ['super'],
@@ -84,8 +84,8 @@ describe('omitResult', () => {
         // password: 'bar',
         name: 'Rafael',
         id: 'b',
-      } as any);
-    });
+      } as any)
+    })
 
     it('null prop', () => {
       const hook: any = {
@@ -96,14 +96,14 @@ describe('omitResult', () => {
           other: 'bar',
         },
         query: {},
-      };
+      }
 
-      omitResult('property.secret')(hook);
+      omitResult('property.secret')(hook)
 
       assert.deepEqual(hook.result, {
         property: null,
         other: 'bar',
-      });
-    });
-  });
-});
+      })
+    })
+  })
+})

@@ -1,6 +1,6 @@
-import type { HookContext } from '@feathersjs/feathers';
-import type { HookType, MethodName } from '../../types';
-import { isContext } from '../../predicates/is-context/is-context';
+import type { HookContext } from '@feathersjs/feathers'
+import type { HookType, MethodName } from '../../types.js'
+import { isContext } from '../../predicates/is-context/is-context.js'
 
 /**
  * Restrict a hook to run for certain methods and method types. (Utility function.)
@@ -18,6 +18,6 @@ export function checkContext<H extends HookContext = HookContext>(
       type: type ?? undefined,
     })(context)
   ) {
-    throw new Error(`The '${label}' hook has invalid context.`);
+    throw new Error(`The '${label}' hook has invalid context.`)
   }
 }

@@ -1,10 +1,11 @@
-import _omit from 'lodash/omit.js';
-import { alterData } from '../alter-items/alter-data';
-import { MaybeArray, toArray } from '../../internal.utils';
+import _omit from 'lodash/omit.js'
+import { transformData } from '../transform/transform-data.js'
+import type { MaybeArray } from '../../internal.utils.js'
+import { toArray } from '../../internal.utils.js'
 
 /**
  * Delete certain fields from the record(s).
  * @see https://hooks-common.feathersjs.com/hooks.html#discard
  */
 export const omitData = (fieldNames: MaybeArray<string>) =>
-  alterData((item: any) => _omit(item, toArray(fieldNames)));
+  transformData((item: any) => _omit(item, toArray(fieldNames)))

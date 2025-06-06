@@ -1,14 +1,14 @@
-import { HookContext, NextFunction } from '@feathersjs/feathers';
-import { getResultIsArray } from '../get-result-is-array/get-result-is-array';
-import { isPromise } from '../../common';
-import copy from 'fast-copy';
-import { DispatchOption } from '../../types';
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
+import { getResultIsArray } from '../get-result-is-array/get-result-is-array.js'
+import { isPromise } from '../../common/index.js'
+import copy from 'fast-copy'
+import type { DispatchOption } from '../../types.js'
 
 export type ReplaceResultOptions = {
-  next?: NextFunction;
-  transform?: (items: any[]) => any[];
-  dispatch?: DispatchOption;
-};
+  next?: NextFunction
+  transform?: (items: any[]) => any[]
+  dispatch?: DispatchOption
+}
 
 export async function replaceResult<H extends HookContext = HookContext>(
   context: H,
@@ -16,59 +16,59 @@ export async function replaceResult<H extends HookContext = HookContext>(
   options?: ReplaceResultOptions,
 ): Promise<H> {
   if (options?.next) {
-    await options.next();
+    await options.next()
   }
 
   if (!!options?.dispatch && !context.dispatch) {
-    context.dispatch = copy(context.result);
+    context.dispatch = copy(context.result)
   }
 
   async function forResult(dispatch: boolean) {
-    const { result, isArray, key } = getResultIsArray(context, { dispatch });
+    const { result, isArray, key } = getResultIsArray(context, { dispatch })
 
     if (!result.length) {
-      return context;
+      return context
     }
 
-    let hasPromises = false;
+    let hasPromises = false
 
     const results = result.map(item => {
-      const result = cb(item);
+      const result = cb(item)
 
       if (!hasPromises && isPromise(result)) {
-        hasPromises = true;
+        hasPromises = true
       }
 
-      return result;
-    });
+      return result
+    })
 
     function replace(r: any) {
       if (options?.transform) {
-        r = options.transform(r);
+        r = options.transform(r)
       }
 
       if (!isArray) {
-        context[key] = r[0];
+        context[key] = r[0]
       } else if (isArray && !Array.isArray(context[key]) && context[key].data) {
-        context[key].data = r;
+        context[key].data = r
       } else {
-        context[key] = r;
+        context[key] = r
       }
 
-      return context;
+      return context
     }
 
     if (hasPromises) {
-      return await Promise.all(results).then(replace);
+      return await Promise.all(results).then(replace)
     } else {
-      return replace(results);
+      return replace(results)
     }
   }
 
   if (options?.dispatch === 'both') {
-    await Promise.all([forResult(true), forResult(false)]);
-    return context;
+    await Promise.all([forResult(true), forResult(false)])
+    return context
   }
 
-  return await forResult(options?.dispatch ?? false);
+  return await forResult(options?.dispatch ?? false)
 }

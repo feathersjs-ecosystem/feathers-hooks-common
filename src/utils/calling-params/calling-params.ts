@@ -1,6 +1,6 @@
-import type { HookContext, Params } from '@feathersjs/feathers';
-import _get from 'lodash/get.js';
-import _set from 'lodash/set.js';
+import type { HookContext, Params } from '@feathersjs/feathers'
+import _get from 'lodash/get.js'
+import _set from 'lodash/set.js'
 
 export type Disablable =
   | 'populate'
@@ -8,37 +8,37 @@ export type Disablable =
   | 'ignoreDeletedAt'
   | 'softDelete'
   | 'softDelete2'
-  | 'stashBefore';
+  | 'stashBefore'
 
 export interface CallingParamsOptions {
   /**
    * The params.query for the calling params.
    */
-  query?: any;
+  query?: any
   /**
    * The names of the props in context.params to include in the new params.
    */
-  propNames?: string[];
+  propNames?: string[]
   /**
    * Additional props to add to the new params.
    */
-  newProps?: any;
+  newProps?: any
   /**
    * The names of hooks to disable during the service call. populate, fastJoin, softDelete and stashBefore are supported.
    */
-  hooksToDisable?: Disablable[] | Disablable;
+  hooksToDisable?: Disablable[] | Disablable
   /**
    *    Ignore the defaults propNames and newProps.
    */
-  ignoreDefaults?: boolean;
+  ignoreDefaults?: boolean
 }
 
-const stndAuthProps = ['provider', 'authenticated', 'user']; // feathers-authentication
+const stndAuthProps = ['provider', 'authenticated', 'user'] // feathers-authentication
 // App wide defaults
 const defaults = {
   propNames: stndAuthProps,
   newProps: {},
-};
+}
 
 /**
  * Set defaults for building params for service calls with callingParams. (Utility function.)
@@ -46,11 +46,11 @@ const defaults = {
  */
 export function callingParamsDefaults(propNames: string[], newProps?: any): void {
   if (propNames) {
-    defaults.propNames = Array.isArray(propNames) ? propNames : [propNames];
+    defaults.propNames = Array.isArray(propNames) ? propNames : [propNames]
   }
 
   if (newProps) {
-    defaults.newProps = newProps;
+    defaults.newProps = newProps
   }
 }
 
@@ -67,53 +67,53 @@ export const callingParams =
     ignoreDefaults,
   }: CallingParamsOptions = {}) =>
   (context: H) => {
-    propNames = Array.isArray(propNames) ? propNames : [propNames];
-    hooksToDisable = Array.isArray(hooksToDisable) ? hooksToDisable : [hooksToDisable];
+    propNames = Array.isArray(propNames) ? propNames : [propNames]
+    hooksToDisable = Array.isArray(hooksToDisable) ? hooksToDisable : [hooksToDisable]
 
-    const newParams: Params = query ? { query } : {};
-    const allPropNames = ignoreDefaults ? propNames : [...defaults.propNames, ...propNames];
+    const newParams: Params = query ? { query } : {}
+    const allPropNames = ignoreDefaults ? propNames : [...defaults.propNames, ...propNames]
 
     allPropNames.forEach(name => {
       if (name) {
         // for makeCallingParams compatibility
-        const value = _get(context.params, name);
+        const value = _get(context.params, name)
 
         if (value !== undefined) {
-          _set(newParams, name, value);
+          _set(newParams, name, value)
         }
       }
-    });
+    })
 
-    Object.assign(newParams, ignoreDefaults ? {} : defaults.newProps, newProps);
+    Object.assign(newParams, ignoreDefaults ? {} : defaults.newProps, newProps)
 
     hooksToDisable.forEach(name => {
       switch (name) {
         case 'populate': // fall through
         case 'fastJoin':
           // @ts-expect-error TODO
-          newParams._populate = 'skip';
-          break;
+          newParams._populate = 'skip'
+          break
         case 'softDelete':
-          newParams.query = newParams.query || {};
-          newParams.query.$disableSoftDelete = true;
-          break;
+          newParams.query = newParams.query || {}
+          newParams.query.$disableSoftDelete = true
+          break
         case 'softDelete2':
           // @ts-expect-error TODO
-          newParams.$disableSoftDelete2 = true;
-          break;
+          newParams.$disableSoftDelete2 = true
+          break
         case 'ignoreDeletedAt':
           // @ts-expect-error TODO
-          newParams.$ignoreDeletedAt = true;
-          break;
+          newParams.$ignoreDeletedAt = true
+          break
         case 'stashBefore':
           // @ts-expect-error TODO
-          newParams.disableStashBefore = true;
-          break;
+          newParams.disableStashBefore = true
+          break
       }
-    });
+    })
 
-    return newParams;
-  };
+    return newParams
+  }
 
 /**
  * You should prefer using the callingParams utility to makeCallingParams.
@@ -136,5 +136,5 @@ export function makeCallingParams<H extends HookContext = HookContext>(
           : [include],
     newProps: Object.assign({}, { _populate: 'skip' }, inject),
     ignoreDefaults: true,
-  })(context);
+  })(context)
 }

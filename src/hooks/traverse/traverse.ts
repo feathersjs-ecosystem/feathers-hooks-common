@@ -1,7 +1,7 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { traverse as _traverse } from '../../common';
-import type { SyncContextFunction } from '../../types';
-import { getItems } from '../../utils';
+import type { HookContext } from '@feathersjs/feathers'
+import { traverse as _traverse } from '../../common/index.js'
+import type { SyncContextFunction } from '../../types.js'
+import { getItems } from '../../utils/index.js'
 
 /**
  * Transform fields & objects in place in the record(s) using a recursive walk. Powerful.
@@ -14,9 +14,9 @@ export function traverse<H extends HookContext = HookContext>(
 ) {
   return (context: H) => {
     const items =
-      typeof getObject === 'function' ? getObject(context) : getObject || getItems(context);
+      typeof getObject === 'function' ? getObject(context) : getObject || getItems(context)
 
-    _traverse(items, transformer);
-    return context;
-  };
+    _traverse(items, transformer)
+    return context
+  }
 }

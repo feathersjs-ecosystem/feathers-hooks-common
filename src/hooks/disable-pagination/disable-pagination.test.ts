@@ -1,7 +1,7 @@
-import { assert } from 'vitest';
-import { disablePagination } from './disable-pagination';
+import { assert } from 'vitest'
+import { disablePagination } from './disable-pagination.js'
 
-let hookBefore: any;
+let hookBefore: any
 
 describe('services disablePagination', () => {
   beforeEach(() => {
@@ -9,36 +9,36 @@ describe('services disablePagination', () => {
       type: 'before',
       method: 'find',
       params: { query: { id: 1, $limit: -1 } },
-    };
-  });
+    }
+  })
 
   it('disables on $limit = -1', () => {
-    hookBefore.params.query.$limit = -1;
+    hookBefore.params.query.$limit = -1
 
-    const result: any = disablePagination()(hookBefore);
-    assert.deepEqual(result.params, { paginate: false, query: { id: 1 } });
-  });
+    const result: any = disablePagination()(hookBefore)
+    assert.deepEqual(result.params, { paginate: false, query: { id: 1 } })
+  })
 
   it('disables on $limit = "-1"', () => {
-    hookBefore.params.query.$limit = '-1';
+    hookBefore.params.query.$limit = '-1'
 
-    const result: any = disablePagination()(hookBefore);
-    assert.deepEqual(result.params, { paginate: false, query: { id: 1 } });
-  });
+    const result: any = disablePagination()(hookBefore)
+    assert.deepEqual(result.params, { paginate: false, query: { id: 1 } })
+  })
 
   it('throws if after hook', () => {
-    hookBefore.type = 'after';
+    hookBefore.type = 'after'
 
     assert.throws(() => {
-      disablePagination()(hookBefore);
-    });
-  });
+      disablePagination()(hookBefore)
+    })
+  })
 
   it('throws if not find', () => {
-    hookBefore.method = 'get';
+    hookBefore.method = 'get'
 
     assert.throws(() => {
-      disablePagination()(hookBefore);
-    });
-  });
-});
+      disablePagination()(hookBefore)
+    })
+  })
+})

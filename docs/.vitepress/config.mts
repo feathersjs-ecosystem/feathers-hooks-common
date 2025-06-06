@@ -1,9 +1,9 @@
-import { defineConfig } from 'vitepress';
-import { name, description, ogUrl, ogImage } from './meta';
-import { version } from '../../package.json';
+import { defineConfig } from 'vitepress'
+import { name, description, ogUrl, ogImage } from './meta'
+import { version } from '../../package.json'
 
 export default defineConfig({
-  title: 'feathers-hooks-common',
+  title: 'feathers-hooks-common/index.js',
   lastUpdated: true,
   description: '',
   head: [
@@ -19,7 +19,7 @@ export default defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ],
   themeConfig: {
-    siteTitle: 'feathers-hooks-common',
+    siteTitle: 'feathers-hooks-common/index.js',
     editLink: {
       pattern:
         'https://github.com/feathersjs-ecosystem/feathers-hooks-common/edit/master/docs/:path',
@@ -36,7 +36,7 @@ export default defineConfig({
       },
       {
         icon: 'github',
-        link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common',
+        link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/index.js',
       },
     ],
     logo: '/feathers-hooks-common-logo.png',
@@ -45,7 +45,7 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Overview', link: '/overview' },
-          { text: 'Hooks', link: '/hooks' },
+          { text: 'Hooks', link: '/hooks/index.js' },
           { text: 'Utilities', link: '/utilities' },
           { text: 'Migrating', link: '/migrating' },
           { text: 'Guides', link: '/guides' },
@@ -77,4 +77,4 @@ export default defineConfig({
       indexName: 'feathers-hooks',
     },
   },
-});
+})

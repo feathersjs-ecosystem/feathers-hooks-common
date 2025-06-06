@@ -1,19 +1,20 @@
-import { HookContext, NextFunction } from '@feathersjs/feathers';
-import { getResult, Resolver, runResolvers } from './resolvers.internal';
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
+import type { Resolver } from './resolvers.internal.js'
+import { getResult, runResolvers } from './resolvers.internal.js'
 
 export const resolveResult = <H extends HookContext>(...resolvers: Resolver<any, H>[]) => {
   return async (context: H, next: NextFunction) => {
     if (typeof next !== 'function') {
-      throw new Error('The resolveResult hook must be used as an around hook');
+      throw new Error('The resolveResult hook must be used as an around hook')
     }
 
-    const { $resolve, $select, ...query } = context.params?.query || {};
+    const { $resolve, $select, ...query } = context.params?.query || {}
 
     const resolve = {
       originalContext: context,
       ...context.params.resolve,
       properties: $resolve || $select,
-    };
+    }
 
     context.params = {
       ...context.params,
@@ -21,23 +22,23 @@ export const resolveResult = <H extends HookContext>(...resolvers: Resolver<any,
       query: {
         ...query,
       },
-    };
+    }
 
-    await next();
+    await next()
 
-    const status = context.params.resolve;
-    const { isPaginated, data } = getResult(context);
+    const status = context.params.resolve
+    const { isPaginated, data } = getResult(context)
 
     const result = Array.isArray(data)
       ? await Promise.all(
           data.map(async current => runResolvers(resolvers, current, context, status)),
         )
-      : await runResolvers(resolvers, data, context, status);
+      : await runResolvers(resolvers, data, context, status)
 
     if (isPaginated) {
-      context.result.data = result;
+      context.result.data = result
     } else {
-      context.result = result;
+      context.result = result
     }
-  };
-};
+  }
+}

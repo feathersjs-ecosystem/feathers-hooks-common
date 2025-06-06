@@ -1,5 +1,5 @@
-import type { HookContext } from '@feathersjs/feathers';
-import type { HookFunction } from '../../types';
+import type { HookContext } from '@feathersjs/feathers'
+import type { HookFunction } from '../../types.js'
 
 /**
  * Sequentially execute multiple hooks.
@@ -11,11 +11,11 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
   // }
 
   const isContext = function (ctx: H) {
-    return typeof ctx?.method === 'string' && typeof ctx?.type === 'string';
-  };
+    return typeof ctx?.method === 'string' && typeof ctx?.type === 'string'
+  }
 
   return async function (context: H) {
-    let ctx = context;
+    let ctx = context
 
     const updateCurrentHook = (current: void | H) => {
       // Either use the returned hook object or the current
@@ -24,36 +24,36 @@ export function combine<H extends HookContext = HookContext>(...serviceHooks: Ho
         if (!isContext(current)) {
           throw new Error(
             `${ctx.type} hook for '${ctx.method}' method returned invalid hook object`,
-          );
+          )
         }
 
-        ctx = current;
+        ctx = current
       }
 
-      return ctx;
-    };
+      return ctx
+    }
 
     // Go through all hooks and chain them into our promise
 
     // @ts-expect-error TODO
     const promise = serviceHooks.reduce(async (current, fn) => {
       // @ts-expect-error TODO
-      const hook = fn.bind(this);
+      const hook = fn.bind(this)
 
       // Use the returned hook object or the old one
 
-      const currentHook = await current;
-      const currentCtx = await hook(currentHook);
-      return updateCurrentHook(currentCtx);
-    }, Promise.resolve(ctx));
+      const currentHook = await current
+      const currentCtx = await hook(currentHook)
+      return updateCurrentHook(currentCtx)
+    }, Promise.resolve(ctx))
 
     try {
-      await promise;
-      return ctx;
+      await promise
+      return ctx
     } catch (error: any) {
       // Add the hook information to any errors
-      error.hook = ctx;
-      throw error;
+      error.hook = ctx
+      throw error
     }
-  };
+  }
 }

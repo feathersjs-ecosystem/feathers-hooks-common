@@ -1,63 +1,41 @@
-export * from './act-on-dispatch/act-on-dispatch';
+// transform
+export * from './transform/transform-data.js'
+export * from './transform/transform-result.js'
 
-// alter
-export * from './alter-items/alter-items';
-export * from './alter-items/alter-data';
-export * from './alter-items/alter-result';
-
-export * from './cache/cache';
-export * from './debug/debug';
-export * from './de-populate/de-populate';
-export * from './disable-pagination/disable-pagination';
-export * from './disallow/disallow';
+export * from './cache/cache.js'
+export * from './debug/debug.js'
+export * from './disable-pagination/disable-pagination.js'
+export * from './disallow/disallow.js'
 
 // omit
-export * from './omit/omit';
-export * from './omit/omit-data';
-export * from './omit/omit-result';
-export * from './omit-query/omit-query';
-
-export * from './fast-join/fast-join';
-export * from './fgraphql/fgraphql';
+export * from './omit/omit-data.js'
+export * from './omit/omit-result.js'
+export * from './omit/omit-query.js'
 
 // iff
-export * from './iff/iff';
-export * from './iff/iff-else';
-export * from './iff/unless';
+export * from './iff/iff.js'
+export * from './iff/iff-else.js'
+export * from './iff/unless.js'
 
 // pick
-export * from './pick/pick';
-export * from './pick/pick-data';
-export * from './pick/pick-result';
-export * from './pick-query/pick-query';
+export * from './pick/pick-data.js'
+export * from './pick/pick-result.js'
+export * from './pick/pick-query.js'
 
-export * from './keep-in-array/keep-in-array';
+export * from './lowercase/lowercase-data.js'
+export * from './lowercase/lowercase-result.js'
 
-export * from './keep-query-in-array/keep-query-in-array';
+export * from './params-from-client/params-from-client.js'
+export * from './prevent-changes/prevent-changes.js'
+export * from './check-required/check-required.js'
+export * from './run-parallel/run-parallel.js'
+export * from './set-field/set-field.js'
 
-export * from './lowercase/lowercase';
-export * from './lowercase/lowercase-data';
-export * from './lowercase/lowercase-result';
+export * from './set-now/set-now-data.js'
+export * from './set-now/set-now-result.js'
 
-export * from './mongo-keys/mongo-keys';
-export * from './params-from-client/params-from-client';
-export * from './populate/populate';
-export * from './prevent-changes/prevent-changes';
-export * from './check-required/check-required';
-export * from './run-parallel/run-parallel';
-export * from './sequelize-convert/sequelize-convert';
-export * from './serialize/serialize';
-export * from './set-field/set-field';
-
-export * from './set-now/set-now';
-export * from './set-now/set-now-data';
-export * from './set-now/set-now-result';
-
-export * from './set-slug/set-slug';
-export * from './sifter/sifter';
-export * from './soft-delete/soft-delete';
-export * from './stash-before/stash-before';
-export * from './traverse/traverse';
-
-export * from './validate/validate';
-export * from './validate-schema/validate-schema';
+export * from './set-slug/set-slug.js'
+export * from './sifter/sifter.js'
+export * from './soft-delete/soft-delete.js'
+export * from './stash-before/stash-before.js'
+export * from './traverse/traverse.js'

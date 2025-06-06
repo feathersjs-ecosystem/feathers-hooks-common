@@ -1,25 +1,26 @@
-import _pick from 'lodash/pick.js';
+import _pick from 'lodash/pick.js'
 
-import { alterResult } from '../alter-items/alter-result';
-import { DispatchOption } from '../../types';
-import { MaybeArray, toArray } from '../../internal.utils';
+import { transformResult } from '../transform/transform-result.js'
+import type { DispatchOption } from '../../types.js'
+import type { MaybeArray } from '../../internal.utils.js'
+import { toArray } from '../../internal.utils.js'
 
 export type PickResultOptions = {
-  dispatch?: DispatchOption;
-};
+  dispatch?: DispatchOption
+}
 
 /**
  * Keep certain fields in the record(s), deleting the rest.
  * @see https://hooks-common.feathersjs.com/hooks.html#keep
  */
 export const pickResult = (fieldNames: MaybeArray<string>, options?: PickResultOptions) => {
-  const fieldNamesArr = toArray(fieldNames);
-  alterResult(
+  const fieldNamesArr = toArray(fieldNames)
+  return transformResult(
     (item: any) => {
-      if (typeof item !== 'object' || item === null) return item;
+      if (typeof item !== 'object' || item === null) return item
 
-      return _pick(item, fieldNamesArr);
+      return _pick(item, fieldNamesArr)
     },
     { dispatch: options?.dispatch },
-  );
-};
+  )
+}

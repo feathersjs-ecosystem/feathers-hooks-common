@@ -1,14 +1,15 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { MaybeArray, toArray } from '../../internal.utils';
+import type { HookContext } from '@feathersjs/feathers'
+import type { MaybeArray } from '../../internal.utils.js'
+import { toArray } from '../../internal.utils.js'
 
-export const FROM_CLIENT_FOR_SERVER_DEFAULT_KEY = '_$client' as const;
+export const FROM_CLIENT_FOR_SERVER_DEFAULT_KEY = '_$client' as const
 
 export type ParamsForServerOptions = {
   /**
    * @default '_$client'
    */
-  keyToHide?: string;
-};
+  keyToHide?: string
+}
 
 /**
  * a hook to move params to query._$client
@@ -20,17 +21,17 @@ export const paramsForServer = (
   whitelist: MaybeArray<string>,
   options?: ParamsForServerOptions,
 ) => {
-  const whitelistArr = toArray(whitelist);
+  const whitelistArr = toArray(whitelist)
 
-  const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {};
+  const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {}
 
   return <H extends HookContext>(context: H) => {
     // clone params on demand
-    let clonedParams: any;
+    let clonedParams: any
 
     Object.keys(context.params).forEach(key => {
       if (key === 'query') {
-        return;
+        return
       }
 
       if (whitelistArr.includes(key)) {
@@ -40,22 +41,22 @@ export const paramsForServer = (
             query: {
               ...context.params.query,
             },
-          };
+          }
         }
 
         if (!clonedParams.query[keyToHide]) {
-          clonedParams.query[keyToHide] = {};
+          clonedParams.query[keyToHide] = {}
         }
 
-        clonedParams.query[keyToHide][key] = clonedParams[key];
-        delete clonedParams[key];
+        clonedParams.query[keyToHide][key] = clonedParams[key]
+        delete clonedParams[key]
       }
-    });
+    })
 
     if (clonedParams) {
-      context.params = clonedParams;
+      context.params = clonedParams
     }
 
-    return context;
-  };
-};
+    return context
+  }
+}

@@ -1,15 +1,15 @@
-import type { HookContext, Id } from '@feathersjs/feathers';
-import { getItems } from '../../utils';
-import { clone as defaultClone } from '../../common';
+import type { HookContext, Id } from '@feathersjs/feathers'
+import { getItems } from '../../utils/index.js'
+import { clone as defaultClone } from '../../common/index.js'
 
-export type CacheMap<T> = Map<string | number, T>;
+export type CacheMap<T> = Map<string | number, T>
 
 export interface CacheOptions<T> {
-  clone?(item: T): T;
-  makeCacheKey?(id: Id): string;
+  clone?(item: T): T
+  makeCacheKey?(id: Id): string
 }
 
-const defaultMakeCacheKey = (key: any) => key;
+const defaultMakeCacheKey = (key: any) => key
 
 /**
  * TODO: rm 'getItems' & migrate to around hook
@@ -23,69 +23,69 @@ export function cache<H extends HookContext = HookContext, T = any>(
   keyField?: string,
   options?: CacheOptions<T>,
 ) {
-  const clone = options?.clone || defaultClone;
-  const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey;
+  const clone = options?.clone || defaultClone
+  const makeCacheKey = options?.makeCacheKey || defaultMakeCacheKey
 
   return (context: H) => {
-    keyField = keyField || context.service?.id; // Will be undefined on client
+    keyField = keyField || context.service?.id // Will be undefined on client
 
-    let items = getItems(context);
-    items = Array.isArray(items) ? items : [items];
+    let items = getItems(context)
+    items = Array.isArray(items) ? items : [items]
 
-    const query = context.params.query || {};
+    const query = context.params.query || {}
 
     if (context.type === 'after') {
       if (context.method === 'remove') {
         items.forEach((item: any) => {
-          const idName = getIdName(keyField, item);
-          const key = makeCacheKey(item[idName]);
-          cacheMap.delete(key);
-        });
-        return context;
+          const idName = getIdName(keyField, item)
+          const key = makeCacheKey(item[idName])
+          cacheMap.delete(key)
+        })
+        return context
       }
 
-      if (query.$select) return context;
+      if (query.$select) return context
 
       items.forEach((item: any) => {
-        const idName = getIdName(keyField, item);
-        const key = makeCacheKey(item[idName]);
-        cacheMap.set(key, clone(item));
-      });
+        const idName = getIdName(keyField, item)
+        const key = makeCacheKey(item[idName])
+        cacheMap.set(key, clone(item))
+      })
 
-      return context;
+      return context
     }
 
     switch (context.method) {
       case 'find': // fall through
       case 'remove': // skip remove in before remove
       case 'create':
-        return context;
+        return context
       case 'get': {
         if (!Object.keys(query).length) {
-          const key = makeCacheKey(context.id!);
-          const value = cacheMap.get(key);
-          if (value) context.result = value;
+          const key = makeCacheKey(context.id!)
+          const value = cacheMap.get(key)
+          if (value) context.result = value
         }
-        return context;
+        return context
       }
       default: // update, patch, remove
         if (context.id) {
-          cacheMap.delete(context.id);
-          return context;
+          cacheMap.delete(context.id)
+          return context
         }
 
         items.forEach((item: any) => {
-          const idName = getIdName(keyField, item);
-          const key = makeCacheKey(item[idName]);
-          cacheMap.delete(key);
-        });
+          const idName = getIdName(keyField, item)
+          const key = makeCacheKey(item[idName])
+          cacheMap.delete(key)
+        })
     }
 
-    return context;
-  };
+    return context
+  }
 }
 
 function getIdName(keyField: any, item: any) {
-  if (keyField) return keyField;
-  return '_id' in item ? '_id' : 'id';
+  if (keyField) return keyField
+  return '_id' in item ? '_id' : 'id'
 }

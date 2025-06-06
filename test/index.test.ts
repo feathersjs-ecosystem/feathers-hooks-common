@@ -1,14 +1,13 @@
-import { assert } from 'vitest';
-import * as allExported from '../src';
+import { assert } from 'vitest'
+import * as allExported from '../src/index.js'
 
 const members = [
   'actOnDefault',
   'actOnDispatch',
 
   // alter
-  'alterItems',
-  'alterData',
-  'alterResult',
+  'transformData',
+  'transformResult',
 
   'cache',
   'callingParams',
@@ -109,10 +108,10 @@ const members = [
 
   'getPaginate',
   'skipResult',
-].sort();
+].sort()
 
 describe('services exposed hooks', () => {
   it('no unexpected hooks', () => {
-    assert.deepEqual(Object.keys(allExported).sort(), [...members].sort());
-  });
-});
+    assert.deepEqual(Object.keys(allExported).sort(), [...members].sort())
+  })
+})

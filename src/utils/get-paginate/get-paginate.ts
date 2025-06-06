@@ -1,6 +1,6 @@
-import type { PaginationOptions } from '@feathersjs/adapter-commons';
-import type { HookContext } from '@feathersjs/feathers';
-import { hasOwnProperty } from '../../internal.utils';
+import type { PaginationOptions } from '@feathersjs/adapter-commons'
+import type { HookContext } from '@feathersjs/feathers'
+import { hasOwnProperty } from '../../internal.utils.js'
 
 /**
  * util to get paginate options from context
@@ -12,18 +12,18 @@ export const getPaginate = <H extends HookContext = HookContext>(
   context: H,
 ): PaginationOptions | undefined => {
   if (hasOwnProperty(context.params, 'paginate')) {
-    return (context.params.paginate as PaginationOptions) || undefined;
+    return (context.params.paginate as PaginationOptions) || undefined
   }
 
   if (context.params.paginate === false) {
-    return undefined;
+    return undefined
   }
-  let options = context.service?.options || {};
+  let options = context.service?.options || {}
 
   options = {
     ...options,
     ...context.params.adapter,
-  };
+  }
 
-  return options.paginate || undefined;
-};
+  return options.paginate || undefined
+}

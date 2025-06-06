@@ -1,6 +1,6 @@
-import type { HookContext } from '@feathersjs/feathers';
-import type { MethodName, HookType } from '../types';
-import { checkContext } from './check-context/check-context';
+import type { HookContext } from '@feathersjs/feathers'
+import type { MethodName, HookType } from '../types.js'
+import { checkContext } from './check-context/check-context.js'
 
 // TODO: Add checkContextIf to docs
 /**
@@ -16,8 +16,8 @@ export function checkContextIf<H extends HookContext = HookContext>(
   label?: string,
 ) {
   if (Array.isArray(type) ? !type.includes(context.type) : type !== context.type) {
-    return;
+    return
   }
 
-  checkContext(context, type, methods, label);
+  checkContext(context, type, methods, label)
 }

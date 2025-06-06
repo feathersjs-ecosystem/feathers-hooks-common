@@ -1,20 +1,20 @@
-import type { HookContext, NextFunction } from '@feathersjs/feathers';
-import { checkContext, getResultIsArray } from '../../utils';
-import { KeyOf, MaybeArray } from '../../internal.utils';
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
+import { checkContext, getResultIsArray } from '../../utils/index.js'
+import type { KeyOf, MaybeArray } from '../../internal.utils.js'
 
-export type OnDeleteAction = 'cascade' | 'set null';
+export type OnDeleteAction = 'cascade' | 'set null'
 
 export interface OnDeleteOptions<Path extends string = string> {
-  service: Path;
-  keyThere: string;
-  keyHere: string;
-  onDelete: OnDeleteAction;
+  service: Path
+  keyThere: string
+  keyHere: string
+  onDelete: OnDeleteAction
   /**
    * If true, the hook will wait for the service to finish before continuing
    *
    * @default false
    */
-  blocking?: boolean;
+  blocking?: boolean
 }
 
 /**
@@ -23,29 +23,29 @@ export interface OnDeleteOptions<Path extends string = string> {
 export const onDelete = <S = Record<string, any>, H extends HookContext = HookContext>(
   options: MaybeArray<OnDeleteOptions<KeyOf<S>>>,
 ) => {
-  const optionsMulti = Array.isArray(options) ? options : [options];
+  const optionsMulti = Array.isArray(options) ? options : [options]
 
   return async (context: H, next?: NextFunction) => {
-    checkContext(context, ['after', 'around'], 'remove', 'onDelete');
+    checkContext(context, ['after', 'around'], 'remove', 'onDelete')
 
     if (next) {
-      await next();
+      await next()
     }
 
-    const { result } = getResultIsArray(context);
+    const { result } = getResultIsArray(context)
 
     if (!result.length) {
-      return context;
+      return context
     }
 
-    const promises: Promise<any>[] = [];
+    const promises: Promise<any>[] = []
 
     optionsMulti.forEach(async ({ keyHere, keyThere, onDelete, service, blocking }) => {
-      let ids = result.map(x => x[keyHere]).filter(x => !!x);
-      ids = [...new Set(ids)];
+      let ids = result.map(x => x[keyHere]).filter(x => !!x)
+      ids = [...new Set(ids)]
 
       if (!ids || ids.length <= 0) {
-        return context;
+        return context
       }
 
       const params = {
@@ -53,26 +53,26 @@ export const onDelete = <S = Record<string, any>, H extends HookContext = HookCo
           ...(ids.length === 1 ? { [keyThere]: ids[0] } : { [keyThere]: { $in: ids } }),
         },
         paginate: false,
-      };
+      }
 
-      let promise: Promise<any> | undefined = undefined;
+      let promise: Promise<any> | undefined = undefined
 
       if (onDelete === 'cascade') {
-        promise = context.app.service(service as string).remove(null, params);
+        promise = context.app.service(service as string).remove(null, params)
       } else if (onDelete === 'set null') {
-        const data = { [keyThere]: null };
-        promise = context.app.service(service as string).patch(null, data, params);
+        const data = { [keyThere]: null }
+        promise = context.app.service(service as string).patch(null, data, params)
       }
 
-      if (blocking) {
-        promises.push(promise);
+      if (promise && blocking) {
+        promises.push(promise)
       }
-    });
+    })
 
     if (promises.length) {
-      await Promise.all(promises);
+      await Promise.all(promises)
     }
 
-    return context;
-  };
-};
+    return context
+  }
+}

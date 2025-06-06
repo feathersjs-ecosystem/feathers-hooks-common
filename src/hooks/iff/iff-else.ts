@@ -1,7 +1,7 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { isPromise } from '../../common';
-import { combine } from '../../utils/combine/combine';
-import type { HookFunction, PredicateFn } from '../../types';
+import type { HookContext } from '@feathersjs/feathers'
+import { isPromise } from '../../common/index.js'
+import { combine } from '../../utils/combine/combine.js'
+import type { HookFunction, PredicateFn } from '../../types.js'
 
 /**
  * Execute one array of hooks or another based on a sync or async predicate.
@@ -18,31 +18,31 @@ export function iffElse<H extends HookContext = HookContext>(
       ? trueHook
       : typeof trueHook === 'function'
         ? [trueHook]
-        : undefined;
+        : undefined
 
     const falseHooks = Array.isArray(falseHook)
       ? falseHook
       : typeof falseHook === 'function'
         ? [falseHook]
-        : undefined;
+        : undefined
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const that = this;
-    const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate;
+    const that = this
+    const check = typeof predicate === 'function' ? predicate.apply(that, [ctx]) : !!predicate
 
     if (!check) {
-      return callHooks.call(that, ctx, falseHooks as any);
+      return callHooks.call(that, ctx, falseHooks as any)
     }
 
     if (!isPromise(check)) {
-      return callHooks.call(that, ctx, trueHooks as any);
+      return callHooks.call(that, ctx, trueHooks as any)
     }
 
     return check.then((check1: any) => {
-      const hooks = check1 ? trueHooks : falseHooks;
-      return callHooks.call(that, ctx, hooks as any);
-    });
-  };
+      const hooks = check1 ? trueHooks : falseHooks
+      return callHooks.call(that, ctx, hooks as any)
+    })
+  }
 }
 
 function callHooks<H extends HookContext = HookContext>(
@@ -50,5 +50,5 @@ function callHooks<H extends HookContext = HookContext>(
   ctx: H,
   serviceHooks: HookFunction<H>[],
 ) {
-  return serviceHooks ? combine(...serviceHooks).call(this, ctx) : ctx;
+  return serviceHooks ? combine(...serviceHooks).call(this, ctx) : ctx
 }

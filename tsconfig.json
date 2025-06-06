@@ -1,12 +1,12 @@
 {
+  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "esModuleInterop": true,
-    "strict": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "vitest/importMeta"],
+    "declaration": true,
   },
-  "include": ["src/**/*", "test/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"]
 }
+  

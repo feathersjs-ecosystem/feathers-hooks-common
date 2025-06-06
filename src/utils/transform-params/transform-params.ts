@@ -1,5 +1,5 @@
-import { Params } from '@feathersjs/feathers';
-import { TransformParamsFn } from '../../types';
+import type { Params } from '@feathersjs/feathers'
+import type { TransformParamsFn } from '../../types.js'
 
 /**
  * Safely use a transformParams function to modify params.
@@ -9,10 +9,10 @@ export const transformParams = <P extends Params = Params>(
   fn: TransformParamsFn<P> | undefined,
 ): P => {
   if (!fn) {
-    return params;
+    return params
   }
 
-  const result = fn({ ...params });
+  const result = fn({ ...params })
 
-  return result ?? params;
-};
+  return result ?? params
+}

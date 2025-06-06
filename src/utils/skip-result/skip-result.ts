@@ -1,15 +1,15 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { isMulti, isPaginated } from '../../predicates';
+import type { HookContext } from '@feathersjs/feathers'
+import { isMulti, isPaginated } from '../../predicates/index.js'
 
 /**
  * util to set `context.result` to an empty array or object, depending on the hook type
  */
 export const skipResult = <H extends HookContext = HookContext>(context: H) => {
   if (context.result) {
-    return context;
+    return context
   }
 
-  const multi = isMulti(context);
+  const multi = isMulti(context)
 
   if (multi) {
     if (context.method === 'find' && isPaginated(context)) {
@@ -18,13 +18,13 @@ export const skipResult = <H extends HookContext = HookContext>(context: H) => {
         skip: 0,
         limit: 0,
         data: [],
-      };
+      }
     } else {
-      context.result = [];
+      context.result = []
     }
   } else {
-    context.result = null;
+    context.result = null
   }
 
-  return context;
-};
+  return context
+}

@@ -1,26 +1,27 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } from '../params-for-server/params-for-server';
-import { MaybeArray, toArray } from '../../internal.utils';
+import type { HookContext } from '@feathersjs/feathers'
+import { FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } from '../params-for-server/params-for-server.js'
+import type { MaybeArray } from '../../internal.utils.js'
+import { toArray } from '../../internal.utils.js'
 
 export type paramsFromClientOptions = {
   /**
    * @default '_$client'
    */
-  keyToHide?: string;
-};
+  keyToHide?: string
+}
 
 export const paramsFromClient = (
   whitelist: MaybeArray<string>,
   options?: paramsFromClientOptions,
 ): ((context: HookContext) => HookContext) => {
-  const whitelistArr = toArray(whitelist);
-  const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {};
+  const whitelistArr = toArray(whitelist)
+  const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {}
   return (context: HookContext): HookContext => {
     if (
       !context.params?.query?.[keyToHide] ||
       typeof context.params.query[keyToHide] !== 'object'
     ) {
-      return context;
+      return context
     }
 
     const params = {
@@ -31,23 +32,23 @@ export const paramsFromClient = (
           ...context.params.query[keyToHide],
         },
       },
-    };
+    }
 
-    const client = params.query[keyToHide];
+    const client = params.query[keyToHide]
 
     whitelistArr.forEach(key => {
       if (key in client) {
-        params[key] = client[key];
-        delete client[key];
+        params[key] = client[key]
+        delete client[key]
       }
-    });
+    })
 
     if (Object.keys(client).length === 0) {
-      delete params.query[keyToHide];
+      delete params.query[keyToHide]
     }
 
-    context.params = params;
+    context.params = params
 
-    return context;
-  };
-};
+    return context
+  }
+}

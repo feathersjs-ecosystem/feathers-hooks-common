@@ -1,11 +1,11 @@
-import { assert, expect } from 'vitest';
-import { HookContext } from '@feathersjs/feathers';
-import { some } from './some';
+import { expect } from 'vitest'
+import type { HookContext } from '@feathersjs/feathers'
+import { some } from './some.js'
 
 describe('predicates/some', () => {
   it('returns true synchronously when empty', () => {
-    expect(some()({} as HookContext)).toBe(true);
-  });
+    expect(some()({} as HookContext)).toBe(true)
+  })
 
   it('returns true synchronously when at least 1 hook is true', () => {
     expect(
@@ -16,8 +16,8 @@ describe('predicates/some', () => {
         () => Promise.resolve(true),
         () => true,
       )({} as HookContext),
-    ).toBe(true);
-  });
+    ).toBe(true)
+  })
 
   it('returns true when at least 1 async hook is true', async () => {
     expect(
@@ -26,25 +26,25 @@ describe('predicates/some', () => {
         () => Promise.resolve(false),
         () => Promise.resolve(true),
       )({} as HookContext),
-    ).resolves.toBe(true);
-  });
+    ).resolves.toBe(true)
+  })
 
   it('rejects with the error', async () => {
     await expect(
       async () => await some(() => Promise.reject(new Error('errored')))({} as HookContext),
-    ).rejects.toThrow('errored');
-  });
+    ).rejects.toThrow('errored')
+  })
 
   it('does not run all predicates when one is true', () => {
-    let ran = 0;
+    let ran = 0
     const fn = () => {
-      ran++;
-      return true;
-    };
+      ran++
+      return true
+    }
 
-    expect(some(fn, fn, fn)({} as HookContext)).toBe(true);
-    expect(ran).toBe(1);
-  });
+    expect(some(fn, fn, fn)({} as HookContext)).toBe(true)
+    expect(ran).toBe(1)
+  })
 
   it('when all hooks are falsey', async () => {
     await expect(
@@ -56,6 +56,6 @@ describe('predicates/some', () => {
         () => undefined,
         () => 0,
       )({} as HookContext),
-    ).resolves.toBe(false);
-  });
-});
+    ).resolves.toBe(false)
+  })
+})

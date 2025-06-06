@@ -1,4 +1,4 @@
-import type { HookContext } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers'
 
 /**
  * Replace the records in context.data or context.result[.data]. (Utility function.)
@@ -9,18 +9,18 @@ import type { HookContext } from '@feathersjs/feathers';
 export function replaceItems<H extends HookContext = HookContext>(context: H, items: any): void {
   if (context.params && context.params._actOn === 'dispatch') {
     if (context.method === 'find' && context.dispatch?.data) {
-      context.dispatch.data = Array.isArray(items) ? items : [items];
+      context.dispatch.data = Array.isArray(items) ? items : [items]
     } else {
-      context.dispatch = items;
+      context.dispatch = items
     }
-    return;
+    return
   }
 
   if (context.type === 'before') {
-    context.data = items;
+    context.data = items
   } else if (context.method === 'find' && context.result && context.result.data) {
-    context.result.data = Array.isArray(items) ? items : [items];
+    context.result.data = Array.isArray(items) ? items : [items]
   } else {
-    context.result = items;
+    context.result = items
   }
 }

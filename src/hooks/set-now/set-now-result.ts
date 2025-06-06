@@ -1,11 +1,12 @@
-import _set from 'lodash/set.js';
-import { alterResult } from '../alter-items/alter-result';
-import { MaybeArray, toArray } from '../../internal.utils';
-import { DispatchOption } from '../../types';
+import _set from 'lodash/set.js'
+import { transformResult } from '../transform/transform-result.js'
+import type { MaybeArray } from '../../internal.utils.js'
+import { toArray } from '../../internal.utils.js'
+import type { DispatchOption } from '../../types.js'
 
 type SetNowResultOptions = {
-  dispatch?: DispatchOption;
-};
+  dispatch?: DispatchOption
+}
 
 /**
  * Create/update certain fields to the current date-time.
@@ -13,16 +14,16 @@ type SetNowResultOptions = {
  * @see https://hooks-common.feathersjs.com/hooks.html#setnow
  */
 export const setNowResult = (fieldNames: MaybeArray<string>, options?: SetNowResultOptions) => {
-  const fieldNamesArray = toArray(fieldNames);
+  const fieldNamesArray = toArray(fieldNames)
 
-  return alterResult(
+  return transformResult(
     data => {
       for (let i = 0, n = fieldNamesArray.length; i < n; i++) {
-        const key = fieldNamesArray[i];
+        const key = fieldNamesArray[i]
 
-        _set(data, key, new Date());
+        _set(data, key, new Date())
       }
     },
     { dispatch: options?.dispatch },
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import _set from 'lodash/set.js';
-import type { HookContext, NextFunction } from '@feathersjs/feathers';
+import _set from 'lodash/set.js'
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
 
 /**
  * Fix slugs in URL, e.g. /stores/:storeId.
@@ -10,17 +10,17 @@ export const setSlug =
   <H extends HookContext = HookContext>(slug: string, fieldName?: string) =>
   (context: H, next?: NextFunction) => {
     if (typeof fieldName !== 'string') {
-      fieldName = `query.${slug}`;
+      fieldName = `query.${slug}`
     }
 
     if (context.params && context.params.provider === 'rest') {
-      const value = context.params.route[slug];
+      const value = context.params.route[slug]
       if (typeof value === 'string' && value[0] !== ':') {
-        _set(context.params, fieldName, value);
+        _set(context.params, fieldName, value)
       }
     }
 
-    if (next) return next().then(() => context);
+    if (next) return next().then(() => context)
 
-    return context;
-  };
+    return context
+  }

@@ -21,12 +21,10 @@ Runs a series of hooks which mutate context.data or content.result (the Feathers
 - **Example**
 
   ```js
-  const { actOnDefault, actOnDispatch } = require('feathers-hooks-common');
+  const { actOnDefault, actOnDispatch } = require('feathers-hooks-common/index.js');
 
   module.exports = {
-    after: {
-      find: [hook1(), actOnDispatch(hook2(), actOnDefault(hook3()), hook4()), hook5()]
-    }
+    after: { find: [hook1(), actOnDispatch(hook2(), actOnDefault(hook3()), hook4()), hook5()] },
   };
   ```
 
@@ -56,12 +54,10 @@ Runs a series of hooks which mutate context.dispatch.
 - **Example**
 
   ```js
-  const { actOnDefault, actOnDispatch } = require('feathers-hooks-common');
+  const { actOnDefault, actOnDispatch } = require('feathers-hooks-common/index.js');
 
   module.exports = {
-    after: {
-      find: [hook1(), actOnDispatch(hook2(), actOnDefault(hook3()), hook4()), hook5()]
-    }
+    after: { find: [hook1(), actOnDispatch(hook2(), actOnDefault(hook3()), hook4()), hook5()] },
   };
   ```
 
@@ -94,7 +90,7 @@ The mutated `item`. Returning `undefined` means the `item` in the parameters was
 - **Example**
 
   ```js
-  const { alterItems } = require('feathers-hooks-common');
+  const { alterItems } = require('feathers-hooks-common/index.js');
 
   module.exports = { before: {
       all: [
@@ -179,50 +175,32 @@ Persistent, least-recently-used record cache for services.
 
   ```js
   const CacheMap = require('@feathers-plus/cache');
-  const { cache } = require('feathers-hooks-common');
+  const { cache } = require('feathers-hooks-common/index.js');
 
   const cacheMap = CacheMap({ max: 100 }); // Keep the 100 most recently used.
 
-  module.exports = {
-    before: {
-      all: cache(cacheMap)
-    },
-    after: {
-      all: cache(cacheMap)
-    }
-  };
+  module.exports = { before: { all: cache(cacheMap) }, after: { all: cache(cacheMap) } };
   ```
 
   ```js
-  const { cache } = require('feathers-hooks-common');
+  const { cache } = require('feathers-hooks-common/index.js');
 
   const cacheMap = new Map();
 
-  module.exports = {
-    before: {
-      all: cache(cacheMap)
-    },
-    after: {
-      all: cache(cacheMap)
-    }
-  };
+  module.exports = { before: { all: cache(cacheMap) }, after: { all: cache(cacheMap) } };
   ```
 
   ```js
   const CacheMap = require('@feathers-plus/cache');
   const mongoose = require('mongoose');
-  const { cache } = require('feathers-hooks-common');
+  const { cache } = require('feathers-hooks-common/index.js');
 
   const cacheMap = CacheMap({ max: 100 });
   const makeCacheKey = key => (key instanceof mongoose.Types.ObjectId ? key.toString() : key);
 
   module.exports = {
-    before: {
-      all: cache(cacheMap, undefined, { makeCacheKey })
-    },
-    after: {
-      all: cache(cacheMap, undefined, { makeCacheKey })
-    }
+    before: { all: cache(cacheMap, undefined, { makeCacheKey }) },
+    after: { all: cache(cacheMap, undefined, { makeCacheKey }) },
   };
   ```
 
@@ -277,7 +255,7 @@ Display the current hook context for debugging.
 - **Example**
 
   ```js
-  const { debug } = require('feathers-hooks-common');
+  const { debug } = require('feathers-hooks-common/index.js');
 
   module.exports = { before: {
       all: [ debug('step 1'), setNow('updatedAt'), debug(' step 2') ],
@@ -320,13 +298,9 @@ Remove records and properties created by the populate hook.
 - **Example**
 
   ```js
-  const { dePopulate } = require('feathers-hooks-common');
+  const { dePopulate } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      all: [depopulate()]
-    }
-  };
+  module.exports = { before: { all: [depopulate()] } };
   ```
 
 - **Details**
@@ -344,13 +318,9 @@ Disables pagination when query.$limit is -1 or '-1'.
 - **Example**
 
   ```js
-  const { disablePagination } = require('feathers-hooks-common');
+  const { disablePagination } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      find: disablePagination()
-    }
-  };
+  module.exports = { before: { find: disablePagination() } };
   ```
 
 - **Details**
@@ -381,7 +351,7 @@ Prevents access to a service method completely or for specific transports.
 - **Example**
 
   ```js
-  const { disallow, iff } = require('feathers-hooks-common');
+  const { disallow, iff } = require('feathers-hooks-common/index.js');
 
   module.exports = {
     before: {
@@ -392,8 +362,8 @@ Prevents access to a service method completely or for specific transports.
       // disallow calling `update` completely (e.g. to allow only `patch`)
       update: disallow(),
       // disallow the remove hook if the user is not an admin
-      remove: iff(context => !context.params.user.isAdmin, disallow())
-    }
+      remove: iff(context => !context.params.user.isAdmin, disallow()),
+    },
   };
   ```
 
@@ -419,12 +389,10 @@ Delete certain fields from the record(s).
 - **Example**
 
   ```js
-  const { discard, iff, isProvider } = require('feathers-hooks-common');
+  const { discard, iff, isProvider } = require('feathers-hooks-common/index.js');
 
   module.exports = {
-    after: {
-      all: iff(isProvider('external'), discard('password', 'address.city'))
-    }
+    after: { all: iff(isProvider('external'), discard('password', 'address.city')) },
   };
   ```
 
@@ -451,13 +419,9 @@ Delete certain fields from the query object.
 - **Example**
 
   ```js
-  const { discardQuery, iff, isProvider } = require('feathers-hooks-common');
+  const { discardQuery, iff, isProvider } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    after: {
-      all: iff(isProvider('external'), discardQuery('secret'))
-    }
-  };
+  module.exports = { after: { all: iff(isProvider('external'), discardQuery('secret')) } };
   ```
 
 - **Details**
@@ -501,38 +465,26 @@ Join related records.
 
   ```js
   // project/src/services/posts/posts.hooks.js
-  const { fastJoin } = require('feathers-hooks-common');
+  const { fastJoin } = require('feathers-hooks-common/index.js');
 
   const postResolvers = {
     joins: {
       author:
         (...args) =>
         async post =>
-          (post.author = (
-            await users.find({
-              query: { id: post.userId },
-              paginate: false
-            })
-          )[0]),
+          (post.author = (await users.find({ query: { id: post.userId }, paginate: false }))[0]),
 
       starers: $select => async post =>
         (post.starers = await users.find({
           query: { id: { $in: post.starIds }, $select: $select || ['name'] },
-          paginate: false
-        }))
-    }
+          paginate: false,
+        })),
+    },
   };
 
-  const query = {
-    author: true,
-    starers: [['id', 'name']]
-  };
+  const query = { author: true, starers: [['id', 'name']] };
 
-  module.exports = {
-    after: {
-      all: [fastJoin(postResolvers, query)]
-    }
-  };
+  module.exports = { after: { all: [fastJoin(postResolvers, query)] } };
 
   // Original record
   [{ id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] }][
@@ -543,7 +495,7 @@ Join related records.
       userId: 101,
       starIds: [102, 103, 104],
       author: { id: 101, name: 'John' },
-      starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }]
+      starers: [{ name: 'Marshall' }, { name: 'Barbara' }, { name: 'Aubree' }],
     }
   ];
   ```
@@ -552,7 +504,7 @@ Join related records.
 
   ```js
   // project/src/services/posts/posts.hooks.js
-  const { fastJoin } = require('feathers-hooks-common');
+  const { fastJoin } = require('feathers-hooks-common/index.js');
 
   const postResolvers = {
     joins: {
@@ -614,16 +566,14 @@ Join related records.
 
   ```js
   // project/src/services/posts/posts.hooks.js
-  const { fastJoin } = require('feathers-hooks-common');
+  const { fastJoin } = require('feathers-hooks-common/index.js');
   const BatchLoader = require('@feathers-plus/batch-loader');
   const { loaderFactory } = BatchLoader;
 
   const postResolvers = {
     before: context => {
       context._loaders = { user: {} };
-      context._loaders.user.id = loaderFactory(users, 'id', false, {
-        paginate: false
-      })(context);
+      context._loaders.user.id = loaderFactory(users, 'id', false, { paginate: false })(context);
     },
     joins: {
       author: () => async (post, context) =>
@@ -632,15 +582,11 @@ Join related records.
       starers: () => async (post, context) =>
         !post.starIds
           ? null
-          : (post.starers = await context._loaders.user.id.loadMany(post.starIds))
-    }
+          : (post.starers = await context._loaders.user.id.loadMany(post.starIds)),
+    },
   };
 
-  module.exports = {
-    after: {
-      all: [fastJoin(postResolvers)]
-    }
-  };
+  module.exports = { after: { all: [fastJoin(postResolvers)] } };
 
   // Original record
   [{ id: 1, body: 'John post', userId: 101, starIds: [102, 103, 104] }][
@@ -654,8 +600,8 @@ Join related records.
       starers: [
         { id: 102, name: 'Marshall' },
         { id: 103, name: 'Barbara' },
-        { id: 104, name: 'Aubree' }
-      ]
+        { id: 104, name: 'Aubree' },
+      ],
     }
   ];
   ```
@@ -664,7 +610,7 @@ Join related records.
 
   ```js
   // project/src/services/posts/posts.hooks.js
-  const { fastJoin, makeCallingParams } = require('feathers-hooks-common');
+  const { fastJoin, makeCallingParams } = require('feathers-hooks-common/index.js');
   const BatchLoader = require('@feathers-plus/batch-loader');
   const { getResultsByKey, getUniqueKeys } = BatchLoader;
 
@@ -774,7 +720,7 @@ Join related records.
 - **Example Using a Persistent Cache**
 
   ```js
-  const { cache, fastJoin, makeCallingParams } = require('feathers-hooks-common');
+  const { cache, fastJoin, makeCallingParams } = require('feathers-hooks-common/index.js');
   const BatchLoader = require('@feathers-plus/batch-loader');
   const CacheMap = require('@feathers-plus/cache');
   const { getResultsByKey, getUniqueKeys } = BatchLoader;
@@ -786,13 +732,11 @@ Join related records.
   const userBatchLoader = new BatchLoader(
     async keys => {
       const result = await users.find(
-        makeCallingParams({}, { id: { $in: getUniqueKeys(keys) } }, undefined, {
-          paginate: false
-        })
+        makeCallingParams({}, { id: { $in: getUniqueKeys(keys) } }, undefined, { paginate: false }),
       );
       return getResultsByKey(keys, result, user => user.id, '!');
     },
-    { cacheMap: cacheMapUsers }
+    { cacheMap: cacheMapUsers },
   );
 
   const postResolvers = {
@@ -808,26 +752,19 @@ Join related records.
       starers: () => async (post, context) =>
         !post.starIds
           ? null
-          : (post.starers = await context._loaders.user.id.loadMany(post.starIds))
-    }
+          : (post.starers = await context._loaders.user.id.loadMany(post.starIds)),
+    },
   };
 
   const query = {
     author: true,
     starers: [['id', 'name']],
-    comments: {
-      args: null,
-      author: [['id', 'name']]
-    }
+    comments: { args: null, author: [['id', 'name']] },
   };
 
   module.exports = {
-    before: {
-      all: cache(cacheMapUsers)
-    },
-    after: {
-      all: [cache(cacheMapUsers), fastJoin(postResolvers, () => query)]
-    }
+    before: { all: cache(cacheMapUsers) },
+    after: { all: [cache(cacheMapUsers), fastJoin(postResolvers, () => query)] },
   };
   ```
 
@@ -873,7 +810,7 @@ Execute one or another series of hooks depending on a sync or async predicate.
 - **Example**
 
   ```js
-  const { discard, iff, isProvider, populate } = require('feathers-hooks-common');
+  const { discard, iff, isProvider, populate } = require('feathers-hooks-common/index.js');
   const isNotAdmin = adminRole => context => context.params.user.roles.indexOf(adminRole || 'admin') === -1;
 
   module.exports = { before: {
@@ -923,7 +860,7 @@ Execute one array of hooks or another based on a sync or async predicate.
 - **Example**
 
   ```js
-  const { iffElse, populate, serialize } = require('feathers-hooks-common');
+  const { iffElse, populate, serialize } = require('feathers-hooks-common/index.js');
 
   module.exports = { after: {
     create: iffElse(() => { ... },
@@ -957,13 +894,9 @@ Keep certain fields in the record(s), deleting the rest.
 - **Example**
 
   ```js
-  const { keep } = require('feathers-hooks-common');
+  const { keep } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    after: {
-      create: keep('name', 'dept', 'address.city')
-    }
-  };
+  module.exports = { after: { create: keep('name', 'dept', 'address.city') } };
   ```
 
 - **Details**
@@ -991,13 +924,13 @@ Keep certain fields in a nested array inside the record(s), deleting the rest.
 - **Example**
 
   ```js
-  const { keepInArray } = require('feathers-hooks-common');
+  const { keepInArray } = require('feathers-hooks-common/index.js');
 
   module.exports = {
     after: {
       create: keepInArray('users', ['name', 'dept', 'address.city']),
-      find: keepInArray('account.users', ['name', 'dept', 'address.city'])
-    }
+      find: keepInArray('account.users', ['name', 'dept', 'address.city']),
+    },
   };
   ```
 
@@ -1024,13 +957,9 @@ Keep certain fields in the query object, deleting the rest.
 - **Example**
 
   ```js
-  const { keepQuery } = require('feathers-hooks-common');
+  const { keepQuery } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    after: {
-      create: keepQuery('name', 'address.city')
-    }
-  };
+  module.exports = { after: { create: keepQuery('name', 'address.city') } };
   ```
 
 - **Details**
@@ -1064,13 +993,9 @@ Keep certain fields in a nested array inside the query object, deleting the rest
 - **Example**
 
   ```js
-  const { keepQueryInArray } = require('feathers-hooks-common');
+  const { keepQueryInArray } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      find: keepQueryInArray('$or', ['name', 'dept', 'address.city'])
-    }
-  };
+  module.exports = { before: { find: keepQueryInArray('$or', ['name', 'dept', 'address.city']) } };
   ```
 
 - **Details**
@@ -1094,13 +1019,9 @@ Convert certain field values to lower case.
 - **Example**
 
   ```js
-  const { lowerCase } = require('feathers-hooks-common');
+  const { lowerCase } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      create: lowerCase('email', 'username', 'div.dept')
-    }
-  };
+  module.exports = { before: { create: lowerCase('email', 'username', 'div.dept') } };
   ```
 
 - **Details**
@@ -1127,7 +1048,7 @@ Wrap MongoDB foreign keys in ObjectID.
 
   ```js
   const { ObjectID } = require('mongodb');
-  const { mongoKeys } = require('feathers-hooks-common');
+  const { mongoKeys } = require('feathers-hooks-common/index.js');
 
   /* Comment Schema
   {
@@ -1180,25 +1101,19 @@ Pass `context.params` from client to server. Server hook.
 
   ```js
   // client
-  const { paramsForServer } = require('feathers-hooks-common');
+  const { paramsForServer } = require('feathers-hooks-common/index.js');
 
   service.update(
     id,
     data,
-    paramsForServer({
-      query: { dept: 'a' },
-      populate: 'po-1',
-      serialize: 'po-mgr'
-    })
+    paramsForServer({ query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' }),
   );
 
   // server
-  const { paramsFromClient } = require('feathers-hooks-common');
+  const { paramsFromClient } = require('feathers-hooks-common/index.js');
 
   module.exports = {
-    before: {
-      all: [paramsFromClient('populate', 'serialize', 'otherProp'), myHook]
-    }
+    before: { all: [paramsFromClient('populate', 'serialize', 'otherProp'), myHook] },
   };
 
   // myHook's `context.params` will now be
@@ -1278,22 +1193,13 @@ Join related records.
   ```javascript
   // users like { _id: '111', name: 'John', roleId: '555' }
   // roles like { _id: '555', permissions: ['foo', bar'] }
-  import { populate } from 'feathers-hooks-common';
+  import { populate } from 'feathers-hooks-common/index.js';
 
   const userRoleSchema = {
-    include: {
-      service: 'roles',
-      nameAs: 'role',
-      parentField: 'roleId',
-      childField: '_id'
-    }
+    include: { service: 'roles', nameAs: 'role', parentField: 'roleId', childField: '_id' },
   };
 
-  app.service('users').hooks({
-    after: {
-      all: populate({ schema: userRoleSchema })
-    }
-  });
+  app.service('users').hooks({ after: { all: populate({ schema: userRoleSchema }) } });
 
   // result like
   // { _id: '111', name: 'John', roleId: '555',
@@ -1306,19 +1212,10 @@ Join related records.
   // users like { _id: '111', name: 'John', roleIds: ['555', '666'] }
   // roles like { _id: '555', permissions: ['foo', 'bar'] }
   const userRolesSchema = {
-    include: {
-      service: 'roles',
-      nameAs: 'roles',
-      parentField: 'roleIds',
-      childField: '_id'
-    }
+    include: { service: 'roles', nameAs: 'roles', parentField: 'roleIds', childField: '_id' },
   };
 
-  usersService.hooks({
-    after: {
-      all: populate({ schema: userRolesSchema })
-    }
-  });
+  usersService.hooks({ after: { all: populate({ schema: userRolesSchema }) } });
 
   // result like
   // { _id: '111', name: 'John', roleIds: ['555', '666'], roles: [
@@ -1333,19 +1230,10 @@ Join related records.
   // posts like { _id: '111', body: '...' }
   // comments like { _id: '555', text: '...', postId: '111' }
   const postCommentsSchema = {
-    include: {
-      service: 'comments',
-      nameAs: 'comments',
-      parentField: '_id',
-      childField: 'postId'
-    }
+    include: { service: 'comments', nameAs: 'comments', parentField: '_id', childField: 'postId' },
   };
 
-  postService.hooks({
-    after: {
-      all: populate({ schema: postCommentsSchema })
-    }
-  });
+  postService.hooks({ after: { all: populate({ schema: postCommentsSchema }) } });
 
   // result like
   // { _id: '111', body: '...' }, comments: [
@@ -1405,15 +1293,11 @@ Join related records.
     include: {
       service: 'comments',
       nameAs: 'comments',
-      select: (hook, parentItem) => ({ postId: parentItem._id })
-    }
+      select: (hook, parentItem) => ({ postId: parentItem._id }),
+    },
   };
 
-  postService.hooks({
-    after: {
-      all: populate({ schema: postCommentsSchema })
-    }
-  });
+  postService.hooks({ after: { all: populate({ schema: postCommentsSchema }) } });
 
   // result like
   // { _id: '111', body: '...' }, comments: [
@@ -1447,13 +1331,9 @@ Prevent patch service calls from changing certain fields.
 - **Example**
 
   ```js
-  const { preventChanges } = require('feathers-hooks-common');
+  const { preventChanges } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      patch: preventChanges(true, 'security.badge')
-    }
-  };
+  module.exports = { before: { patch: preventChanges(true, 'security.badge') } };
   ```
 
 - **Details**
@@ -1476,13 +1356,9 @@ Check selected fields exist and are not falsey. Numeric 0 is acceptable.
 - **Example**
 
   ```js
-  const { required } = require('feathers-hooks-common');
+  const { required } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      all: required('email', 'password')
-    }
-  };
+  module.exports = { before: { all: required('email', 'password') } };
   ```
 
 ## runParallel
@@ -1506,7 +1382,7 @@ Run a hook in parallel to the other hooks and the service call.
 - **Example**
 
   ```js
-  const { runParallel } = require('feathers-hooks-common');
+  const { runParallel } = require('feathers-hooks-common/index.js');
   const clone = require('clone');
 
   function sendEmail(...) {
@@ -1618,45 +1494,40 @@ Limit all external access of the `users` service to the authenticated user:
 
 ```js
 const { authenticate } = require('@feathersjs/authentication');
-const { setField } = require('feathers-hooks-common');
+const { setField } = require('feathers-hooks-common/index.js');
 
-app.service('users').hooks({
-  before: {
-    all: [
-      authenticate('jwt'),
-      setField({
-        from: 'params.user.id',
-        as: 'params.query.id'
-      })
-    ]
-  }
-});
+app
+  .service('users')
+  .hooks({
+    before: {
+      all: [authenticate('jwt'), setField({ from: 'params.user.id', as: 'params.query.id' })],
+    },
+  });
 ```
 
 Only allow access to invoices for the users organization:
 
 ```js
 const { authenticate } = require('@feathersjs/authentication');
-const { setField } = require('feathers-hooks-common');
+const { setField } = require('feathers-hooks-common/index.js');
 
-app.service('invoices').hooks({
-  before: {
-    all: [
-      authenticate('jwt'),
-      setField({
-        from: 'params.user.organizationId',
-        as: 'params.query.organizationId'
-      })
-    ]
-  }
-});
+app
+  .service('invoices')
+  .hooks({
+    before: {
+      all: [
+        authenticate('jwt'),
+        setField({ from: 'params.user.organizationId', as: 'params.query.organizationId' }),
+      ],
+    },
+  });
 ```
 
 Set the current user id as `userId` when creating a message and only allow users to edit and remove their own messages:
 
 ```js
 const { authenticate } = require('@feathersjs/authentication');
-const { setField } = require('feathers-hooks-common');
+const { setField } = require('feathers-hooks-common/index.js');
 
 const setUserId = setField({
   from: 'params.user.id',
@@ -1704,13 +1575,9 @@ Create/update certain fields to the current date-time.
 - **Example**
 
   ```js
-  const { setNow } = require('feathers-hooks-common');
+  const { setNow } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      create: setNow('createdAt', 'updatedAt')
-    }
-  };
+  module.exports = { before: { create: setNow('createdAt', 'updatedAt') } };
   ```
 
 - **Details**
@@ -1735,13 +1602,9 @@ Set slugs in URL, e.g. /stores/:storeId.
 - **Example**
 
   ```js
-  const { setSlug } = require('feathers-hooks-common');
+  const { setSlug } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      all: [hooks.setSlug('storeId')]
-    }
-  };
+  module.exports = { before: { all: [hooks.setSlug('storeId')] } };
 
   // `context.params.query` will always be normalized,
   // e.g. `{ size: 'large', storeId: '123' }`
@@ -1777,28 +1640,20 @@ Filter data or result records using a MongoDB-like selection syntax.
 
   ```js
   const sift = require('sift');
-  const { sifter } = require('feathers-hooks-common');
+  const { sifter } = require('feathers-hooks-common/index.js');
 
   const selectCountry = hook => sift({ 'address.country': hook.params.country });
 
-  module.exports = {
-    before: {
-      find: sifter(selectCountry)
-    }
-  };
+  module.exports = { before: { find: sifter(selectCountry) } };
   ```
 
   ```js
   const sift = require('sift');
-  const { sifter } = require('feathers-hooks-common');
+  const { sifter } = require('feathers-hooks-common/index.js');
 
   const selectCountry = country => () => sift({ address: { country: country } });
 
-  module.exports = {
-    before: {
-      find: sifter(selectCountry('Canada'))
-    }
-  };
+  module.exports = { before: { find: sifter(selectCountry('Canada')) } };
   ```
 
 - **Details**
@@ -1831,14 +1686,10 @@ Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hoo
   Basic usage:
 
   ```js
-  const { softDelete } = require('feathers-hooks-common');
+  const { softDelete } = require('feathers-hooks-common/index.js');
 
   // Use standard softDelete which uses `deleted: true`
-  app.service('people').hooks({
-    before: {
-      all: [softDelete()]
-    }
-  });
+  app.service('people').hooks({ before: { all: [softDelete()] } });
 
   //  will set `deleted: true` for entry with id 1
   app.service('people').remove(1);
@@ -1864,15 +1715,15 @@ Setting `params.disableSoftDelete` to `true` allows to skip the `softDelete` hoo
           },
           removeData: async context => {
             return { deletedAt: new Date() };
-          }
-        })
+          },
+        }),
       ],
       create: [
         context => {
           context.data.deletedAt = null;
-        }
-      ]
-    }
+        },
+      ],
+    },
   });
   ```
 
@@ -1892,13 +1743,9 @@ Stash current value of record, usually before mutating it. Performs a get call.
 - **Example**
 
   ```js
-  const { stashBefore } = require('feathers-hooks-common');
+  const { stashBefore } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    before: {
-      patch: stashBefore()
-    }
-  };
+  module.exports = { before: { patch: stashBefore() } };
   ```
 
 - **Details**
@@ -1931,7 +1778,7 @@ Transform fields & objects in place in the record(s) using a recursive walk. Pow
 - **Example**
 
   ```js
-  const { traverse } = require('feathers-hooks-common');
+  const { traverse } = require('feathers-hooks-common/index.js');
 
   // Trim strings
   const trimmer = function (node) {
@@ -1949,10 +1796,7 @@ Transform fields & objects in place in the record(s) using a recursive walk. Pow
   };
 
   module.exports = {
-    before: {
-      create: traverse(trimmer),
-      find: traverse(nuller, context => context.params.query)
-    }
+    before: { create: traverse(trimmer), find: traverse(nuller, context => context.params.query) },
   };
   ```
 
@@ -1980,7 +1824,7 @@ Execute a series of hooks if a sync or async predicate is falsey.
 - **Example**
 
   ```js
-  const { isProvider, unless } = require('feathers-hooks-common');
+  const { isProvider, unless } = require('feathers-hooks-common/index.js');
 
   module.exports = {
     before: {
@@ -1988,9 +1832,9 @@ Execute a series of hooks if a sync or async predicate is falsey.
         isProvider('server'),
         hookA,
         unless(isProvider('rest'), hook1, hook2, hook3),
-        hookB
-      )
-    }
+        hookB,
+      ),
+    },
   };
   ```
 
@@ -2017,17 +1861,13 @@ Validate data using a validation function.
 - **Example**
 
   ```js
-  const { validate } = require('feathers-hooks-common');
+  const { validate } = require('feathers-hooks-common/index.js');
   const { promisify } = require('util');
 
   // function myCallbackValidator(values, cb) { ... }
   const myValidator = promisify(myCallbackValidator);
 
-  module.exports = {
-    before: {
-      create: validate(myValidator)
-    }
-  };
+  module.exports = { before: { create: validate(myValidator) } };
   ```
 
 - **Details**
@@ -2087,9 +1927,7 @@ Validate data using JSON-Schema.
     /* JSON-Schema */
   };
 
-  module.before({
-    create: validateSchema(createSchema, Ajv)
-  });
+  module.before({ create: validateSchema(createSchema, Ajv) });
   ```
 
   ```js
@@ -2101,9 +1939,7 @@ Validate data using JSON-Schema.
     /* JSON-Schema */
   };
 
-  module.before({
-    create: validateSchema(createSchema, ajv)
-  });
+  module.before({ create: validateSchema(createSchema, ajv) });
   ```
 
 - **Details**
@@ -2140,7 +1976,7 @@ Validate data using JSON-Schema.
   '\'in row 1 of 3, first\' should match format "startWithJo"',
   "in row 1 of 3, should have required property 'last'",
   '\'in row 2 of 3, first\' should match format "startWithJo"',
-  "in row 3 of 3, should have required property 'last'"
+  "in row 3 of 3, should have required property 'last'",
 ];
 ```
 

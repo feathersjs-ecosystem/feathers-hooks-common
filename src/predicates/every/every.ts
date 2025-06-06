@@ -1,6 +1,6 @@
-import type { HookContext } from '@feathersjs/feathers';
-import type { PredicateFn } from '../../types';
-import { isPromise } from '../../common';
+import type { HookContext } from '@feathersjs/feathers'
+import type { PredicateFn } from '../../types.js'
+import { isPromise } from '../../common/index.js'
 
 /**
  * Return the and of a series of sync or async predicate functions.
@@ -12,24 +12,24 @@ export const every =
     if (!predicates.length) {
       // same as Array.prototype.every
       // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every#description
-      return true;
+      return true
     }
 
-    const promises: Promise<boolean>[] = [];
+    const promises: Promise<boolean>[] = []
 
     for (const predicate of predicates) {
-      const result = predicate(context);
+      const result = predicate(context)
       if (result === false) {
-        return false;
+        return false
       } else if (isPromise(result)) {
-        promises.push(result);
+        promises.push(result)
       }
     }
 
     if (!promises.length) {
       // no promises returned -> all predicates are sync and true
-      return true;
+      return true
     }
 
-    return Promise.all(promises).then(results => results.every(result => !!result));
-  };
+    return Promise.all(promises).then(results => results.every(result => !!result))
+  }

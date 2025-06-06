@@ -1,5 +1,5 @@
-export * from './hooks';
-export * from './utils';
-export * from './predicates';
+export * from './hooks/index.js'
+export * from './utils/index.js'
+export * from './predicates/index.js'
 
-export * from './types';
+export * from './types.js'

@@ -1,4 +1,4 @@
-import { HookContext } from '@feathersjs/feathers';
+import type { HookContext } from '@feathersjs/feathers'
 
 export function getDataIsArray<H extends HookContext = HookContext>(
   context: H,
@@ -7,13 +7,13 @@ export function getDataIsArray<H extends HookContext = HookContext>(
     return {
       isArray: false,
       data: [],
-    };
+    }
   }
 
-  const isArray = Array.isArray(context.data);
+  const isArray = Array.isArray(context.data)
 
   return {
     isArray,
     data: isArray ? context.data : [context.data],
-  };
+  }
 }

@@ -1,5 +1,5 @@
-import { HookContext } from '@feathersjs/feathers';
-import { paramsFromClient } from './params-from-client';
+import type { HookContext } from '@feathersjs/feathers'
+import { paramsFromClient } from './params-from-client.js'
 
 describe('paramsFromClient', () => {
   it('should move params to query._$client', () => {
@@ -23,8 +23,8 @@ describe('paramsFromClient', () => {
           c: 3,
         },
       },
-    });
-  });
+    })
+  })
 
   it('should move params to query._$client and leave remaining', () => {
     expect(
@@ -49,6 +49,6 @@ describe('paramsFromClient', () => {
           c: 3,
         },
       },
-    });
-  });
-});
+    })
+  })
+})

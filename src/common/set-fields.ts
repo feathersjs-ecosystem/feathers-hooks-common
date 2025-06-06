@@ -1,4 +1,4 @@
-import _set from 'lodash/set.js';
+import _set from 'lodash/set.js'
 
 export function setFields<T extends Record<string, any>>(
   items: T | T[],
@@ -6,13 +6,12 @@ export function setFields<T extends Record<string, any>>(
   fieldNames: string[],
   defaultFieldName: string,
 ): void {
-  const value = typeof fieldValue === 'function' ? fieldValue() : fieldValue;
+  const value = typeof fieldValue === 'function' ? fieldValue() : fieldValue
 
-  if (!fieldNames.length) fieldNames = [defaultFieldName];
-
-  (Array.isArray(items) ? items : [items]).forEach(item => {
+  if (!fieldNames.length) fieldNames = [defaultFieldName]
+  ;(Array.isArray(items) ? items : [items]).forEach(item => {
     fieldNames.forEach((fieldName: any) => {
-      _set(item, fieldName, value);
-    });
-  });
+      _set(item, fieldName, value)
+    })
+  })
 }

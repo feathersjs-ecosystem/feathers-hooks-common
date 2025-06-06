@@ -1,4 +1,4 @@
-import type { Params } from '@feathersjs/feathers';
+import type { Params } from '@feathersjs/feathers'
 
 /**
  * Pass an explicit context.params from client to server. Client-side. (Utility function.)
@@ -8,21 +8,21 @@ import type { Params } from '@feathersjs/feathers';
  * @deprecated use the hook `paramsForServer2` instead
  */
 export function paramsForServer(params?: Params, ...whitelist: string[]): Params {
-  const ifWhitelist = !!whitelist.length;
-  const _params: Record<string, any> = Object.assign({}, params);
+  const ifWhitelist = !!whitelist.length
+  const _params: Record<string, any> = Object.assign({}, params)
 
-  _params.query = _params.query || {};
-  _params.query.$client = _params.query.$client || {};
+  _params.query = _params.query || {}
+  _params.query.$client = _params.query.$client || {}
 
   Object.keys(_params).forEach(key => {
     if (key !== 'query') {
       if (!ifWhitelist || whitelist.includes(key)) {
-        _params.query.$client[key] = _params[key];
+        _params.query.$client[key] = _params[key]
       }
 
-      delete _params[key];
+      delete _params[key]
     }
-  });
+  })
 
-  return _params;
+  return _params
 }

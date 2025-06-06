@@ -1,9 +1,9 @@
-import { assert } from 'vitest';
-import { pickResult } from './pick-result';
+import { assert } from 'vitest'
+import { pickResult } from './pick-result.js'
 
-let hookAfter: any;
-let hookFindPaginate: any;
-let hookFind: any;
+let hookAfter: any
+let hookFindPaginate: any
+let hookFind: any
 
 describe('pickResult', () => {
   describe('removes fields', () => {
@@ -13,7 +13,7 @@ describe('pickResult', () => {
         method: 'create',
         params: { provider: 'rest' },
         result: { first: 'Jane', last: 'Doe' },
-      };
+      }
       hookFindPaginate = {
         type: 'after',
         method: 'find',
@@ -25,7 +25,7 @@ describe('pickResult', () => {
             { first: 'Jane', last: 'Doe' },
           ],
         },
-      };
+      }
       hookFind = {
         type: 'after',
         method: 'find',
@@ -34,30 +34,30 @@ describe('pickResult', () => {
           { first: 'John', last: 'Doe' },
           { first: 'Jane', last: 'Doe' },
         ],
-      };
-    });
+      }
+    })
 
     it('updates hook after::find with pagination', () => {
-      pickResult('first')(hookFindPaginate);
-      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+      pickResult('first')(hookFindPaginate)
+      assert.deepEqual(hookFindPaginate.result.data, [{ first: 'John' }, { first: 'Jane' }])
+    })
 
     it('updates hook after::find with no pagination', () => {
-      pickResult('first')(hookFind);
-      assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }]);
-    });
+      pickResult('first')(hookFind)
+      assert.deepEqual(hookFind.result, [{ first: 'John' }, { first: 'Jane' }])
+    })
 
     it('updates hook after', () => {
-      pickResult('first')(hookAfter);
-      assert.deepEqual(hookAfter.result, { first: 'Jane' });
-    });
+      pickResult('first')(hookAfter)
+      assert.deepEqual(hookAfter.result, { first: 'Jane' })
+    })
 
     it('updates when called internally on server', () => {
-      hookAfter.params.provider = '';
-      pickResult('first')(hookAfter);
-      assert.deepEqual(hookAfter.result, { first: 'Jane' });
-    });
-  });
+      hookAfter.params.provider = ''
+      pickResult('first')(hookAfter)
+      assert.deepEqual(hookAfter.result, { first: 'Jane' })
+    })
+  })
 
   describe('ignore non-object records', () => {
     beforeEach(() => {
@@ -66,12 +66,12 @@ describe('pickResult', () => {
         method: 'create',
         params: { provider: 'rest' },
         result: [{ first: 'Jane', last: 'Doe' }, null, undefined, Infinity],
-      };
-    });
+      }
+    })
 
     it('after', () => {
-      pickResult('first')(hookAfter);
-      assert.deepEqual(hookAfter.result, [{ first: 'Jane' }, null, undefined, Infinity]);
-    });
-  });
-});
+      pickResult('first')(hookAfter)
+      assert.deepEqual(hookAfter.result, [{ first: 'Jane' }, null, undefined, Infinity])
+    })
+  })
+})

@@ -1,5 +1,5 @@
-import type { HookContext } from '@feathersjs/feathers';
-import { isMulti } from './is-multi';
+import type { HookContext } from '@feathersjs/feathers'
+import { isMulti } from './is-multi.js'
 
 describe('predicates/isMulti', () => {
   it('returns true', function () {
@@ -7,43 +7,43 @@ describe('predicates/isMulti', () => {
       const context = {
         method,
         type,
-      } as HookContext;
+      } as HookContext
       if (method === 'create') {
-        context.data = [];
+        context.data = []
       }
       if (method === 'patch' || method === 'remove') {
-        context.id = null as any;
+        context.id = null as any
       }
-      return context;
-    };
-    ['before', 'after', 'around'].forEach(type => {
-      ['find', 'create', 'patch', 'remove'].forEach(method => {
-        const context = makeContext(type, method);
-        assert.strictEqual(isMulti(context), true, `'${type}:${method}': returns true`);
-      });
-    });
-  });
+      return context
+    }
+    ;['before', 'after', 'around'].forEach(type => {
+      ;['find', 'create', 'patch', 'remove'].forEach(method => {
+        const context = makeContext(type, method)
+        assert.strictEqual(isMulti(context), true, `'${type}:${method}': returns true`)
+      })
+    })
+  })
 
   it('returns false', function () {
     const makeContext = (type: string, method: string) => {
       const context = {
         method,
         type,
-      } as HookContext;
+      } as HookContext
       if (method === 'create') {
-        context.data = {};
+        context.data = {}
       }
       if (method === 'patch' || method === 'remove' || method === 'update') {
-        context.id = 0;
+        context.id = 0
       }
 
-      return context;
-    };
-    ['before', 'after', 'around'].forEach(type => {
-      ['get', 'create', 'update', 'patch', 'remove'].forEach(method => {
-        const context = makeContext(type, method);
-        assert.strictEqual(isMulti(context), false, `'${type}:${method}': returns false`);
-      });
-    });
-  });
-});
+      return context
+    }
+    ;['before', 'after', 'around'].forEach(type => {
+      ;['get', 'create', 'update', 'patch', 'remove'].forEach(method => {
+        const context = makeContext(type, method)
+        assert.strictEqual(isMulti(context), false, `'${type}:${method}': returns false`)
+      })
+    })
+  })
+})

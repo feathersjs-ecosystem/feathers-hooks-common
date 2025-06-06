@@ -47,7 +47,7 @@ Build `params` for a service call.
 - **Example**
 
   ```js
-  const { callingParams, callingParamsDefaults } = require('feathers-hooks-common');
+  const { callingParams, callingParamsDefaults } = require('feathers-hooks-common/index.js');
   // Authentication props to always copy. Suitable for feathers-authentication-management.
   callingParamsDefaults(['provider', 'authenticated', 'user', 'isVerified']);
 
@@ -88,7 +88,7 @@ Set defaults for building `params` for service calls with callingParams.
 - **Example**
 
   ```js
-  const { callingParams, callingParamsDefaults } = require('feathers-hooks-common');
+  const { callingParams, callingParamsDefaults } = require('feathers-hooks-common/index.js');
   // Authentication props to always copy. Suitable for feathers-authentication-management.
   // Only hooks will be calling `callingParams`. Set a flag so other hooks recognize such a call.
   callingParamsDefaults(['provider', 'authenticated', 'user', 'isVerified'], { _calledByHook: true });
@@ -133,7 +133,7 @@ Restrict a hook to run for certain methods and method types.
 - **Example**
 
   ```js
-  const { checkContext } = require('feathers-hooks-common');
+  const { checkContext } = require('feathers-hooks-common/index.js');
 
   function myHook(context) {
     checkContext(context, 'after', ['create', 'remove']);
@@ -170,7 +170,7 @@ Sequentially execute multiple sync or async hooks.
 - **Example**
 
   ```js
-  const { combine, createdAt, updatedAt } = require('feathers-hooks-common');
+  const { combine, createdAt, updatedAt } = require('feathers-hooks-common/index.js');
 
   async function myCustomHook(context) {
     const newContext = await combine(setNow('createdAt'), setNow('updatedAt')).call(this, context);
@@ -217,7 +217,7 @@ Return the and of a series of sync or async predicate functions.
 - **Example**
 
   ```js
-  const { iff, every } = require('feathers-hooks-common');
+  const { iff, every } = require('feathers-hooks-common/index.js');
 
   module.exports = { before: {
       create: iff(every(hook1, hook2, ...), hookA, hookB, ...)
@@ -250,7 +250,7 @@ Get the records in `context.data` or `context.result`
 - **Example**
 
   ```js
-  const { getItems, replaceItems } = require('feathers-hooks-common');
+  const { getItems, replaceItems } = require('feathers-hooks-common/index.js');
 
   const insertCode = code => context => {
     const items = getItems(context);
@@ -264,11 +264,7 @@ Get the records in `context.data` or `context.result`
     replaceItems(context, items);
   };
 
-  module.exports = {
-    before: {
-      create: insertCode('a')
-    }
-  };
+  module.exports = { before: { create: insertCode('a') } };
   ```
 
 - **Details**
@@ -300,7 +296,7 @@ Negate a sync or async predicate function.
 - **Example**
 
   ```js
-  const { iff, isNot, isProvider, discard } = require('feathers-hooks-common');
+  const { iff, isNot, isProvider, discard } = require('feathers-hooks-common/index.js');
   const isRequestor = () => context => new Promise(resolve, reject) => ... );
 
   module.exports = { after: {
@@ -343,13 +339,9 @@ Check which transport provided the service call.
 - **Example**
 
   ```js
-  const { iff, isProvider, discard } = require('feathers-hooks-common');
+  const { iff, isProvider, discard } = require('feathers-hooks-common/index.js');
 
-  module.exports = {
-    after: {
-      create: iff(isProvider('external'), discard('password'))
-    }
-  };
+  module.exports = { after: { create: iff(isProvider('external'), discard('password')) } };
   ```
 
 - **Details**
@@ -387,7 +379,7 @@ Build context.params for service calls.
 - **Example**
 
   ```js
-  const { makeCallingParams } = require('feathers-hooks-common');
+  const { makeCallingParams } = require('feathers-hooks-common/index.js');
 
   async function myCustomHook(context) {
     // ...
@@ -422,25 +414,19 @@ Pass an explicit context.params from client to server. Client-side.
 
   ```js
   // client
-  const { paramsForServer } = require('feathers-hooks-common');
+  const { paramsForServer } = require('feathers-hooks-common/index.js');
 
   service.update(
     id,
     data,
-    paramsForServer({
-      query: { dept: 'a' },
-      populate: 'po-1',
-      serialize: 'po-mgr'
-    })
+    paramsForServer({ query: { dept: 'a' }, populate: 'po-1', serialize: 'po-mgr' }),
   );
 
   // server
-  const { paramsFromClient } = require('feathers-hooks-common');
+  const { paramsFromClient } = require('feathers-hooks-common/index.js');
 
   module.exports = {
-    before: {
-      all: [paramsFromClient('populate', 'serialize', 'otherProp'), myHook]
-    }
+    before: { all: [paramsFromClient('populate', 'serialize', 'otherProp'), myHook] },
   };
 
   // myHook's `context.params` will now be
@@ -472,7 +458,7 @@ Replace the records in context.data or context.result[.data].
 - **Example**
 
   ```js
-  const { getItems, replaceItems } = require('feathers-hooks-common');
+  const { getItems, replaceItems } = require('feathers-hooks-common/index.js');
 
   const insertCode = code => context {
     const items = getItems(context);
@@ -509,7 +495,7 @@ Let's you call a hook right after the service call.
 - **Example**
 
   ```js
-  const { keep, runHook } = require('feathers-hooks-common');
+  const { keep, runHook } = require('feathers-hooks-common/index.js');
 
   user.get(...)
     .then( runHook()(keep('name', 'address.state')) )
@@ -520,7 +506,7 @@ Let's you call a hook right after the service call.
   ```
 
   ```js
-  const { fastJoin, runHook } = require('feathers-hooks-common');
+  const { fastJoin, runHook } = require('feathers-hooks-common/index.js');
   const runHookFinds = runHook({ app: app, method: 'find' });
 
   const paymentsRecords = [
@@ -529,29 +515,23 @@ Let's you call a hook right after the service call.
     { _id: 103, amount: 110, patientId: 1 },
     { _id: 104, amount: 115, patientId: 2 },
     { _id: 105, amount: 120, patientId: 3 },
-    { _id: 106, amount: 125, patientId: 3 }
+    { _id: 106, amount: 125, patientId: 3 },
   ];
   await payments.create(paymentsRecords);
 
   const patientsRecords = [
     { _id: 1, name: 'John' },
     { _id: 2, name: 'Marshall' },
-    { _id: 3, name: 'David' }
+    { _id: 3, name: 'David' },
   ];
   await patients.create(patientsRecords);
 
   const paymentResolvers = {
     joins: {
       patient: () => async payment => {
-        payment.patient = (
-          await patients.find({
-            query: {
-              id: payment.patientId
-            }
-          })
-        )[0];
-      }
-    }
+        payment.patient = (await patients.find({ query: { id: payment.patientId } }))[0];
+      },
+    },
   };
 
   await payments
@@ -564,14 +544,9 @@ Let's you call a hook right after the service call.
     { _id: 101, amount: 100, patientId: 1, patient: { _id: 1, name: 'John' } },
     { _id: 102, amount: 105, patientId: 1, patient: { _id: 1, name: 'John' } },
     { _id: 103, amount: 110, patientId: 1, patient: { _id: 1, name: 'John' } },
-    {
-      _id: 104,
-      amount: 115,
-      patientId: 2,
-      patient: { _id: 2, name: 'Marshall' }
-    },
+    { _id: 104, amount: 115, patientId: 2, patient: { _id: 2, name: 'Marshall' } },
     { _id: 105, amount: 120, patientId: 3, patient: { _id: 3, name: 'David' } },
-    { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } }
+    { _id: 106, amount: 125, patientId: 3, patient: { _id: 3, name: 'David' } },
   ];
   ```
 
@@ -610,7 +585,7 @@ Return the or of a series of sync or async predicate functions.
 - **Example**
 
   ```js
-  const { iff, some } = require('feathers-hooks-common');
+  const { iff, some } = require('feathers-hooks-common/index.js');
 
   module.exports = { before: {
       create: iff(some(hook1, hook2, ...), hookA, hookB, ...)

@@ -1,14 +1,15 @@
-import { assert } from 'vitest';
-import { feathers, HookContext } from '@feathersjs/feathers';
-import { MemoryService } from '@feathersjs/memory';
-import { iff } from '../../hooks';
-import { every } from './every';
-import { isNot } from '../not/not';
+import { assert } from 'vitest'
+import type { HookContext } from '@feathersjs/feathers'
+import { feathers } from '@feathersjs/feathers'
+import { MemoryService } from '@feathersjs/memory'
+import { iff } from '../../hooks/index.js'
+import { every } from './every.js'
+import { not } from '../not/not.js'
 
 describe('predicates/every', () => {
   it('returns true synchronously when empty', () => {
-    assert.equal(every()({} as HookContext), true);
-  });
+    assert.equal(every()({} as HookContext), true)
+  })
 
   it('returns false synchronously when at least 1 hook is false', () => {
     expect(
@@ -18,8 +19,8 @@ describe('predicates/every', () => {
         () => Promise.resolve(true),
         () => false,
       )({} as HookContext),
-    ).toBe(false);
-  });
+    ).toBe(false)
+  })
 
   it('returns true when all hooks are truthy', async () => {
     await expect(
@@ -28,31 +29,31 @@ describe('predicates/every', () => {
         () => Promise.resolve(true),
         () => Promise.resolve(true),
       )({} as HookContext),
-    ).resolves.toBe(true);
-  });
+    ).resolves.toBe(true)
+  })
 
   it('rejects with the error', async () => {
     await expect(
       async () => await every(() => Promise.reject(new Error('errored')))({} as HookContext),
-    ).rejects.toThrow('errored');
-  });
+    ).rejects.toThrow('errored')
+  })
 
   it('does not run all predicates when one is false', () => {
-    let ran = 0;
+    let ran = 0
     const fn = () => {
-      ran++;
-      return false;
-    };
+      ran++
+      return false
+    }
 
-    expect(every(fn, fn, fn)({} as HookContext)).toBe(false);
-    expect(ran).toBe(1);
-  });
+    expect(every(fn, fn, fn)({} as HookContext)).toBe(false)
+    expect(ran).toBe(1)
+  })
 
-  let app: any;
+  let app: any
 
   beforeEach(() => {
-    app = feathers().use('/users', new MemoryService());
-  });
+    app = feathers().use('/users', new MemoryService())
+  })
 
   describe('when all hooks are truthy', () => {
     beforeEach(() => {
@@ -62,7 +63,7 @@ describe('predicates/every', () => {
             iff(
               every(
                 (_hook: any) => true,
-                // @ts-ignore
+                // @ts-expect-error TODO
                 (_hook: any) => 1,
                 (_hook: any) => {},
                 (_hook: any) => Promise.resolve(true),
@@ -71,18 +72,18 @@ describe('predicates/every', () => {
             ),
           ],
         },
-      });
-    });
+      })
+    })
 
     it('returns true', () => {
       return app
         .service('users')
         .find()
         .then((result: any) => {
-          assert.deepEqual(result, []);
-        });
-    });
-  });
+          assert.deepEqual(result, [])
+        })
+    })
+  })
 
   describe('when a hook throws an error', () => {
     beforeEach(() => {
@@ -93,7 +94,7 @@ describe('predicates/every', () => {
               every(
                 (_hook: any) => true,
                 (_hook: any) => {
-                  throw new Error('Hook 2 errored');
+                  throw new Error('Hook 2 errored')
                 },
                 (_hook: any) => true,
               ),
@@ -101,18 +102,18 @@ describe('predicates/every', () => {
             ),
           ],
         },
-      });
-    });
+      })
+    })
 
     it('rejects with the error', () => {
       return app
         .service('users')
         .find()
         .catch((error: any) => {
-          assert.equal(error.message, 'Hook 2 errored');
-        });
-    });
-  });
+          assert.equal(error.message, 'Hook 2 errored')
+        })
+    })
+  })
 
   describe('when a hook rejects with an error', () => {
     beforeEach(() => {
@@ -129,18 +130,18 @@ describe('predicates/every', () => {
             ),
           ],
         },
-      });
-    });
+      })
+    })
 
     it('rejects with the error', () => {
       return app
         .service('users')
         .find()
         .catch((error: any) => {
-          assert.equal(error.message, 'Hook 2 errored');
-        });
-    });
-  });
+          assert.equal(error.message, 'Hook 2 errored')
+        })
+    })
+  })
 
   describe('when at least one hook is falsey', () => {
     beforeEach(() => {
@@ -148,13 +149,13 @@ describe('predicates/every', () => {
         before: {
           all: [
             iff(
-              isNot(
+              not(
                 every(
                   (_hook: any) => true,
                   (_hook: any) => Promise.resolve(true),
                   (_hook: any) => Promise.resolve(false),
                   (_hook: any) => false,
-                  // @ts-ignore
+                  // @ts-expect-error TODO
                   (_hook: any) => 0,
                   (_hook: any) => null,
                   (_hook: any) => undefined,
@@ -165,16 +166,16 @@ describe('predicates/every', () => {
             ),
           ],
         },
-      });
-    });
+      })
+    })
 
     it('returns false', () => {
       return app
         .service('users')
         .find()
         .catch((error: any) => {
-          assert.equal(error.message, 'A hook returned false');
-        });
-    });
-  });
-});
+          assert.equal(error.message, 'A hook returned false')
+        })
+    })
+  })
+})

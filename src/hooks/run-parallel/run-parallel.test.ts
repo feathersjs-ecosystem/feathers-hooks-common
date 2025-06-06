@@ -1,74 +1,74 @@
-import { assert } from 'vitest';
-import { runParallel } from './run-parallel';
+import { assert } from 'vitest'
+import { runParallel } from './run-parallel.js'
 
-let contextBefore: any;
-let that: any;
+let contextBefore: any
+let that: any
 
 function test(tester: any) {
   return function (this: any, contextCloned: any) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    that = this;
-    tester(contextCloned);
-  };
+    that = this
+    tester(contextCloned)
+  }
 }
 
 describe('services runParallel', () => {
   beforeEach(() => {
-    that = undefined;
+    that = undefined
 
     contextBefore = {
       type: 'before',
       method: 'create',
       params: { provider: 'rest' },
       data: { first: 'John', last: 'Doe' },
-    };
-  });
+    }
+  })
 
   it('runs the func', () =>
     new Promise<void>(resolve => {
-      runParallel(test(tester))(contextBefore);
+      runParallel(test(tester))(contextBefore)
 
       function tester() {
-        resolve();
+        resolve()
       }
-    }));
+    }))
 
   it('passes this', () =>
     new Promise<void>(resolve => {
-      runParallel(test(tester)).call({ bar: true }, contextBefore);
+      runParallel(test(tester)).call({ bar: true }, contextBefore)
 
       function tester() {
-        assert.strictEqual(that.bar, true);
-        resolve();
+        assert.strictEqual(that.bar, true)
+        resolve()
       }
-    }));
+    }))
 
   it('defaults to uncloned context', () =>
     new Promise<void>(resolve => {
-      runParallel(test(tester))(contextBefore);
-      contextBefore._foo = true;
+      runParallel(test(tester))(contextBefore)
+      contextBefore._foo = true
 
       function tester(contextCloned: any) {
-        assert.property(contextCloned, '_foo');
-        resolve();
+        assert.property(contextCloned, '_foo')
+        resolve()
       }
-    }));
+    }))
 
   it('clones', () =>
     new Promise<void>(resolve => {
-      runParallel(test(tester), structuredClone)(contextBefore);
-      contextBefore._foo = true;
+      runParallel(test(tester), structuredClone)(contextBefore)
+      contextBefore._foo = true
 
       function tester(contextCloned: any) {
-        assert.notProperty(contextCloned, '_foo');
-        resolve();
+        assert.notProperty(contextCloned, '_foo')
+        resolve()
       }
-    }));
+    }))
 
   it('Throws if no func', () => {
     assert.throws(() => {
-      // @ts-expect-error
-      runParallel()(contextBefore);
-    });
-  });
-});
+      // @ts-expect-error TODO
+      runParallel()(contextBefore)
+    })
+  })
+})

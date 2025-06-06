@@ -1,5 +1,5 @@
-import { alterData } from '../alter-items/alter-data';
-import _set from 'lodash/set.js';
+import { transformData } from '../transform/transform-data.js'
+import _set from 'lodash/set.js'
 
 /**
  * Create/update certain fields to the current date-time.
@@ -7,10 +7,10 @@ import _set from 'lodash/set.js';
  * @see https://hooks-common.feathersjs.com/hooks.html#setnow
  */
 export const setNowData = (...fieldNames: string[]) =>
-  alterData(data => {
+  transformData(data => {
     for (let i = 0; i < fieldNames.length; i++) {
-      const key = fieldNames[i];
+      const key = fieldNames[i]
 
-      _set(data, key, new Date());
+      _set(data, key, new Date())
     }
-  });
+  })

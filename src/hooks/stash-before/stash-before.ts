@@ -1,41 +1,41 @@
-import type { HookContext, NextFunction } from '@feathersjs/feathers';
-import { checkContext } from '../../utils';
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
+import { checkContext } from '../../utils/index.js'
 
 /**
  * Stash current value of record, usually before mutating it. Performs a get call.
  * @see https://hooks-common.feathersjs.com/hooks.html#stashbefore
  */
 export function stashBefore<H extends HookContext = HookContext>(fieldName?: string) {
-  const beforeField = fieldName || 'before';
+  const beforeField = fieldName || 'before'
 
   return async (context: H, next?: NextFunction) => {
     if (context.params.disableStashBefore) {
-      return context;
+      return context
     }
 
-    checkContext(context, ['before', 'around'], ['update', 'patch', 'remove'], 'stashBefore');
+    checkContext(context, ['before', 'around'], ['update', 'patch', 'remove'], 'stashBefore')
 
-    const isMulti = context.id == null;
+    const isMulti = context.id == null
 
     const params = {
       ...context.params,
       disableStashBefore: true,
       ...(isMulti ? { paginate: false } : {}),
-    };
+    }
 
     await (!isMulti ? context.service.get(context.id, params) : context.service.find(params))
       .then((result: any) => {
-        context.params[beforeField] = result;
-        return context;
+        context.params[beforeField] = result
+        return context
       })
       .catch(() => {
-        return context;
-      });
+        return context
+      })
 
     if (next) {
-      return await next();
+      return await next()
     }
 
-    return context;
-  };
+    return context
+  }
 }

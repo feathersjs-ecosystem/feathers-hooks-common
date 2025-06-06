@@ -2,19 +2,26 @@
 
 #### hooks
 
-- added alterData, alterResult, rm alterItems
+- added transformData, transformResult, rm alterItems
 - added discardData, discardResult, rm discard
   - moved to omitData, omitResult, rm omit
+  - MaybeArray
 - added keepData, keepResult, rm keep
   - moved to pickData, pickResult, rm pick
+  - MaybeArray
 - added lowercaseData, lowercaseResult, rm lowercase
+  - MaybeArray
 - added setNowData, setNowResult, rm setNow
 
 - removed several checks that are handled by typescript
 - removed check for `preventChanges(true, ...fieldNames)`
 
+  - switch `true` to second argument
+
 - renamed 'keepQuery' to 'pickQuery', added alias
 - renamed 'required' to 'checkRequired', added alias
+
+- removed 'actOn', 'actOnDefault', 'actOnDispatch'
 
 - added throwIf
 - added throwIfIsProvider
@@ -26,6 +33,8 @@
 - stashBefore multi
 
 - softDelete: added 'transformParams' & added 'key' option
+
+- disallow: MaybeArray
 
 - rm support for spread argument
 
@@ -44,6 +53,7 @@
 - added replaceData, replaceResult, deprecated replaceItems
 - added util getPaginate
 - added util skipResult
+- rm 'runHook'
 
 ### Hooks to discuss
 

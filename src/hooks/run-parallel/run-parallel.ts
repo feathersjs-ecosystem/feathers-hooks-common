@@ -1,6 +1,6 @@
-import { BadRequest } from '@feathersjs/errors';
-import type { HookContext } from '@feathersjs/feathers';
-import type { HookFunction } from '../../types';
+import { BadRequest } from '@feathersjs/errors'
+import type { HookContext } from '@feathersjs/feathers'
+import type { HookFunction } from '../../types.js'
 
 /**
  * Run a hook in parallel to the other hooks and the service call.
@@ -12,13 +12,13 @@ export function runParallel<H extends HookContext = HookContext>(
   clone?: (item: H) => H,
 ) {
   if (typeof hook !== 'function') {
-    throw new BadRequest('Function not provided. (runParallel)');
+    throw new BadRequest('Function not provided. (runParallel)')
   }
 
   return function (this: any, context: H) {
     // must use function
-    const copy = clone ? clone(context) : context;
+    const copy = clone ? clone(context) : context
 
-    setTimeout(() => hook.call(this, copy as any));
-  };
+    setTimeout(() => hook.call(this, copy as any))
+  }
 }
