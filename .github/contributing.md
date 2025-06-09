@@ -10,7 +10,7 @@ Before creating an issue please make sure you have checked out the docs, specifi
 
 If you haven't found your answer please feel free to join our [slack channel](http://slack.feathersjs.com), create an issue on Github, or post on [Stackoverflow](http://stackoverflow.com) using the `feathers` or `feathersjs` tag. We try our best to monitor Stackoverflow but you're likely to get more immediate responses in Slack and Github.
 
-Issues can be reported in the [issue tracker](https://github.com/feathersjs/feathers/issues).  Since feathers combines many modules it can be hard for us to assess the root cause without knowing which modules are being used and what your configuration looks like, so **it helps us immensely if you can link to a simple example that reproduces your issue**.
+Issues can be reported in the [issue tracker](https://github.com/feathersjs/feathers/issues). Since feathers combines many modules it can be hard for us to assess the root cause without knowing which modules are being used and what your configuration looks like, so **it helps us immensely if you can link to a simple example that reproduces your issue**.
 
 ## Report a Security Concern
 
@@ -34,13 +34,7 @@ Although we generally accept many PRs they can be rejected for many reasons. We 
 
 Before running the tests from the `test/` folder `npm test` will run ESlint. You can check your code changes individually by running `npm run lint`.
 
-### ES6 compilation
-
-Feathers uses [Babel](https://babeljs.io/) to leverage the latest developments of the JavaScript language. All code and samples are currently written in ES2015. To transpile the code in this repository run
-
-> npm run compile
-
-__Note:__ `npm test` will run the compilation automatically before the tests.
+**Note:** `npm test` will run the compilation automatically before the tests.
 
 ### Tests
 
