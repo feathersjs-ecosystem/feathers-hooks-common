@@ -31,7 +31,7 @@ export const preventChanges = (fieldNames: MaybeArray<string>, options?: Prevent
           throw error
         }
       }
-
+    } else {
       item = _omit(item, fieldNamesArr)
     }
 

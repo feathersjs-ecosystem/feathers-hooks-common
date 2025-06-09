@@ -10,33 +10,37 @@ export type SoftDeleteOptionFunction<H extends HookContext = HookContext> = (
 
 export interface SoftDeleteOptions<H extends HookContext = HookContext> {
   /**
-   * @default { deletedAt: { $ne: true } }
+   * @example { deletedAt: null }
    */
-  deletedQuery?: { [key: string]: any } | SoftDeleteOptionFunction<H>
+  deletedQuery: { [key: string]: any } | SoftDeleteOptionFunction<H>
   /**
-   * @default { deletedAt: new Date() }
+   * @example { deletedAt: new Date() }
    */
-  removeData?: { [key: string]: any } | SoftDeleteOptionFunction<H>
+  removeData: { [key: string]: any } | SoftDeleteOptionFunction<H>
   /**
    * Transform the params before calling the service method. E.g. remove 'params.provider' or add custom params.
    */
   transformParams?: TransformParamsFn
 
   /**
+   * Key in `params` to disable the soft delete functionality.
+   *
    * @default 'disableSoftDelete'
    */
   disableSoftDeleteKey?: string
 }
 
-const defaultQuery = () => ({ deletedAt: { $ne: true } })
-const defaultData = () => ({ deletedAt: new Date() })
-
 /**
  * Allow to mark items as deleted instead of removing them.
  */
-export const softDelete =
-  <H extends HookContext = HookContext>(options: SoftDeleteOptions<H> = {}) =>
-  async (context: H, next?: NextFunction) => {
+export const softDelete = <H extends HookContext = HookContext>(options: SoftDeleteOptions<H>) => {
+  if (!options?.deletedQuery || !options?.removeData) {
+    throw new Error(
+      'You must provide `deletedQuery` and `removeData` options to the softDelete hook.',
+    )
+  }
+
+  return async (context: H, next?: NextFunction) => {
     checkContext(context, ['before', 'around'], null, 'softDelete')
 
     const { disableSoftDeleteKey = 'disableSoftDelete' } = options
@@ -45,7 +49,7 @@ export const softDelete =
       return context
     }
 
-    const { deletedQuery = defaultQuery, removeData = defaultData } = options
+    const { deletedQuery, removeData } = options
 
     const deleteQuery = await getValue(deletedQuery, context)
 
@@ -75,6 +79,7 @@ export const softDelete =
 
     return context
   }
+}
 
 const getValue = (value: any, ...args: any[]) => {
   if (typeof value === 'function') {

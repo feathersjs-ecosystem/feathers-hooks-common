@@ -1,4 +1,4 @@
-import { assert } from 'vitest'
+import { assert, expect } from 'vitest'
 import { preventChanges } from './prevent-changes.js'
 import { clone } from '../../common/index.js'
 
@@ -15,17 +15,27 @@ describe('preventChanges', () => {
       }
     })
 
-    it('does not throw if props not found', () => {
-      preventChanges(['name', 'address'], { error: true })(hookBefore)
-      preventChanges(['name.x', 'x.y.z'], { error: true })(hookBefore)
+    it('does not throw if props not found', async () => {
+      await preventChanges(['name', 'address'], { error: true })(hookBefore)
+      await preventChanges(['name.x', 'x.y.z'], { error: true })(hookBefore)
     })
 
-    it('throw if props found', () => {
-      assert.throw(() => preventChanges(['name', 'first'], { error: true })(hookBefore))
-      assert.throw(() => preventChanges(['name', 'a'], { error: true })(hookBefore))
-      assert.throw(() => preventChanges(['name', 'a.b'], { error: true })(hookBefore))
-      assert.throw(() => preventChanges(['name', 'a.c'], { error: true })(hookBefore))
-      assert.throw(() => preventChanges(['name', 'a.c.d.e'], { error: true })(hookBefore))
+    it('throw if props found', async () => {
+      await expect(() =>
+        preventChanges(['name', 'first'], { error: true })(hookBefore),
+      ).rejects.toThrow()
+      await expect(() =>
+        preventChanges(['name', 'a'], { error: true })(hookBefore),
+      ).rejects.toThrow()
+      await expect(() =>
+        preventChanges(['name', 'a.b'], { error: true })(hookBefore),
+      ).rejects.toThrow()
+      await expect(() =>
+        preventChanges(['name', 'a.c'], { error: true })(hookBefore),
+      ).rejects.toThrow()
+      await expect(() =>
+        preventChanges(['name', 'a.c.d.e'], { error: true })(hookBefore),
+      ).rejects.toThrow()
     })
   })
 
@@ -39,38 +49,44 @@ describe('preventChanges', () => {
       }
     })
 
-    it('does not delete if props not found', () => {
-      let context: any = preventChanges(['name', 'address'], { error: false })(clone(hookBefore))
+    it('does not delete if props not found', async () => {
+      let context: any = await preventChanges(['name', 'address'], { error: false })(
+        clone(hookBefore),
+      )
       assert.deepEqual(context, hookBefore)
 
-      context = preventChanges(['name.x', 'x.y.z'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['name.x', 'x.y.z'], { error: false })(clone(hookBefore))
       assert.deepEqual(context, hookBefore)
     })
 
-    it('deletes if props found', () => {
-      let context: any = preventChanges(['name', 'first'], { error: false })(clone(hookBefore))
+    it('deletes if props found', async () => {
+      let context: any = await preventChanges(['name', 'first'], { error: false })(
+        clone(hookBefore),
+      )
       assert.deepEqual(context.data, { last: 'Doe', a: { b: 'john', c: { d: { e: 1 } } } }, '1')
 
-      context = preventChanges(['name', 'a'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['name', 'a'], { error: false })(clone(hookBefore))
       assert.deepEqual(context.data, { first: 'John', last: 'Doe' }, '2')
 
-      context = preventChanges(['name', 'a.b'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['name', 'a.b'], { error: false })(clone(hookBefore))
       assert.deepEqual(context.data, { first: 'John', last: 'Doe', a: { c: { d: { e: 1 } } } }, '3')
 
-      context = preventChanges(['name', 'a.c'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['name', 'a.c'], { error: false })(clone(hookBefore))
       assert.deepEqual(context.data, { first: 'John', last: 'Doe', a: { b: 'john' } }, '4')
 
-      context = preventChanges(['name', 'a.c.d.e'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['name', 'a.c.d.e'], { error: false })(clone(hookBefore))
       assert.deepEqual(
         context.data,
         { first: 'John', last: 'Doe', a: { b: 'john', c: { d: {} } } },
         '5',
       )
 
-      context = preventChanges(['first', 'last'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['first', 'last'], { error: false })(clone(hookBefore))
       assert.deepEqual(context.data, { a: { b: 'john', c: { d: { e: 1 } } } })
 
-      context = preventChanges(['first', 'a.b', 'a.c.d.e'], { error: false })(clone(hookBefore))
+      context = await preventChanges(['first', 'a.b', 'a.c.d.e'], { error: false })(
+        clone(hookBefore),
+      )
       assert.deepEqual(context.data, { last: 'Doe', a: { c: { d: {} } } })
     })
   })

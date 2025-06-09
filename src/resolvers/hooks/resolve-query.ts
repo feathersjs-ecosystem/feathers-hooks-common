@@ -1,11 +1,11 @@
 import type { HookContext, NextFunction } from '@feathersjs/feathers'
-import { type Resolver, runResolvers } from './resolvers.internal.js'
+import { type ResolverObject, resolve } from './resolvers.internal.js'
 
 export const resolveQuery =
-  <H extends HookContext>(...resolvers: Resolver<any, H>[]) =>
+  <H extends HookContext>(resolverProperties: ResolverObject<any, H>) =>
   async (context: H, next?: NextFunction) => {
-    const data = context?.params?.query || {}
-    const query = await runResolvers(resolvers, data, context)
+    const queryIngoing = context?.params?.query || {}
+    const query = await resolve(resolverProperties, queryIngoing, context)
 
     context.params = {
       ...context.params,

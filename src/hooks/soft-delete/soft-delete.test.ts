@@ -6,10 +6,10 @@ import { softDelete } from './soft-delete.js'
 const initialUsers = [
   { name: 'Jane Doe', key: 'a' },
   { name: 'Jack Doe', key: 'a' },
-  { name: 'Jack Doe', key: 'a', deleted: true },
+  { name: 'Jack Doe', key: 'a', deletedAt: new Date() },
   { name: 'Rick Doe', key: 'b' },
   { name: 'Mick Doe', key: 'b' },
-  { name: 'Mick Doe', key: 'b', deleted: true },
+  { name: 'Mick Doe', key: 'b', deletedAt: new Date() },
 ]
 
 describe('softDelete', () => {
@@ -19,14 +19,19 @@ describe('softDelete', () => {
     const app = feathers().use(
       '/users',
       new MemoryService({
-        multi: ['create', 'patch', 'remove'],
+        multi: true,
       }),
     )
 
     userService = app.service('users')
     userService.hooks({
       before: {
-        all: [softDelete()],
+        all: [
+          softDelete({
+            deletedQuery: { deletedAt: null },
+            removeData: { deletedAt: new Date() },
+          }),
+        ],
       },
     })
 
@@ -45,19 +50,15 @@ describe('softDelete', () => {
       ])
     })
 
-    it('returns everything with params.disableSoftdelete', async () => {
+    it('returns everything with params.disableSoftDelete', async () => {
       const users = await userService.find({
         disableSoftDelete: true,
       })
 
-      assert.deepStrictEqual(users, [
-        { name: 'Jane Doe', key: 'a', id: 0 },
-        { name: 'Jack Doe', key: 'a', id: 1 },
-        { name: 'Jack Doe', key: 'a', deleted: true, id: 2 },
-        { name: 'Rick Doe', key: 'b', id: 3 },
-        { name: 'Mick Doe', key: 'b', id: 4 },
-        { name: 'Mick Doe', key: 'b', deleted: true, id: 5 },
-      ])
+      assert.deepStrictEqual(
+        users.map(x => x.id),
+        [0, 1, 2, 3, 4, 5],
+      )
     })
   })
 
@@ -83,12 +84,7 @@ describe('softDelete', () => {
         disableSoftDelete: true,
       })
 
-      assert.deepStrictEqual(user, {
-        name: 'Jack Doe',
-        key: 'a',
-        deleted: true,
-        id: 2,
-      })
+      assert.ok(user.deletedAt)
     })
 
     it('throws on missing item', async () => {
@@ -144,12 +140,8 @@ describe('softDelete', () => {
     it('marks item as deleted', async () => {
       const user = await userService.remove(0)
 
-      assert.deepStrictEqual(user, {
-        name: 'Jane Doe',
-        key: 'a',
-        id: 0,
-        deleted: true,
-      })
+      assert.equal(user.id, 0)
+      assert.equal(!!user.deletedAt, true)
 
       await expect(() => userService.get(0)).rejects.toThrow()
     })
@@ -162,60 +154,26 @@ describe('softDelete', () => {
   describe('remove, without id', () => {
     it('marks filtered items as deleted', async () => {
       const query = { key: 'a' }
-      await userService.remove(null, { query })
+      const removedUsers = await userService.remove(null, { query })
+
+      assert.strictEqual(removedUsers.length, 2)
 
       const users = await userService.find({ query })
 
       assert.strictEqual(users.length, 0)
+
+      const deletedUsers = await userService.find({
+        query,
+        disableSoftDelete: true,
+      })
+
+      assert.strictEqual(deletedUsers.length, 3)
     })
 
     it('handles nothing found', async () => {
       const users = await userService.remove(null, { query: { key: 'z' } })
 
       assert.strictEqual(users.length, 0)
-    })
-  })
-
-  describe('with customization: deletedAt', () => {
-    let peopleService: any
-
-    beforeEach(() => {
-      const app = feathers().use(
-        '/people',
-        new MemoryService({
-          multi: ['create', 'patch', 'remove'],
-        }),
-      )
-
-      peopleService = app.service('people')
-      peopleService.hooks({
-        before: {
-          all: [
-            softDelete({
-              deletedQuery: async () => {
-                return { deletedAt: null }
-              },
-              removeData: async () => {
-                return { deletedAt: new Date() }
-              },
-            }),
-          ],
-          create: [
-            (context: any) => {
-              context.data.deletedAt = null
-            },
-          ],
-        },
-      })
-    })
-
-    it('works with setting deletedAt to date', async () => {
-      const user = await peopleService.create({ name: 'Jon Doe' })
-      const deletedUser = await peopleService.remove(user.id)
-
-      assert.ok(deletedUser.deletedAt !== null)
-
-      await expect(() => peopleService.get(user.id)).rejects.toThrow()
     })
   })
 })

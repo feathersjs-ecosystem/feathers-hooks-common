@@ -35,7 +35,6 @@ export * from './set-now/set-now-data.js'
 export * from './set-now/set-now-result.js'
 
 export * from './set-slug/set-slug.js'
-export * from './sifter/sifter.js'
 export * from './soft-delete/soft-delete.js'
 export * from './stash-before/stash-before.js'
 export * from './traverse/traverse.js'

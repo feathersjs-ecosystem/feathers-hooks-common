@@ -16,7 +16,8 @@
 - removed several checks that are handled by typescript
 - removed check for `preventChanges(true, ...fieldNames)`
 
-  - switch `true` to second argument
+  - switch `true` to second argument options
+  - async
 
 - renamed 'keepQuery' to 'pickQuery', added alias
 - renamed 'required' to 'checkRequired', added alias
@@ -39,6 +40,10 @@
 - rm support for spread argument
 
 - rm 'actOnDispatch' & 'actOnDefault'
+
+- rm 'validate', 'validateSchema', 'setNow', 'sequelizeConvert', 'serialize', 'required', 'runHook', 'populate', 'pick', 'omit', 'mongoKeys', 'lowercase', 'lowerCase', 'keepQuery', 'keepQueryInArray', 'isNot', fgraphql', 'fastJoin', 'discard...', 'dePopulate', 'actOnDefault', 'actOnDispatch', 'sifter'
+
+- softDelete: need to pass 'deletedQuery' and 'removeData'
 
 #### predicates
 

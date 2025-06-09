@@ -2,10 +2,7 @@ import { assert } from 'vitest'
 import * as allExported from '../src/index.js'
 
 const members = [
-  'actOnDefault',
-  'actOnDispatch',
-
-  // alter
+  // transform
   'transformData',
   'transformResult',
 
@@ -16,22 +13,14 @@ const members = [
   'checkContextIf',
   'combine',
   'debug',
-  'dePopulate',
   'disablePagination',
   'disallow',
 
   // omit
-  'discard',
-  'discardData',
-  'discardResult',
-  'discardQuery',
-  'omit',
   'omitData',
   'omitResult',
   'omitQuery',
 
-  'fastJoin',
-  'fgraphql',
   'getItems',
   'getDataIsArray',
   'getResultIsArray',
@@ -39,31 +28,18 @@ const members = [
   'isProvider',
 
   // pick
-  'keep',
-  'keepData',
-  'keepResult',
-  'keepQuery',
-  'pick',
   'pickData',
   'pickResult',
   'pickQuery',
 
-  'keepInArray',
-
-  'keepQueryInArray',
-
   // lowercase
-  'lowerCase',
-  'lowercase',
   'lowercaseData',
   'lowercaseResult',
 
   'makeCallingParams',
   'methodNames',
-  'mongoKeys',
   'paramsForServer',
   'paramsFromClient',
-  'populate',
   'preventChanges',
 
   // replace
@@ -72,24 +48,16 @@ const members = [
   'replaceResult',
 
   'checkRequired',
-  'required',
-  'runHook',
   'runParallel',
-  'sequelizeConvert',
-  'serialize',
   'setField',
 
-  'setNow',
   'setNowData',
   'setNowResult',
 
   'setSlug',
-  'sifter',
   'softDelete',
   'stashBefore',
   'traverse',
-  'validate',
-  'validateSchema',
 
   // iff
   'iffElse',
@@ -100,7 +68,6 @@ const members = [
   // predicates
   'some',
   'every',
-  'isNot',
   'not',
   'isMulti',
   'isPaginated',

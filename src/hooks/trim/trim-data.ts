@@ -6,10 +6,10 @@ import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
 
 /**
- * Convert certain field values to lower case.
- * @see https://hooks-common.feathersjs.com/hooks.html#lowercase
+ * Trim certain field values.
+ * @see https://hooks-common.feathersjs.com/hooks.html#trimData
  */
-export const lowercaseData = (fieldNames: MaybeArray<string>) => {
+export const trimData = (fieldNames: MaybeArray<string>) => {
   const fieldNamesArr = toArray(fieldNames)
 
   return transformData(item => {
@@ -22,10 +22,10 @@ export const lowercaseData = (fieldNames: MaybeArray<string>) => {
       }
 
       if (typeof value !== 'string') {
-        throw new BadRequest(`Expected string data. (lowercase ${fieldName})`)
+        throw new BadRequest(`Expected string data. (trim ${fieldName})`)
       }
 
-      _set(item, fieldName, value.toLowerCase())
+      _set(item, fieldName, value.trim())
     }
   })
 }

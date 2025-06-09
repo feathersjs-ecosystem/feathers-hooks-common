@@ -36,11 +36,11 @@ describe('lowercaseData', () => {
       assert.deepEqual(hook.data, { first: null, last: 'doe' })
     })
 
-    it('throws if field is not a string', () => {
+    it('throws if field is not a string', async () => {
       const hook: any = { type: 'before', method: 'create', data: { first: 1, last: 'Doe' } }
-      assert.throws(() => {
-        lowercaseData(['first', 'last'])(hook)
-      })
+      await expect(async () => {
+        await lowercaseData(['first', 'last'])(hook)
+      }).rejects.toThrow('Expected string data. (lowercase first)')
     })
   })
 

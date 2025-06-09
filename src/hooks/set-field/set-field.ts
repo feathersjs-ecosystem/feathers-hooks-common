@@ -34,7 +34,7 @@ export const setField =
 
     context = _setWith(context, as, value, _clone)
 
-    if (next) return next().then(() => context)
+    if (next) return next()
 
     return context
   }

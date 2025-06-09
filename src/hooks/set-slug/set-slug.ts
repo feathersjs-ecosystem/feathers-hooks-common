@@ -6,13 +6,12 @@ import type { HookContext, NextFunction } from '@feathersjs/feathers'
  *
  * @see https://hooks-common.feathersjs.com/hooks.html#setslug
  */
-export const setSlug =
-  <H extends HookContext = HookContext>(slug: string, fieldName?: string) =>
-  (context: H, next?: NextFunction) => {
-    if (typeof fieldName !== 'string') {
-      fieldName = `query.${slug}`
-    }
+export const setSlug = <H extends HookContext = HookContext>(slug: string, fieldName?: string) => {
+  if (typeof fieldName !== 'string') {
+    fieldName = `query.${slug}`
+  }
 
+  return (context: H, next?: NextFunction) => {
     if (context.params && context.params.provider === 'rest') {
       const value = context.params.route[slug]
       if (typeof value === 'string' && value[0] !== ':') {
@@ -20,7 +19,8 @@ export const setSlug =
       }
     }
 
-    if (next) return next().then(() => context)
+    if (next) return next()
 
     return context
   }
+}

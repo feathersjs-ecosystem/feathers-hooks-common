@@ -21,7 +21,7 @@ describe('setNowData', () => {
     })
 
     it('supports multiple field names', () => {
-      setNowData('createdAt1', 'createdAt2')(hookBefore)
+      setNowData(['createdAt1', 'createdAt2'])(hookBefore)
       checkHook(hookBefore.data, { first: 'John', last: 'Doe' }, ['createdAt1', 'createdAt2'])
     })
   })
@@ -54,7 +54,7 @@ describe('setNowData', () => {
     })
 
     it('props with no dots', () => {
-      setNowData('madeAt', 'builtAt')(hookBefore)
+      setNowData(['madeAt', 'builtAt'])(hookBefore)
       checkHook(
         hookBefore.data,
         { empl: { name: { first: 'John', last: 'Doe' }, status: 'AA' }, dept: 'Acct' },

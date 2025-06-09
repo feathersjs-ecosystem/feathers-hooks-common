@@ -22,4 +22,6 @@ export const transformData =
     if (next) {
       return next()
     }
+
+    return context
   }
