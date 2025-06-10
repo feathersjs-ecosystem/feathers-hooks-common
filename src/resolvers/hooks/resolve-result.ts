@@ -10,11 +10,7 @@ export const resolveResult = <T extends Record<string, any>, H extends HookConte
       await next()
     }
 
-    await replaceResult(context, item =>
-      resolve(resolverProperties, item, context, {
-        originalContext: context,
-      }),
-    )
+    await replaceResult(context, item => resolve(resolverProperties, item, context))
 
     return context
   }

@@ -11,6 +11,10 @@ describe('predicates/every', () => {
     assert.equal(every()({} as HookContext), true)
   })
 
+  it('returns true when all are undefined', () => {
+    expect(every(undefined, undefined, undefined)({} as HookContext)).toBe(true)
+  })
+
   it('returns false synchronously when at least 1 hook is false', () => {
     expect(
       every(
@@ -39,14 +43,12 @@ describe('predicates/every', () => {
   })
 
   it('does not run all predicates when one is false', () => {
-    let ran = 0
-    const fn = () => {
-      ran++
+    const fn = vi.fn(() => {
       return false
-    }
+    })
 
     expect(every(fn, fn, fn)({} as HookContext)).toBe(false)
-    expect(ran).toBe(1)
+    expect(fn).toHaveBeenCalledTimes(1)
   })
 
   let app: any

@@ -3,14 +3,29 @@
   "version": "8.2.1",
   "description": "Useful hooks for use with Feathersjs services.",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks.d.ts",
+      "import": "./dist/hooks.js"
+    },
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
+    },
+    "./predicates": {
+      "types": "./dist/predicates.d.ts",
+      "import": "./dist/predicates.js"
+    },
+    "./resolvers": {
+      "types": "./dist/resolvers.d.ts",
+      "import": "./dist/resolvers.js"
     }
   },
   "scripts": {

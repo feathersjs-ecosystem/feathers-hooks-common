@@ -56,7 +56,7 @@ describe('softDelete', () => {
       })
 
       assert.deepStrictEqual(
-        users.map(x => x.id),
+        users.map((x: any) => x.id),
         [0, 1, 2, 3, 4, 5],
       )
     })

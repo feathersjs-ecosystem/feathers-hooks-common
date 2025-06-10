@@ -7,6 +7,10 @@ describe('predicates/some', () => {
     expect(some()({} as HookContext)).toBe(true)
   })
 
+  it('returns true when all are undefined', () => {
+    expect(some(undefined, undefined, undefined)({} as HookContext)).toBe(true)
+  })
+
   it('returns true synchronously when at least 1 hook is true', () => {
     expect(
       some(
@@ -36,14 +40,12 @@ describe('predicates/some', () => {
   })
 
   it('does not run all predicates when one is true', () => {
-    let ran = 0
-    const fn = () => {
-      ran++
+    const fn = vi.fn(() => {
       return true
-    }
+    })
 
     expect(some(fn, fn, fn)({} as HookContext)).toBe(true)
-    expect(ran).toBe(1)
+    expect(fn).toHaveBeenCalledTimes(1)
   })
 
   it('when all hooks are falsey', async () => {

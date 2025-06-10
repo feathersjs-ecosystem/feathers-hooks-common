@@ -8,11 +8,7 @@ export const resolveData =
     resolverProperties: ResolverObject<T, H>,
   ) =>
   async (context: H, next?: NextFunction) => {
-    await replaceData(context, item =>
-      resolve(resolverProperties, item, context, {
-        originalContext: context,
-      }),
-    )
+    await replaceData(context, item => resolve(resolverProperties, item, context))
 
     if (typeof next === 'function') {
       return next()
