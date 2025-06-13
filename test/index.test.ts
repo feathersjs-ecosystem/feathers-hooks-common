@@ -12,6 +12,7 @@ const members = [
   'checkContext',
   'checkContextIf',
   'combine',
+  'createRelated',
   'debug',
   'disablePagination',
   'disallow',
@@ -76,10 +77,14 @@ const members = [
   'getPaginate',
   'skipResult',
 
+  'trimData',
+  'trimResult',
+
   'throwIf',
   'throwIfIsMulti',
   'throwIfIsProvider',
 
+  'getExposedMethods',
   'transformParams',
 ].sort()
 
