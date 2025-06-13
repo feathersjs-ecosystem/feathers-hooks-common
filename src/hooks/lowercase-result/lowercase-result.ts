@@ -1,7 +1,7 @@
 import _get from 'lodash/get.js'
 import _set from 'lodash/set.js'
 import { BadRequest } from '@feathersjs/errors'
-import { transformResult } from '../transform-data/transform-result.js'
+import { transformResult } from '../transform-result/transform-result.js'
 import type { DispatchOption } from '../../types.js'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'

@@ -1,8 +1,7 @@
 import type { HookContext, NextFunction } from '@feathersjs/feathers'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
-
-export const FROM_CLIENT_FOR_SERVER_DEFAULT_KEY = '_$client' as const
+import { FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } from './params-for-from-shared.js'
 
 export type ParamsForServerOptions = {
   /**

@@ -1,5 +1,5 @@
 import type { HookContext, NextFunction } from '@feathersjs/feathers'
-import { replaceData } from '../../utils/replace-items/replace-data.js'
+import { replaceData } from '../../utils/replace-data/replace-data.js'
 import { isPromise } from '../../common/index.js'
 
 /**

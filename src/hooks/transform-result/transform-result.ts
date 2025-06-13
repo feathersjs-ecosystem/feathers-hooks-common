@@ -1,6 +1,6 @@
 import type { HookContext, NextFunction } from '@feathersjs/feathers'
 import { isPromise } from '../../common/index.js'
-import { replaceResult } from '../../utils/replace-items/replace-result.js'
+import { replaceResult } from '../../utils/replace-result/replace-result.js'
 import type { DispatchOption } from '../../types.js'
 
 export type TransformResultOptions = {

@@ -1,5 +1,5 @@
 import _omit from 'lodash/omit.js'
-import { transformResult } from '../transform-data/transform-result.js'
+import { transformResult } from '../transform-result/transform-result.js'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
 import type { DispatchOption } from '../../types.js'

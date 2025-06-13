@@ -75,6 +75,12 @@ const members = [
 
   'getPaginate',
   'skipResult',
+
+  'throwIf',
+  'throwIfIsMulti',
+  'throwIfIsProvider',
+
+  'transformParams',
 ].sort()
 
 describe('services exposed hooks', () => {
