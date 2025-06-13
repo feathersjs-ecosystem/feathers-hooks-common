@@ -34,7 +34,6 @@ export function MarkdownTransform(options: MarkdownTransformOptions): Plugin {
 
       const utility = utilitiesList.find(x => x.pathMd === slug)
       if (!utility) {
-        console.warn(`Utility not found for slug: ${slug}`)
         return null
       }
 

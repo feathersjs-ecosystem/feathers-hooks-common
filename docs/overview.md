@@ -4,14 +4,8 @@
 
 This documentation has several parts:
 
-- [Hooks API](./hooks.md) - The API for the available hooks
-- [Utilities API](./utilities.md) - The API for the available utility methods
-- [Predicates](./predicates.md)- The API for the available predicates
+- [Hooks API](./hooks/index.md) - The API for the available hooks
+- [Utilities API](./utils/index.md) - The API for the available utility methods
+- [Predicates](./predicates/index.md)- The API for the available predicates
 - [Migrating](./migrating.md) - Information on how to migrate to the latest version of `feathers-hooks-common`
 - [Guides](./guides.md) - More in-depth guides for some of the available hooks
-
-## Notable Changes
-
-### 6.1.0
-
-- **new hook `setField`**: The `setField` hook allows to set a field on the hook context based on the value of another field on the hook context. [see docs](./hooks.md#setfield)

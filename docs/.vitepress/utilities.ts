@@ -48,8 +48,6 @@ export async function discoverUtilities() {
 
       const slug = kebabCase(title)
 
-      console.log(`Processing ${filePath} -> ${slug}`)
-
       const utility: Utility = {
         name: title,
         title,
