@@ -1,9 +1,19 @@
 import { defineConfig } from 'vitepress'
-import { name, description, ogUrl, ogImage } from './meta'
+import { name, description, ogUrl, ogImage, repository, mainBranch } from './meta'
 import { version } from '../../package.json'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { discoverUtilities } from './utilities'
+import { MarkdownTransform } from './plugins/markdownTransform'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
+import tailwindcss from '@tailwindcss/vite'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+const utilities = await discoverUtilities()
 
 export default defineConfig({
-  title: 'feathers-hooks-common/index.js',
+  title: name,
   lastUpdated: true,
   description: '',
   head: [
@@ -19,24 +29,19 @@ export default defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ],
   themeConfig: {
-    siteTitle: 'feathers-hooks-common/index.js',
+    siteTitle: name,
     editLink: {
-      pattern:
-        'https://github.com/feathersjs-ecosystem/feathers-hooks-common/edit/master/docs/:path',
+      pattern: `https://github.com/${repository}/edit/${mainBranch}/docs/:path`,
     },
     lastUpdatedText: 'Last Updated',
     socialLinks: [
-      {
-        icon: 'twitter',
-        link: 'https://twitter.com/feathersjs',
-      },
       {
         icon: 'discord',
         link: 'https://discord.gg/qa8kez8QBx',
       },
       {
         icon: 'github',
-        link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/index.js',
+        link: `https://github.com/${repository}`,
       },
     ],
     logo: '/feathers-hooks-common-logo.png',
@@ -45,8 +50,36 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Overview', link: '/overview' },
-          { text: 'Hooks', link: '/hooks/index.js' },
-          { text: 'Utilities', link: '/utilities' },
+          {
+            text: 'Hooks',
+            link: '/hooks',
+            items: utilities
+              .filter(x => x.category === 'hooks')
+              .map(x => ({
+                text: x.title,
+                link: x.path,
+              })),
+          },
+          {
+            text: 'Utilities',
+            link: '/utils',
+            items: utilities
+              .filter(x => x.category === 'utils')
+              .map(x => ({
+                text: x.title,
+                link: x.path,
+              })),
+          },
+          {
+            text: 'Predicates',
+            link: '/predicates',
+            items: utilities
+              .filter(x => x.category === 'predicates')
+              .map(x => ({
+                text: x.title,
+                link: x.path,
+              })),
+          },
           { text: 'Migrating', link: '/migrating' },
           { text: 'Guides', link: '/guides' },
         ],
@@ -58,11 +91,11 @@ export default defineConfig({
         items: [
           {
             text: 'Changelog',
-            link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/CHANGELOG.md',
+            link: `https://github.com/${repository}/blob/${mainBranch}/CHANGELOG.md`,
           },
           {
             text: 'Contributing',
-            link: 'https://github.com/feathersjs-ecosystem/feathers-hooks-common/blob/master/.github/contributing.md',
+            link: `https://github.com/${repository}/blob/${mainBranch}/.github/contributing.md`,
           },
         ],
       },
@@ -76,5 +109,37 @@ export default defineConfig({
       apiKey: '8114a3bec3c82b65c26a4ed113659bce',
       indexName: 'feathers-hooks',
     },
+  },
+  markdown: {
+    codeTransformers: [
+      transformerTwoslash({
+        twoslashOptions: {
+          compilerOptions: {
+            paths: {
+              'feathers-commons': [resolve(__dirname, '../../src/index.ts')],
+              'feathers-commons/hooks': [resolve(__dirname, '../../src/hooks/index.ts')],
+              'feathers-commons/utils': [resolve(__dirname, '../../src/utils/index.ts')],
+              'feathers-commons/predicates': [resolve(__dirname, '../../src/predicates/index.ts')],
+              'feathers-commons/resolvers': [resolve(__dirname, '../../src/resolvers/index.ts')],
+            },
+          },
+        },
+      }),
+    ],
+    // Explicitly load these languages for types hightlighting
+    languages: ['js', 'ts'],
+  },
+  vite: {
+    server: {
+      fs: {
+        allow: [resolve(__dirname, '../../src')],
+      },
+    },
+    plugins: [
+      MarkdownTransform({
+        vitepressDirectory: resolve(__dirname, '../'),
+      }),
+      tailwindcss(),
+    ],
   },
 })

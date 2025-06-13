@@ -1,0 +1,4 @@
+---
+title: getPaginate
+category: utils
+---

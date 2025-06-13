@@ -38,7 +38,7 @@ export const resolve = <
       await Promise.all(promisesBefore)
     }
 
-    if (typeof next === 'function') {
+    if (next) {
       await next()
     }
 

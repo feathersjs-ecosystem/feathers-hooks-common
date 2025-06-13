@@ -1,0 +1,4 @@
+---
+title: getExposedMethods
+category: utils
+---

@@ -15,7 +15,7 @@ export function createRelated<S = Record<string, any>, H extends HookContext = H
   options: MaybeArray<CreateRelatedOptions<S>>,
 ) {
   return async (context: H, next?: NextFunction) => {
-    checkContext(context, ['after', 'around'], undefined, 'createRelated')
+    checkContext(context, ['after', 'around'], ['create'], 'createRelated')
 
     if (next) {
       await next()

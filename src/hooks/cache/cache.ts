@@ -12,11 +12,12 @@ export interface CacheOptions<T> {
 const defaultMakeCacheKey = (key: any) => key
 
 /**
- * TODO: rm 'getItems' & migrate to around hook
+ * A hook that caches results in a Map.
  *
- * Persistent, most-recently-used record cache for services.
- *
- * @see https://hooks-common.feathersjs.com/hooks.html#cache
+ * @param cacheMap - The Map to use for caching.
+ * @param keyField - Optional field name to use as the cache key.
+ * @param options - Optional configuration for cloning and cache key generation.
+ * @param options.clone - Function to clone items before caching.
  */
 export function cache<H extends HookContext = HookContext, T = any>(
   cacheMap: CacheMap<T>,

@@ -6,6 +6,7 @@ This documentation has several parts:
 
 - [Hooks API](./hooks.md) - The API for the available hooks
 - [Utilities API](./utilities.md) - The API for the available utility methods
+- [Predicates](./predicates.md)- The API for the available predicates
 - [Migrating](./migrating.md) - Information on how to migrate to the latest version of `feathers-hooks-common`
 - [Guides](./guides.md) - More in-depth guides for some of the available hooks
 

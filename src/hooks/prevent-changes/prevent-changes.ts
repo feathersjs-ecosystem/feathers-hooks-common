@@ -2,7 +2,7 @@ import _has from 'lodash/has.js'
 import _omit from 'lodash/omit.js'
 import type { FeathersError } from '@feathersjs/errors'
 import { BadRequest } from '@feathersjs/errors'
-import { transformData } from '../transform/transform-data.js'
+import { transformData } from '../transform-data/transform-data.js'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
 

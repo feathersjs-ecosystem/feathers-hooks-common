@@ -6,6 +6,9 @@
     "esModuleInterop": true,
     "types": ["vitest/globals", "vitest/importMeta"],
     "declaration": true,
+    "paths": {
+      "feathers-commons": ["./src/index.ts"]
+    }
   },
   "include": ["src/**/*"]
 }

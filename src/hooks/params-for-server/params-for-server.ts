@@ -1,4 +1,4 @@
-import type { HookContext } from '@feathersjs/feathers'
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
 
@@ -25,7 +25,7 @@ export const paramsForServer = (
 
   const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {}
 
-  return <H extends HookContext>(context: H) => {
+  return <H extends HookContext>(context: H, next?: NextFunction) => {
     // clone params on demand
     let clonedParams: any
 
@@ -55,6 +55,10 @@ export const paramsForServer = (
 
     if (clonedParams) {
       context.params = clonedParams
+    }
+
+    if (next) {
+      return next()
     }
 
     return context

@@ -1,0 +1,4 @@
+---
+title: skipResult
+category: utils
+---

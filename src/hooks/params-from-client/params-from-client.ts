@@ -1,4 +1,4 @@
-import type { HookContext } from '@feathersjs/feathers'
+import type { HookContext, NextFunction } from '@feathersjs/feathers'
 import { FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } from '../params-for-server/params-for-server.js'
 import type { MaybeArray } from '../../internal.utils.js'
 import { toArray } from '../../internal.utils.js'
@@ -13,10 +13,10 @@ export type paramsFromClientOptions = {
 export const paramsFromClient = (
   whitelist: MaybeArray<string>,
   options?: paramsFromClientOptions,
-): ((context: HookContext) => HookContext) => {
+) => {
   const whitelistArr = toArray(whitelist)
   const { keyToHide = FROM_CLIENT_FOR_SERVER_DEFAULT_KEY } = options || {}
-  return (context: HookContext): HookContext => {
+  return (context: HookContext, next?: NextFunction) => {
     if (
       !context.params?.query?.[keyToHide] ||
       typeof context.params.query[keyToHide] !== 'object'
@@ -48,6 +48,10 @@ export const paramsFromClient = (
     }
 
     context.params = params
+
+    if (next) {
+      return next()
+    }
 
     return context
   }

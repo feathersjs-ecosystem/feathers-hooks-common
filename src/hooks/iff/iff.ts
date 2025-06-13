@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers'
-import { iffElse } from './iff-else.js'
+import { iffElse } from '../iff-else/iff-else.js'
 import type { HookFunction, PredicateFn } from '../../types.js'
 
 export interface IffHook<H extends HookContext = HookContext> extends HookFunction<H> {

@@ -2,10 +2,10 @@
 layout: home
 
 hero:
-  name: feathers-hooks-common
+  name: feathers-commons
   image:
     src: /feathers-hooks-common-logo.png
-    alt: feathers-hooks-common
+    alt: feathers-commons
   tagline: Common hooks and utils for FeathersJS apps
   actions:
     - theme: brand

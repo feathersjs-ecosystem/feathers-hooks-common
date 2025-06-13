@@ -14,7 +14,7 @@ import { toArray } from '../../internal.utils.js'
 export function checkRequired<H extends HookContext = HookContext>(fieldNames: MaybeArray<string>) {
   const fieldNamesArray = toArray(fieldNames)
   return (context: H, next?: NextFunction) => {
-    checkContext(context, ['before', 'around'], ['create', 'update', 'patch'], 'required')
+    checkContext(context, ['before', 'around'], ['create', 'update', 'patch'], 'checkRequired')
 
     const { data } = getDataIsArray(context)
 

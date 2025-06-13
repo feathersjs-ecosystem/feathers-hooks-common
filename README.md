@@ -27,7 +27,8 @@
 - added throwIf
 - added throwIfIsProvider
 - added throwIfIsMulti
-- added paramsForServer2 & paramsForClient2
+
+- removed old paramsForServer & changed to hook
 
 - added 'onDelete' & 'createRelated'
 

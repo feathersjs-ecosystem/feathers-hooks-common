@@ -12,7 +12,9 @@ export const resolveQuery =
       query,
     }
 
-    if (typeof next === 'function') {
+    if (next) {
       return next()
     }
+
+    return context
   }
