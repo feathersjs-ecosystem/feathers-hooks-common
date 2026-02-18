@@ -79,8 +79,13 @@ function addNewErrorDflt(errorMessages: any, ajvError: any, itemsLen: any, index
   const leader = itemsLen === 1 ? '' : `in row ${index + 1} of ${itemsLen}, `;
   let message;
 
-  if (ajvError.dataPath) {
-    message = `'${leader}${ajvError.dataPath.substring(1)}' ${ajvError.message}`;
+  // AJV v8 uses instancePath (/field) instead of v6's dataPath (.field)
+  const rawPath = ajvError.instancePath ?? ajvError.dataPath;
+  if (rawPath) {
+    const fieldPath = rawPath.startsWith('/')
+      ? rawPath.substring(1).replace(/\//g, '.')
+      : rawPath.substring(1);
+    message = `'${leader}${fieldPath}' ${ajvError.message}`;
   } else {
     message = `${leader}${ajvError.message}`;
   }

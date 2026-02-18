@@ -63,10 +63,10 @@
   ],
   "dependencies": {
     "@feathersjs/errors": "^5.0.29",
-    "ajv": "^6.12.6",
+    "ajv": "^8.18.0",
     "debug": "^4.3.5",
     "graphql": "^16.9.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "neotraverse": "^0.6.14"
   },
   "devDependencies": {
