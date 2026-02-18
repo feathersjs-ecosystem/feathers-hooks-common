@@ -120,8 +120,8 @@ describe('services validateSchema', () => {
         assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          "'first' should be string",
-          "should have required property 'last'",
+          "must have required property 'last'",
+          "'first' must be string",
         ]);
       }
     });
@@ -135,9 +135,9 @@ describe('services validateSchema', () => {
         assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          "'in row 1 of 3, first' should be string",
-          "in row 1 of 3, should have required property 'last'",
-          "in row 3 of 3, should have required property 'last'",
+          "in row 1 of 3, must have required property 'last'",
+          "'in row 1 of 3, first' must be string",
+          "in row 3 of 3, must have required property 'last'",
         ]);
       }
     });
@@ -149,8 +149,8 @@ describe('services validateSchema', () => {
         assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          '\'first\' should match format "startWithJo"',
-          "should have required property 'last'",
+          "must have required property 'last'",
+          '\'first\' must match format "startWithJo"',
         ]);
       }
     });
@@ -164,10 +164,10 @@ describe('services validateSchema', () => {
         assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
         assert.deepEqual(err.errors, [
-          '\'in row 1 of 3, first\' should match format "startWithJo"',
-          "in row 1 of 3, should have required property 'last'",
-          '\'in row 2 of 3, first\' should match format "startWithJo"',
-          "in row 3 of 3, should have required property 'last'",
+          "in row 1 of 3, must have required property 'last'",
+          '\'in row 1 of 3, first\' must match format "startWithJo"',
+          '\'in row 2 of 3, first\' must match format "startWithJo"',
+          "in row 3 of 3, must have required property 'last'",
         ]);
       }
     });
@@ -179,7 +179,7 @@ describe('services validateSchema', () => {
         validateSchema(schemaForAjvInstance, ajv)(hookBefore);
         assert.fail('test succeeds unexpectedly');
       } catch (err: any) {
-        assert.deepEqual(err.errors, ["'nested' should NOT have additional properties: 'foo'"]);
+        assert.deepEqual(err.errors, ["'nested' must NOT have additional properties: 'foo'"]);
       }
     });
   });
@@ -266,8 +266,8 @@ describe('services validateSchema', () => {
       await expect(validateSchema(asyncSchema, ajvAsync)(hookBefore)).rejects.toSatisfy(
         (err: any) => {
           assert.deepEqual(err.errors, [
-            '\'first\' should match format "3or4chars"',
-            "should have required property 'last'",
+            "must have required property 'last'",
+            '\'first\' must match format "3or4chars"',
           ]);
           return true;
         },
@@ -281,7 +281,7 @@ describe('services validateSchema', () => {
       await expect(validateSchema(asyncSchema, ajvAsync)(hookBeforeArray)).rejects.toSatisfy(
         (err: any) => {
           assert.deepEqual(err.errors, [
-            "in row 3 of 3, should have required property 'last'",
+            "in row 3 of 3, must have required property 'last'",
             "'in row 1 of 3, last' should be Doe",
           ]);
           return true;
