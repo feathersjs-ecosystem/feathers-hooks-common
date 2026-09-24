@@ -13,6 +13,14 @@
 
 A collection of useful hooks to use with Feathers services.
 
+> [!IMPORTANT]
+> **feathers-hooks-common has a successor: [feathers-utils](https://utils.feathersjs.com/)**
+>
+> `feathers-utils` provides a modern and improved set of hooks and utilities for FeathersJS applications. New projects should use it instead of `feathers-hooks-common`.
+>
+> - Documentation: [utils.feathersjs.com](https://utils.feathersjs.com/)
+> - GitHub: [feathersjs/feathers-utils](https://github.com/feathersjs/feathers-utils)
+
 > NOTE: This is the version for Feathers v5. For Feathers v4 use [feathers-hooks-common v6](https://github.com/feathersjs-ecosystem/feathers-hooks-common/tree/crow)
 
 ```
